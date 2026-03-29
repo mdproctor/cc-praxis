@@ -1,13 +1,10 @@
 ---
 name: java-git-commit
 description: >
-  Analyzes staged Java changes, generates a conventional commit message, syncs
-  DESIGN.md via the update-design skill, then commits everything in one
-  confirmed step. Use when the user says "commit", "smart commit", "update
-  design and commit", or invokes /java-git-commit. Always proposes everything
-  for review before touching the repo.
-allowed-tools:
-  - Bash
+  Use when the user says "commit", "smart commit", "update design and commit",
+  or invokes /java-git-commit. Creates conventional commits for Java changes
+  with automatic DESIGN.md synchronization via update-design skill. Always
+  proposes everything for review before touching the repo.
 ---
 
 # Java Git Commit Helper with Design Document Sync
@@ -25,6 +22,38 @@ commits for Java/Spring/Maven/Gradle projects while keeping DESIGN.md in sync.
 - Always sync DESIGN.md before committing — the design doc is part of the
   commit, not an afterthought.
 - Never run `git commit` until the user has explicitly confirmed.
+
+## Decision Flow
+
+```dot
+digraph commit_flow {
+    "Start" [shape=doublecircle];
+    "Staged changes?" [shape=diamond];
+    "Stop: ask user to stage" [shape=box];
+    "Generate commit message" [shape=box];
+    "Invoke update-design" [shape=box];
+    "Present consolidated proposal" [shape=box];
+    "User confirms?" [shape=diamond];
+    "Apply DESIGN.md changes" [shape=box];
+    "Stage DESIGN.md" [shape=box];
+    "Execute git commit" [shape=box];
+    "Done" [shape=doublecircle];
+    "Adjust proposal" [shape=box];
+
+    "Start" -> "Staged changes?";
+    "Staged changes?" -> "Stop: ask user to stage" [label="no"];
+    "Staged changes?" -> "Generate commit message" [label="yes"];
+    "Generate commit message" -> "Invoke update-design";
+    "Invoke update-design" -> "Present consolidated proposal";
+    "Present consolidated proposal" -> "User confirms?";
+    "User confirms?" -> "Adjust proposal" [label="no"];
+    "Adjust proposal" -> "Present consolidated proposal";
+    "User confirms?" -> "Apply DESIGN.md changes" [label="yes"];
+    "Apply DESIGN.md changes" -> "Stage DESIGN.md";
+    "Stage DESIGN.md" -> "Execute git commit";
+    "Execute git commit" -> "Done";
+}
+```
 
 ## Workflow
 
@@ -147,3 +176,21 @@ feat(api)!: replace userId with UUID across all endpoints
 BREAKING CHANGE: all callers must update userId fields to UUID format.
 Fixes #88
 ~~~
+
+---
+
+## Common Pitfalls
+
+| Mistake | Why It's Wrong | Fix |
+|---------|----------------|-----|
+| Committing before user confirms | User loses control | Always show proposal and wait for YES |
+| Skipping DESIGN.md sync | Design doc drifts from code | Always invoke update-design first |
+| Subject line > 50 chars | Truncated in git log | Keep under 50, use body for details |
+| Subject ends with period | Not conventional commits standard | Remove trailing period |
+| Using past tense ("Added X") | Not imperative mood | Use "Add X" (command form) |
+| Type `chore` for production code | Wrong semantics | Use `feat`, `fix`, or `refactor` |
+| Wrong type (`refactor` for bug fix) | Misleading git history | `fix` if it was wrong, `refactor` if it was working |
+| No body for complex changes | Reviewers lack context | Add why/what in body (not how) |
+| Committing merge conflict markers | Broken code in history | Check diff for `<<<<<<<` markers first |
+| Forgetting BREAKING CHANGE footer | Hidden breaking changes | Add footer with `!` in type/scope |
+| Running commit without staged changes | Wastes time | Check `git status` first |

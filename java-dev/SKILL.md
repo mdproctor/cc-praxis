@@ -11,6 +11,43 @@ description: >
   java-git-commit skill.
 ---
 
+## Quick Reference
+
+| Category | Rule | How to Apply |
+|----------|------|--------------|
+| **Safety** | Resource leaks | Always use try-with-resources for Closeable |
+| | Deadlocks | Document lock ordering; minimize critical sections |
+| | Classloader leaks | Remove ThreadLocal values in finally |
+| | Silent corruption | Never swallow exceptions; log or rethrow |
+| **Concurrency** | Thread model | Prefer thread-local or event-loop over shared state |
+| | Vert.x integration | Never block I/O thread; use @Blocking annotation |
+| | Single-threaded code | Add `// NOT thread-safe` comment |
+| **Performance** | Hot paths | Avoid streams, boxing, allocations in tight loops |
+| | Measuring | Profile before optimizing; don't pre-optimize cold code |
+| **Testing** | Framework | JUnit 5 + AssertJ + QuarkusTest |
+| | Mocking | Prefer real CDI/in-memory over Mockito |
+| | Integration tests | Use real database, not mocks |
+| **Code Quality** | Mutability | Mark new parameters/variables `final` unless mutated |
+| | Imports | Use simple names with imports, not FQNs |
+| | Documentation | Javadoc only for non-trivial methods; focus on why |
+| | Changes | Minimize line changes; don't reformat untouched code |
+
+## Why These Rules Matter
+
+**Resource leaks:** A production Quarkus service leaked 50 file descriptors per hour from unclosed HTTP connections. The limit of 1024 was exhausted in 20 hours, causing cascading failures. Kubernetes restarted the pod daily. The fix: one missing try-with-resources block.
+
+**Deadlocks:** Thread dump showed lock ordering violation between cache update and event publishing. Service hung for 3 hours during peak traffic. Fix required documenting lock acquisition order in comments and refactoring to minimize critical sections.
+
+**Classloader leaks:** ThreadLocal values holding references to request-scoped beans prevented classloader garbage collection after hot redeployments. Memory grew 200MB per deployment. After 10 deployments in development, OutOfMemoryError crashed the JVM. Fix: explicit ThreadLocal.remove() in finally blocks.
+
+**Silent corruption:** Exception swallowed in event handler caused payment records to be marked "processed" without actually processing them. Discovered 3 days later when customer complained. 1,200 transactions lost. Fix: log exception and set error flag instead of swallowing.
+
+**Blocking on event loop:** Synchronous database call in Vert.x event loop handler blocked all concurrent requests. Single slow query (5 seconds) froze entire service. 503 errors cascaded to all endpoints. Fix: `@Blocking` annotation on handler method.
+
+**Premature optimization:** Developer used primitive arrays and manual indexing "for performance" in config parser (called once at startup). Introduced off-by-one bug that corrupted plugin loading. Cost: 4 hours debugging. Config parser is not a hot path.
+
+These are real incidents. The rules exist because the pain is real.
+
 ## Safety
 
 Our code is deployed in mission-critical scenarios. Never compromise on:
@@ -145,6 +182,25 @@ If IntelliJ MCP is unavailable:
 When IntelliJ MCP is available, use it for project-wide error detection
 alongside your own analysis. Prefer it when it's faster — but never let it
 substitute for catching compilation errors you can see directly.
+
+## Red Flags — These Thoughts Mean STOP
+
+If you catch yourself thinking any of these, **STOP** and apply the correct approach:
+
+| Rationalization | Reality |
+|-----------------|---------|
+| "Resource will close automatically" | Not without try-with-resources or explicit finally. Add it now. |
+| "This is single-threaded, no sync needed" | Document it with `// NOT thread-safe` comment or future-you will forget. |
+| "I'll add the test after I finish this" | Test coverage gaps never get filled. Add integration test now. |
+| "This is performance-critical, streams are too slow" | Measure first. Don't pre-optimize without profiling data. |
+| "Just this once I'll catch and ignore the exception" | Silent failures cause production mysteries. Log it or rethrow. |
+| "I know this blocks, but it's quick" | Blocking Vert.x event loop causes cascading failures. Use @Blocking. |
+| "ThreadLocal cleanup isn't critical here" | Classloader leaks accumulate slowly then crash. Always clean up. |
+| "The lock order doesn't matter for this simple case" | Simple cases become complex. Document lock ordering now. |
+| "This allocation is trivial" | In a hot loop, trivial allocations cause GC pressure. Use primitives. |
+| "I'll use HashMap, order doesn't matter" | If it's build-time code, order matters. Use LinkedHashMap or TreeMap. |
+| "Mockito is faster than a real test database" | Mocks drift from reality. Use @QuarkusTest with real DB. |
+| "Let me refactor this code I haven't read yet" | Read first, understand, then refactor. Don't break working code. |
 
 ## Skill chaining
 

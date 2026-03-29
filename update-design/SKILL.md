@@ -1,13 +1,11 @@
+---
 name: update-design
 description: >
-  Keeps DESIGN.md in sync with code changes. Use this skill whenever the user
-  invokes /update-design, asks to "update the design doc", "sync DESIGN.md",
-  "reflect code changes in the design", or when another skill requests a design
-  document update. Reads DESIGN.md from docs/ under the project root, analyzes
-  git-staged changes or a user-provided diff/description, then proposes precise,
-  targeted updates for user review before applying anything.
-allowed-tools:
-  - Bash
+  Use when the user invokes /update-design, asks to "update the design doc",
+  "sync DESIGN.md", "reflect code changes in the design", or when another
+  skill requests a design document update. Keeps DESIGN.md in sync with code
+  changes by analyzing git-staged changes or diffs and proposing targeted
+  updates.
 ---
 
 # Update Design Document
@@ -182,3 +180,19 @@ Use this when DESIGN.md doesn't exist yet:
   ask the user to confirm scope before proposing updates.
 - **Multi-module Maven/Gradle projects**: Search for DESIGN.md in the root and
   each submodule. If multiple exist, ask which to update.
+
+---
+
+## Common Pitfalls
+
+| Mistake | Why It's Wrong | Fix |
+|---------|----------------|-----|
+| Applying changes without user confirmation | User loses control of their docs | Always wait for explicit YES |
+| Updating DESIGN.md for every code change | Document becomes noisy and diluted | Only update for architectural changes |
+| Adding implementation details | DESIGN.md is not code documentation | Focus on what/why, not how |
+| Copying method signatures into DESIGN.md | Low-value duplication of code | Describe component purpose, not API details |
+| Rewriting entire sections | Destroys user's voice and structure | Surgical updates only - preserve existing prose |
+| Creating DESIGN.md without user input | Might not match team conventions | Show starter template and ask first |
+| Skipping "Reason:" in proposals | User doesn't understand why change needed | Always explain rationale |
+| Not reading existing DESIGN.md first | Proposals conflict with structure | Always read full file before proposing |
+| Mentioning AI/tools in DESIGN.md | Breaks professional documentation standards | Never mention Claude, AI, or tooling in the doc itself |

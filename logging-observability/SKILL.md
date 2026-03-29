@@ -1,15 +1,12 @@
 ---
 name: logging-observability
 description: >
-  Configures structured logging, MDC fields, distributed tracing, and metrics
-  for Quarkus and quarkus-flow applications. Use when the user mentions
-  "logging", "tracing", "observability", "MDC", "structured logs", "JSON
-  logs", "OpenTelemetry", "OTel", "Prometheus", "metrics", "Kibana", "Loki",
-  "Datadog", "workflow tracing", or "quarkus.flow.tracing". Also triggers
-  when debugging a workflow in production or setting up monitoring for
-  CaseHub. Applies alongside java-dev and quarkus-flow-dev.
-allowed-tools:
-  - Bash
+  Use when the user mentions "logging", "tracing", "observability", "MDC",
+  "structured logs", "JSON logs", "OpenTelemetry", "OTel", "Prometheus",
+  "metrics", "Kibana", "Loki", "Datadog", "workflow tracing", or
+  "quarkus.flow.tracing". Also use when debugging a workflow in production
+  or setting up monitoring. Configures structured logging, MDC fields,
+  distributed tracing, and metrics for Quarkus and quarkus-flow applications.
 ---
 
 # Logging and Observability

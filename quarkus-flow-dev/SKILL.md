@@ -65,229 +65,53 @@ WorkflowDefinition definition;
 
 ---
 
-## Task DSL Patterns
+## Task DSL Quick Reference
 
-### Calling Java methods
+Common task patterns (full API reference in `funcDSL-reference.md`):
 
-~~~java
-// Simple function call (input type inferred)
-function(myService::process)
+| Pattern | Quick Example |
+|---------|---------------|
+| **Function call** | `function(svc::process, Request.class)` |
+| **Named task** | `function("step1", svc::process, Request.class)` |
+| **Agent** | `agent("drafter", ai::draft, String.class)` |
+| **Data extraction** | `.inputFrom("$.cart.items")` |
+| **Result transform** | `.outputAs("{ status: ., processed: true }")` |
+| **Context merge** | `.exportAs((result, ctx) -> merge(result, ctx), Type.class)` |
+| **Branching** | `switchWhenOrElse(pred, "yesStep", "noStep", Type.class)` |
+| **Emit event** | `emitJson("org.acme.event.type", Data.class)` |
+| **Wait for event** | `listen("wait", toOne("org.acme.done"))` |
+| **HTTP call** | `get("https://api.example.com/resource")` |
+| **Iteration** | `forEach(ctx -> ctx.items(), inner -> ...)` |
+| **Side effect** | `consume("log", data -> logger.info(...), Type.class)` |
 
-// Explicit input type
-function(myService::process, ProcessRequest.class)
+**Key rule**: Name tasks you branch to. Keep transformations close to the task that needs them.
 
-// Named (required when branching to this task)
-function("processStep", myService::process, ProcessRequest.class)
-
-// With workflow context (payload + context)
-withContext((payload, ctx) -> svc.run(ctx, payload), Input.class)
-
-// Agent call — uses unique id as memory id (for LangChain4j AI services)
-agent("draftAgent", drafterAgent::draft, String.class)
-
-// Agent with instance id (stateful agents, HITL loops)
-withInstanceId((id, prompt) -> agent.run(id, prompt), Prompt.class)
-~~~
-
-### Data flow: inputFrom / outputAs / exportAs
-
-~~~java
-// Extract a slice of the context as input
-function(pricing::quote, QuoteRequest.class)
-    .inputFrom("$.cart.quoteRequest")
-
-// Transform the task result before merging
-function(nlp::classify, Text.class)
-    .outputAs("{ sentiment: ., reviewed: false }")
-
-// Merge result back into global context
-agent("draftNewsletter", drafter::draft, Draft.class)
-    .exportAs((draft, wfCtx) -> {
-        var current = (NewsletterContext) wfCtx.currentData();
-        return current.withDraft(draft);
-    }, Draft.class)
-~~~
-
-**Rule**: keep transformations close to the step that needs them. Don't
-use global context mutations when a targeted `exportAs` will do.
-
-### Branching
-
-~~~java
-// Single condition
-switchWhen(".score >= 80", "sendStep")
-
-// Typed predicate + else
-switchWhenOrElse(
-    (HumanReview h) -> h.needsRevision(),
-    "reviseStep",
-    "sendStep",
-    HumanReview.class
-)
-
-// Typed predicate + directive (END, CONTINUE, etc.)
-switchWhenOrElse(
-    (HumanReview h) -> h.approved(),
-    "sendStep",
-    FlowDirectiveEnum.END,
-    HumanReview.class
-)
-~~~
-
-### Events (emit / listen)
-
-~~~java
-// Emit a JSON CloudEvent
-emitJson("org.acme.newsletter.review.required", Review.class)
-
-// Wait for a single event (HITL pattern)
-listen("waitHuman", toOne("org.acme.review.done"))
-    .outputAs((Collection<Object> c) -> c.iterator().next())
-
-// Wait for any of several events
-listen(toAny("org.acme.approved", "org.acme.rejected"))
-~~~
-
-### HTTP and OpenAPI tasks
-
-~~~java
-// Fluent HTTP GET
-get("https://service/api/resource")
-
-// Named GET (required if you branch to it)
-get("fetchUser", "https://service/users/" + id)
-
-// POST with body
-post(Map.of("name", "Ricardo"), "https://service/users")
-
-// OpenAPI call
-call(openapi()
-    .document("https://petstore3.swagger.io/api/v3/openapi.json")
-    .operation("findPetById"))
-~~~
-
-### Side effects and iteration
-
-~~~java
-// Fire-and-forget (no result merged to context)
-consume("sendEmail",
-    (HumanReview r) -> mailService.send("to@acme.com", "Subject", r.draft()),
-    HumanReview.class
-)
-
-// Iterate over a collection
-forEach(order -> order.items(),
-    inner -> inner.tasks(
-        function(inventoryService::reserve, Item.class)
-    )
-)
-~~~
+See **funcDSL-reference.md** for complete examples and all patterns.
 
 ---
 
-## Testing Workflows
+## Testing
 
-### Unit test (inject and execute directly)
+For comprehensive testing patterns (unit tests, YAML workflow tests, REST
+integration tests, AI service mocking), use the **quarkus-flow-testing** skill.
 
+Quick test example:
 ~~~java
 @QuarkusTest
 class MyWorkflowTest {
-
-    @Inject
-    MyWorkflow workflow;
+    @Inject MyWorkflow workflow;
 
     @Test
-    void should_produce_expected_output() throws Exception {
-        WorkflowModel result = workflow.instance(Map.of("input", "value"))
-            .start()
-            .toCompletableFuture()
-            .get(5, TimeUnit.SECONDS);
-
+    void should_complete() throws Exception {
+        var result = workflow.instance(Map.of("input", "value"))
+            .start().toCompletableFuture().get(5, TimeUnit.SECONDS);
         assertThat(result.asMap().orElseThrow().get("output"))
             .isEqualTo("expected");
     }
 }
 ~~~
 
-**Note**: blocking with `.get()` or `.join()` is acceptable in tests.
-Never block the event loop in production code.
-
-### Test a YAML workflow
-
-~~~java
-@QuarkusTest
-class EchoYamlWorkflowTest {
-
-    @Inject
-    @Identifier("flow:echo-name")
-    WorkflowDefinition definition;
-
-    @Test
-    void should_echo_name() throws Exception {
-        WorkflowModel result = definition.instance(Map.of("name", "Joe"))
-            .start()
-            .toCompletableFuture()
-            .get(5, TimeUnit.SECONDS);
-
-        assertThat(result.asMap().orElseThrow().get("message"))
-            .isEqualTo("echo: Joe");
-    }
-}
-~~~
-
-### Integration test via REST (REST Assured)
-
-~~~java
-@QuarkusTest
-class MyResourceTest {
-
-    @Test
-    void should_trigger_workflow_via_http() {
-        given()
-            .queryParam("name", "John")
-        .when()
-            .get("/my-endpoint")
-        .then()
-            .statusCode(200)
-            .body("message", equalTo("Hello, John!"));
-    }
-}
-~~~
-
-### Test HTTP error mapping (RFC 7807)
-
-~~~java
-@Test
-void should_map_workflow_exception_to_problem_details() {
-    given()
-        .queryParam("customerId", "unauthorized")
-    .when()
-        .get("/customer/profile")
-    .then()
-        .statusCode(401)
-        .body("type", equalTo(
-            "https://serverlessworkflow.io/spec/1.0.0/errors/communication"))
-        .body("status", equalTo(401));
-}
-~~~
-
-**Important**: your JAX-RS resource must be **reactive** (return `Uni` or
-`CompletionStage`) for automatic error mapping to work. Blocking with
-`.await().indefinitely()` wraps the error in `ExecutionException` and
-breaks the mapper.
-
-### Enable tracing in tests
-
-~~~properties
-# application.properties
-%test.quarkus.flow.tracing.enabled=true
-~~~
-
-### Mock AI agents in tests
-
-Always mock LangChain4j AI services in unit/integration tests to avoid
-flaky tests from network calls and non-deterministic LLM responses. Use
-`@InjectMock` or a `@QuarkusTestProfile` that substitutes a stub bean.
+**Note**: blocking with `.get()` is OK in tests, never in production.
 
 ---
 
@@ -345,9 +169,10 @@ workflow("review-loop")
 
 ## Skill chaining
 
-- When implementing a new workflow: apply `java-dev` rules for safety,
-  concurrency, and testing, then apply this skill for DSL patterns.
-- When done: invoke `code-review` before committing.
-- When committing: invoke `java-git-commit` (which chains `update-design`).
+- When implementing a new workflow: apply `java-dev` rules for safety and
+  concurrency, then this skill for DSL patterns.
+- When writing tests: use **quarkus-flow-testing** for testing patterns.
+- When done: invoke **code-review** before committing.
+- When committing: invoke **java-git-commit** (which chains **update-design**).
 - If the workflow represents a significant architectural addition, ensure
-  `update-design` captures it in DESIGN.md even outside of a commit.
+  **update-design** captures it in DESIGN.md even outside of a commit.

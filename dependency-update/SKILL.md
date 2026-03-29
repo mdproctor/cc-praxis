@@ -1,14 +1,11 @@
 ---
 name: dependency-update
 description: >
-  Manages Maven dependency updates for Quarkus/quarkus-flow projects, with
-  a strong focus on Quarkus BOM alignment. Use when the user says "update
-  dependencies", "bump a version", "upgrade Quarkus", "check for updates",
-  "add a dependency", or when pom.xml changes are needed. Always checks BOM
-  alignment before proposing any version change, and always proposes changes
-  for review before modifying any file.
-allowed-tools:
-  - Bash
+  Use when the user says "update dependencies", "bump a version", "upgrade
+  Quarkus", "check for updates", "add a dependency", or when pom.xml changes
+  are needed. Manages Maven dependency updates for Quarkus/quarkus-flow
+  projects with strong focus on Quarkus BOM alignment to prevent version
+  drift.
 ---
 
 # Dependency Update Helper
@@ -138,6 +135,18 @@ Only after explicit YES:
 - `quarkiverse-parent` version should stay in sync with the Quarkus release
   train — check https://github.com/quarkiverse/quarkiverse-parent/releases
   when bumping `quarkus.version`.
+
+## Common Pitfalls
+
+| Mistake | Consequence | Fix |
+|---------|-------------|-----|
+| Adding `<version>` to BOM-managed dependency | Overrides BOM, causes version drift and conflicts | Remove version tag, let BOM manage it |
+| Upgrading one dependency without checking BOM | Breaks compatibility with Quarkus platform | Check `mvn dependency:tree` first |
+| Using `quarkus-bom` version in dependencies | Duplicate/conflicting version management | Only set in `<dependencyManagement>` |
+| Bumping Quarkus without checking quarkiverse-parent | Parent-child version mismatch | Update both in lockstep |
+| Applying version changes without compilation check | Silent compilation failures post-commit | Always run `mvn compile` after changes |
+| Upgrading major version without reading release notes | Breaking changes surprise you in production | Check release notes before proposing |
+| Adding unmanaged version without noting it | Future confusion about why version is explicit | Note "unmanaged" in proposal |
 
 ## Skill chaining
 

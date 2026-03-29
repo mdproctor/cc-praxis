@@ -1,16 +1,13 @@
 ---
 name: adr
 description: >
-  Creates and manages Architecture Decision Records (ADRs) in MADR format
-  under docs/adr/. Use when the user says "create an ADR", "record this
-  decision", "document why we chose X", "add an architecture decision", or
-  when a significant technical decision is being made that warrants capturing
-  the reasoning and alternatives considered. Also suggest creating an ADR
-  when dependency-update proposes a major version upgrade or adoption of a
-  new extension, or when update-design captures a significant new component.
-  Always proposes the ADR content for review before writing any file.
-allowed-tools:
-  - Bash
+  Use when the user says "create an ADR", "record this decision", "document
+  why we chose X", "add an architecture decision", or when a significant
+  technical decision is being made that warrants capturing the reasoning and
+  alternatives considered. Also use when dependency-update proposes a major
+  version upgrade or adoption of a new extension, or when update-design
+  captures a significant new component. Manages ADRs in MADR format under
+  docs/adr/.
 ---
 
 # Architecture Decision Record (ADR) Helper
@@ -161,6 +158,19 @@ When superseding an ADR:
 2. Create the new ADR referencing the old one in its Links section
 
 ---
+
+## Common Pitfalls
+
+| Mistake | Why It's Wrong | Fix |
+|---------|----------------|-----|
+| Deleting or rewriting accepted ADRs | Erases decision history | Mark as superseded, create new ADR |
+| Writing essay-length ADRs | Too long to read, defeats purpose | Keep concise - capture why, not everything |
+| Title includes solution | "ADR-001: Use PostgreSQL" is conclusion, not decision | "ADR-001: Database Selection" |
+| Using UPPERCASE.md or CamelCase.md | Inconsistent naming conventions | Use `nnnn-kebab-case-title.md` |
+| Skipping "Considered Options" section | Doesn't show what was evaluated | List 2-3 real alternatives considered |
+| Creating ADR after implementing | Decision already made, ADR is theater | Write ADR when decision is made, not after |
+| No consequences section | Hides tradeoffs and risks | Always list both positive and negative consequences |
+| ADR documents routine decisions | Signal-to-noise ratio drops | Only for non-obvious decisions with alternatives |
 
 ## Skill chaining
 

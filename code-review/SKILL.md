@@ -1,16 +1,12 @@
 ---
 name: code-review
 description: >
-  Reviews staged Java changes against safety, concurrency, performance, and
-  code quality rules before committing. Use when the user says "review my
-  code", "check my changes", "can you review this", "look at my staged
-  changes", or invokes /code-review. Also triggered automatically by
-  java-git-commit if no review has been done in the current session —
-  ask the user if they want a review before proceeding with the commit.
-  Always reviews git diff --staged only. CRITICAL findings block the commit;
-  all other findings are advisory.
-allowed-tools:
-  - Bash
+  Use when the user says "review my code", "check my changes", "can you
+  review this", "look at my staged changes", or invokes /code-review. Also
+  triggered automatically by java-git-commit if no review has been done in
+  the current session. Reviews staged Java changes against safety,
+  concurrency, performance, and code quality rules. CRITICAL findings block
+  the commit; all other findings are advisory.
 ---
 
 # Java Code Review
@@ -19,6 +15,28 @@ You are an expert Java and Quarkus code reviewer. Your job is to catch
 problems before they reach the repository, with particular focus on the
 issues that are hardest to find later: safety violations, concurrency bugs,
 and silent data corruption.
+
+## Why Code Review Matters
+
+**Caught in review vs. caught in production:**
+- Resource leak found in review: 2-minute fix
+- Resource leak in production: 3-hour incident, emergency patch, postmortem
+
+**Real examples of what reviews prevent:**
+- **Deadlock** between cache lock and event publishing lock. Would have hung production during peak hours. Caught in review by checking lock ordering documentation.
+- **ThreadLocal leak** holding 200MB per deployment. Would have crashed dev environments after 10 hot-reloads. Caught by checking cleanup in finally blocks.
+- **Blocking I/O on Vert.x thread**. Would have frozen all concurrent requests during database slowdown. Caught by seeing missing `@Blocking` annotation.
+- **Mockito test passing, real DB failing**. Integration test used mocked repository instead of real database. Migration failure would have been discovered in staging. Caught by enforcing real DB in tests.
+
+**What code review is not:**
+- Not style police (formatters handle that)
+- Not architecture redesign (that's during design phase)
+- Not performance tuning (profiler does that better)
+
+**What code review is:**
+- Safety net for critical issues compilers can't detect
+- Second pair of eyes on concurrency correctness
+- Verification that tests actually test what they claim
 
 ## Workflow
 
@@ -70,6 +88,30 @@ Review complete: 2 CRITICAL, 1 WARNING, 3 NOTES
 **If no CRITICAL findings:**
 > "✅ No critical issues found. [N warnings / notes listed above.]
 > Ready to commit — run `/java-git-commit` or tell me to proceed."
+
+---
+
+## Severity Assignment Flow
+
+```dot
+digraph severity_flow {
+    "Finding detected" [shape=doublecircle];
+    "Safety violation?" [shape=diamond];
+    "Concurrency issue in shared code?" [shape=diamond];
+    "CRITICAL" [shape=box, style=filled, fillcolor=red];
+    "In hot path?" [shape=diamond];
+    "WARNING" [shape=box, style=filled, fillcolor=yellow];
+    "NOTE" [shape=box, style=filled, fillcolor=lightblue];
+
+    "Finding detected" -> "Safety violation?";
+    "Safety violation?" -> "CRITICAL" [label="yes"];
+    "Safety violation?" -> "Concurrency issue in shared code?" [label="no"];
+    "Concurrency issue in shared code?" -> "CRITICAL" [label="yes"];
+    "Concurrency issue in shared code?" -> "In hot path?" [label="no"];
+    "In hot path?" -> "WARNING" [label="yes (perf/repro)"];
+    "In hot path?" -> "NOTE" [label="no"];
+}
+```
 
 ---
 
