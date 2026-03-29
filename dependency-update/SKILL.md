@@ -62,6 +62,28 @@ Identify:
 ./mvnw help:effective-pom | grep -A2 <artifact-name>
 ~~~
 
+**BOM alignment decision flow:**
+
+```dot
+digraph bom_decision {
+    "Adding/updating dependency" [shape=doublecircle];
+    "In Quarkus BOM?" [shape=diamond];
+    "In quarkiverse BOM?" [shape=diamond];
+    "CVE fix required?" [shape=diamond];
+    "Add with no version tag" [shape=box, style=filled, fillcolor=lightgreen];
+    "Add version, note unmanaged" [shape=box, style=filled, fillcolor=yellow];
+    "Override with WARNING" [shape=box, style=filled, fillcolor=red];
+
+    "Adding/updating dependency" -> "In Quarkus BOM?";
+    "In Quarkus BOM?" -> "CVE fix required?" [label="yes"];
+    "In Quarkus BOM?" -> "In quarkiverse BOM?" [label="no"];
+    "CVE fix required?" -> "Override with WARNING" [label="yes"];
+    "CVE fix required?" -> "Add with no version tag" [label="no"];
+    "In quarkiverse BOM?" -> "Add with no version tag" [label="yes"];
+    "In quarkiverse BOM?" -> "Add version, note unmanaged" [label="no"];
+}
+```
+
 **BOM alignment rules:**
 
 | Situation | Action |
@@ -128,6 +150,20 @@ Only after explicit YES:
 
 ---
 
+## Success Criteria
+
+Dependency update is complete when:
+
+- ✅ User has confirmed changes with **YES**
+- ✅ BOM alignment verified (no version drift)
+- ✅ Compilation succeeds (`mvn compile` passes)
+- ✅ pom.xml changes committed (via java-git-commit if applicable)
+- ✅ For major upgrades: ADR created documenting decision
+
+**Not complete until** all criteria met and changes committed.
+
+---
+
 ## Java 17 / Quarkus platform notes
 
 - Quarkus 3.x requires Java 17 minimum; check `maven.compiler.release` if
@@ -148,7 +184,7 @@ Only after explicit YES:
 | Upgrading major version without reading release notes | Breaking changes surprise you in production | Check release notes before proposing |
 | Adding unmanaged version without noting it | Future confusion about why version is explicit | Note "unmanaged" in proposal |
 
-## Skill chaining
+## Skill Chaining
 
 - After updating dependencies, if tests pass and changes are ready:
   invoke **java-git-commit**.

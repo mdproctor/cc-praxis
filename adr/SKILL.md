@@ -146,6 +146,28 @@ Don't suggest an ADR for routine decisions with no meaningful alternatives
 
 ## ADR Lifecycle
 
+```dot
+digraph adr_lifecycle {
+    "Significant decision made" [shape=doublecircle];
+    "Create new ADR" [shape=box];
+    "Status: Accepted" [shape=box, style=filled, fillcolor=lightgreen];
+    "Decision still valid?" [shape=diamond];
+    "Better approach found?" [shape=diamond];
+    "Mark Superseded" [shape=box, style=filled, fillcolor=yellow];
+    "Mark Deprecated" [shape=box, style=filled, fillcolor=lightgray];
+    "Create new ADR (replacement)" [shape=box];
+
+    "Significant decision made" -> "Create new ADR";
+    "Create new ADR" -> "Status: Accepted";
+    "Status: Accepted" -> "Decision still valid?" [label="time passes"];
+    "Decision still valid?" -> "Better approach found?" [label="no (no longer relevant)"];
+    "Decision still valid?" -> "Status: Accepted" [label="yes"];
+    "Better approach found?" -> "Mark Deprecated" [label="no"];
+    "Better approach found?" -> "Mark Superseded" [label="yes"];
+    "Mark Superseded" -> "Create new ADR (replacement)";
+}
+```
+
 | Status | Meaning |
 |---|---|
 | **Proposed** | Draft, not yet agreed |
@@ -156,6 +178,20 @@ Don't suggest an ADR for routine decisions with no meaningful alternatives
 When superseding an ADR:
 1. Update the old ADR's status line to `Superseded by [ADR-NNNN]`
 2. Create the new ADR referencing the old one in its Links section
+
+---
+
+## Success Criteria
+
+ADR creation is complete when:
+
+- ✅ User has confirmed ADR content with **YES**
+- ✅ ADR written to `docs/adr/NNNN-title.md`
+- ✅ Status set to "Accepted" (or "Proposed" if needs review)
+- ✅ All sections filled (Context, Decision, Consequences, Alternatives, Links)
+- ✅ File committed (staged with related code changes)
+
+**Not complete until** ADR file exists and is committed.
 
 ---
 
@@ -172,7 +208,7 @@ When superseding an ADR:
 | No consequences section | Hides tradeoffs and risks | Always list both positive and negative consequences |
 | ADR documents routine decisions | Signal-to-noise ratio drops | Only for non-obvious decisions with alternatives |
 
-## Skill chaining
+## Skill Chaining
 
 - After writing an ADR, suggest staging it with **java-git-commit** if
   other changes are already staged.

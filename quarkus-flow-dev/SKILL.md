@@ -18,6 +18,16 @@ You are an expert in quarkus-flow, the CNCF Serverless Workflow engine for
 Quarkus. This skill extends java-dev with quarkus-flow-specific patterns,
 conventions, and pitfalls.
 
+## Prerequisites
+
+**This skill builds on `java-dev`**. Apply all java-dev rules first:
+- Safety patterns (resource leaks, deadlocks, ThreadLocal cleanup)
+- Concurrency rules (event loop awareness, thread safety)
+- Performance guidelines (avoid streams in hot paths, minimize allocations)
+- Testing practices (JUnit 5, AssertJ, real CDI over mocking)
+
+Then apply the quarkus-flow-specific patterns below.
+
 ## Core Concepts
 
 ### Workflow class structure
@@ -167,12 +177,14 @@ workflow("review-loop")
 
 ---
 
-## Skill chaining
+## Skill Chaining
 
-- When implementing a new workflow: apply `java-dev` rules for safety and
-  concurrency, then this skill for DSL patterns.
-- When writing tests: use **quarkus-flow-testing** for testing patterns.
-- When done: invoke **code-review** before committing.
-- When committing: invoke **java-git-commit** (which chains **update-design**).
-- If the workflow represents a significant architectural addition, ensure
-  **update-design** captures it in DESIGN.md even outside of a commit.
+- **When implementing a new workflow:** apply `java-dev` rules for safety and
+  concurrency, then this skill for DSL patterns
+- **When writing tests:** use **quarkus-flow-testing** for testing patterns
+- **When done:** invoke **code-review** before committing
+- **When committing:** invoke **java-git-commit** (which chains **update-design**)
+- **For significant architectural additions:** ensure **update-design** captures
+  it in DESIGN.md even outside of a commit
+- **For workflow observability:** use **logging-observability** when adding
+  workflow tracing or MDC context

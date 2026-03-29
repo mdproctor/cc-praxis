@@ -66,9 +66,11 @@ Expert Java development for Quarkus server-side applications with focus on:
 
 **Features:**
 - Quick Reference table (safety, concurrency, performance, testing, code quality)
+- Rule Priority Flow flowchart (Safety > Concurrency > Performance > Code Quality)
 - "Red Flags — These Thoughts Mean STOP" 4-column rationalization table (Problem-Impact-Fix)
 - "Why These Rules Matter" section with 6 real production incidents
 - ❌/✅ code examples for Safety, Concurrency, Performance sections
+- Enhanced Skill Chaining (6 comprehensive skill references)
 - RED-GREEN-REFACTOR validated (prevents resource leaks under pressure)
 
 **Triggers:** Writing Java classes, fixing bugs, refactoring, working with `.java`, `pom.xml`, or build files.
@@ -81,10 +83,12 @@ Specialized development for quarkus-flow (CNCF Serverless Workflow) including:
 - LangChain4j AI service integration
 
 **Features:**
+- Prerequisites section (builds on java-dev rules)
 - Task DSL Quick Reference table (12 common patterns)
 - Complete API reference extracted to `funcDSL-reference.md`
 - Common Pitfalls table (7 mistakes and fixes)
 - HITL pattern example with full workflow
+- Enhanced Skill Chaining (includes logging-observability)
 - Token-optimized: 31.5% reduction from original size
 
 **Triggers:** Flow subclasses, workflow YAML, mentions of "workflow", "agent", "agentic", or "LangChain4j".
@@ -98,6 +102,7 @@ Comprehensive testing patterns for quarkus-flow workflows:
 - AI service mocking strategies (`@InjectMock`, `@QuarkusTestProfile`)
 
 **Features:**
+- Prerequisites section (builds on java-dev and quarkus-flow-dev)
 - Quick Reference table for test types
 - Common Testing Pitfalls table (7 mistakes)
 - Two mocking strategies with complete examples
@@ -144,19 +149,35 @@ Security vulnerability review for Quarkus applications:
 
 ### Version Control & Documentation
 
-#### **java-git-commit**
-Intelligent commit workflow that:
+#### **git-commit**
+Generic conventional commit workflow for any repository:
 - Generates conventional commit messages (Conventional Commits 1.0.0)
-- Syncs DESIGN.md automatically via `update-design` skill
-- Analyzes staged changes with context-aware categorization
+- Works with any codebase or file types
+- Proposes commit message for user review before committing
+- Base workflow extended by java-git-commit
+
+**Features:**
+- Decision Flow flowchart (stage → generate → propose → commit)
+- Conventional commit type and scope reference
+- Common Pitfalls table
+- Language-agnostic examples
+
+**Triggers:** "commit", "make a commit", `/git-commit` in non-Java repositories.
+
+#### **java-git-commit**
+Intelligent commit workflow that extends git-commit with:
+- Java/Quarkus-specific scope suggestions (controller, service, repository, BOM)
+- Automatic DESIGN.md synchronization via `update-design` skill
+- Maven/Gradle awareness
 - Proposes everything for review before committing
 
 **Features:**
-- Decision flowchart showing complete commit process
-- Common Pitfalls table (11 commit mistakes)
-- Conventional commit type reference
+- Decision flowchart showing complete commit + design sync process
+- Common Pitfalls table (11 commit mistakes including Java-specific)
+- Java-specific scope and type examples
+- Simplified workflow (references git-commit, adds DESIGN.md sync)
 
-**Triggers:** "commit", "smart commit", "update design and commit", `/java-git-commit`.
+**Triggers:** "commit", "smart commit", "update design and commit", `/java-git-commit` in Java/Maven/Gradle repositories.
 
 #### **update-design**
 Maintains DESIGN.md documentation in sync with code changes, capturing:

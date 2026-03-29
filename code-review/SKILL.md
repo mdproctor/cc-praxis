@@ -352,8 +352,9 @@ class OrderServiceTest {
 
 ---
 
-## Integration with java-git-commit
+## Skill Chaining
 
+**Triggered by java-git-commit:**
 When `java-git-commit` is invoked and no `/code-review` has been run
 in the current session, ask:
 > "Would you like me to run a code review before committing? (Recommended)"
@@ -361,3 +362,15 @@ in the current session, ask:
 If the user says yes, run this skill in full before proceeding.
 If the user says no, proceed directly to `java-git-commit`.
 Do not ask again if a review was already completed this session.
+
+**Chain to security-audit for security-critical code:**
+If reviewing code that handles:
+- User input (authentication, authorization, validation)
+- Payment processing or PII
+- External API calls or data persistence
+
+Offer to run `security-audit` for specialized OWASP Top 10 vulnerability checks:
+> "This code handles [auth/payment/PII]. Run security-audit for specialized vulnerability checks?"
+
+**Reference java-dev for detailed patterns:**
+For deep dives into safety, concurrency, and performance patterns with additional examples, see `java-dev` skill.

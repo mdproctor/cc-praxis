@@ -14,8 +14,13 @@ description: >
 Expert testing patterns for quarkus-flow workflows, covering unit tests,
 integration tests, and AI service mocking.
 
-**REQUIRED BACKGROUND:** You MUST understand quarkus-flow-dev for workflow
-structure and DSL patterns before using this skill.
+## Prerequisites
+
+**This skill builds on `java-dev` and `quarkus-flow-dev`**. Apply all rules from:
+- **java-dev**: Testing practices (JUnit 5, AssertJ, real CDI over mocking, @QuarkusTest patterns)
+- **quarkus-flow-dev**: Workflow structure, DSL patterns, and quarkus-flow concepts
+
+Then apply the workflow-specific testing patterns below.
 
 ## Quick Reference
 

@@ -290,7 +290,7 @@ quarkus.micrometer.export.prometheus.enabled=true
 
 ---
 
-## Skill chaining
+## Skill Chaining
 
 - If adding OTel or Micrometer dependencies: invoke **dependency-update**
   to verify BOM alignment.

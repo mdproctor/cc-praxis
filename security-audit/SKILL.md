@@ -400,9 +400,17 @@ quarkus.rate-limiter.enabled=true
 
 ---
 
-## Integration with Other Skills
+## Skill Chaining
 
-- **code-review**: Security audit is a specialized form of code review. Run this for security-critical changes (auth, payment, PII handling).
+**Triggered by code-review:**
+When code-review encounters code handling authentication, authorization, payment processing, PII, or external API calls, it should offer to run security-audit for specialized OWASP Top 10 checks.
+
+**Chains from:**
+- **code-review**: Security audit is a specialized form of code review. Automatically offered for security-critical changes (auth, payment, PII handling).
+- **java-dev**: Invoke for security-critical implementations (authentication, authorization, payment, PII handling).
+- **dependency-update**: Invoke when updating dependencies with known CVEs or security advisories.
+
+**Integration notes:**
 - **java-dev**: Security rules override convenience. If a security fix makes code more verbose, that's acceptable.
 - **java-git-commit**: Security fixes should reference CVE numbers or vulnerability types in commit messages (e.g., "fix: prevent SQL injection in user search (CWE-89)").
 

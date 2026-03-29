@@ -32,6 +32,38 @@ description: >
 | | Documentation | Javadoc only for non-trivial methods; focus on why |
 | | Changes | Minimize line changes; don't reformat untouched code |
 
+## Rule Priority Flow
+
+```dot
+digraph rule_priority {
+    "Writing code" [shape=doublecircle];
+    "Safety violation?" [shape=diamond];
+    "Apply Safety rules" [shape=box, style=filled, fillcolor=red];
+    "Concurrency issue?" [shape=diamond];
+    "Apply Concurrency rules" [shape=box, style=filled, fillcolor=orange];
+    "Performance-critical path?" [shape=diamond];
+    "Apply Performance rules" [shape=box, style=filled, fillcolor=yellow];
+    "Apply Code Quality rules" [shape=box, style=filled, fillcolor=lightblue];
+    "Code complete" [shape=doublecircle];
+
+    "Writing code" -> "Safety violation?";
+    "Safety violation?" -> "Apply Safety rules" [label="yes (NEVER compromise)"];
+    "Safety violation?" -> "Concurrency issue?" [label="no"];
+    "Apply Safety rules" -> "Code complete";
+
+    "Concurrency issue?" -> "Apply Concurrency rules" [label="yes (shared state/threading)"];
+    "Concurrency issue?" -> "Performance-critical path?" [label="no"];
+    "Apply Concurrency rules" -> "Code complete";
+
+    "Performance-critical path?" -> "Apply Performance rules" [label="yes (hot path/tight loop)"];
+    "Performance-critical path?" -> "Apply Code Quality rules" [label="no (cold path)"];
+    "Apply Performance rules" -> "Code complete";
+    "Apply Code Quality rules" -> "Code complete";
+}
+```
+
+**Priority order:** Safety > Concurrency > Performance > Code Quality
+
 ## Why These Rules Matter
 
 **Resource leaks:** A production Quarkus service leaked 50 file descriptors per hour from unclosed HTTP connections. The limit of 1024 was exhausted in 20 hours, causing cascading failures. Kubernetes restarted the pod daily. The fix: one missing try-with-resources block.
@@ -327,9 +359,12 @@ If you catch yourself thinking any of these, **STOP** and apply the correct appr
 | "Mockito is faster than a real test database" | Mocked database | Mock/prod drift, broken prod | Use @QuarkusTest + real DB |
 | "Let me refactor this code I haven't read yet" | Refactoring unknown code | Breaking working functionality | Read and understand first |
 
-## Skill chaining
+## Skill Chaining
 
-- After implementing or refactoring, if the user wants to commit: invoke
-  **java-git-commit**, which will also sync DESIGN.md via **update-design**.
-- If a change has significant architectural impact and no commit is planned,
-  suggest running **/update-design** independently.
+- **Before committing:** invoke **code-review** to catch safety, concurrency, and performance issues
+- **After implementing or refactoring:** if the user wants to commit, invoke
+  **java-git-commit**, which will also sync DESIGN.md via **update-design**
+- **For architectural decisions:** suggest running **adr** to document significant decisions
+- **For logging/observability setup:** invoke **logging-observability** when implementing structured logging, tracing, or metrics
+- **For security-critical code:** invoke **security-audit** when handling authentication, authorization, payment, or PII
+- **If architectural impact without commit:** suggest running **update-design** independently
