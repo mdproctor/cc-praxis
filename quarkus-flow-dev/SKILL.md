@@ -126,15 +126,17 @@ class MyWorkflowTest {
 
 ## Common Pitfalls
 
-| Mistake | Correct approach |
-|---|---|
-| Unnamed task used as branch target | Always name tasks you `switchWhen*` to |
-| Blocking event loop in a `function` task | Annotate with `@Blocking` or dispatch via `executeBlocking` |
-| Using `outputAs` when you mean `exportAs` | `outputAs` transforms the task result; `exportAs` merges into global context — don't confuse them |
-| Forgetting `@Identifier` when injecting YAML workflow | YAML workflows need `@Identifier("flow:<name>")` to resolve |
-| Blocking in REST resource | Resource must return `Uni`/`CompletionStage` for error mapping to work |
-| Using Mockito to mock AI services | Prefer stub CDI beans or `@InjectMock`; keep tests deterministic |
-| Mutable shared state in a `Flow` subclass | `Flow` beans are `@ApplicationScoped` — treat as stateless; all state belongs in the workflow context |
+These are the most frequent mistakes when working with quarkus-flow:
+
+| Mistake | Why It's Wrong | Fix |
+|---------|----------------|-----|
+| Unnamed task used as branch target | `switchWhen*` requires task name to resolve target | Always name tasks you branch to |
+| Blocking event loop in `function` task | Blocks Vert.x I/O thread, freezes concurrent requests | Annotate with `@Blocking` or use `executeBlocking` |
+| Using `outputAs` when you mean `exportAs` | Wrong transformation scope - `outputAs` transforms task result, `exportAs` merges into global context | Check if you need task-local or global context transformation |
+| Forgetting `@Identifier` on YAML workflow injection | CDI can't resolve bean without identifier | Add `@Identifier("flow:<namespace>:<name>")` |
+| Blocking in REST resource | Wraps exceptions in `ExecutionException`, breaks error mapping | Return `Uni` or `CompletionStage` from JAX-RS resource |
+| Using Mockito to mock AI services | Non-deterministic LLM responses cause flaky tests | Use stub CDI beans or `@InjectMock` with deterministic responses |
+| Mutable shared state in `Flow` subclass | `@ApplicationScoped` beans shared across workflow instances - race conditions | Treat Flow beans as stateless; all state in workflow context |
 
 ---
 

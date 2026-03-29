@@ -82,7 +82,9 @@ Follow the `git-commit` workflow with these Java-specific enhancements:
 Same as `git-commit`.
 
 ### Step 2 — Generate commit message
-Use Java/Quarkus-specific scopes (see **Java-Specific Scopes** below).
+
+Analyze the staged changes and draft a commit message using Java/Quarkus-specific scopes (see **Java-Specific Scopes** below).
+
 Hold it — don't show it yet.
 
 ### Step 3 — Sync documentation

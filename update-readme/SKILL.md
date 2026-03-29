@@ -102,7 +102,11 @@ When the user confirms with YES (or a clear equivalent):
 - Apply **only** the proposed changes — no extras.
 - Print a brief summary of what was written, e.g. "✅ Updated sections: Skills, Skill Chaining Reference."
 
+---
+
 ## Common Pitfalls
+
+Avoid these mistakes when updating README.md:
 
 | Mistake | Why It's Wrong | Fix |
 |---------|----------------|-----|

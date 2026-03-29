@@ -39,7 +39,7 @@ Ask user which skill(s) to review.
 
 ### Step 2 — Review each skill
 
-For each SKILL.md:
+For each SKILL.md, run all checks systematically:
 
 1. **Read the full file** (always read, never assume)
 2. **Check frontmatter** (CRITICAL: name, description, CSO compliance)

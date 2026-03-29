@@ -63,6 +63,8 @@ Identify:
 
 ### Step 3 — Check BOM membership before any version change
 
+Ask yourself: **Is this dependency already managed by the Quarkus or quarkiverse BOM?**
+
 ```bash
 # Check what the current BOM manages
 ./mvnw dependency:tree | grep <artifact-name>

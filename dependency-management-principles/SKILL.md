@@ -50,6 +50,8 @@ Read the dependency manifest file to identify:
 
 ### Step 3 — Check dependency management alignment
 
+Ask yourself: **Is this dependency managed by a platform or ecosystem BOM?**
+
 **BOM alignment rules:**
 
 | Situation | Action |

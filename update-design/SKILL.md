@@ -138,7 +138,11 @@ When the user confirms with YES (or a clear equivalent):
 - Apply **only** the proposed changes — no extras.
 - Print a brief summary of what was written, e.g. "✅ Updated sections: API, Data Model."
 
+---
+
 ## Common Pitfalls
+
+Avoid these mistakes when updating DESIGN.md:
 
 | Mistake | Why It's Wrong | Fix |
 |---------|----------------|-----|

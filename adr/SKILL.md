@@ -115,6 +115,8 @@ Show the full ADR draft and the target filename, then ask:
 > "Does this look good? Reply **YES** to write it to
 > `docs/adr/NNNN-<title>.md`, or tell me what to adjust."
 
+---
+
 ### Step 5 — Write and confirm
 
 Only after explicit YES:
@@ -137,6 +139,8 @@ Proactively suggest creating an ADR when you observe:
 
 Don't suggest an ADR for routine decisions with no meaningful alternatives
 (e.g. adding a utility method, bumping a patch version).
+
+---
 
 ## ADR Lifecycle Decision Flow
 

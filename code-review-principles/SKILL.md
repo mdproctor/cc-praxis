@@ -84,6 +84,8 @@ Review complete: X CRITICAL, Y WARNING, Z NOTES
 
 ## Review Checklist
 
+Work through each category systematically to catch critical issues:
+
 ### 🔴 Safety (always check — any violation is CRITICAL)
 
 **Resource leaks** - streams, connections, handles, executors must be closed:

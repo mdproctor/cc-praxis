@@ -37,7 +37,8 @@ If nothing is staged, stop and tell the user:
 > "Nothing is staged. Run `git add <files>` first."
 
 ### Step 2 — Run the review checklist
-Work through each category below. For every finding, assign a severity:
+
+Work through each category below systematically. For every finding, assign a severity:
 
 | Severity | Meaning |
 |---|---|

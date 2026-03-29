@@ -124,7 +124,11 @@ When user confirms YES:
 - Apply **only** the proposed changes
 - Print brief summary: "✅ Updated sections: Build Commands, Testing"
 
+---
+
 ## Common Pitfalls
+
+Avoid these mistakes when updating CLAUDE.md:
 
 | Mistake | Why It's Wrong | Fix |
 |---------|----------------|-----|

@@ -50,7 +50,8 @@ git diff --staged --name-only | grep 'SKILL.md$'
 
 ### Step 2 — Generate commit message
 
-Draft one conventional commit message (see **Message Format** below).
+Analyze the staged changes and draft one conventional commit message (see **Message Format** below).
+
 Hold it — don't show it yet.
 
 ### Step 2a — Sync CLAUDE.md (if exists)

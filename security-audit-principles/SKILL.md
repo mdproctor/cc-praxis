@@ -66,7 +66,11 @@ Suggested fix:
 > "✅ No critical vulnerabilities found. [N warnings / notes listed above.]
 > Security review complete."
 
+---
+
 ## Security Checklist (OWASP Top 10)
+
+Work through each OWASP category systematically:
 
 ### 🔴 A01 — Injection
 

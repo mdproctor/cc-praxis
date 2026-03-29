@@ -51,7 +51,11 @@ Create counters, histograms, and gauges for business-relevant operations with co
 
 Test that logs include correlation fields, traces appear in collector, metrics endpoint exposes data.
 
+---
+
 ## Structured Logging Checklist
+
+Apply these patterns when configuring logging:
 
 **Enable structured output for production:**
 - JSON format for machine-readability
