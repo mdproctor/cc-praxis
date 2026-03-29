@@ -1,10 +1,9 @@
 ---
 name: update-claude-md
 description: >
-  Use when workflow, conventions, or repository structure changes that affect
-  how Claude should work in this repository. Keeps CLAUDE.md in sync with
-  changes by analyzing git-staged changes and proposing targeted updates to
-  build commands, testing patterns, naming conventions, and repository guidance.
+  Auto-invoked by git-commit and java-git-commit when CLAUDE.md exists and
+  staged changes may affect documented workflows, build commands, testing
+  patterns, naming conventions, or repository structure.
 ---
 
 # Update CLAUDE.md

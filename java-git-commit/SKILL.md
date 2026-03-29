@@ -4,8 +4,7 @@ description: >
   Use when the user says "commit", "smart commit", "update design and commit",
   or invokes /java-git-commit in a Java/Maven/Gradle repository. Extends
   git-commit with Java-specific context and automatic DESIGN.md synchronization
-  via update-design skill. Always proposes everything for review before
-  touching the repo.
+  via update-design skill.
 ---
 
 # Java Git Commit Helper with Design Document Sync

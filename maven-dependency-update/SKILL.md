@@ -4,8 +4,7 @@ description: >
   Use when the user says "update dependencies", "bump a version", "upgrade
   Quarkus", "check for updates", "add a dependency", or when pom.xml changes
   are needed. Manages Maven dependency updates for Quarkus/quarkus-flow
-  projects with strong focus on Quarkus BOM alignment to prevent version
-  drift.
+  projects.
 ---
 
 # Maven Dependency Update Helper

@@ -1,15 +1,10 @@
 ---
 name: quarkus-flow-dev
 description: >
-  Use this skill for all development tasks involving quarkus-flow workflows,
-  agentic AI pipelines, and LangChain4j integration. Triggers on: writing or
-  editing a Flow subclass, working with the FuncDSL, defining tasks with
-  function/agent/emit/listen/switchWhen/forEach/http/openapi, writing workflow
-  tests with @QuarkusTest, injecting WorkflowDefinition or Flow beans, working
-  with YAML workflow definitions, or when the user mentions "workflow", "flow",
-  "agent", "HITL", "human-in-the-loop", "agentic", "LangChain4j", or
-  "serverless workflow". Always applies in addition to java-dev, not instead
-  of it.
+  Use when actively developing quarkus-flow workflows: writing Flow subclasses,
+  defining tasks with FuncDSL (function/agent/emit/listen/switchWhen/forEach/
+  http/openapi), working with YAML workflow definitions, or debugging workflow
+  issues. Builds on java-dev foundation.
 ---
 
 # Quarkus Flow Development

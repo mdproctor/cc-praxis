@@ -1,12 +1,10 @@
 ---
 name: quarkus-flow-testing
 description: >
-  Use when writing or debugging tests for quarkus-flow workflows. Triggers on:
-  creating @QuarkusTest for Flow classes, testing YAML workflows, writing REST
-  integration tests for workflow endpoints, mocking AI agents in tests, debugging
-  workflow test failures, or when the user mentions "test workflow", "workflow
-  test", "mock agent", or "@QuarkusTest". Always applies alongside java-dev for
-  general testing practices.
+  Use when writing or debugging tests for quarkus-flow workflows: creating
+  @QuarkusTest for Flow classes, testing YAML workflows, writing REST
+  integration tests for workflow endpoints, mocking AI agents in tests, or
+  debugging workflow test failures.
 ---
 
 # Quarkus Flow Testing Patterns

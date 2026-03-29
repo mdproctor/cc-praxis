@@ -1,13 +1,10 @@
 ---
 name: adr
 description: >
-  Use when the user says "create an ADR", "record this decision", "document
-  why we chose X", "add an architecture decision", or when a significant
-  technical decision is being made that warrants capturing the reasoning and
-  alternatives considered. Also use when maven-dependency-update proposes a major
-  version upgrade or adoption of a new extension, or when update-design
-  captures a significant new component. Manages ADRs in MADR format under
-  docs/adr/.
+  Use when recording architectural decisions: user says "create an ADR",
+  "document why we chose X", significant technical choices are made,
+  maven-dependency-update proposes major version upgrades, or update-design
+  captures new components.
 ---
 
 # Architecture Decision Record (ADR) Helper

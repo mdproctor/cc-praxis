@@ -1,10 +1,9 @@
 ---
 name: update-readme
 description: >
-  Use when skill changes occur (new skills, renamed skills, modified chaining,
-  new features added) in a skills repository. Keeps README.md in sync with skill
-  collection changes by analyzing skill modifications and proposing targeted updates
-  to skill descriptions, chaining tables, and feature lists.
+  Auto-invoked by git-commit when README.md exists and staged changes include
+  SKILL.md files or new skill directories. Proposes updates to skill
+  descriptions, chaining tables, and feature lists.
 ---
 
 # Update README

@@ -5,8 +5,7 @@ description: >
   review this", "look at my staged changes", or invokes /java-code-review. Also
   triggered automatically by java-git-commit if no review has been done in
   the current session. Reviews staged Java/Quarkus changes against safety,
-  concurrency, performance, and code quality rules. CRITICAL findings block
-  the commit; all other findings are advisory.
+  concurrency, performance, and code quality rules.
 ---
 
 # Java Code Review
