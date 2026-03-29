@@ -146,18 +146,22 @@ digraph adr_lifecycle {
     "Create new ADR" [shape=box];
     "Status: Accepted" [shape=box, style=filled, fillcolor=lightgreen];
     "Decision still valid?" [shape=diamond];
+    "Still relevant?" [shape=diamond];
     "Better approach found?" [shape=diamond];
     "Mark Superseded" [shape=box, style=filled, fillcolor=yellow];
     "Mark Deprecated" [shape=box, style=filled, fillcolor=lightgray];
     "Create new ADR (replacement)" [shape=box];
+    "Continue using" [shape=box, style=filled, fillcolor=lightgreen];
 
     "Significant decision made" -> "Create new ADR";
     "Create new ADR" -> "Status: Accepted";
     "Status: Accepted" -> "Decision still valid?" [label="time passes"];
-    "Decision still valid?" -> "Better approach found?" [label="no (no longer relevant)"];
-    "Decision still valid?" -> "Status: Accepted" [label="yes"];
-    "Better approach found?" -> "Mark Deprecated" [label="no"];
+    "Decision still valid?" -> "Continue using" [label="yes (still applies)"];
+    "Decision still valid?" -> "Still relevant?" [label="no"];
+    "Still relevant?" -> "Better approach found?" [label="yes"];
+    "Still relevant?" -> "Mark Deprecated" [label="no (obsolete)"];
     "Better approach found?" -> "Mark Superseded" [label="yes"];
+    "Better approach found?" -> "Mark Deprecated" [label="no"];
     "Mark Superseded" -> "Create new ADR (replacement)";
 }
 ```

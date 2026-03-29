@@ -282,12 +282,14 @@ quarkus.http.cors.origins=https://app.example.com,https://admin.example.com
 
 Run dependency checks:
 ```bash
-# Check for known CVEs
+# Check for known CVEs (requires internet connection, downloads CVE database)
 ./mvnw org.owasp:dependency-check-maven:check
 
 # Check for outdated dependencies
 ./mvnw versions:display-dependency-updates
 ```
+
+**Note:** First run of `dependency-check-maven` downloads the NVD CVE database (~200MB) and can take 5-10 minutes. Subsequent runs are faster.
 
 **Flag for review:**
 - Any dependency with known CVE (severity HIGH or CRITICAL)
@@ -424,8 +426,10 @@ digraph security_severity {
 
 ## Skill Chaining
 
-**Invoked by:** [`java-code-review`] when reviewing auth/payment/PII handling (offered, not automatic)
+**Invoked by:** [`java-code-review`] when reviewing auth/payment/PII handling (offered as option, not automatic)
 
-**Invokes:** None
+**Invokes:** None (terminal skill in the chain)
 
 **Can be invoked independently:** User says "security review", "audit security", or explicitly invokes for security-critical implementations
+
+**Works alongside:** `java-code-review` — while java-code-review catches general safety and concurrency issues, this skill focuses specifically on OWASP Top 10 security vulnerabilities

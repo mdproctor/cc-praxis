@@ -163,6 +163,8 @@ digraph commit_flow {
     "Start" [shape=doublecircle];
     "Staged changes?" [shape=diamond];
     "Stop: ask user to stage" [shape=box];
+    "SKILL.md files?" [shape=diamond];
+    "Review skills" [shape=box];
     "Generate commit message" [shape=box];
     "Present proposal" [shape=box];
     "User confirms?" [shape=diamond];
@@ -172,7 +174,10 @@ digraph commit_flow {
 
     "Start" -> "Staged changes?";
     "Staged changes?" -> "Stop: ask user to stage" [label="no"];
-    "Staged changes?" -> "Generate commit message" [label="yes"];
+    "Staged changes?" -> "SKILL.md files?" [label="yes"];
+    "SKILL.md files?" -> "Review skills" [label="yes"];
+    "SKILL.md files?" -> "Generate commit message" [label="no"];
+    "Review skills" -> "Generate commit message";
     "Generate commit message" -> "Present proposal";
     "Present proposal" -> "User confirms?";
     "User confirms?" -> "Adjust proposal" [label="no"];
@@ -214,7 +219,7 @@ Commit is complete when:
 
 **Invoked by:** User says "commit", "make a commit", or invokes `/git-commit`
 
-**Invokes:** [`skill-review`] for SKILL.md validation, [`update-claude-md`] for workflow sync, [`update-readme`] for skill collection sync
+**Invokes:** [`skill-review`] for SKILL.md validation (automatic if SKILL.md files staged), [`update-claude-md`] for workflow sync (automatic if CLAUDE.md exists), [`update-readme`] for skill collection sync (automatic if README.md exists and skill changes detected)
 
 **Can be invoked independently:** Yes, this is the primary commit workflow for non-Java repositories
 

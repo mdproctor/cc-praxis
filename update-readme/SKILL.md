@@ -130,7 +130,7 @@ README.md update is complete when:
 
 ## Skill Chaining
 
-**Invoked by:** [`git-commit`] when committing in skills repositories (if README.md exists and skill changes detected)
+**Invoked by:** [`git-commit`] when committing in skills repositories (automatic only if README.md exists AND skill changes detected via staged SKILL.md files or skill directory changes)
 
 **Invokes:** None (terminal skill in the chain)
 

@@ -121,8 +121,18 @@ mdc.quarkus.flow.instanceId: "01K9GDCXJVN89V0N4CWVG40R7C"
 ### Plain text format (if JSON not enabled)
 
 ```properties
-quarkus.log.console.format=%d{HH:mm:ss} %-5p instanceId=%X{quarkus.flow.instanceId} task=%X{quarkus.flow.task} [%c{2.}] %s%n
+quarkus.log.console.format=%d{HH:mm:ss} %-5p instanceId=%X{quarkus.flow.instanceId} task=%X{quarkus.flow.task} [%c{2.}] %s%e%n
 ```
+
+This format includes:
+- `%d{HH:mm:ss}` — timestamp
+- `%-5p` — log level (INFO, WARN, etc.)
+- `instanceId=%X{quarkus.flow.instanceId}` — workflow instance ID from MDC
+- `task=%X{quarkus.flow.task}` — current task name from MDC
+- `[%c{2.}]` — abbreviated logger name
+- `%s` — message
+- `%e` — exception (if present)
+- `%n` — newline
 
 ### HTTP header propagation
 

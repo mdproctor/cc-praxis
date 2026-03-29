@@ -44,6 +44,8 @@ digraph commit_flow {
     "Start" [shape=doublecircle];
     "Staged changes?" [shape=diamond];
     "Stop: ask user to stage" [shape=box];
+    "SKILL.md files?" [shape=diamond];
+    "Review skills" [shape=box];
     "Generate commit message" [shape=box];
     "Invoke update-design" [shape=box];
     "Present consolidated proposal" [shape=box];
@@ -56,7 +58,10 @@ digraph commit_flow {
 
     "Start" -> "Staged changes?";
     "Staged changes?" -> "Stop: ask user to stage" [label="no"];
-    "Staged changes?" -> "Generate commit message" [label="yes"];
+    "Staged changes?" -> "SKILL.md files?" [label="yes"];
+    "SKILL.md files?" -> "Review skills" [label="yes"];
+    "SKILL.md files?" -> "Generate commit message" [label="no"];
+    "Review skills" -> "Generate commit message";
     "Generate commit message" -> "Invoke update-design";
     "Invoke update-design" -> "Present consolidated proposal";
     "Present consolidated proposal" -> "User confirms?";

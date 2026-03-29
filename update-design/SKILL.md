@@ -31,7 +31,8 @@ concise. Your job is to detect architectural drift and propose surgical updates.
 ### Step 1: Locate DESIGN.md
 
 ```bash
-find . -maxdepth 3 -name "DESIGN.md" | head -5
+# Check standard location first
+ls docs/DESIGN.md 2>/dev/null || find . -name "DESIGN.md" | head -5
 ```
 
 - If found at `docs/DESIGN.md` → proceed.
@@ -176,14 +177,12 @@ DESIGN.md update is complete when:
 
 ## Edge Cases
 
-- **No staged changes and no diff provided**: Run `git log --oneline -5` to
-  show recent commits and ask the user which to analyze.
-- **DESIGN.md has no obvious matching section**: Suggest the best-fit section
-  or propose a new one — don't silently skip the change.
-- **Large diffs (100+ files)**: Summarize themes rather than file-by-file;
-  ask the user to confirm scope before proposing updates.
-- **Multi-module Maven/Gradle projects**: Search for DESIGN.md in the root and
-  each submodule. If multiple exist, ask which to update.
+| Situation | Action |
+|-----------|--------|
+| **No staged changes and no diff provided** | Run `git log --oneline -5` to show recent commits and ask which to analyze |
+| **DESIGN.md has no obvious matching section** | Suggest the best-fit section or propose a new one — don't silently skip |
+| **Large diffs (100+ files)** | Summarize themes rather than file-by-file; confirm scope with user first |
+| **Multi-module Maven/Gradle projects** | Search for DESIGN.md in root and each submodule. If multiple exist, ask which to update |
 
 ## Starter Template
 

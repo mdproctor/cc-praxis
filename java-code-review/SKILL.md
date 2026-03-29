@@ -359,8 +359,8 @@ class OrderServiceTest {
 
 ## Skill Chaining
 
-**Invoked by:** [`java-git-commit`] when no review has been run in the current session (asks user for confirmation before running)
+**Invoked by:** [`java-dev`] before committing (user can skip), [`java-git-commit`] when no review has been run in the current session (asks user for confirmation before running)
 
-**Invokes:** [`java-security-audit`] for security-critical code (offered when reviewing auth/payment/PII handling)
+**Invokes:** [`java-security-audit`] for security-critical code (offered when reviewing auth/payment/PII handling), [`java-git-commit`] after approval if user wants to commit
 
 **Can be invoked independently:** User says "review my code", "check my changes", or explicitly invokes /java-code-review

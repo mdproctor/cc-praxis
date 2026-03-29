@@ -129,6 +129,7 @@ digraph severity_flow {
     "CRITICAL: Block commit" [shape=box, style=filled, fillcolor=red];
     "WARNING: Fix before commit" [shape=box, style=filled, fillcolor=yellow];
     "NOTE: Improve when possible" [shape=box, style=filled, fillcolor=lightblue];
+    "Report findings" [shape=box];
     "Approved" [shape=doublecircle, style=filled, fillcolor=green];
 
     "Start review" -> "Frontmatter missing/invalid?";
@@ -143,7 +144,11 @@ digraph severity_flow {
     "Cross-references broken?" -> "WARNING: Fix before commit" [label="yes"];
     "Cross-references broken?" -> "Documentation incomplete?" [label="no"];
     "Documentation incomplete?" -> "NOTE: Improve when possible" [label="yes"];
-    "Documentation incomplete?" -> "Approved" [label="no"];
+    "Documentation incomplete?" -> "Report findings" [label="no"];
+    "CRITICAL: Block commit" -> "Report findings";
+    "WARNING: Fix before commit" -> "Report findings";
+    "NOTE: Improve when possible" -> "Report findings";
+    "Report findings" -> "Approved";
 }
 ```
 

@@ -65,7 +65,7 @@ Identify:
 
 ```bash
 # Check what the current BOM manages
-./mvnw dependency:resolve -Dsort | grep <artifact-name>
+./mvnw dependency:tree | grep <artifact-name>
 
 # Or inspect the BOM directly for a specific artifact
 ./mvnw help:effective-pom | grep -A2 <artifact-name>
@@ -82,6 +82,10 @@ digraph bom_decision {
     "Add with no version tag" [shape=box, style=filled, fillcolor=lightgreen];
     "Add version, note unmanaged" [shape=box, style=filled, fillcolor=yellow];
     "Override with WARNING" [shape=box, style=filled, fillcolor=red];
+    "Review changes" [shape=box];
+    "User confirms?" [shape=diamond];
+    "Apply changes" [shape=box, style=filled, fillcolor=lightgreen];
+    "Abort update" [shape=box];
 
     "Adding/updating dependency" -> "In Quarkus BOM?";
     "In Quarkus BOM?" -> "CVE fix required?" [label="yes"];
@@ -90,6 +94,12 @@ digraph bom_decision {
     "CVE fix required?" -> "Add with no version tag" [label="no"];
     "In quarkiverse BOM?" -> "Add with no version tag" [label="yes"];
     "In quarkiverse BOM?" -> "Add version, note unmanaged" [label="no"];
+    "Override with WARNING" -> "Review changes";
+    "Add with no version tag" -> "Review changes";
+    "Add version, note unmanaged" -> "Review changes";
+    "Review changes" -> "User confirms?";
+    "User confirms?" -> "Apply changes" [label="yes"];
+    "User confirms?" -> "Abort update" [label="no"];
 }
 ```
 
@@ -153,7 +163,11 @@ Only after explicit YES:
 1. Apply version changes to `pom.xml`
 2. Run a quick compilation check:
 ```bash
+# For single-module projects:
 ./mvnw -q -DskipTests compile
+
+# For multi-module projects, specify module if needed:
+./mvnw -q -DskipTests compile -pl <module-name>
 ```
 3. Report success or any compilation errors introduced by the update.
 
