@@ -11,6 +11,8 @@ description: >
   java-git-commit skill.
 ---
 
+# Java Development
+
 ## Quick Reference
 
 | Category | Rule | How to Apply |
@@ -32,7 +34,7 @@ description: >
 | | Documentation | Javadoc only for non-trivial methods; focus on why |
 | | Changes | Minimize line changes; don't reformat untouched code |
 
-## Rule Priority Flow
+## Rule Priority Decision Flow
 
 ```dot
 digraph rule_priority {
@@ -89,7 +91,7 @@ Our code is deployed in mission-critical scenarios. Never compromise on:
 - Silent data corruption
 
 **Resource leaks:**
-~~~java
+```java
 // ❌ BAD: Stream not closed if exception thrown
 FileInputStream fis = new FileInputStream(path);
 byte[] data = fis.readAllBytes();
@@ -99,10 +101,10 @@ fis.close();  // Never reached if readAllBytes() throws
 try (FileInputStream fis = new FileInputStream(path)) {
     byte[] data = fis.readAllBytes();
 }
-~~~
+```
 
 **Classloader leaks:**
-~~~java
+```java
 // ❌ BAD: ThreadLocal never removed, holds classloader reference
 ThreadLocal<RequestContext> context = new ThreadLocal<>();
 context.set(new RequestContext());
@@ -117,10 +119,10 @@ try {
 } finally {
     context.remove();  // Releases classloader reference
 }
-~~~
+```
 
 **Silent data corruption:**
-~~~java
+```java
 // ❌ BAD: Exception swallowed, order marked complete incorrectly
 try {
     processPayment(order);
@@ -136,7 +138,7 @@ try {
     order.setStatus(FAILED);
     throw e;
 }
-~~~
+```
 
 When a violation of these rules is detected in existing code, output a
 **CRITICAL SAFETY WARNING** block with:
@@ -169,7 +171,7 @@ or event-loop patterns over shared-state concurrency. This aligns with
 Quarkus's Vert.x event-loop model — avoid blocking the I/O thread.
 
 **Single-threaded code:**
-~~~java
+```java
 // ❌ BAD: No indication of thread model
 public class EventProcessor {
     private List<Event> buffer = new ArrayList<>();  // Is this shared?
@@ -188,10 +190,10 @@ public class EventProcessor {
         buffer.add(e);
     }
 }
-~~~
+```
 
 **Blocking on event loop:**
-~~~java
+```java
 // ❌ BAD: JDBC call blocks event loop thread
 @Path("/orders")
 public class OrderResource {
@@ -208,7 +210,7 @@ public class OrderResource {
         return orderRepo.persist(req);
     }
 }
-~~~
+```
 
 Always establish whether code is single- or multi-threaded before writing it.
 Minimize critical sections. When they are unavoidable: document the lock
@@ -220,7 +222,7 @@ This codebase targets cloud-hosted Quarkus services where efficiency matters
 at scale. Be mindful of allocations and GC pressure.
 
 **Hot path optimization:**
-~~~java
+```java
 // ❌ BAD: Stream overhead in per-request path
 @Path("/items")
 public List<String> getActive() {
@@ -241,10 +243,10 @@ public List<String> getActive() {
     }
     return result;
 }
-~~~
+```
 
 **Avoid unnecessary boxing:**
-~~~java
+```java
 // ❌ BAD: Boxing creates GC pressure
 List<Integer> counts = getCounts();
 int sum = 0;
@@ -258,7 +260,7 @@ int sum = 0;
 for (int count : counts) {
     sum += count;
 }
-~~~
+```
 
 - For hot paths, measure before optimizing — don't pre-optimize cold code
 

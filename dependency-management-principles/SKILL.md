@@ -10,17 +10,24 @@ description: >
 
 # Dependency Management Principles
 
-Universal principles for managing dependencies in projects using BOM (Bill of
-Materials) or similar dependency management patterns.
+Universal principles for managing dependencies in projects using BOM (Bill of Materials) or similar dependency management patterns.
 
-## Core Principles
+## Why This Matters
 
-- **BOM alignment first** — if a dependency is managed by a BOM/lockfile,
-  never override the version without documenting why
-- **Never downgrade** without explicit confirmation and documented reason
-- **Never apply changes** without explicit user confirmation
-- **Check compatibility** before upgrading versions
-- **Prefer platform-aligned extensions** over generic libraries when both available
+**Caught early vs. caught in production:**
+- Version conflict found during update: 5-minute rollback
+- Version conflict in production: Service crashes, emergency rollback, incident postmortem
+
+**What dependency management prevents:**
+- **Version drift** where dependencies conflict with platform BOM
+- **Breaking changes** from major upgrades without migration planning
+- **Security vulnerabilities** from outdated dependencies with known CVEs
+- **Build failures** from incompatible dependency combinations
+
+**What dependency management is:**
+- Proactive alignment with platform/framework BOMs
+- Controlled, tested upgrades with compatibility verification
+- Protection against accidental version downgrades
 
 ## Workflow
 
@@ -42,28 +49,6 @@ Read the dependency manifest file to identify:
 | "Check for updates" | Run update check, filter by alignment risk |
 
 ### Step 3 — Check dependency management alignment
-
-**BOM alignment decision flow:**
-
-```dot
-digraph bom_decision {
-    "Adding/updating dependency" [shape=doublecircle];
-    "In platform BOM?" [shape=diamond];
-    "In ecosystem BOM?" [shape=diamond];
-    "CVE fix required?" [shape=diamond];
-    "Add with no version" [shape=box, style=filled, fillcolor=lightgreen];
-    "Add version, note unmanaged" [shape=box, style=filled, fillcolor=yellow];
-    "Override with WARNING" [shape=box, style=filled, fillcolor=red];
-
-    "Adding/updating dependency" -> "In platform BOM?";
-    "In platform BOM?" -> "CVE fix required?" [label="yes"];
-    "In platform BOM?" -> "In ecosystem BOM?" [label="no"];
-    "CVE fix required?" -> "Override with WARNING" [label="yes"];
-    "CVE fix required?" -> "Add with no version" [label="no"];
-    "In ecosystem BOM?" -> "Add with no version" [label="yes"];
-    "In ecosystem BOM?" -> "Add version, note unmanaged" [label="no"];
-}
-```
 
 **BOM alignment rules:**
 
@@ -113,19 +98,27 @@ Only after explicit YES:
 2. Run build/compile check to verify changes
 3. Report success or errors
 
----
+## BOM Alignment Decision Flow
 
-## Success Criteria
+```dot
+digraph bom_decision {
+    "Adding/updating dependency" [shape=doublecircle];
+    "In platform BOM?" [shape=diamond];
+    "In ecosystem BOM?" [shape=diamond];
+    "CVE fix required?" [shape=diamond];
+    "Add with no version" [shape=box, style=filled, fillcolor=lightgreen];
+    "Add version, note unmanaged" [shape=box, style=filled, fillcolor=yellow];
+    "Override with WARNING" [shape=box, style=filled, fillcolor=red];
 
-Dependency update is complete when:
-
-- ✅ User has confirmed changes with **YES**
-- ✅ BOM alignment verified (no version drift)
-- ✅ Build/compilation succeeds
-- ✅ Changes committed to version control
-- ✅ For major upgrades: ADR documenting decision (optional but recommended)
-
-**Not complete until** all criteria met and changes committed.
+    "Adding/updating dependency" -> "In platform BOM?";
+    "In platform BOM?" -> "CVE fix required?" [label="yes"];
+    "In platform BOM?" -> "In ecosystem BOM?" [label="no"];
+    "CVE fix required?" -> "Override with WARNING" [label="yes"];
+    "CVE fix required?" -> "Add with no version" [label="no"];
+    "In ecosystem BOM?" -> "Add with no version" [label="yes"];
+    "In ecosystem BOM?" -> "Add version, note unmanaged" [label="no"];
+}
+```
 
 ---
 
@@ -140,18 +133,6 @@ Dependency update is complete when:
 | Applying changes without build check | Silent compilation failures post-commit | Always verify build after changes |
 | Upgrading major version without release notes | Breaking changes surprise you | Check release notes before proposing |
 | Adding unmanaged version without noting it | Future confusion about explicit version | Note "unmanaged" in proposal |
-
----
-
-## When to Create ADRs
-
-Create Architecture Decision Records for:
-- Major platform version upgrades (e.g., 3.x → 4.x)
-- Adopting new significant dependencies/plugins
-- Deliberately deviating from BOM (document why)
-- Choosing between multiple viable dependency options
-
----
 
 ## Skill Chaining
 

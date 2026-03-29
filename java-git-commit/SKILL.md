@@ -23,13 +23,12 @@ For the core conventional commits workflow, refer to the `git-commit` skill.
 
 ## Prerequisites
 
-**This skill builds on `git-commit`**. All core conventional commit rules apply:
-- Subject line: imperative mood, max 50 chars, no trailing period
-- Conventional Commits 1.0.0 specification (type[scope]: description)
-- Always wait for explicit user confirmation before committing
-- Never mention AI/tooling attribution in commit messages
+**This skill builds on [`git-commit`]**.
 
-This skill adds Java-specific enhancements on top of that foundation.
+Apply all rules from:
+- **`git-commit`**: Subject line format (imperative mood, max 50 chars), Conventional Commits 1.0.0 specification, always wait for explicit user confirmation before committing, never mention AI/tooling attribution
+
+Then apply the Java/Quarkus-specific commit patterns below.
 
 ## Core Rules
 
@@ -38,7 +37,7 @@ This skill adds Java-specific enhancements on top of that foundation.
   commit, not an afterthought
 - Never run `git commit` until the user has explicitly confirmed
 
-## Decision Flow
+## Commit Decision Flow
 
 ```dot
 digraph commit_flow {
@@ -94,7 +93,7 @@ Hold all proposals.
 ### Step 4 — Present everything together
 Show the user a single consolidated proposal:
 
-~~~
+```
 ## Staged files
 <output of git diff --staged --stat>
 
@@ -106,7 +105,7 @@ Show the user a single consolidated proposal:
 
 ## Proposed CLAUDE.md updates
 <output from update-claude-md skill, if any>
-~~~
+```
 
 Then ask exactly:
 > "Does everything look good? Reply **YES** to apply the documentation updates,
@@ -194,9 +193,11 @@ All pitfalls from `git-commit` apply, plus:
 
 ## Skill Chaining
 
-- **Always invokes `update-design`** before proposing commit
-- **Chains from `java-code-review`** after all critical issues resolved
-- **May chain to `adr`** for major architectural decisions
+**Invoked by:** [`java-code-review`] after all critical issues resolved
+
+**Invokes:** [`update-design`] and [`update-claude-md`] before proposing commit (automatic)
+
+**Can be invoked independently:** User says "commit", "smart commit", or explicitly invokes /java-git-commit in Java repositories
 
 ## Success Criteria
 
@@ -218,36 +219,36 @@ Commit is complete when:
 ## Examples
 
 **New REST endpoint:**
-~~~
+```
 feat(rest): add user profile update endpoint
 
 Implements PUT /api/users/{id}/profile with validation and
 audit logging. Updates UserService and UserRepository.
-~~~
+```
 
 **Bug fix with SQL context:**
-~~~
+```
 fix(repository): prevent N+1 query in order fetching
 
 Use JOIN FETCH to eagerly load order items. Previously loaded
 items in separate queries causing performance degradation.
 
 Fixes #127
-~~~
+```
 
 **Quarkus upgrade:**
-~~~
+```
 build(quarkus): upgrade to Quarkus 3.8.0
 
 Update quarkus.version property and align all extensions with
 new BOM. Verified compilation and existing tests pass.
-~~~
+```
 
 **Design doc sync example:**
-~~~
+```
 ## Proposed DESIGN.md updates
 Add OrderService to Services section:
 - Handles order creation, validation, and fulfillment
 - Integrates with PaymentGateway and InventoryService
 - Uses pessimistic locking for inventory allocation
-~~~
+```

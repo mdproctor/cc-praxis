@@ -20,39 +20,14 @@ Conventional Commits 1.0.0 specification.
 - Never run `git commit` until the user has explicitly confirmed.
 - Never mention AI, tooling, or assistant attribution in commit messages.
 
-## Decision Flow
-
-```dot
-digraph commit_flow {
-    "Start" [shape=doublecircle];
-    "Staged changes?" [shape=diamond];
-    "Stop: ask user to stage" [shape=box];
-    "Generate commit message" [shape=box];
-    "Present proposal" [shape=box];
-    "User confirms?" [shape=diamond];
-    "Adjust proposal" [shape=box];
-    "Execute git commit" [shape=box];
-    "Done" [shape=doublecircle];
-
-    "Start" -> "Staged changes?";
-    "Staged changes?" -> "Stop: ask user to stage" [label="no"];
-    "Staged changes?" -> "Generate commit message" [label="yes"];
-    "Generate commit message" -> "Present proposal";
-    "Present proposal" -> "User confirms?";
-    "User confirms?" -> "Adjust proposal" [label="no"];
-    "Adjust proposal" -> "Present proposal";
-    "User confirms?" -> "Execute git commit" [label="yes"];
-    "Execute git commit" -> "Done";
-}
-```
-
 ## Workflow
 
 ### Step 1 — Inspect staged changes
-~~~bash
+
+```bash
 git diff --staged --stat
 git diff --staged
-~~~
+```
 
 If nothing is staged, stop and tell the user:
 > "Nothing is staged. Run `git add <files>` first, or tell me which files
@@ -111,7 +86,7 @@ ls README.md 2>/dev/null && git diff --staged --name-only | grep -E '(SKILL\.md|
 ### Step 3 — Present proposal
 
 **If skill-review, CLAUDE.md, or README.md updates proposed**, show consolidated proposal:
-~~~
+```
 ## Staged files
 <output of git diff --staged --stat>
 
@@ -130,10 +105,10 @@ ls README.md 2>/dev/null && git diff --staged --name-only | grep -E '(SKILL\.md|
 
 ## Proposed README.md updates (if any)
 <output from update-readme skill>
-~~~
+```
 
 **Otherwise**, show standard proposal:
-~~~
+```
 ## Staged files
 <output of git diff --staged --stat>
 
@@ -143,7 +118,7 @@ ls README.md 2>/dev/null && git diff --staged --name-only | grep -E '(SKILL\.md|
 <optional body>
 
 <optional footer>
-~~~
+```
 
 Then ask exactly:
 > "Does this look good? Reply **YES** to commit, or tell me what to adjust."
@@ -155,23 +130,23 @@ Then ask exactly:
 2. Let update-readme apply its changes (if proposed)
 3. Stage updated files: `git add CLAUDE.md README.md` (only files that were changed)
 4. Commit with the confirmed message:
-~~~bash
+```bash
 git commit -m "<subject>" -m "<body if any>"
-~~~
+```
 5. Confirm success:
-~~~bash
+```bash
 git log --oneline -1
-~~~
+```
 
 **If no documentation updates**, run in this exact order:
 1. Commit with the confirmed message:
-~~~bash
+```bash
 git commit -m "<subject>" -m "<body if any>"
-~~~
+```
 2. Confirm success:
-~~~bash
+```bash
 git log --oneline -1
-~~~
+```
 
 ### Step 5 — Handle edge cases
 
@@ -181,17 +156,79 @@ git log --oneline -1
 | Merge conflict markers in diff | Warn before proceeding |
 | Large diff (10+ files) | Summarize by module/category rather than file-by-file |
 
----
+## Commit Decision Flow
+
+```dot
+digraph commit_flow {
+    "Start" [shape=doublecircle];
+    "Staged changes?" [shape=diamond];
+    "Stop: ask user to stage" [shape=box];
+    "Generate commit message" [shape=box];
+    "Present proposal" [shape=box];
+    "User confirms?" [shape=diamond];
+    "Adjust proposal" [shape=box];
+    "Execute git commit" [shape=box];
+    "Done" [shape=doublecircle];
+
+    "Start" -> "Staged changes?";
+    "Staged changes?" -> "Stop: ask user to stage" [label="no"];
+    "Staged changes?" -> "Generate commit message" [label="yes"];
+    "Generate commit message" -> "Present proposal";
+    "Present proposal" -> "User confirms?";
+    "User confirms?" -> "Adjust proposal" [label="no"];
+    "Adjust proposal" -> "Present proposal";
+    "User confirms?" -> "Execute git commit" [label="yes"];
+    "Execute git commit" -> "Done";
+}
+```
+
+## Common Pitfalls
+
+| Mistake | Why It's Wrong | Fix |
+|---------|----------------|-----|
+| Committing before user confirms | User loses control | Always show proposal and wait for YES |
+| Subject line > 50 chars | Truncated in git log | Keep under 50, use body for details |
+| Subject ends with period | Not conventional commits standard | Remove trailing period |
+| Using past tense ("Added X") | Not imperative mood | Use "Add X" (command form) |
+| Type `chore` for production code | Wrong semantics | Use `feat`, `fix`, or `refactor` |
+| Wrong type (`refactor` for bug fix) | Misleading git history | `fix` if it was wrong, `refactor` if working |
+| No body for complex changes | Reviewers lack context | Add why/what in body (not how) |
+| Committing merge conflict markers | Broken code in history | Check diff for `<<<<<<<` markers first |
+| Forgetting BREAKING CHANGE footer | Hidden breaking changes | Add footer with `!` in type/scope |
+| Running commit without staged changes | Wastes time | Check `git status` first |
+
+## Success Criteria
+
+Commit is complete when:
+
+- ✅ All files staged (or user confirmed which files to stage)
+- ✅ Commit message generated and presented to user
+- ✅ Documentation updates applied (if CLAUDE.md, README.md, or skill review needed)
+- ✅ User confirmed with explicit **YES**
+- ✅ Commit executed successfully
+- ✅ `git log --oneline -1` confirms commit exists
+
+**Not complete until** all criteria met and commit confirmed in git log.
+
+## Skill Chaining
+
+**Invoked by:** User says "commit", "make a commit", or invokes `/git-commit`
+
+**Invokes:** [`skill-review`] for SKILL.md validation, [`update-claude-md`] for workflow sync, [`update-readme`] for skill collection sync
+
+**Can be invoked independently:** Yes, this is the primary commit workflow for non-Java repositories
+
+**Note:** For Java repositories with DESIGN.md, use `java-git-commit` instead (extends this skill with DESIGN.md sync)
 
 ## Message Format
 
-~~~
+```
 <type>[optional scope]: <short imperative description>
 
 [optional body — WHAT and WHY, not HOW, wrapped at 72 chars]
 
 [optional footer — "Fixes #123", "BREAKING CHANGE: ...", etc.]
-~~~
+```
 
 ### Types
 
@@ -224,81 +261,48 @@ Scope depends on repository structure. Common patterns:
 > When in doubt, use the directory name or component being modified.
 
 ### Breaking changes
+
 Add `!` after the type/scope and a `BREAKING CHANGE:` footer:
-~~~
+```
 feat(api)!: replace REST endpoints with GraphQL
 
 BREAKING CHANGE: all API clients must migrate to GraphQL schema.
 Fixes #88
-~~~
-
----
-
-## Common Pitfalls
-
-| Mistake | Why It's Wrong | Fix |
-|---------|----------------|-----|
-| Committing before user confirms | User loses control | Always show proposal and wait for YES |
-| Subject line > 50 chars | Truncated in git log | Keep under 50, use body for details |
-| Subject ends with period | Not conventional commits standard | Remove trailing period |
-| Using past tense ("Added X") | Not imperative mood | Use "Add X" (command form) |
-| Type `chore` for production code | Wrong semantics | Use `feat`, `fix`, or `refactor` |
-| Wrong type (`refactor` for bug fix) | Misleading git history | `fix` if it was wrong, `refactor` if working |
-| No body for complex changes | Reviewers lack context | Add why/what in body (not how) |
-| Committing merge conflict markers | Broken code in history | Check diff for `<<<<<<<` markers first |
-| Forgetting BREAKING CHANGE footer | Hidden breaking changes | Add footer with `!` in type/scope |
-| Running commit without staged changes | Wastes time | Check `git status` first |
-
----
-
-## Success Criteria
-
-Commit is complete when:
-
-- ✅ All files staged (or user confirmed which files to stage)
-- ✅ Commit message generated and presented to user
-- ✅ Documentation updates applied (if CLAUDE.md, README.md, or skill review needed)
-- ✅ User confirmed with explicit **YES**
-- ✅ Commit executed successfully
-- ✅ `git log --oneline -1` confirms commit exists
-
-**Not complete until** all criteria met and commit confirmed in git log.
-
----
+```
 
 ## Examples
 
 **Simple feature:**
-~~~
+```
 feat(cli): add --verbose flag for detailed output
-~~~
+```
 
 **Bug fix with context:**
-~~~
+```
 fix(parser): handle empty input without crashing
 
 Previously would throw NullPointerException when input was empty.
 Now returns empty result gracefully.
 
 Fixes #42
-~~~
+```
 
 **Breaking change:**
-~~~
+```
 feat(api)!: migrate from v1 to v2 endpoints
 
 BREAKING CHANGE: all /api/v1/* endpoints removed. Use /api/v2/* instead.
 See migration guide in docs/MIGRATION.md
-~~~
+```
 
 **Documentation update:**
-~~~
+```
 docs(readme): add installation instructions for Windows
-~~~
+```
 
 **Refactoring:**
-~~~
+```
 refactor(utils): extract validation logic to separate module
 
 No functional changes, improves testability and reusability.
-~~~
+```

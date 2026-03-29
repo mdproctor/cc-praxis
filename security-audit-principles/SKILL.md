@@ -66,35 +66,6 @@ Suggested fix:
 > "✅ No critical vulnerabilities found. [N warnings / notes listed above.]
 > Security review complete."
 
----
-
-## Severity Decision Flow
-
-```dot
-digraph security_severity {
-    "Vulnerability detected" [shape=doublecircle];
-    "Exploitable remotely?" [shape=diamond];
-    "Leads to data breach or RCE?" [shape=diamond];
-    "Requires authentication?" [shape=diamond];
-    "CRITICAL" [shape=box, style=filled, fillcolor=red];
-    "Defense in depth issue?" [shape=diamond];
-    "WARNING" [shape=box, style=filled, fillcolor=yellow];
-    "NOTE" [shape=box, style=filled, fillcolor=lightblue];
-
-    "Vulnerability detected" -> "Exploitable remotely?";
-    "Exploitable remotely?" -> "Leads to data breach or RCE?" [label="yes"];
-    "Exploitable remotely?" -> "Defense in depth issue?" [label="no"];
-    "Leads to data breach or RCE?" -> "CRITICAL" [label="yes"];
-    "Leads to data breach or RCE?" -> "Requires authentication?" [label="no"];
-    "Requires authentication?" -> "WARNING" [label="yes"];
-    "Requires authentication?" -> "CRITICAL" [label="no"];
-    "Defense in depth issue?" -> "WARNING" [label="yes"];
-    "Defense in depth issue?" -> "NOTE" [label="no"];
-}
-```
-
----
-
 ## Security Checklist (OWASP Top 10)
 
 ### 🔴 A01 — Injection
@@ -233,6 +204,33 @@ digraph security_severity {
 - Log authorization failures
 - Log access to sensitive data
 - Include user ID, timestamp, action, resource
+
+---
+
+## Severity Decision Flow
+
+```dot
+digraph security_severity {
+    "Vulnerability detected" [shape=doublecircle];
+    "Exploitable remotely?" [shape=diamond];
+    "Leads to data breach or RCE?" [shape=diamond];
+    "Requires authentication?" [shape=diamond];
+    "CRITICAL" [shape=box, style=filled, fillcolor=red];
+    "Defense in depth issue?" [shape=diamond];
+    "WARNING" [shape=box, style=filled, fillcolor=yellow];
+    "NOTE" [shape=box, style=filled, fillcolor=lightblue];
+
+    "Vulnerability detected" -> "Exploitable remotely?";
+    "Exploitable remotely?" -> "Leads to data breach or RCE?" [label="yes"];
+    "Exploitable remotely?" -> "Defense in depth issue?" [label="no"];
+    "Leads to data breach or RCE?" -> "CRITICAL" [label="yes"];
+    "Leads to data breach or RCE?" -> "Requires authentication?" [label="no"];
+    "Requires authentication?" -> "WARNING" [label="yes"];
+    "Requires authentication?" -> "CRITICAL" [label="no"];
+    "Defense in depth issue?" -> "WARNING" [label="yes"];
+    "Defense in depth issue?" -> "NOTE" [label="no"];
+}
+```
 
 ---
 

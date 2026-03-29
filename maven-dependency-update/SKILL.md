@@ -16,13 +16,12 @@ Quarkus BOM — never let managed versions drift.
 
 ## Prerequisites
 
-**This skill builds on `dependency-management-principles`**. Apply all dependency-management-principles:
-- BOM-first philosophy and alignment verification
-- Compatibility checking and upgrade safety
-- Never downgrade without confirmation
-- Version drift prevention
+**This skill builds on [`dependency-management-principles`]**.
 
-This skill adds Maven-specific implementations including ./mvnw commands, pom.xml manipulation, Quarkus BOM specifics, and quarkiverse-parent version management.
+Apply all rules from:
+- **`dependency-management-principles`**: BOM-first philosophy and alignment verification, compatibility checking and upgrade safety, never downgrade without confirmation, version drift prevention
+
+Then apply the Maven-specific dependency patterns below.
 
 ## Core Rules
 
@@ -43,10 +42,10 @@ This skill adds Maven-specific implementations including ./mvnw commands, pom.xm
 
 ### Step 1 — Understand the current state
 
-~~~bash
+```bash
 # Read the root pom.xml to find current Quarkus version and BOM
 cat pom.xml
-~~~
+```
 
 Identify:
 - The Quarkus platform version (`quarkus.version` property)
@@ -64,15 +63,15 @@ Identify:
 
 ### Step 3 — Check BOM membership before any version change
 
-~~~bash
+```bash
 # Check what the current BOM manages
 ./mvnw dependency:resolve -Dsort | grep <artifact-name>
 
 # Or inspect the BOM directly for a specific artifact
 ./mvnw help:effective-pom | grep -A2 <artifact-name>
-~~~
+```
 
-**BOM alignment decision flow:**
+## BOM Alignment Decision Flow
 
 ```dot
 digraph bom_decision {
@@ -107,10 +106,10 @@ digraph bom_decision {
 
 For any Quarkus version bump:
 
-~~~bash
+```bash
 # Check available Quarkus versions
 ./mvnw versions:display-property-updates -Dincludes=io.quarkus:quarkus-bom
-~~~
+```
 
 Also check:
 - The [Quarkus compatibility matrix](https://quarkus.io/extensions/) for
@@ -119,16 +118,16 @@ Also check:
   be updated in step with the platform
 
 For quarkiverse extension updates (including `quarkus-flow`):
-~~~bash
+```bash
 ./mvnw versions:display-dependency-updates \
   -Dincludes=io.quarkiverse.*
-~~~
+```
 
 ### Step 5 — Propose changes
 
 Present a clear proposal:
 
-~~~
+```
 ## Proposed dependency changes
 
 | Artifact | Current | Proposed | BOM managed? | Notes |
@@ -142,7 +141,7 @@ Present a clear proposal:
 ## Risks
 - quarkus-flow 0.7.1 release notes should be reviewed before upgrading
   (check: https://github.com/quarkiverse/quarkus-flow/releases)
-~~~
+```
 
 Then ask:
 > "Does this look good? Reply **YES** to apply these changes to pom.xml,
@@ -153,9 +152,9 @@ Then ask:
 Only after explicit YES:
 1. Apply version changes to `pom.xml`
 2. Run a quick compilation check:
-~~~bash
+```bash
 ./mvnw -q -DskipTests compile
-~~~
+```
 3. Report success or any compilation errors introduced by the update.
 
 ---
@@ -196,10 +195,8 @@ Dependency update is complete when:
 
 ## Skill Chaining
 
-- After updating dependencies, if tests pass and changes are ready:
-  invoke **java-git-commit**.
-- If the update represents a significant architectural decision (e.g.
-  adopting a new extension, upgrading to a new major Quarkus version):
-  suggest creating an ADR via **adr**.
-- If `update-design` is warranted (e.g. new extension adds a component):
-  suggest running **/update-design**.
+**Invoked by:** None (user-initiated)
+
+**Invokes:** [`java-git-commit`] after successful dependency updates
+
+**Can be invoked independently:** User says "update dependencies", "upgrade Quarkus", or explicitly invokes when pom.xml changes are needed

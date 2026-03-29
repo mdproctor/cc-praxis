@@ -18,20 +18,21 @@ and silent data corruption.
 
 ## Prerequisites
 
-**This skill builds on `code-review-principles` AND `java-dev`**. Apply all code-review-principles:
-- Severity assignment (CRITICAL/WARNING/NOTE)
-- Review workflow and reporting format
-- Why reviews matter and what they catch vs. production discovery
+**This skill builds on [`code-review-principles`] and [`java-dev`]**.
 
-This skill adds Java/Quarkus-specific implementations including try-with-resources patterns, ThreadLocal cleanup, `@Blocking` annotations, CDI testing, and Quarkus-specific safety checks.
+Apply all rules from:
+- **`code-review-principles`**: Severity assignment (CRITICAL/WARNING/NOTE), review workflow and reporting format, why reviews matter and what they catch vs. production discovery
+- **`java-dev`**: Safety patterns (resource leaks, deadlocks, ThreadLocal cleanup), concurrency rules (@Blocking, thread safety), performance guidelines, testing practices
+
+Then apply the Java/Quarkus-specific review patterns below.
 
 ## Workflow
 
 ### Step 1 — Collect staged changes
-~~~bash
+```bash
 git diff --staged
 git diff --staged --stat
-~~~
+```
 If nothing is staged, stop and tell the user:
 > "Nothing is staged. Run `git add <files>` first."
 
@@ -48,7 +49,7 @@ Work through each category below. For every finding, assign a severity:
 
 Group findings by severity, then by file. Use this format for each:
 
-~~~
+```
 🔴 CRITICAL — ClassName.java:42
 Resource leak: InputStream opened but not closed in a finally block or
 try-with-resources. In a high-request-rate server this will exhaust file
@@ -56,12 +57,12 @@ descriptors.
 
 Suggested fix:
   try (InputStream is = ...) { ... }
-~~~
+```
 
 After all findings, show a summary line:
-~~~
+```
 Review complete: 2 CRITICAL, 1 WARNING, 3 NOTES
-~~~
+```
 
 ### Step 4 — Conclude
 
@@ -78,7 +79,7 @@ Review complete: 2 CRITICAL, 1 WARNING, 3 NOTES
 
 ---
 
-## Severity Assignment Flow
+## Severity Assignment Decision Flow
 
 ```dot
 digraph severity_flow {
@@ -107,7 +108,7 @@ digraph severity_flow {
 ### 🔴 Safety (always check — any violation is CRITICAL)
 
 **Resource leaks** - streams, connections, readers, writers, executors must be closed:
-~~~java
+```java
 // ❌ BAD: Resource leak if read() throws exception
 FileInputStream fis = new FileInputStream(path);
 byte[] data = fis.readAllBytes();
@@ -117,10 +118,10 @@ fis.close();
 try (FileInputStream fis = new FileInputStream(path)) {
     byte[] data = fis.readAllBytes();
 }
-~~~
+```
 
 **Classloader leaks** - ThreadLocal values must be removed:
-~~~java
+```java
 // ❌ BAD: ThreadLocal never cleaned up
 ThreadLocal<User> currentUser = new ThreadLocal<>();
 currentUser.set(user);
@@ -133,10 +134,10 @@ try {
 } finally {
     currentUser.remove();
 }
-~~~
+```
 
 **Silent data corruption** - never swallow exceptions:
-~~~java
+```java
 // ❌ BAD: Exception swallowed, data marked processed
 try {
     processPayment(order);
@@ -152,7 +153,7 @@ try {
     order.setStatus(FAILED);
     throw e;
 }
-~~~
+```
 
 - **Deadlock risk**: nested lock acquisition — flag any code that acquires
   more than one lock and verify ordering is documented.
@@ -162,7 +163,7 @@ try {
 ### 🔴 Concurrency (CRITICAL if in shared/multi-threaded code)
 
 **Blocking on event loop** - I/O operations must not block Vert.x event thread:
-~~~java
+```java
 // ❌ BAD: Blocks event loop, freezes all concurrent requests
 @Path("/user")
 public class UserResource {
@@ -179,10 +180,10 @@ public class UserResource {
         return userRepository.findById(id);
     }
 }
-~~~
+```
 
 **Non-thread-safe collections** - shared mutable state needs synchronization:
-~~~java
+```java
 // ❌ BAD: HashMap shared across threads without synchronization
 @ApplicationScoped
 public class CacheService {
@@ -202,10 +203,10 @@ public class CacheService {
         cache.put(key, value);
     }
 }
-~~~
+```
 
 **ThreadLocal across async boundaries:**
-~~~java
+```java
 // ❌ BAD: ThreadLocal value lost across async boundary
 ThreadLocal<User> currentUser = new ThreadLocal<>();
 currentUser.set(user);
@@ -221,7 +222,7 @@ currentUser.set(user);
 User capturedUser = user;  // Capture in local variable
 return asyncService.process()
     .thenApply(result -> transform(capturedUser, result));
-~~~
+```
 
 - Shared mutable state accessed without synchronisation.
 - Hot-loop code added without a `// NOT thread-safe` comment.
@@ -236,7 +237,7 @@ return asyncService.process()
 ### 🟡 Performance (WARNING in hot paths, NOTE elsewhere)
 
 **Streams in hot paths** - functional overhead adds up at scale:
-~~~java
+```java
 // ❌ BAD: Stream allocation per request
 @Path("/items")
 public List<ItemDTO> getActiveItems() {
@@ -257,10 +258,10 @@ public List<ItemDTO> getActiveItems() {
     }
     return result;
 }
-~~~
+```
 
 **Unnecessary boxing** - primitives avoid GC pressure:
-~~~java
+```java
 // ❌ BAD: Boxing on every iteration
 List<Integer> counts = List.of(1, 2, 3, 4, 5);
 int sum = 0;
@@ -274,7 +275,7 @@ int sum = 0;
 for (int count : counts) {
     sum += count;
 }
-~~~
+```
 
 - Excessive object allocation inside loops (e.g. `new String(...)`,
   `String.format` in a hot path).
@@ -283,7 +284,7 @@ for (int count : counts) {
 ### 🟡 Testing (WARNING)
 
 **Prefer real implementations over mocks:**
-~~~java
+```java
 // ❌ BAD: Mockito masks real integration issues
 @QuarkusTest
 class OrderServiceTest {
@@ -315,7 +316,7 @@ class OrderServiceTest {
         // Tests actual SQL, transaction handling, constraints
     }
 }
-~~~
+```
 
 - New non-trivial logic added with no corresponding test.
 - `@QuarkusTest` used where `@QuarkusComponentTest` would suffice
@@ -358,23 +359,8 @@ class OrderServiceTest {
 
 ## Skill Chaining
 
-**Triggered by java-git-commit:**
-When `java-git-commit` is invoked and no `/java-code-review` has been run
-in the current session, ask:
-> "Would you like me to run a code review before committing? (Recommended)"
+**Invoked by:** [`java-git-commit`] when no review has been run in the current session (asks user for confirmation before running)
 
-If the user says yes, run this skill in full before proceeding.
-If the user says no, proceed directly to `java-git-commit`.
-Do not ask again if a review was already completed this session.
+**Invokes:** [`java-security-audit`] for security-critical code (offered when reviewing auth/payment/PII handling)
 
-**Chain to java-security-audit for security-critical code:**
-If reviewing code that handles:
-- User input (authentication, authorization, validation)
-- Payment processing or PII
-- External API calls or data persistence
-
-Offer to run `java-security-audit` for specialized OWASP Top 10 vulnerability checks:
-> "This code handles [auth/payment/PII]. Run java-security-audit for specialized vulnerability checks?"
-
-**Reference java-dev for detailed patterns:**
-For deep dives into safety, concurrency, and performance patterns with additional examples, see `java-dev` skill.
+**Can be invoked independently:** User says "review my code", "check my changes", or explicitly invokes /java-code-review

@@ -82,30 +82,6 @@ Review complete: X CRITICAL, Y WARNING, Z NOTES
 
 ---
 
-## Severity Assignment Flow
-
-```dot
-digraph severity_flow {
-    "Finding detected" [shape=doublecircle];
-    "Safety violation?" [shape=diamond];
-    "Concurrency issue in shared code?" [shape=diamond];
-    "CRITICAL" [shape=box, style=filled, fillcolor=red];
-    "In hot path?" [shape=diamond];
-    "WARNING" [shape=box, style=filled, fillcolor=yellow];
-    "NOTE" [shape=box, style=filled, fillcolor=lightblue];
-
-    "Finding detected" -> "Safety violation?";
-    "Safety violation?" -> "CRITICAL" [label="yes"];
-    "Safety violation?" -> "Concurrency issue in shared code?" [label="no"];
-    "Concurrency issue in shared code?" -> "CRITICAL" [label="yes"];
-    "Concurrency issue in shared code?" -> "In hot path?" [label="no"];
-    "In hot path?" -> "WARNING" [label="yes (perf/repro)"];
-    "In hot path?" -> "NOTE" [label="no"];
-}
-```
-
----
-
 ## Review Checklist
 
 ### 🔴 Safety (always check — any violation is CRITICAL)
@@ -211,6 +187,28 @@ digraph severity_flow {
 - Signature changes without semantic need
 - Formatting/whitespace changed on untouched lines
 - Import order changed unnecessarily
+
+## Severity Decision Flow
+
+```dot
+digraph severity_flow {
+    "Finding detected" [shape=doublecircle];
+    "Safety violation?" [shape=diamond];
+    "Concurrency issue in shared code?" [shape=diamond];
+    "CRITICAL" [shape=box, style=filled, fillcolor=red];
+    "In hot path?" [shape=diamond];
+    "WARNING" [shape=box, style=filled, fillcolor=yellow];
+    "NOTE" [shape=box, style=filled, fillcolor=lightblue];
+
+    "Finding detected" -> "Safety violation?";
+    "Safety violation?" -> "CRITICAL" [label="yes"];
+    "Safety violation?" -> "Concurrency issue in shared code?" [label="no"];
+    "Concurrency issue in shared code?" -> "CRITICAL" [label="yes"];
+    "Concurrency issue in shared code?" -> "In hot path?" [label="no"];
+    "In hot path?" -> "WARNING" [label="yes (perf/repro)"];
+    "In hot path?" -> "NOTE" [label="no"];
+}
+```
 
 ---
 

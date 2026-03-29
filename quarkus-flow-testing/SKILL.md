@@ -16,9 +16,11 @@ integration tests, and AI service mocking.
 
 ## Prerequisites
 
-**This skill builds on `java-dev` and `quarkus-flow-dev`**. Apply all rules from:
-- **java-dev**: Testing practices (JUnit 5, AssertJ, real CDI over mocking, @QuarkusTest patterns)
-- **quarkus-flow-dev**: Workflow structure, DSL patterns, and quarkus-flow concepts
+**This skill builds on [`java-dev`] and [`quarkus-flow-dev`]**.
+
+Apply all rules from:
+- **`java-dev`**: Testing practices (JUnit 5, AssertJ, real CDI over mocking, @QuarkusTest patterns)
+- **`quarkus-flow-dev`**: Workflow structure, DSL patterns, and quarkus-flow concepts
 
 Then apply the workflow-specific testing patterns below.
 
@@ -34,7 +36,7 @@ Then apply the workflow-specific testing patterns below.
 
 ## Unit Test (Inject and Execute Directly)
 
-~~~java
+```java
 @QuarkusTest
 class MyWorkflowTest {
 
@@ -52,14 +54,14 @@ class MyWorkflowTest {
             .isEqualTo("expected");
     }
 }
-~~~
+```
 
 **Note**: blocking with `.get()` or `.join()` is acceptable in tests.
 Never block the event loop in production code.
 
 ## Test YAML Workflow
 
-~~~java
+```java
 @QuarkusTest
 class EchoYamlWorkflowTest {
 
@@ -78,11 +80,11 @@ class EchoYamlWorkflowTest {
             .isEqualTo("echo: Joe");
     }
 }
-~~~
+```
 
 ## Integration Test via REST (REST Assured)
 
-~~~java
+```java
 @QuarkusTest
 class MyResourceTest {
 
@@ -97,11 +99,11 @@ class MyResourceTest {
             .body("message", equalTo("Hello, John!"));
     }
 }
-~~~
+```
 
 ## Test HTTP Error Mapping (RFC 7807)
 
-~~~java
+```java
 @Test
 void should_map_workflow_exception_to_problem_details() {
     given()
@@ -114,7 +116,7 @@ void should_map_workflow_exception_to_problem_details() {
             "https://serverlessworkflow.io/spec/1.0.0/errors/communication"))
         .body("status", equalTo(401));
 }
-~~~
+```
 
 **Important**: your JAX-RS resource must be **reactive** (return `Uni` or
 `CompletionStage`) for automatic error mapping to work. Blocking with
@@ -123,10 +125,10 @@ breaks the mapper.
 
 ## Enable Tracing in Tests
 
-~~~properties
+```properties
 # application.properties
 %test.quarkus.flow.tracing.enabled=true
-~~~
+```
 
 Useful for debugging workflow execution flow in test failures.
 
@@ -137,7 +139,7 @@ flaky tests from network calls and non-deterministic LLM responses.
 
 ### Option 1: @InjectMock (Simple)
 
-~~~java
+```java
 @QuarkusTest
 class AIDrivenWorkflowTest {
 
@@ -152,11 +154,11 @@ class AIDrivenWorkflowTest {
         // Test workflow that uses aiService
     }
 }
-~~~
+```
 
 ### Option 2: @QuarkusTestProfile (Complex Stubbing)
 
-~~~java
+```java
 public class MockedAIProfile implements QuarkusTestProfile {
     @Override
     public Map<String, String> getConfigOverrides() {
@@ -183,9 +185,9 @@ public class MockedAIProfile implements QuarkusTestProfile {
 class WorkflowWithAITest {
     // Tests using mocked AI service
 }
-~~~
+```
 
-## Common Testing Pitfalls
+## Common Pitfalls
 
 | Mistake | Why It's Wrong | Fix |
 |---------|----------------|-----|
@@ -199,11 +201,8 @@ class WorkflowWithAITest {
 
 ## Skill Chaining
 
-**Invoked by quarkus-flow-dev:**
-When writing or debugging tests for quarkus-flow workflows.
+**Invoked by:** [`quarkus-flow-dev`] when writing or debugging tests for quarkus-flow workflows
 
-**Chains to:**
-- Before writing tests: understand workflow structure with **quarkus-flow-dev**
-- Apply **java-dev** testing rules (JUnit 5, AssertJ, real CDI)
-- When done: invoke **java-code-review** before committing
-- When committing: invoke **java-git-commit**
+**Invokes:** [`java-code-review`] before committing, [`java-git-commit`] when ready to commit
+
+**Can be invoked independently:** User writes @QuarkusTest for Flow classes, tests YAML workflows, or debugs workflow test failures

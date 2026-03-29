@@ -17,12 +17,13 @@ focus on OWASP Top 10 risks adapted for Quarkus server-side applications.
 
 ## Prerequisites
 
-**This skill builds on `security-audit-principles` AND `java-dev`**. Apply all security-audit-principles:
-- OWASP Top 10 vulnerability categories and severity assessment
-- Security audit workflow and reporting format
-- Why security audits matter and cost of production discovery
+**This skill builds on [`security-audit-principles`] and [`java-dev`]**.
 
-This skill adds Java/Quarkus-specific implementations including JPA parameterized queries, JAX-RS validation patterns, Quarkus security features (@RolesAllowed, SecurityIdentity), and Maven dependency CVE checking.
+Apply all rules from:
+- **`security-audit-principles`**: OWASP Top 10 vulnerability categories and severity assessment, security audit workflow and reporting format, why security audits matter and cost of production discovery
+- **`java-dev`**: Safety patterns (resource leaks, exception handling), code quality rules, testing practices
+
+Then apply the Java/Quarkus-specific security audit patterns below.
 
 ## Workflow
 
@@ -49,7 +50,7 @@ Work through each category below. For every finding, assign severity:
 
 Group by severity, then by category. Use this format:
 
-~~~
+```
 🔴 CRITICAL — UserService.java:67
 SQL Injection: JPQL query built with string concatenation allows arbitrary
 SQL execution. Attacker can dump database or modify records.
@@ -57,12 +58,12 @@ SQL execution. Attacker can dump database or modify records.
 Suggested fix:
   Use parameterized query:
   query.setParameter("username", username)
-~~~
+```
 
 After all findings, show summary:
-~~~
+```
 Security audit complete: 1 CRITICAL, 3 WARNINGS, 2 NOTES
-~~~
+```
 
 ### Step 4 — Conclude
 
@@ -81,7 +82,7 @@ Security audit complete: 1 CRITICAL, 3 WARNINGS, 2 NOTES
 ### 🔴 Injection (OWASP #3)
 
 **SQL/JPQL Injection** - never build queries with string concatenation:
-~~~java
+```java
 // ❌ BAD: SQL injection vulnerability
 @GET
 @Path("/user/{name}")
@@ -98,10 +99,10 @@ public User findByName(@PathParam("name") String name) {
         .setParameter("name", name)
         .getSingleResult();
 }
-~~~
+```
 
 **Log Injection** - sanitize user input before logging:
-~~~java
+```java
 // ❌ BAD: Log injection allows log forgery
 LOG.info("User login: " + username);  // Attacker: "admin\nSUCCESS: Root access"
 
@@ -109,10 +110,10 @@ LOG.info("User login: " + username);  // Attacker: "admin\nSUCCESS: Root access"
 LOG.info("User login: {}", username.replaceAll("[\n\r]", ""));
 // Better: structured logging
 LOG.info("User login", "username", username);
-~~~
+```
 
 **Command Injection** - never pass user input to `Runtime.exec()` or `ProcessBuilder`:
-~~~java
+```java
 // ❌ BAD: Command injection
 new ProcessBuilder("convert", userFilename, "output.pdf").start();
 // Attacker: "input.jpg; rm -rf /"
@@ -122,22 +123,22 @@ if (!userFilename.matches("[a-zA-Z0-9._-]+")) {
     throw new SecurityException("Invalid filename");
 }
 new ProcessBuilder("convert", userFilename, "output.pdf").start();
-~~~
+```
 
 ### 🔴 Broken Authentication (OWASP #7)
 
 **Hardcoded credentials:**
-~~~java
+```java
 // ❌ BAD: Credentials in code
 String apiKey = "sk-1234567890abcdef";
 
 // ✅ GOOD: Environment variables
 @ConfigProperty(name = "api.key")
 String apiKey;
-~~~
+```
 
 **Weak JWT configuration:**
-~~~yaml
+```yaml
 # ❌ BAD: application.properties
 mp.jwt.verify.publickey=classpath:/publicKey.pem
 smallrye.jwt.sign.key=classpath:/privateKey.pem  # Committed to git!
@@ -145,10 +146,10 @@ smallrye.jwt.sign.key=classpath:/privateKey.pem  # Committed to git!
 # ✅ GOOD: Secret from environment
 mp.jwt.verify.publickey=classpath:/publicKey.pem
 smallrye.jwt.sign.key=${JWT_PRIVATE_KEY}  # Injected at runtime
-~~~
+```
 
 **Insufficient session timeout:**
-~~~java
+```java
 // ❌ BAD: No timeout, sessions live forever
 @ApplicationScoped
 public class SessionManager {
@@ -162,12 +163,12 @@ public class SessionManager {
         .expireAfterWrite(30, TimeUnit.MINUTES)
         .build();
 }
-~~~
+```
 
 ### 🔴 Broken Access Control (OWASP #1)
 
 **Mass assignment vulnerability:**
-~~~java
+```java
 // ❌ BAD: Binding request directly to entity
 @PUT
 @Path("/user/{id}")
@@ -189,10 +190,10 @@ public User update(@PathParam("id") Long id, UserUpdateDTO dto) {
     // isAdmin NOT modifiable via API
     return existing;
 }
-~~~
+```
 
 **Missing authorization checks:**
-~~~java
+```java
 // ❌ BAD: No authorization check
 @DELETE
 @Path("/order/{id}")
@@ -212,21 +213,21 @@ public void deleteOrder(@PathParam("id") Long id, @Context SecurityContext ctx) 
     }
     em.remove(order);
 }
-~~~
+```
 
 ### 🔴 Cryptographic Failures (OWASP #2)
 
 **Sensitive data in logs:**
-~~~java
+```java
 // ❌ BAD: Logging PII or secrets
 LOG.info("Payment processed: card={}, cvv={}", cardNumber, cvv);
 
 // ✅ GOOD: Mask sensitive fields
 LOG.info("Payment processed: card={}****{}", cardNumber.substring(0,4), cardNumber.substring(12));
-~~~
+```
 
 **Weak hashing:**
-~~~java
+```java
 // ❌ BAD: MD5/SHA1 for passwords
 String hash = DigestUtils.md5Hex(password);
 
@@ -235,21 +236,21 @@ String hash = DigestUtils.md5Hex(password);
 PasswordEncoder encoder;  // Quarkus Security Elytron
 
 String hash = encoder.encode(password);
-~~~
+```
 
 **Unencrypted storage of secrets:**
-~~~properties
+```properties
 # ❌ BAD: Plaintext database password
 quarkus.datasource.password=ProductionDB123!
 
 # ✅ GOOD: Use Vault or environment variable
 quarkus.datasource.password=${DB_PASSWORD}
-~~~
+```
 
 ### 🟡 Security Misconfiguration (OWASP #5)
 
 **Default error messages expose stack traces:**
-~~~java
+```java
 // ❌ BAD: Stack trace to client
 @ServerExceptionMapper
 public Response handleException(Exception e) {
@@ -266,27 +267,27 @@ public Response handleException(Exception e) {
         .entity(new ErrorResponse("Internal server error"))
         .build();
 }
-~~~
+```
 
 **CORS misconfiguration:**
-~~~properties
+```properties
 # ❌ BAD: Allow all origins
 quarkus.http.cors.origins=*
 
 # ✅ GOOD: Explicit allowlist
 quarkus.http.cors.origins=https://app.example.com,https://admin.example.com
-~~~
+```
 
 ### 🟡 Vulnerable Components (OWASP #6)
 
 Run dependency checks:
-~~~bash
+```bash
 # Check for known CVEs
 ./mvnw org.owasp:dependency-check-maven:check
 
 # Check for outdated dependencies
 ./mvnw versions:display-dependency-updates
-~~~
+```
 
 **Flag for review:**
 - Any dependency with known CVE (severity HIGH or CRITICAL)
@@ -296,7 +297,7 @@ Run dependency checks:
 ### 🟡 SSRF (Server-Side Request Forgery)
 
 **Unvalidated external URLs:**
-~~~java
+```java
 // ❌ BAD: User-controlled URL
 @GET
 @Path("/fetch")
@@ -313,12 +314,12 @@ public String fetch(@QueryParam("url") String url) {
     }
     return restClient.get(url);
 }
-~~~
+```
 
 ### 🟡 Unvalidated Redirects
 
 **Open redirect vulnerability:**
-~~~java
+```java
 // ❌ BAD: User-controlled redirect
 @GET
 @Path("/login")
@@ -337,7 +338,7 @@ public Response login(@QueryParam("redirect") String redirect) {
     }
     return Response.seeOther(URI.create(redirect != null ? redirect : "/dashboard")).build();
 }
-~~~
+```
 
 ### 🔵 Defense in Depth
 
@@ -365,7 +366,7 @@ public Response login(@QueryParam("redirect") String redirect) {
 | `quarkus-vault` | Secret management |
 
 **Security-critical configuration:**
-~~~properties
+```properties
 # Enforce HTTPS in production
 quarkus.http.ssl.certificate.files=...
 quarkus.http.ssl.certificate.key-files=...
@@ -376,11 +377,11 @@ quarkus.rest-csrf.token-header-name=X-CSRF-TOKEN
 
 # Rate limiting
 quarkus.rate-limiter.enabled=true
-~~~
+```
 
 ---
 
-## Common Mistakes
+## Common Pitfalls
 
 | Mistake | Impact | Fix |
 |---------|--------|-----|
@@ -397,21 +398,7 @@ quarkus.rate-limiter.enabled=true
 
 ---
 
-## Skill Chaining
-
-**Offered by java-code-review (not automatic):**
-When java-code-review encounters code handling authentication, authorization, payment processing, PII, or external API calls, it offers to run java-security-audit for specialized OWASP Top 10 checks.
-
-**Chains from:**
-- **java-code-review**: Security audit is a specialized form of code review. Automatically offered for security-critical changes (auth, payment, PII handling).
-- **java-dev**: Invoke for security-critical implementations (authentication, authorization, payment, PII handling).
-- **maven-dependency-update**: Invoke when updating dependencies with known CVEs or security advisories.
-
-**Integration notes:**
-- **java-dev**: Security rules override convenience. If a security fix makes code more verbose, that's acceptable.
-- **java-git-commit**: Security fixes should reference CVE numbers or vulnerability types in commit messages (e.g., "fix: prevent SQL injection in user search (CWE-89)").
-
-## Severity Assignment
+## Severity Assignment Decision Flow
 
 ```dot
 digraph security_severity {
@@ -432,3 +419,13 @@ digraph security_severity {
     "Requires authentication?" -> "CRITICAL" [label="no (unauthenticated)"];
 }
 ```
+
+---
+
+## Skill Chaining
+
+**Invoked by:** [`java-code-review`] when reviewing auth/payment/PII handling (offered, not automatic)
+
+**Invokes:** None
+
+**Can be invoked independently:** User says "security review", "audit security", or explicitly invokes for security-critical implementations

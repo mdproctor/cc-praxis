@@ -20,11 +20,10 @@ conventions, and pitfalls.
 
 ## Prerequisites
 
-**This skill builds on `java-dev`**. Apply all java-dev rules first:
-- Safety patterns (resource leaks, deadlocks, ThreadLocal cleanup)
-- Concurrency rules (event loop awareness, thread safety)
-- Performance guidelines (avoid streams in hot paths, minimize allocations)
-- Testing practices (JUnit 5, AssertJ, real CDI over mocking)
+**This skill builds on [`java-dev`]**.
+
+Apply all rules from:
+- **`java-dev`**: Safety patterns (resource leaks, deadlocks, ThreadLocal cleanup), concurrency rules (event loop awareness, thread safety), performance guidelines (avoid streams in hot paths, minimize allocations), testing practices (JUnit 5, AssertJ, real CDI over mocking)
 
 Then apply the quarkus-flow-specific patterns below.
 
@@ -36,7 +35,7 @@ All workflows extend `io.quarkiverse.flow.Flow`, are `@ApplicationScoped`
 CDI beans, and override `descriptor()`. They are **discovered at build time**
 — no manual registration needed.
 
-~~~java
+```java
 import static io.serverlessworkflow.fluent.func.dsl.FuncDSL.*;
 import static io.serverlessworkflow.fluent.func.spec.FuncWorkflowBuilder.workflow;
 
@@ -49,20 +48,20 @@ public class MyWorkflow extends Flow {
             .build();
     }
 }
-~~~
+```
 
 ### Key imports (always use static imports for brevity)
 
-~~~java
+```java
 import io.serverlessworkflow.api.types.Workflow;
 import io.serverlessworkflow.fluent.func.spec.FuncWorkflowBuilder;
 import static io.serverlessworkflow.fluent.func.dsl.FuncDSL.*;
 import static io.serverlessworkflow.fluent.func.spec.FuncWorkflowBuilder.workflow;
-~~~
+```
 
 ### Injecting workflows
 
-~~~java
+```java
 // Inject a Java DSL workflow by class
 @Inject
 MyWorkflow workflow;
@@ -71,7 +70,7 @@ MyWorkflow workflow;
 @Inject
 @Identifier("flow:echo-name")  // namespace:name from the YAML document section
 WorkflowDefinition definition;
-~~~
+```
 
 ---
 
@@ -106,7 +105,7 @@ For comprehensive testing patterns (unit tests, YAML workflow tests, REST
 integration tests, AI service mocking), use the **quarkus-flow-testing** skill.
 
 Quick test example:
-~~~java
+```java
 @QuarkusTest
 class MyWorkflowTest {
     @Inject MyWorkflow workflow;
@@ -119,7 +118,7 @@ class MyWorkflowTest {
             .isEqualTo("expected");
     }
 }
-~~~
+```
 
 **Note**: blocking with `.get()` is OK in tests, never in production.
 
@@ -143,7 +142,7 @@ class MyWorkflowTest {
 
 The standard HITL loop in quarkus-flow:
 
-~~~java
+```java
 workflow("review-loop")
     .tasks(
         // 1. Do work
@@ -173,18 +172,14 @@ workflow("review-loop")
         )
     )
     .build()
-~~~
+```
 
 ---
 
 ## Skill Chaining
 
-- **When implementing a new workflow:** apply `java-dev` rules for safety and
-  concurrency, then this skill for DSL patterns
-- **When writing tests:** use **quarkus-flow-testing** for testing patterns
-- **When done:** invoke **java-code-review** before committing
-- **When committing:** invoke **java-git-commit** (which chains **update-design**)
-- **For significant architectural additions:** ensure **update-design** captures
-  it in DESIGN.md even outside of a commit
-- **For workflow observability:** use **quarkus-observability** when adding
-  workflow tracing or MDC context
+**Invoked by:** None (user-initiated when working with quarkus-flow)
+
+**Invokes:** [`quarkus-flow-testing`] for workflow testing, [`quarkus-observability`] for workflow tracing/MDC setup, [`java-code-review`] before committing, [`java-git-commit`] when ready to commit
+
+**Can be invoked independently:** User works with Flow classes, FuncDSL, YAML workflows, or mentions "workflow", "flow", "agent", "HITL"

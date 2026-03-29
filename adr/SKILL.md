@@ -26,15 +26,13 @@ using the MADR (Markdown Any Decision Records) format. ADRs live in
 - Number ADRs sequentially: `NNNN-short-title.md` (e.g. `0001-use-quarkus-flow.md`).
 - Titles use kebab-case, all lowercase.
 
----
-
 ## Workflow
 
 ### Step 1 — Check existing ADRs
 
-~~~bash
+```bash
 ls docs/adr/ 2>/dev/null || echo "No ADRs yet"
-~~~
+```
 
 Determine the next sequence number. If no ADRs exist, start at `0001`.
 
@@ -53,7 +51,7 @@ extract context from those proposals automatically.
 
 Use this MADR template:
 
-~~~markdown
+```markdown
 # NNNN — <Short noun phrase title>
 
 Date: YYYY-MM-DD
@@ -109,7 +107,7 @@ Chosen option: **Option X**, because <brief rationale>.
 ## Links
 
 * <Related ADR, issue, PR, or doc — optional>
-~~~
+```
 
 ### Step 4 — Propose for review
 
@@ -124,9 +122,7 @@ Only after explicit YES:
 2. Write the file
 3. Confirm: "✅ Written to `docs/adr/NNNN-<title>.md`"
 
----
-
-## When to suggest an ADR
+### Step 6 — Suggest an ADR when appropriate
 
 Proactively suggest creating an ADR when you observe:
 
@@ -142,9 +138,7 @@ Proactively suggest creating an ADR when you observe:
 Don't suggest an ADR for routine decisions with no meaningful alternatives
 (e.g. adding a utility method, bumping a patch version).
 
----
-
-## ADR Lifecycle
+## ADR Lifecycle Decision Flow
 
 ```dot
 digraph adr_lifecycle {
@@ -179,22 +173,6 @@ When superseding an ADR:
 1. Update the old ADR's status line to `Superseded by [ADR-NNNN]`
 2. Create the new ADR referencing the old one in its Links section
 
----
-
-## Success Criteria
-
-ADR creation is complete when:
-
-- ✅ User has confirmed ADR content with **YES**
-- ✅ ADR written to `docs/adr/NNNN-title.md`
-- ✅ Status set to "Accepted" (or "Proposed" if needs review)
-- ✅ All sections filled (Context, Decision, Consequences, Alternatives, Links)
-- ✅ File committed (staged with related code changes)
-
-**Not complete until** ADR file exists and is committed.
-
----
-
 ## Common Pitfalls
 
 | Mistake | Why It's Wrong | Fix |
@@ -208,9 +186,22 @@ ADR creation is complete when:
 | No consequences section | Hides tradeoffs and risks | Always list both positive and negative consequences |
 | ADR documents routine decisions | Signal-to-noise ratio drops | Only for non-obvious decisions with alternatives |
 
+## Success Criteria
+
+ADR creation is complete when:
+
+- ✅ User has confirmed ADR content with **YES**
+- ✅ ADR written to `docs/adr/NNNN-title.md`
+- ✅ Status set to "Accepted" (or "Proposed" if needs review)
+- ✅ All sections filled (Context, Decision, Consequences, Alternatives, Links)
+- ✅ File committed (staged with related code changes)
+
+**Not complete until** ADR file exists and is committed.
+
 ## Skill Chaining
 
-- After writing an ADR, suggest staging it with **java-git-commit** if
-  other changes are already staged.
-- If the ADR documents a new component or integration, also suggest
-  running **update-design** to keep DESIGN.md in sync.
+**Invoked by:** [`maven-dependency-update`] when major version upgrades or new extensions are proposed, [`update-design`] when significant new components are captured
+
+**Invokes:** [`java-git-commit`] to stage and commit the ADR with related changes
+
+**Can be invoked independently:** User can run `/adr` or say "create an ADR" directly when making architectural decisions

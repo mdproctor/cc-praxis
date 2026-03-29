@@ -24,7 +24,7 @@ changes.
 
 **Not covered here:** Software architecture (that's DESIGN.md via update-design)
 
-## Rules
+## Core Rules
 
 - CLAUDE.md lives at repository root
 - **Never apply changes without explicit user confirmation** (a plain "YES" or equivalent)
@@ -124,7 +124,36 @@ When user confirms YES:
 - Apply **only** the proposed changes
 - Print brief summary: "✅ Updated sections: Build Commands, Testing"
 
----
+## Common Pitfalls
+
+| Mistake | Why It's Wrong | Fix |
+|---------|----------------|-----|
+| Applying changes without confirmation | User loses control | Always wait for explicit YES |
+| Documenting architecture in CLAUDE.md | Wrong file - DESIGN.md is for architecture | Focus on workflow/conventions only |
+| Over-documenting obvious things | Clutter, maintenance burden | Only document non-obvious workflows |
+| Not updating CLAUDE.md when adding tools | Claude doesn't know about new tools | Update when workflow changes |
+| Copying command help text verbatim | Duplicate of `--help` output | Summarize common use cases |
+
+## Success Criteria
+
+CLAUDE.md update is complete when:
+
+- ✅ CLAUDE.md located and read
+- ✅ Workflow/convention changes identified from staged diff
+- ✅ Proposed updates formatted as before/after blocks
+- ✅ User confirmed with explicit **YES**
+- ✅ Changes applied to CLAUDE.md
+- ✅ File ready for staging (or user confirmed no changes needed)
+
+**Not complete until** all criteria met and CLAUDE.md reflects current workflows.
+
+## Skill Chaining
+
+**Invoked by:** [`git-commit`] when committing in any repository, [`java-git-commit`] alongside update-design
+
+**Invokes:** None (terminal skill in the chain)
+
+**Can be invoked independently:** User can run `/update-claude-md` directly to sync CLAUDE.md without committing
 
 ## Starter Template (Skills Repository)
 
@@ -161,8 +190,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 [List of important skills and their purposes]
 ```
-
----
 
 ## Starter Template (Code Repository)
 
@@ -206,41 +233,3 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 [Environment variables, config files, setup requirements]
 ```
-
----
-
-## Common Pitfalls
-
-| Mistake | Why It's Wrong | Fix |
-|---------|----------------|-----|
-| Applying changes without confirmation | User loses control | Always wait for explicit YES |
-| Documenting architecture in CLAUDE.md | Wrong file - DESIGN.md is for architecture | Focus on workflow/conventions only |
-| Over-documenting obvious things | Clutter, maintenance burden | Only document non-obvious workflows |
-| Not updating CLAUDE.md when adding tools | Claude doesn't know about new tools | Update when workflow changes |
-| Copying command help text verbatim | Duplicate of `--help` output | Summarize common use cases |
-
----
-
-## Success Criteria
-
-CLAUDE.md update is complete when:
-
-- ✅ CLAUDE.md located and read
-- ✅ Workflow/convention changes identified from staged diff
-- ✅ Proposed updates formatted as before/after blocks
-- ✅ User confirmed with explicit **YES**
-- ✅ Changes applied to CLAUDE.md
-- ✅ File ready for staging (or user confirmed no changes needed)
-
-**Not complete until** all criteria met and CLAUDE.md reflects current workflows.
-
----
-
-## Skill Chaining
-
-- **Invoked by `git-commit`**: When committing in any repository, git-commit
-  invokes update-claude-md to keep workflow documentation in sync.
-- **Invoked by `java-git-commit`**: Alongside update-design, keeps both
-  architecture (DESIGN.md) and workflow (CLAUDE.md) documentation current.
-- **Can be invoked independently**: User can run `/update-claude-md` directly
-  to sync CLAUDE.md without committing.

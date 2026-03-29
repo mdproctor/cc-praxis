@@ -10,17 +10,48 @@ description: >
 
 # Observability Principles
 
-Universal principles for production observability: structured logging, distributed
-tracing, and metrics. Enables debugging production issues and understanding
-system behavior at scale.
+Universal principles for production observability: structured logging, distributed tracing, and metrics. Enables debugging production issues and understanding system behavior at scale.
 
-## The Three Pillars of Observability
+## Why This Matters
 
+**With observability vs. without:**
+- With correlation IDs: Find all logs for failing request in seconds
+- Without correlation IDs: Grep through gigabytes of logs manually for hours
+
+**What observability enables:**
+- **Root cause analysis** — trace request end-to-end across services to find bottleneck
+- **Production debugging** — filter logs by correlation ID to see exact failure path
+- **Performance optimization** — identify slowest spans in distributed trace
+- **Proactive monitoring** — alert on metrics before users notice issues
+
+**The three pillars:**
 1. **Logs** — discrete events with context (what happened, when, where)
 2. **Traces** — request flows across services (path through system)
 3. **Metrics** — aggregated measurements over time (counters, histograms)
 
-## Structured Logging Principles
+## Workflow
+
+### Step 1 — Configure structured logging
+
+Enable JSON output for production, set appropriate log levels, configure MDC for correlation fields.
+
+### Step 2 — Implement correlation ID propagation
+
+Generate correlation IDs at entry points, store in MDC/context, propagate via HTTP headers to downstream services.
+
+### Step 3 — Enable distributed tracing
+
+Configure OpenTelemetry exporter, set service name, add custom spans for business operations.
+
+### Step 4 — Instrument custom metrics
+
+Create counters, histograms, and gauges for business-relevant operations with consistent naming.
+
+### Step 5 — Verify observability stack
+
+Test that logs include correlation fields, traces appear in collector, metrics endpoint exposes data.
+
+## Structured Logging Checklist
 
 **Enable structured output for production:**
 - JSON format for machine-readability
@@ -166,20 +197,7 @@ within a scope:
 - ✅ Custom business metrics instrumented
 - ✅ Metric naming conventions followed
 
-## Common Pitfalls
-
-| Mistake | Why It's Wrong | Fix |
-|---------|----------------|-----|
-| Missing structured logging config | Logs unparseable by aggregators | Enable JSON output for production |
-| Disabled tracing in production | Can't debug performance issues | Enable tracing, configure sampling if needed |
-| Broken header propagation | Correlation lost between services | Test header propagation end-to-end |
-| Collector connectivity issues | Traces/metrics lost silently | Monitor exporter errors, use fallback |
-| Logging sensitive data | Security/privacy violation | Sanitize logs, never log passwords/PII |
-| Unstructured log format | Can't query/filter effectively | Use structured logging with consistent fields |
-| Missing correlation IDs | Can't trace requests across services | Implement MDC and header propagation |
-| High-cardinality labels in metrics | Metrics explosion, performance issues | Use low-cardinality labels only |
-| Over-instrumentation | Performance overhead, noise | Instrument significant operations only |
-| Debug logs in production | Log volume explosion | Set INFO as default level |
+---
 
 ## Querying Observability Data
 
@@ -200,6 +218,25 @@ within a scope:
 - Alert on metric thresholds
 - Visualize trends over time
 - Compare before/after deployments
+
+---
+
+## Common Pitfalls
+
+| Mistake | Why It's Wrong | Fix |
+|---------|----------------|-----|
+| Missing structured logging config | Logs unparseable by aggregators | Enable JSON output for production |
+| Disabled tracing in production | Can't debug performance issues | Enable tracing, configure sampling if needed |
+| Broken header propagation | Correlation lost between services | Test header propagation end-to-end |
+| Collector connectivity issues | Traces/metrics lost silently | Monitor exporter errors, use fallback |
+| Logging sensitive data | Security/privacy violation | Sanitize logs, never log passwords/PII |
+| Unstructured log format | Can't query/filter effectively | Use structured logging with consistent fields |
+| Missing correlation IDs | Can't trace requests across services | Implement MDC and header propagation |
+| High-cardinality labels in metrics | Metrics explosion, performance issues | Use low-cardinality labels only |
+| Over-instrumentation | Performance overhead, noise | Instrument significant operations only |
+| Debug logs in production | Log volume explosion | Set INFO as default level |
+
+---
 
 ## Skill Chaining
 

@@ -18,13 +18,12 @@ how to configure and use them together correctly.
 
 ## Prerequisites
 
-**This skill builds on `observability-principles`**. Apply all observability-principles:
-- Structured logging patterns and JSON output formats
-- MDC/correlation ID patterns and propagation
-- Distributed tracing concepts and span design
-- Metrics collection and aggregation patterns
+**This skill builds on [`observability-principles`]**.
 
-This skill adds Quarkus-specific configuration including quarkus.log.console.json properties, quarkus-flow MDC fields (quarkus.flow.instanceId, quarkus.flow.task), JBoss Logger API, Quarkus OpenTelemetry integration, Micrometer/Prometheus setup, and quarkus-flow built-in metrics.
+Apply all rules from:
+- **`observability-principles`**: Structured logging patterns and JSON output formats, MDC/correlation ID patterns and propagation, distributed tracing concepts and span design, metrics collection and aggregation patterns
+
+Then apply the Quarkus/quarkus-flow-specific observability patterns below.
 
 ---
 
@@ -32,23 +31,23 @@ This skill adds Quarkus-specific configuration including quarkus.log.console.jso
 
 ### Enable JSON console output
 
-~~~properties
+```properties
 quarkus.log.console.json.enabled=true
-~~~
+```
 
 This is the standard for cloud deployments — log aggregators (Kibana,
 Loki, Datadog, GCP Logging) parse structured JSON fields directly.
 
 ### Disable in dev/test (human-readable output)
 
-~~~properties
+```properties
 %dev.quarkus.log.console.json.enabled=false
 %test.quarkus.log.console.json.enabled=false
-~~~
+```
 
 ### Log levels
 
-~~~properties
+```properties
 # Global level
 quarkus.log.level=INFO
 
@@ -58,11 +57,11 @@ quarkus.log.category."org.acme.casehub".level=INFO
 
 # Debug for a specific subsystem during investigation
 %dev.quarkus.log.category."io.quarkiverse.flow".level=DEBUG
-~~~
+```
 
 ### Using SLF4J correctly in application code
 
-~~~java
+```java
 import org.jboss.logging.Logger;
 
 // Prefer JBoss Logger (Quarkus native) over SLF4J in Quarkus apps
@@ -76,7 +75,7 @@ LOG.infof("Processing case caseId=%s workflowId=%s", caseId, workflowId);
 LOG.infof("User authenticated email=%s password=%s", email, password);
 // Good:
 LOG.infof("User authenticated userId=%s", userId);
-~~~
+```
 
 ---
 
@@ -96,19 +95,19 @@ Every workflow lifecycle event includes these MDC fields in logs:
 
 ### Enable tracing
 
-~~~properties
+```properties
 # Enabled by default in dev/test, disabled in prod
 quarkus.flow.tracing.enabled=true
 
 # Disable in dev if too noisy during development
 %dev.quarkus.flow.tracing.enabled=false
-~~~
+```
 
 ### Query by instance in your log aggregator
 
 With JSON logging enabled, filter a complete workflow execution:
 
-~~~
+```
 # Kibana / OpenSearch
 mdc.quarkus.flow.instanceId: "01K9GDCXJVN89V0N4CWVG40R7C"
 
@@ -117,13 +116,13 @@ mdc.quarkus.flow.instanceId: "01K9GDCXJVN89V0N4CWVG40R7C"
 
 # Datadog
 @mdc.quarkus.flow.instanceId:01K9GDCXJVN89V0N4CWVG40R7C
-~~~
+```
 
 ### Plain text format (if JSON not enabled)
 
-~~~properties
+```properties
 quarkus.log.console.format=%d{HH:mm:ss} %-5p instanceId=%X{quarkus.flow.instanceId} task=%X{quarkus.flow.task} [%c{2.}] %s%n
-~~~
+```
 
 ### HTTP header propagation
 
@@ -138,9 +137,9 @@ calls from workflow tasks:
 Downstream services should log these headers to enable end-to-end
 correlation. Disable if a strict API rejects unknown headers:
 
-~~~properties
+```properties
 quarkus.flow.http.client.enable-metadata-propagation=false
-~~~
+```
 
 ### Workflow tracing vs messaging lifecycle events
 
@@ -157,16 +156,16 @@ Both can be active simultaneously.
 
 ### Dependencies
 
-~~~xml
+```xml
 <dependency>
   <groupId>io.quarkus</groupId>
   <artifactId>quarkus-opentelemetry</artifactId>
 </dependency>
-~~~
+```
 
 ### Configuration
 
-~~~properties
+```properties
 # OTLP exporter endpoint (Jaeger, Tempo, Honeycomb, etc.)
 quarkus.otel.exporter.otlp.endpoint=http://localhost:4317
 
@@ -176,11 +175,11 @@ quarkus.otel.resource.attributes=service.name=casehub
 # Disable in dev if no collector running locally
 %dev.quarkus.otel.sdk.disabled=true
 %test.quarkus.otel.sdk.disabled=true
-~~~
+```
 
 ### Adding custom spans in application code
 
-~~~java
+```java
 import io.opentelemetry.instrumentation.annotations.WithSpan;
 import io.opentelemetry.instrumentation.annotations.SpanAttribute;
 
@@ -190,7 +189,7 @@ public Uni<CaseResult> processCase(
         @SpanAttribute("case.id") String caseId) {
     // ...
 }
-~~~
+```
 
 **Do not** annotate every method — only meaningful business operations.
 Over-instrumentation creates noise and overhead.
@@ -201,12 +200,12 @@ The `quarkus.flow.instanceId` from MDC and the OTel `traceId` are
 separate identifiers. To correlate them, add the flow instance ID as
 a span attribute in your workflow entry point:
 
-~~~java
+```java
 import io.opentelemetry.api.trace.Span;
 
 // In a REST resource that starts a workflow:
 Span.current().setAttribute("flow.instanceId", instanceId);
-~~~
+```
 
 ---
 
@@ -214,19 +213,19 @@ Span.current().setAttribute("flow.instanceId", instanceId);
 
 ### Dependencies
 
-~~~xml
+```xml
 <dependency>
   <groupId>io.quarkus</groupId>
   <artifactId>quarkus-micrometer-registry-prometheus</artifactId>
 </dependency>
-~~~
+```
 
 ### Expose metrics endpoint
 
-~~~properties
+```properties
 # Metrics available at /q/metrics by default
 quarkus.micrometer.export.prometheus.enabled=true
-~~~
+```
 
 ### quarkus-flow built-in metrics
 
@@ -242,7 +241,7 @@ on the classpath. Key metrics:
 
 ### Custom application metrics
 
-~~~java
+```java
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Counter;
 
@@ -262,11 +261,11 @@ public class CaseMetrics {
         casesProcessed.increment();
     }
 }
-~~~
+```
 
 ---
 
-## 5. Common Pitfalls
+## Common Pitfalls
 
 | Symptom | Cause | Fix |
 |---|---|---|
@@ -281,7 +280,7 @@ public class CaseMetrics {
 
 ## Recommended production configuration
 
-~~~properties
+```properties
 # Structured logging
 quarkus.log.console.json.enabled=true
 quarkus.log.level=INFO
@@ -296,19 +295,14 @@ quarkus.otel.resource.attributes=service.name=casehub
 
 # Metrics
 quarkus.micrometer.export.prometheus.enabled=true
-~~~
+```
 
 ---
 
 ## Skill Chaining
 
-- **Invoked by `java-dev`**: When implementing structured logging, tracing, or
-  metrics in Java applications.
-- **Invoked by `quarkus-flow-dev`**: When implementing workflows that need
-  observability (workflow tracing, MDC context propagation, metrics).
-- If adding OTel or Micrometer dependencies: invoke **maven-dependency-update**
-  to verify BOM alignment.
-- If this is the first time setting up observability for CaseHub: consider
-  an ADR via **adr** documenting the logging and tracing strategy chosen.
-- Observability config changes are good candidates for **java-git-commit**
-  with type `chore(observability)`.
+**Invoked by:** [`java-dev`] when implementing structured logging/tracing/metrics, [`quarkus-flow-dev`] when implementing workflow observability
+
+**Invokes:** [`maven-dependency-update`] when adding OTel/Micrometer dependencies, [`java-git-commit`] for observability config changes
+
+**Can be invoked independently:** User mentions "logging", "tracing", "observability", "MDC", "OpenTelemetry", "Prometheus", or configures observability
