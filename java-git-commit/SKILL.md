@@ -81,9 +81,15 @@ Same as `git-commit`.
 Use Java/Quarkus-specific scopes (see **Java-Specific Scopes** below).
 Hold it — don't show it yet.
 
-### Step 3 — Sync DESIGN.md
-Invoke the `update-design` skill, passing the staged diff.
-It will return proposed DESIGN.md changes. Hold those too.
+### Step 3 — Sync documentation
+
+**Always invoke both:**
+1. Invoke `update-design` skill, passing the staged diff
+   - Returns proposed DESIGN.md changes (if docs/DESIGN.md exists)
+2. Invoke `update-claude-md` skill, passing the staged diff
+   - Returns proposed CLAUDE.md changes (if CLAUDE.md exists)
+
+Hold all proposals.
 
 ### Step 4 — Present everything together
 Show the user a single consolidated proposal:
@@ -96,24 +102,31 @@ Show the user a single consolidated proposal:
 <as per git-commit skill>
 
 ## Proposed DESIGN.md updates
-<output from update-design skill>
+<output from update-design skill, if any>
+
+## Proposed CLAUDE.md updates
+<output from update-claude-md skill, if any>
 ~~~
 
 Then ask exactly:
-> "Does everything look good? Reply **YES** to apply the DESIGN.md updates,
+> "Does everything look good? Reply **YES** to apply the documentation updates,
 > stage them, and commit. Or tell me what to adjust."
 
 ### Step 5 — Apply and commit (only after explicit YES)
 
 Follow `git-commit` Step 4 (commit), with this enhancement:
 
-**Before committing:** If update-design proposed changes:
-1. Let update-design apply its changes to `docs/DESIGN.md`
-2. Stage the updated file: `git add docs/DESIGN.md`
+**Before committing:** Apply any proposed documentation changes:
+1. If update-design proposed DESIGN.md changes:
+   - Let update-design apply its changes to `docs/DESIGN.md`
+   - Stage the updated file: `git add docs/DESIGN.md`
+2. If update-claude-md proposed CLAUDE.md changes:
+   - Let update-claude-md apply its changes to `CLAUDE.md`
+   - Stage the updated file: `git add CLAUDE.md`
 
 **Then commit:** Same as git-commit (`git commit`, confirm with `git log --oneline -1`)
 
-> If update-design found no changes needed, commit the originally staged files as-is.
+> If neither skill found changes needed, commit the originally staged files as-is.
 
 ### Step 6 — Handle Java-specific edge cases
 

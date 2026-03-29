@@ -61,11 +61,42 @@ If nothing is staged, stop and tell the user:
 ### Step 2 — Generate commit message
 
 Draft one conventional commit message (see **Message Format** below).
+Hold it — don't show it yet.
+
+### Step 2a — Sync CLAUDE.md (if exists)
+
+Check if CLAUDE.md exists:
+```bash
+ls CLAUDE.md 2>/dev/null
+```
+
+**If CLAUDE.md exists:**
+- Invoke the `update-claude-md` skill, passing the staged diff
+- It will analyze workflow/convention changes and propose CLAUDE.md updates
+- Hold those proposals too
+
+**If CLAUDE.md doesn't exist:**
+- Skip to Step 3 (present proposal)
 
 ### Step 3 — Present proposal
 
-Show the user:
+**If CLAUDE.md updates proposed**, show consolidated proposal:
+~~~
+## Staged files
+<output of git diff --staged --stat>
 
+## Proposed commit message
+<type>[optional scope]: <description>
+
+<optional body>
+
+<optional footer>
+
+## Proposed CLAUDE.md updates
+<output from update-claude-md skill>
+~~~
+
+**Otherwise**, show standard proposal:
 ~~~
 ## Staged files
 <output of git diff --staged --stat>
@@ -83,7 +114,19 @@ Then ask exactly:
 
 ### Step 4 — Commit (only after explicit YES)
 
-Run in this exact order:
+**If CLAUDE.md updates were proposed**, run in this exact order:
+1. Let update-claude-md apply its changes
+2. Stage the updated file: `git add CLAUDE.md`
+3. Commit with the confirmed message:
+~~~bash
+git commit -m "<subject>" -m "<body if any>"
+~~~
+4. Confirm success:
+~~~bash
+git log --oneline -1
+~~~
+
+**If no CLAUDE.md updates**, run in this exact order:
 1. Commit with the confirmed message:
 ~~~bash
 git commit -m "<subject>" -m "<body if any>"

@@ -201,10 +201,14 @@ Use this when DESIGN.md doesn't exist yet:
 
 ## Skill Chaining
 
-- **Invoked automatically by `java-git-commit`**: Every Java commit triggers
-  update-design to keep DESIGN.md in sync with code changes before committing.
+- **Invoked automatically by `java-git-commit`**: Alongside `update-claude-md`,
+  keeps both architecture (DESIGN.md) and workflow (CLAUDE.md) documentation
+  in sync with code changes before committing.
 - **Suggested by `adr`**: When an ADR documents a new component or integration,
   adr suggests running update-design to keep DESIGN.md aligned with the
   architectural decision.
 - **Can be invoked independently**: User can run `/update-design` directly when
-  they want to sync documentation without committing.
+  they want to sync DESIGN.md without committing.
+
+**Note:** This skill handles DESIGN.md only. For CLAUDE.md updates, see
+`update-claude-md` skill.

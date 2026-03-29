@@ -71,9 +71,13 @@ Skills explicitly reference each other to create workflows. The README documents
 3. **Use Prerequisites sections** for layered skills (e.g., quarkus-flow-testing builds on java-dev and quarkus-flow-dev)
 4. **Generic principles skills are never invoked directly** — they're referenced via Prerequisites by language/framework-specific skills
 
-Example chaining pattern:
+Example chaining patterns:
 ```
-java-dev → java-code-review → java-git-commit → update-design (automatic)
+# Java repositories with both DESIGN.md and CLAUDE.md:
+java-dev → java-code-review → java-git-commit → update-design + update-claude-md (automatic)
+
+# Any repository with CLAUDE.md:
+git-commit → update-claude-md (automatic)
 ```
 
 ### Supporting Files
@@ -189,7 +193,8 @@ When modifying existing skills:
 - `git-commit` — generic conventional commits (extended by `java-git-commit`)
 
 **Workflow integrators** (chain multiple skills):
-- `java-git-commit` — automatically invokes `update-design`
+- `git-commit` — automatically invokes `update-claude-md` (if CLAUDE.md exists)
+- `java-git-commit` — automatically invokes `update-design` and `update-claude-md` (if docs exist)
 - `java-code-review` — triggers `java-security-audit` for security-critical code
 
 **Specialized skills** (domain-specific):
@@ -197,6 +202,8 @@ When modifying existing skills:
 - `java-security-audit` — OWASP Top 10 for Java/Quarkus, triggered by `java-code-review`
 - `maven-dependency-update` — Maven BOM management, builds on `dependency-management-principles`
 - `quarkus-observability` — Quarkus observability config, builds on `observability-principles`
+- `update-design` — DESIGN.md synchronization (architecture documentation), invoked by `java-git-commit`
+- `update-claude-md` — CLAUDE.md synchronization (workflow documentation), invoked by `git-commit` and `java-git-commit`
 
 ## README Synchronization
 

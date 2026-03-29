@@ -243,7 +243,23 @@ Maintains DESIGN.md documentation in sync with code changes, capturing:
 - Java-specific signal detection (annotations → architectural meaning)
 - Surgical update strategy (preserves user's voice)
 
-Invoked automatically by `java-git-commit` or independently.
+Invoked automatically by `java-git-commit` or independently. Handles architectural documentation; for workflow/convention documentation, see `update-claude-md`.
+
+#### **update-claude-md**
+Maintains CLAUDE.md documentation in sync with workflow and convention changes:
+- Build commands and development workflows
+- Testing patterns and commands
+- Naming conventions and code organization
+- Repository-specific tools and processes
+- Skill lists (for skills repositories)
+
+**Features:**
+- Common Pitfalls table (documentation mistakes)
+- Skills repository awareness (skill naming, cross-references)
+- Code repository support (build tools, testing frameworks)
+- Surgical update strategy (preserves user's voice)
+
+Invoked automatically by `git-commit` and `java-git-commit` (if CLAUDE.md exists), or independently. Handles workflow documentation; for architectural documentation, see `update-design`.
 
 #### **adr**
 Creates and manages Architecture Decision Records (ADRs) in MADR format:
@@ -414,7 +430,10 @@ Each skill explicitly declares when to chain to other skills:
 | `observability-principles` | (referenced by framework implementations) | Foundation for all observability |
 | `quarkus-observability` | `maven-dependency-update` | Adding OTel/Micrometer deps |
 | `quarkus-observability` | `adr` | First-time observability setup |
-| `java-git-commit` | `update-design` | Always (automatic) |
+| `git-commit` | `update-claude-md` | Always (automatic if CLAUDE.md exists) |
+| `java-git-commit` | `update-design` | Always (automatic if docs/DESIGN.md exists) |
+| `java-git-commit` | `update-claude-md` | Always (automatic if CLAUDE.md exists) |
+| `update-design` | (companion: `update-claude-md`) | Architecture changes often need workflow doc updates |
 | `adr` | `update-design` | New components documented |
 | `adr` | `java-git-commit` | Stage with related changes |
 
@@ -489,6 +508,8 @@ All skills have been systematically improved following the [superpowers:writing-
 ├── java-git-commit/                     # Java-specific smart commits
 │   └── SKILL.md
 ├── update-design/                       # DESIGN.md maintenance
+│   └── SKILL.md
+├── update-claude-md/                    # CLAUDE.md maintenance
 │   └── SKILL.md
 ├── adr/                                 # Architecture Decision Records
 │   └── SKILL.md
