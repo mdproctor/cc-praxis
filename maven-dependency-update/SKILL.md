@@ -206,7 +206,7 @@ Dependency update is complete when:
 | Using `quarkus-bom` version in dependencies | Duplicate/conflicting version management | Only set in `<dependencyManagement>` |
 | Bumping Quarkus without checking quarkiverse-parent | Parent-child version mismatch | Update both in lockstep |
 | Applying version changes without compilation check | Silent compilation failures post-commit | Always run `mvn compile` after changes |
-| Upgrading major version without reading release notes | Breaking changes surprise you in production | Check release notes before proposing |
+| Upgrading major version without reading release notes | Breaking changes surprise you in production (at 3 AM) | Check release notes before proposing |
 | Adding unmanaged version without noting it | Future confusion about why version is explicit | Note "unmanaged" in proposal |
 
 ## Skill Chaining

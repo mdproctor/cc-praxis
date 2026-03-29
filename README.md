@@ -53,6 +53,18 @@ These skills make documentation *painless* by doing it *as you code*:
 
 You're not writing documentation. You're leaving breadcrumbs for Future You, who has the memory of a goldfish and the patience of a caffeinated squirrel.
 
+## Why Skills Even Exist
+
+**The problem:** Without skills, every conversation with Claude starts from scratch:
+- Claude: "Let me write this workflow with a `for` loop!"
+- You: "No, use the FuncDSL. We talked about this yesterday."
+- Claude: "Right! Let me mock the database."
+- You: "No! Real database! We *just* discussed this!"
+- Claude: "Got it! Should I use `HashMap`?"
+- You: *flips desk*
+
+**The solution:** Skills = "things we've already figured out, written down once, so we never have to explain them again." Think of them as the difference between training a golden retriever and training a goldfish.
+
 ## Skills
 
 ### Generic Foundation Skills

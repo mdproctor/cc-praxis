@@ -195,7 +195,7 @@ digraph commit_flow {
 | Committing before user confirms | User loses control | Always show proposal and wait for YES |
 | Subject line > 50 chars | Truncated in git log | Keep under 50, use body for details |
 | Subject ends with period | Not conventional commits standard | Remove trailing period |
-| Using past tense ("Added X") | Not imperative mood | Use "Add X" (command form) |
+| Using past tense ("Added X") | Not imperative mood (wrong mental model for git revert/cherry-pick) | Use "Add X" (command form) |
 | Type `chore` for production code | Wrong semantics | Use `feat`, `fix`, or `refactor` |
 | Wrong type (`refactor` for bug fix) | Misleading git history | `fix` if it was wrong, `refactor` if working |
 | No body for complex changes | Reviewers lack context | Add why/what in body (not how) |

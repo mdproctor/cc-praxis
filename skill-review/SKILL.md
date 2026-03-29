@@ -156,7 +156,7 @@ digraph severity_flow {
 
 | Mistake | Why It's Wrong | Fix |
 |---------|----------------|-----|
-| Workflow summary in description | Claude follows description instead of reading skill body | Remove workflow details, describe *when to use* only |
+| Workflow summary in description | Claude follows description instead of reading skill body (skill becomes expensive wallpaper) | Remove workflow details, describe *when to use* only |
 | Missing name or description field | Skill won't load | Add required frontmatter fields |
 | Generic flowchart labels | Unreadable, unclear intent | Use semantic labels (e.g., "Check BOM alignment" not "step1") |
 | Dangling cross-references | Skill references non-existent skill | Verify all referenced skills exist |

@@ -350,7 +350,7 @@ If you catch yourself thinking any of these, **STOP** and apply the correct appr
 |-----------------|---------|--------|-----|
 | "Resource will close automatically" | Missing try-with-resources | FD exhaustion after 20hrs | Wrap in try-with-resources |
 | "This is single-threaded, no sync needed" | Undocumented thread model | Future bugs when threading added | Add `// NOT thread-safe` comment |
-| "I'll add the test after I finish this" | No test coverage | Gaps never get filled | Add integration test now |
+| "I'll add the test after I finish this" | No test coverage | Gaps never get filled (spoiler: they never do) | Add integration test now |
 | "This is performance-critical, streams are too slow" | Premature optimization | Bugs from complex code | Measure first with profiler |
 | "Just this once I'll catch and ignore the exception" | Swallowed exception | Silent failures, lost data | Log exception or rethrow |
 | "I know this blocks, but it's quick" | Blocking event loop | Cascading 503 errors | Use @Blocking annotation |
@@ -358,7 +358,7 @@ If you catch yourself thinking any of these, **STOP** and apply the correct appr
 | "The lock order doesn't matter for this simple case" | Undocumented lock order | Deadlock when code grows | Document ordering now |
 | "This allocation is trivial" | Boxing in hot loop | GC pressure, latency spikes | Use primitive types |
 | "I'll use HashMap, order doesn't matter" | Non-deterministic ordering | Build flakiness | Use LinkedHashMap/TreeMap |
-| "Mockito is faster than a real test database" | Mocked database | Mock/prod drift, broken prod | Use @QuarkusTest + real DB |
+| "Mockito is faster than a real test database" | Mocked database | Mock/prod drift, broken prod (tests pass, prod burns) | Use @QuarkusTest + real DB |
 | "Let me refactor this code I haven't read yet" | Refactoring unknown code | Breaking working functionality | Read and understand first |
 
 ## Skill Chaining
