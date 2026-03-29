@@ -14,6 +14,41 @@ These skills transform Claude Code into an expert Java/Quarkus development assis
 - ✅ **Decision flowcharts** for complex workflows
 - ✅ **RED-GREEN-REFACTOR validated** (tested with pressure scenarios)
 
+## Why Commit Messages and Design Docs Actually Matter (Yes, Really)
+
+Let's be honest: writing good commit messages and keeping design documentation in sync with code is about as exciting as watching paint dry. It ranks somewhere between "updating Jira tickets" and "mandatory corporate training videos" on the Developer Fun Scale™.
+
+**The usual developer experience:**
+- **3:00 PM:** Write brilliant code solving a complex problem
+- **3:45 PM:** `git commit -m "fix stuff"` (you'll remember what it does, right?)
+- **3:46 PM:** Move on to next task (design doc? what design doc?)
+- **Next Tuesday:** Teammate asks "Why did we change the cache invalidation strategy?"
+- **You:** *frantically scrolls through git log* "Uhh... 'fix stuff', 'more fixes', 'actually fix it this time'..."
+- **3 months later:** You're debugging and find your own code. No idea why it works that way. Commit message: "refactor". Thanks, past you. Really helpful.
+
+**The actual cost of bad commit messages:**
+- **Debugging time:** 30 minutes trying to understand why code exists → discover commit message is "wip" → give up, rewrite it
+- **Code review delays:** Reviewer has no context → asks 10 clarifying questions → you forgot what you did → meeting scheduled
+- **Incident post-mortems:** "When did this bug get introduced?" → `git bisect` → 20 commits all say "updates" → cry
+- **Onboarding new developers:** "Just read the git history to understand the architecture" → they quit
+
+**The actual cost of stale design docs:**
+- **Architecture drift:** DESIGN.md says system uses Redis → code actually uses Hazelcast (changed 8 months ago, doc never updated)
+- **Wrong decisions:** New developer reads outdated doc → implements feature the wrong way → has to redo it
+- **Meeting overhead:** Every design question becomes "let me check the code to see what we actually did"
+- **Institutional knowledge loss:** Senior dev leaves → their mental model of the system dies with them
+
+**The automation win:**
+
+These skills make documentation *painless* by doing it *as you code*:
+- `java-git-commit` generates proper conventional commit messages automatically by analyzing your actual changes
+- `update-design` keeps DESIGN.md in sync with code *before* you commit, not as a quarterly exercise
+- Both work together so documentation is *part of* the commit, not a separate chore you skip
+
+**Result:** Six months from now, you'll thank yourself. Your teammates will thank you. The new hire will thank you. And that 2 AM production incident? The git history will actually help instead of making you want to rage-quit.
+
+You're not writing documentation. You're leaving breadcrumbs for Future You, who has the memory of a goldfish and the patience of a caffeinated squirrel.
+
 ## Skills
 
 ### Core Development
