@@ -43,6 +43,8 @@ digraph commit_flow {
     "Start" [shape=doublecircle];
     "Staged changes?" [shape=diamond];
     "Stop: ask user to stage" [shape=box];
+    "DESIGN.md exists?" [shape=diamond];
+    "Error: Create DESIGN.md first" [shape=box, style=filled, fillcolor=red];
     "SKILL.md files?" [shape=diamond];
     "Review skills" [shape=box];
     "Generate commit message" [shape=box];
@@ -57,7 +59,9 @@ digraph commit_flow {
 
     "Start" -> "Staged changes?";
     "Staged changes?" -> "Stop: ask user to stage" [label="no"];
-    "Staged changes?" -> "SKILL.md files?" [label="yes"];
+    "Staged changes?" -> "DESIGN.md exists?" [label="yes"];
+    "DESIGN.md exists?" -> "Error: Create DESIGN.md first" [label="no"];
+    "DESIGN.md exists?" -> "SKILL.md files?" [label="yes"];
     "SKILL.md files?" -> "Review skills" [label="yes"];
     "SKILL.md files?" -> "Generate commit message" [label="no"];
     "Review skills" -> "Generate commit message";
@@ -77,8 +81,32 @@ digraph commit_flow {
 
 Follow the `git-commit` workflow with these Java-specific enhancements:
 
-### Step 1 — Inspect staged changes
-Same as `git-commit`.
+### Step 1 — Inspect staged changes and verify DESIGN.md
+
+First, same as `git-commit`:
+```bash
+git diff --staged --stat
+git diff --staged
+```
+
+If nothing is staged, stop and tell the user:
+> "Nothing is staged. Run `git add <files>` first, or tell me which files
+> to stage."
+
+**Then check for DESIGN.md:**
+```bash
+ls docs/DESIGN.md 2>/dev/null
+```
+
+If DESIGN.md doesn't exist, stop and tell the user:
+> "❌ **Java projects require DESIGN.md for architectural documentation.**
+>
+> This file should live at `docs/DESIGN.md`. I can help you create it.
+>
+> Would you like me to invoke `update-design` to generate a starter DESIGN.md,
+> or would you prefer to create it manually first?"
+
+Do not proceed with the commit until DESIGN.md exists.
 
 ### Step 2 — Generate commit message
 
@@ -137,6 +165,7 @@ Follow `git-commit` Step 4 (commit), with this enhancement:
 
 | Situation | Action |
 |---|---|
+| DESIGN.md missing | STOP — offer to create it via update-design or manually |
 | Only test files staged | Suggest `test` type, note DESIGN.md likely unchanged |
 | Only `pom.xml` / `build.gradle` changed | Suggest `build` type, check for new deps that need design doc mention |
 | New `@Entity`, `@Service`, `@Repository` | Ensure update-design captures architectural significance |
@@ -190,6 +219,7 @@ All pitfalls from `git-commit` apply, plus:
 
 | Mistake | Why It's Wrong | Fix |
 |---------|----------------|-----|
+| Committing without DESIGN.md | Java projects need architectural docs | Check for docs/DESIGN.md first, create if missing |
 | Skipping DESIGN.md sync | Design doc drifts from code | Always invoke update-design first |
 | Committing pom.xml changes without testing | Build may be broken | Run `mvn compile` before committing |
 | Generic scope when Java-specific exists | Less context for reviewers | Use `repository` not `data`, `rest` not `api` |
