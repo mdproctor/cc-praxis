@@ -7,12 +7,16 @@ A curated collection of specialized skills for Claude Code that streamline Java 
 These skills transform Claude Code into an expert Java/Quarkus development assistant that understands enterprise-grade code quality, safety requirements, and modern cloud-native patterns. Each skill encodes best practices, common pitfalls, and project-specific conventions to ensure consistent, production-ready code.
 
 **Key Features:**
+- ✅ **❌/✅ Code examples** showing wrong and right approaches
 - ✅ **Quick Reference tables** for instant lookup
 - ✅ **Red Flags sections** to prevent rationalizations
 - ✅ **Common Mistakes tables** documenting pitfalls
 - ✅ **Real-World Impact** sections with production incidents
 - ✅ **Decision flowcharts** for complex workflows
-- ✅ **RED-GREEN-REFACTOR validated** (tested with pressure scenarios)
+- ✅ **Automatic skill chaining** (dev → review → commit → design sync)
+- ✅ **Automatic DESIGN.md sync** with every commit
+- ✅ **Quarkus/Vert.x specialized** (event loop, BOM, reactive patterns)
+- ✅ **RED-GREEN-REFACTOR validated** (tested under pressure scenarios)
 
 ## Why Commit Messages and Design Docs Actually Matter (Yes, Really)
 
