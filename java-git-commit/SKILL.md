@@ -198,6 +198,23 @@ All pitfalls from `git-commit` apply, plus:
 - **Chains from `java-code-review`** after all critical issues resolved
 - **May chain to `adr`** for major architectural decisions
 
+## Success Criteria
+
+Commit is complete when:
+
+- ✅ All files staged (or user confirmed which files to stage)
+- ✅ Commit message generated with Java-specific scope
+- ✅ DESIGN.md updates proposed (if docs/DESIGN.md exists)
+- ✅ CLAUDE.md updates proposed (if CLAUDE.md exists)
+- ✅ User confirmed with explicit **YES**
+- ✅ Documentation changes applied and staged
+- ✅ Commit executed successfully
+- ✅ `git log --oneline -1` confirms commit exists
+
+**Not complete until** all criteria met, documentation synced, and commit confirmed in git log.
+
+---
+
 ## Examples
 
 **New REST endpoint:**

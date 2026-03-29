@@ -221,6 +221,21 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ---
 
+## Success Criteria
+
+CLAUDE.md update is complete when:
+
+- ✅ CLAUDE.md located and read
+- ✅ Workflow/convention changes identified from staged diff
+- ✅ Proposed updates formatted as before/after blocks
+- ✅ User confirmed with explicit **YES**
+- ✅ Changes applied to CLAUDE.md
+- ✅ File ready for staging (or user confirmed no changes needed)
+
+**Not complete until** all criteria met and CLAUDE.md reflects current workflows.
+
+---
+
 ## Skill Chaining
 
 - **Invoked by `git-commit`**: When committing in any repository, git-commit

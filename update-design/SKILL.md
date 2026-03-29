@@ -199,6 +199,21 @@ Use this when DESIGN.md doesn't exist yet:
 
 ---
 
+## Success Criteria
+
+DESIGN.md update is complete when:
+
+- ✅ docs/DESIGN.md located and read
+- ✅ Architectural changes identified from staged diff
+- ✅ Proposed updates formatted as before/after blocks
+- ✅ User confirmed with explicit **YES**
+- ✅ Changes applied to docs/DESIGN.md
+- ✅ File ready for staging (or user confirmed no changes needed)
+
+**Not complete until** all criteria met and DESIGN.md reflects current architecture.
+
+---
+
 ## Skill Chaining
 
 - **Invoked automatically by `java-git-commit`**: Alongside `update-claude-md`,

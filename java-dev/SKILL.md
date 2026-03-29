@@ -340,7 +340,7 @@ When IntelliJ MCP is available, use it for project-wide error detection
 alongside your own analysis. Prefer it when it's faster — but never let it
 substitute for catching compilation errors you can see directly.
 
-## Red Flags — These Thoughts Mean STOP
+## Common Pitfalls — These Thoughts Mean STOP
 
 If you catch yourself thinking any of these, **STOP** and apply the correct approach:
 

@@ -219,6 +219,21 @@ When updating the Skill Chaining Reference table:
 
 ---
 
+## Success Criteria
+
+README.md update is complete when:
+
+- ✅ README.md located and read
+- ✅ Skill collection changes identified from staged diff
+- ✅ Proposed updates formatted as before/after blocks
+- ✅ User confirmed with explicit **YES**
+- ✅ Changes applied to README.md
+- ✅ File ready for staging (or user confirmed no changes needed)
+
+**Not complete until** all criteria met and README.md reflects current skill collection.
+
+---
+
 ## Skill Chaining
 
 - **Invoked automatically by `git-commit`**: When committing in skills repositories,

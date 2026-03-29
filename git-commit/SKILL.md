@@ -251,6 +251,21 @@ Fixes #88
 
 ---
 
+## Success Criteria
+
+Commit is complete when:
+
+- ✅ All files staged (or user confirmed which files to stage)
+- ✅ Commit message generated and presented to user
+- ✅ Documentation updates applied (if CLAUDE.md, README.md, or skill review needed)
+- ✅ User confirmed with explicit **YES**
+- ✅ Commit executed successfully
+- ✅ `git log --oneline -1` confirms commit exists
+
+**Not complete until** all criteria met and commit confirmed in git log.
+
+---
+
 ## Examples
 
 **Simple feature:**

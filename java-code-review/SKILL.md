@@ -339,6 +339,23 @@ class OrderServiceTest {
 
 ---
 
+## Common Pitfalls
+
+| Mistake | Why It's Wrong | Fix |
+|---------|----------------|-----|
+| Skipping review for "small changes" | Small changes cause production incidents | Review ALL changes, size doesn't matter |
+| Only checking syntax/compilation | Misses resource leaks, race conditions, security | Follow full checklist from code-review-principles |
+| Approving with WARNING findings | Warnings become tech debt | Fix or document why acceptable |
+| Not checking thread safety | Quarkus event loop violations cause crashes | Verify @Blocking, avoid shared mutable state |
+| Ignoring test coverage gaps | Untested code breaks in production | Require tests for business logic |
+| Accepting mocked tests | Mocks hide integration issues | Prefer real CDI wiring over mocks |
+| Not checking for resource leaks | try-with-resources missed, connections leak | Verify AutoCloseable usage |
+| Skipping security review | Security vulnerabilities deployed | Invoke java-security-audit for auth/payment/PII |
+| Approving without running code | "Looks good" without testing | Verify compilation, run relevant tests |
+| Not checking BOM alignment | Dependency conflicts, CVEs | Verify transitive dependencies match BOM |
+
+---
+
 ## Skill Chaining
 
 **Triggered by java-git-commit:**
