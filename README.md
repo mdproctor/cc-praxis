@@ -269,10 +269,10 @@ Generic conventional commit workflow for any repository:
 
 #### **java-git-commit**
 Intelligent commit workflow that extends git-commit with:
+- **Enforces DESIGN.md existence** — blocks commits if `docs/DESIGN.md` is missing
 - Java/Quarkus-specific scope suggestions (controller, service, repository, BOM)
 - Automatic DESIGN.md synchronization via `update-design` skill
 - Maven/Gradle awareness
-- Proposes everything for review before committing
 
 **Features:**
 - Decision flowchart showing complete commit + design sync process
@@ -509,7 +509,7 @@ Each skill explicitly declares when to chain to other skills:
 | `git-commit` | `skill-review` | Always (automatic if SKILL.md files staged) |
 | `git-commit` | `update-claude-md` | Always (automatic if CLAUDE.md exists) |
 | `git-commit` | `update-readme` | Always (automatic if README.md exists and skill changes) |
-| `java-git-commit` | `update-design` | Always (automatic if docs/DESIGN.md exists) |
+| `java-git-commit` | `update-design` | Blocks if DESIGN.md missing; syncs automatically if exists |
 | `java-git-commit` | `update-claude-md` | Always (automatic if CLAUDE.md exists) |
 | `update-design` | (companion: `update-claude-md`) | Architecture changes often need workflow doc updates |
 | `update-readme` | (companion: `update-claude-md`) | Skill changes often need workflow doc updates |
