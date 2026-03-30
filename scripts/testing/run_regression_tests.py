@@ -14,14 +14,25 @@ from typing import Dict, List, Any
 
 def load_regression_test(test_file: Path) -> Dict[str, Any]:
     """Load regression test from JSON."""
-    with open(test_file, 'r') as f:
-        return json.load(f)
+    try:
+        with open(test_file, 'r') as f:
+            return json.load(f)
+    except json.JSONDecodeError as e:
+        print(f"❌ Error parsing {test_file}: {e}")
+        sys.exit(1)
+    except Exception as e:
+        print(f"❌ Error reading {test_file}: {e}")
+        sys.exit(1)
 
 def run_validator(validator: str, target: str) -> tuple[int, str]:
     """Run a validator and return exit code and output."""
+    validator_path = Path(f"scripts/validation/{validator}")
+    if not validator_path.exists():
+        return -1, f"Validator not found: {validator_path}"
+
     try:
         result = subprocess.run(
-            ["python3", f"scripts/validation/{validator}", target],
+            ["python3", str(validator_path), target],
             capture_output=True,
             text=True,
             timeout=30
@@ -65,6 +76,12 @@ def execute_regression_test(test: Dict[str, Any]) -> Dict[str, Any]:
         else:
             result['passed'] = True
             result['details'] = "No CSO violations found"
+    elif val_type is None:
+        result['passed'] = False
+        result['details'] = "No validation type specified in test"
+    else:
+        result['passed'] = False
+        result['details'] = f"Unknown validation type: {val_type}"
 
     return result
 
@@ -79,6 +96,13 @@ def main():
 
     # Find regression tests
     regression_dir = Path('tests/regression')
+    if not regression_dir.exists():
+        if args.json:
+            print(json.dumps({'error': 'Regression test directory not found'}))
+        else:
+            print("❌ Regression test directory not found: tests/regression")
+        sys.exit(1)
+
     if args.issue:
         test_files = list(regression_dir.glob(f'issue-{args.issue}-*.json'))
     else:
