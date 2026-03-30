@@ -24,7 +24,22 @@ def create_test_worktree(base_dir: Path) -> Path:
 
     Returns:
         Path to created worktree
+
+    Raises:
+        RuntimeError: If not in a git repository
+        subprocess.CalledProcessError: If worktree creation fails
     """
+    # Verify we're in a git repository
+    try:
+        subprocess.run(
+            ["git", "rev-parse", "--git-dir"],
+            cwd=base_dir,
+            check=True,
+            capture_output=True
+        )
+    except subprocess.CalledProcessError:
+        raise RuntimeError("Not in a git repository - worktree creation requires git")
+
     # Create temporary directory for worktree
     worktree_path = Path(tempfile.mkdtemp(prefix="skill_test_", dir=base_dir))
 
@@ -45,12 +60,16 @@ def cleanup_worktree(worktree_path: Path) -> None:
     Args:
         worktree_path: Path to worktree to remove
     """
-    # Remove git worktree
-    subprocess.run(
-        ["git", "worktree", "remove", str(worktree_path), "--force"],
-        check=True,
-        capture_output=True
-    )
+    try:
+        # Remove git worktree
+        subprocess.run(
+            ["git", "worktree", "remove", str(worktree_path), "--force"],
+            check=True,
+            capture_output=True
+        )
+    except subprocess.CalledProcessError:
+        # If worktree removal fails, still try to clean up directory
+        pass
 
     # Clean up directory if it still exists
     if worktree_path.exists():
