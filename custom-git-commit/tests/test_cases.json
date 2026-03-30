@@ -1,0 +1,134 @@
+{
+  "skill": "custom-git-commit",
+  "description": "Functional tests for custom-git-commit skill",
+  "tests": [
+    {
+      "name": "Verifies CLAUDE.md declares type: custom",
+      "description": "Should verify project type is 'custom' before proceeding",
+      "setup": [
+        "git init /tmp/test-custom-commit-1",
+        "cd /tmp/test-custom-commit-1 && echo '## Project Type\\n\\n**Type:** custom\\n**Primary Document:** docs/vision.md' > CLAUDE.md",
+        "cd /tmp/test-custom-commit-1 && git add CLAUDE.md"
+      ],
+      "assertions": [
+        {
+          "category": "file",
+          "type": "contains",
+          "path": "/tmp/test-custom-commit-1/CLAUDE.md",
+          "text": "**Type:** custom"
+        },
+        {
+          "category": "file",
+          "type": "contains",
+          "path": "/tmp/test-custom-commit-1/CLAUDE.md",
+          "text": "**Primary Document:**"
+        }
+      ]
+    },
+    {
+      "name": "Blocks if Primary Document is missing",
+      "description": "Should block commit if Primary Document declared in CLAUDE.md doesn't exist",
+      "setup": [
+        "git init /tmp/test-custom-commit-2",
+        "cd /tmp/test-custom-commit-2 && echo '## Project Type\\n\\n**Type:** custom\\n**Primary Document:** docs/vision.md' > CLAUDE.md",
+        "cd /tmp/test-custom-commit-2 && echo 'test' > test.txt",
+        "cd /tmp/test-custom-commit-2 && git add CLAUDE.md test.txt"
+      ],
+      "assertions": [
+        {
+          "category": "file",
+          "type": "not_exists",
+          "path": "/tmp/test-custom-commit-2/docs/vision.md"
+        }
+      ]
+    },
+    {
+      "name": "Invokes update-primary-doc when Sync Rules configured",
+      "description": "Should invoke update-primary-doc to sync primary document with changes",
+      "setup": [
+        "git init /tmp/test-custom-commit-3",
+        "cd /tmp/test-custom-commit-3 && cat > CLAUDE.md <<'EOF'\n## Project Type\n\n**Type:** custom\n**Primary Document:** docs/vision.md\n\n**Sync Rules:**\n| Changed Files | Document Section | Update Type |\n|---------------|------------------|-------------|\n| docs/catalog/*.md | Projects | Add/update entries |\nEOF",
+        "cd /tmp/test-custom-commit-3 && mkdir -p docs/catalog && echo '# Vision' > docs/vision.md",
+        "cd /tmp/test-custom-commit-3 && echo '# Project A' > docs/catalog/project-a.md",
+        "cd /tmp/test-custom-commit-3 && git add ."
+      ],
+      "assertions": [
+        {
+          "category": "file",
+          "type": "exists",
+          "path": "/tmp/test-custom-commit-3/docs/vision.md"
+        },
+        {
+          "category": "file",
+          "type": "exists",
+          "path": "/tmp/test-custom-commit-3/docs/catalog/project-a.md"
+        },
+        {
+          "category": "skill",
+          "type": "invoked",
+          "skill": "update-primary-doc"
+        }
+      ]
+    },
+    {
+      "name": "Invokes update-claude-md when CLAUDE.md exists",
+      "description": "Should invoke update-claude-md alongside update-primary-doc",
+      "setup": [
+        "git init /tmp/test-custom-commit-4",
+        "cd /tmp/test-custom-commit-4 && cat > CLAUDE.md <<'EOF'\n## Project Type\n\n**Type:** custom\n**Primary Document:** docs/vision.md\n\n**Sync Rules:**\n| Changed Files | Document Section | Update Type |\n|---------------|------------------|-------------|\n| docs/catalog/*.md | Projects | Add entries |\nEOF",
+        "cd /tmp/test-custom-commit-4 && mkdir -p docs && echo '# Vision' > docs/vision.md",
+        "cd /tmp/test-custom-commit-4 && echo 'test' > test.txt",
+        "cd /tmp/test-custom-commit-4 && git add ."
+      ],
+      "assertions": [
+        {
+          "category": "file",
+          "type": "exists",
+          "path": "/tmp/test-custom-commit-4/CLAUDE.md"
+        },
+        {
+          "category": "skill",
+          "type": "invoked",
+          "skill": "update-claude-md"
+        }
+      ]
+    },
+    {
+      "name": "Handles milestone tracking",
+      "description": "Should include current milestone in commit context",
+      "setup": [
+        "git init /tmp/test-custom-commit-5",
+        "cd /tmp/test-custom-commit-5 && cat > CLAUDE.md <<'EOF'\n## Project Type\n\n**Type:** custom\n**Primary Document:** docs/vision.md\n\n**Current Milestone:** Phase 2 - Implementation\nEOF",
+        "cd /tmp/test-custom-commit-5 && mkdir -p docs && echo '# Vision' > docs/vision.md",
+        "cd /tmp/test-custom-commit-5 && echo 'test' > test.txt",
+        "cd /tmp/test-custom-commit-5 && git add ."
+      ],
+      "assertions": [
+        {
+          "category": "file",
+          "type": "contains",
+          "path": "/tmp/test-custom-commit-5/CLAUDE.md",
+          "text": "**Current Milestone:**"
+        }
+      ]
+    },
+    {
+      "name": "Generates conventional commit with custom context",
+      "description": "Should generate feat/fix/refactor commit appropriate for custom project",
+      "setup": [
+        "git init /tmp/test-custom-commit-6",
+        "cd /tmp/test-custom-commit-6 && cat > CLAUDE.md <<'EOF'\n## Project Type\n\n**Type:** custom\n**Primary Document:** docs/vision.md\nEOF",
+        "cd /tmp/test-custom-commit-6 && mkdir -p docs && echo '# Vision' > docs/vision.md",
+        "cd /tmp/test-custom-commit-6 && echo '# New decision' > docs/decision-001.md",
+        "cd /tmp/test-custom-commit-6 && git add ."
+      ],
+      "assertions": [
+        {
+          "category": "file",
+          "type": "exists",
+          "path": "/tmp/test-custom-commit-6/docs/decision-001.md"
+        }
+      ]
+    }
+  ]
+}

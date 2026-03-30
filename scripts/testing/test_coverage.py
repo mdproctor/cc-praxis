@@ -21,11 +21,12 @@ def get_all_skills() -> List[str]:
 def get_tested_skills() -> Set[str]:
     """Get set of skills with test cases."""
     tested = set()
-    test_dir = Path('tests/skills')
-    if test_dir.exists():
-        for skill_test_dir in test_dir.iterdir():
-            if skill_test_dir.is_dir() and (skill_test_dir / 'test_cases.json').exists():
-                tested.add(skill_test_dir.name)
+    # Check for test cases in <skill>/tests/test_cases.json
+    for skill_dir in Path('.').glob('*/SKILL.md'):
+        skill_name = skill_dir.parent.name
+        test_file = skill_dir.parent / 'tests' / 'test_cases.json'
+        if test_file.exists():
+            tested.add(skill_name)
     return tested
 
 def categorize_skills(skills: List[str]) -> Dict[str, List[str]]:
@@ -54,7 +55,7 @@ def categorize_skills(skills: List[str]) -> Dict[str, List[str]]:
 
 def count_test_scenarios(skill: str) -> int:
     """Count test scenarios for a skill."""
-    test_file = Path(f'tests/skills/{skill}/test_cases.json')
+    test_file = Path(skill) / 'tests' / 'test_cases.json'
     if not test_file.exists():
         return 0
 

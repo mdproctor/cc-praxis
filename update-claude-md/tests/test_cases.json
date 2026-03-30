@@ -1,0 +1,226 @@
+{
+  "skill": "update-claude-md",
+  "description": "Functional tests for update-claude-md skill",
+  "tests": [
+    {
+      "name": "Checks if CLAUDE.md exists before proceeding",
+      "description": "Should verify CLAUDE.md exists, skip if not found",
+      "setup": [
+        "git init /tmp/test-claude-md-1",
+        "cd /tmp/test-claude-md-1 && echo 'test' > test.txt",
+        "cd /tmp/test-claude-md-1 && git add test.txt"
+      ],
+      "assertions": [
+        {
+          "category": "file",
+          "type": "not_exists",
+          "path": "/tmp/test-claude-md-1/CLAUDE.md"
+        },
+        {
+          "category": "skill",
+          "type": "skips"
+        }
+      ]
+    },
+    {
+      "name": "Reads current CLAUDE.md before proposing updates",
+      "description": "Should read full CLAUDE.md to understand existing structure",
+      "setup": [
+        "git init /tmp/test-claude-md-2",
+        "cd /tmp/test-claude-md-2 && cat > CLAUDE.md <<'EOF'\n# CLAUDE.md\n\n## Project Type\n**Type:** generic\n\n## Build Commands\nmvn compile\nEOF",
+        "cd /tmp/test-claude-md-2 && echo 'test' > test.txt",
+        "cd /tmp/test-claude-md-2 && git add CLAUDE.md test.txt"
+      ],
+      "assertions": [
+        {
+          "category": "file",
+          "type": "exists",
+          "path": "/tmp/test-claude-md-2/CLAUDE.md"
+        },
+        {
+          "category": "skill",
+          "type": "reads",
+          "file": "CLAUDE.md"
+        }
+      ]
+    },
+    {
+      "name": "Maps new script to Development Tools section",
+      "description": "Should update Development Tools when new script added",
+      "setup": [
+        "git init /tmp/test-claude-md-3",
+        "cd /tmp/test-claude-md-3 && mkdir -p scripts",
+        "cd /tmp/test-claude-md-3 && cat > CLAUDE.md <<'EOF'\n# CLAUDE.md\n\n## Development Tools\nNo scripts yet\nEOF",
+        "cd /tmp/test-claude-md-3 && echo '#!/bin/bash\\necho test' > scripts/validate_all.py",
+        "cd /tmp/test-claude-md-3 && git add ."
+      ],
+      "assertions": [
+        {
+          "category": "file",
+          "type": "exists",
+          "path": "/tmp/test-claude-md-3/scripts/validate_all.py"
+        },
+        {
+          "category": "proposal",
+          "type": "proposes_update",
+          "file": "CLAUDE.md",
+          "section": "Development Tools"
+        }
+      ]
+    },
+    {
+      "name": "Maps test framework changes to Testing section",
+      "description": "Should update Testing section when test infrastructure added",
+      "setup": [
+        "git init /tmp/test-claude-md-4",
+        "cd /tmp/test-claude-md-4 && mkdir -p scripts/testing",
+        "cd /tmp/test-claude-md-4 && cat > CLAUDE.md <<'EOF'\n# CLAUDE.md\n\n## Testing\nNo test framework\nEOF",
+        "cd /tmp/test-claude-md-4 && echo '#!/usr/bin/env python3' > scripts/testing/run_tests.py",
+        "cd /tmp/test-claude-md-4 && git add ."
+      ],
+      "assertions": [
+        {
+          "category": "file",
+          "type": "exists",
+          "path": "/tmp/test-claude-md-4/scripts/testing/run_tests.py"
+        },
+        {
+          "category": "proposal",
+          "type": "proposes_update",
+          "file": "CLAUDE.md",
+          "section": "Testing"
+        }
+      ]
+    },
+    {
+      "name": "Maps package.json changes to Build section",
+      "description": "Should update Build Commands when build config changes",
+      "setup": [
+        "git init /tmp/test-claude-md-5",
+        "cd /tmp/test-claude-md-5 && cat > CLAUDE.md <<'EOF'\n# CLAUDE.md\n\n## Build Commands\nNo build yet\nEOF",
+        "cd /tmp/test-claude-md-5 && cat > package.json <<'EOF'\n{\n  \"scripts\": {\n    \"build\": \"tsc\",\n    \"test\": \"jest\"\n  }\n}\nEOF",
+        "cd /tmp/test-claude-md-5 && git add ."
+      ],
+      "assertions": [
+        {
+          "category": "file",
+          "type": "contains",
+          "path": "/tmp/test-claude-md-5/package.json",
+          "text": "\"build\""
+        },
+        {
+          "category": "proposal",
+          "type": "proposes_update",
+          "file": "CLAUDE.md",
+          "section": "Build Commands"
+        }
+      ]
+    },
+    {
+      "name": "Maps CI workflow changes to CI section",
+      "description": "Should update CI/CD section when GitHub Actions workflow added",
+      "setup": [
+        "git init /tmp/test-claude-md-6",
+        "cd /tmp/test-claude-md-6 && mkdir -p .github/workflows",
+        "cd /tmp/test-claude-md-6 && cat > CLAUDE.md <<'EOF'\n# CLAUDE.md\n\n## CI/CD\nNo CI yet\nEOF",
+        "cd /tmp/test-claude-md-6 && cat > .github/workflows/test.yml <<'EOF'\nname: Test\non: [push]\njobs:\n  test:\n    runs-on: ubuntu-latest\nEOF",
+        "cd /tmp/test-claude-md-6 && git add ."
+      ],
+      "assertions": [
+        {
+          "category": "file",
+          "type": "exists",
+          "path": "/tmp/test-claude-md-6/.github/workflows/test.yml"
+        },
+        {
+          "category": "proposal",
+          "type": "proposes_update",
+          "file": "CLAUDE.md",
+          "section": "CI/CD"
+        }
+      ]
+    },
+    {
+      "name": "Skips Project Type section (never modifies)",
+      "description": "Should never modify Project Type section (user-configured)",
+      "setup": [
+        "git init /tmp/test-claude-md-7",
+        "cd /tmp/test-claude-md-7 && cat > CLAUDE.md <<'EOF'\n# CLAUDE.md\n\n## Project Type\n**Type:** java\nEOF",
+        "cd /tmp/test-claude-md-7 && echo 'test' > test.txt",
+        "cd /tmp/test-claude-md-7 && git add ."
+      ],
+      "assertions": [
+        {
+          "category": "proposal",
+          "type": "never_proposes",
+          "file": "CLAUDE.md",
+          "section": "Project Type"
+        }
+      ]
+    },
+    {
+      "name": "Validates document after updates",
+      "description": "Should run document validation after applying changes",
+      "setup": [
+        "git init /tmp/test-claude-md-8",
+        "cd /tmp/test-claude-md-8 && echo '# CLAUDE.md' > CLAUDE.md",
+        "cd /tmp/test-claude-md-8 && echo 'test' > test.txt",
+        "cd /tmp/test-claude-md-8 && git add ."
+      ],
+      "assertions": [
+        {
+          "category": "validation",
+          "type": "runs",
+          "script": "validate_document.py",
+          "target": "CLAUDE.md"
+        }
+      ]
+    },
+    {
+      "name": "Routes to modular sections if CLAUDE.md is modular",
+      "description": "Should update specific module files when CLAUDE.md has modules",
+      "setup": [
+        "git init /tmp/test-claude-md-9",
+        "cd /tmp/test-claude-md-9 && mkdir -p docs/workflows scripts/testing",
+        "cd /tmp/test-claude-md-9 && cat > CLAUDE.md <<'EOF'\n# CLAUDE.md\n\nSee [Testing Workflows](docs/workflows/testing.md)\nEOF",
+        "cd /tmp/test-claude-md-9 && cat > docs/workflows/testing.md <<'EOF'\n# Testing\nNo tests yet\nEOF",
+        "cd /tmp/test-claude-md-9 && echo '#!/usr/bin/env python3' > scripts/testing/run_tests.py",
+        "cd /tmp/test-claude-md-9 && git add ."
+      ],
+      "assertions": [
+        {
+          "category": "file",
+          "type": "exists",
+          "path": "/tmp/test-claude-md-9/docs/workflows/testing.md"
+        },
+        {
+          "category": "proposal",
+          "type": "proposes_update",
+          "file": "docs/workflows/testing.md"
+        }
+      ]
+    },
+    {
+      "name": "Blocks if validation fails after updates",
+      "description": "Should revert changes if document validation detects corruption",
+      "setup": [
+        "git init /tmp/test-claude-md-10",
+        "cd /tmp/test-claude-md-10 && echo '# CLAUDE.md' > CLAUDE.md",
+        "cd /tmp/test-claude-md-10 && echo 'test' > test.txt",
+        "cd /tmp/test-claude-md-10 && git add ."
+      ],
+      "assertions": [
+        {
+          "category": "validation",
+          "type": "blocks_on",
+          "severity": "CRITICAL"
+        },
+        {
+          "category": "git",
+          "type": "reverts",
+          "file": "CLAUDE.md"
+        }
+      ]
+    }
+  ]
+}

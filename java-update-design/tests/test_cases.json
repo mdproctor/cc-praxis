@@ -1,0 +1,195 @@
+{
+  "skill": "java-update-design",
+  "description": "Functional tests for java-update-design skill",
+  "tests": [
+    {
+      "name": "Reads DESIGN.md for current architecture",
+      "description": "Should read docs/DESIGN.md to understand current state before proposing updates",
+      "setup": [
+        "git init /tmp/test-java-design-1",
+        "cd /tmp/test-java-design-1 && mkdir -p docs src/main/java/test",
+        "cd /tmp/test-java-design-1 && cat > docs/DESIGN.md <<'EOF'\n# Design\n\n## Architecture\n3-tier architecture\n\n## Domain Model\nNo entities yet\nEOF",
+        "cd /tmp/test-java-design-1 && echo 'public class Test {}' > src/main/java/test/Test.java",
+        "cd /tmp/test-java-design-1 && git add ."
+      ],
+      "assertions": [
+        {
+          "category": "file",
+          "type": "exists",
+          "path": "/tmp/test-java-design-1/docs/DESIGN.md"
+        },
+        {
+          "category": "skill",
+          "type": "reads",
+          "file": "docs/DESIGN.md"
+        }
+      ]
+    },
+    {
+      "name": "Maps @Entity to Domain Model section",
+      "description": "Should update Domain Model section when new @Entity added",
+      "setup": [
+        "git init /tmp/test-java-design-2",
+        "cd /tmp/test-java-design-2 && mkdir -p docs src/main/java/test/domain",
+        "cd /tmp/test-java-design-2 && cat > docs/DESIGN.md <<'EOF'\n# Design\n\n## Domain Model\nNo entities yet\nEOF",
+        "cd /tmp/test-java-design-2 && cat > src/main/java/test/domain/User.java <<'EOF'\nimport javax.persistence.Entity;\n\n@Entity\npublic class User {\n    private Long id;\n    private String username;\n}\nEOF",
+        "cd /tmp/test-java-design-2 && git add ."
+      ],
+      "assertions": [
+        {
+          "category": "file",
+          "type": "contains",
+          "path": "/tmp/test-java-design-2/src/main/java/test/domain/User.java",
+          "text": "@Entity"
+        },
+        {
+          "category": "proposal",
+          "type": "proposes_update",
+          "file": "docs/DESIGN.md",
+          "section": "Domain Model"
+        }
+      ]
+    },
+    {
+      "name": "Maps @RestController to API section",
+      "description": "Should update API Endpoints section when new REST endpoint added",
+      "setup": [
+        "git init /tmp/test-java-design-3",
+        "cd /tmp/test-java-design-3 && mkdir -p docs src/main/java/test/rest",
+        "cd /tmp/test-java-design-3 && cat > docs/DESIGN.md <<'EOF'\n# Design\n\n## API Endpoints\nNo endpoints yet\nEOF",
+        "cd /tmp/test-java-design-3 && cat > src/main/java/test/rest/UserResource.java <<'EOF'\nimport javax.ws.rs.*;\n\n@Path(\"/users\")\npublic class UserResource {\n    @GET\n    public List<User> list() { return null; }\n}\nEOF",
+        "cd /tmp/test-java-design-3 && git add ."
+      ],
+      "assertions": [
+        {
+          "category": "file",
+          "type": "contains",
+          "path": "/tmp/test-java-design-3/src/main/java/test/rest/UserResource.java",
+          "text": "@Path"
+        },
+        {
+          "category": "proposal",
+          "type": "proposes_update",
+          "file": "docs/DESIGN.md",
+          "section": "API Endpoints"
+        }
+      ]
+    },
+    {
+      "name": "Maps @ApplicationScoped to Components section",
+      "description": "Should update Components section when new service added",
+      "setup": [
+        "git init /tmp/test-java-design-4",
+        "cd /tmp/test-java-design-4 && mkdir -p docs src/main/java/test/service",
+        "cd /tmp/test-java-design-4 && cat > docs/DESIGN.md <<'EOF'\n# Design\n\n## Components\n### Business Logic\nNo services yet\nEOF",
+        "cd /tmp/test-java-design-4 && cat > src/main/java/test/service/UserService.java <<'EOF'\nimport javax.enterprise.context.ApplicationScoped;\n\n@ApplicationScoped\npublic class UserService {\n    public void createUser() { }\n}\nEOF",
+        "cd /tmp/test-java-design-4 && git add ."
+      ],
+      "assertions": [
+        {
+          "category": "file",
+          "type": "contains",
+          "path": "/tmp/test-java-design-4/src/main/java/test/service/UserService.java",
+          "text": "@ApplicationScoped"
+        },
+        {
+          "category": "proposal",
+          "type": "proposes_update",
+          "file": "docs/DESIGN.md",
+          "section": "Components"
+        }
+      ]
+    },
+    {
+      "name": "Maps pom.xml module to Component Structure",
+      "description": "Should update Component Structure when new module added to pom.xml",
+      "setup": [
+        "git init /tmp/test-java-design-5",
+        "cd /tmp/test-java-design-5 && mkdir -p docs",
+        "cd /tmp/test-java-design-5 && cat > docs/DESIGN.md <<'EOF'\n# Design\n\n## Component Structure\nSingle module\nEOF",
+        "cd /tmp/test-java-design-5 && cat > pom.xml <<'EOF'\n<project>\n  <modules>\n    <module>core</module>\n    <module>api</module>\n  </modules>\n</project>\nEOF",
+        "cd /tmp/test-java-design-5 && git add ."
+      ],
+      "assertions": [
+        {
+          "category": "file",
+          "type": "contains",
+          "path": "/tmp/test-java-design-5/pom.xml",
+          "text": "<modules>"
+        },
+        {
+          "category": "proposal",
+          "type": "proposes_update",
+          "file": "docs/DESIGN.md",
+          "section": "Component Structure"
+        }
+      ]
+    },
+    {
+      "name": "Validates document after updates",
+      "description": "Should run document validation after applying changes",
+      "setup": [
+        "git init /tmp/test-java-design-6",
+        "cd /tmp/test-java-design-6 && mkdir -p docs src/main/java/test",
+        "cd /tmp/test-java-design-6 && echo '# Design' > docs/DESIGN.md",
+        "cd /tmp/test-java-design-6 && echo 'public class Test {}' > src/main/java/test/Test.java",
+        "cd /tmp/test-java-design-6 && git add ."
+      ],
+      "assertions": [
+        {
+          "category": "validation",
+          "type": "runs",
+          "script": "validate_document.py",
+          "target": "docs/DESIGN.md"
+        }
+      ]
+    },
+    {
+      "name": "Routes to modular sections if DESIGN.md is modular",
+      "description": "Should update specific module files when DESIGN.md has modules",
+      "setup": [
+        "git init /tmp/test-java-design-7",
+        "cd /tmp/test-java-design-7 && mkdir -p docs/design src/main/java/test/domain",
+        "cd /tmp/test-java-design-7 && cat > docs/DESIGN.md <<'EOF'\n# Design\n\nSee [Domain Model](docs/design/data-model.md)\nEOF",
+        "cd /tmp/test-java-design-7 && cat > docs/design/data-model.md <<'EOF'\n# Domain Model\nNo entities yet\nEOF",
+        "cd /tmp/test-java-design-7 && cat > src/main/java/test/domain/User.java <<'EOF'\n@Entity\npublic class User {}\nEOF",
+        "cd /tmp/test-java-design-7 && git add ."
+      ],
+      "assertions": [
+        {
+          "category": "file",
+          "type": "exists",
+          "path": "/tmp/test-java-design-7/docs/design/data-model.md"
+        },
+        {
+          "category": "proposal",
+          "type": "proposes_update",
+          "file": "docs/design/data-model.md"
+        }
+      ]
+    },
+    {
+      "name": "Blocks if validation fails after updates",
+      "description": "Should revert changes if document validation detects corruption",
+      "setup": [
+        "git init /tmp/test-java-design-8",
+        "cd /tmp/test-java-design-8 && mkdir -p docs src/main/java/test",
+        "cd /tmp/test-java-design-8 && echo '# Design' > docs/DESIGN.md",
+        "cd /tmp/test-java-design-8 && echo 'public class Test {}' > src/main/java/test/Test.java",
+        "cd /tmp/test-java-design-8 && git add ."
+      ],
+      "assertions": [
+        {
+          "category": "validation",
+          "type": "blocks_on",
+          "severity": "CRITICAL"
+        },
+        {
+          "category": "git",
+          "type": "reverts",
+          "file": "docs/DESIGN.md"
+        }
+      ]
+    }
+  ]
+}

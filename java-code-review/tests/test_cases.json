@@ -1,0 +1,157 @@
+{
+  "skill": "java-code-review",
+  "description": "Functional tests for java-code-review skill",
+  "tests": [
+    {
+      "name": "Reviews staged Java files",
+      "description": "Should read and analyze all staged .java files",
+      "setup": [
+        "git init /tmp/test-java-review-1",
+        "cd /tmp/test-java-review-1 && mkdir -p src/main/java/test",
+        "cd /tmp/test-java-review-1 && echo 'public class Test {}' > src/main/java/test/Test.java",
+        "cd /tmp/test-java-review-1 && git add src/main/java/test/Test.java"
+      ],
+      "assertions": [
+        {
+          "category": "git",
+          "type": "staged",
+          "path": "src/main/java/test/Test.java"
+        },
+        {
+          "category": "file",
+          "type": "contains",
+          "path": "/tmp/test-java-review-1/src/main/java/test/Test.java",
+          "text": "public class Test"
+        }
+      ]
+    },
+    {
+      "name": "Detects concurrency violations (shared mutable state)",
+      "description": "Should flag CRITICAL when mutable field accessed without synchronization",
+      "setup": [
+        "git init /tmp/test-java-review-2",
+        "cd /tmp/test-java-review-2 && mkdir -p src/main/java/test",
+        "cd /tmp/test-java-review-2 && cat > src/main/java/test/Unsafe.java <<'EOF'\n@ApplicationScoped\npublic class Unsafe {\n    private int counter = 0;  // Mutable shared state\n    public void increment() { counter++; }  // No synchronization\n}\nEOF",
+        "cd /tmp/test-java-review-2 && git add src/main/java/test/Unsafe.java"
+      ],
+      "assertions": [
+        {
+          "category": "file",
+          "type": "contains",
+          "path": "/tmp/test-java-review-2/src/main/java/test/Unsafe.java",
+          "text": "@ApplicationScoped"
+        },
+        {
+          "category": "review",
+          "type": "finding",
+          "severity": "CRITICAL",
+          "contains": "shared mutable state"
+        }
+      ]
+    },
+    {
+      "name": "Detects safety violations (unchecked nulls)",
+      "description": "Should flag WARNING when nullable value used without null check",
+      "setup": [
+        "git init /tmp/test-java-review-3",
+        "cd /tmp/test-java-review-3 && mkdir -p src/main/java/test",
+        "cd /tmp/test-java-review-3 && cat > src/main/java/test/NullUnsafe.java <<'EOF'\npublic class NullUnsafe {\n    public String process(String input) {\n        return input.toLowerCase();  // No null check\n    }\n}\nEOF",
+        "cd /tmp/test-java-review-3 && git add src/main/java/test/NullUnsafe.java"
+      ],
+      "assertions": [
+        {
+          "category": "file",
+          "type": "contains",
+          "path": "/tmp/test-java-review-3/src/main/java/test/NullUnsafe.java",
+          "text": "input.toLowerCase()"
+        },
+        {
+          "category": "review",
+          "type": "finding",
+          "severity": "WARNING",
+          "contains": "null"
+        }
+      ]
+    },
+    {
+      "name": "Triggers java-security-audit for security-critical code",
+      "description": "Should invoke java-security-audit when security packages detected",
+      "setup": [
+        "git init /tmp/test-java-review-4",
+        "cd /tmp/test-java-review-4 && mkdir -p src/main/java/test/security",
+        "cd /tmp/test-java-review-4 && cat > src/main/java/test/security/Auth.java <<'EOF'\nimport javax.crypto.Cipher;\nimport java.security.MessageDigest;\n\npublic class Auth {\n    public void encrypt(String data) { }\n}\nEOF",
+        "cd /tmp/test-java-review-4 && git add src/main/java/test/security/Auth.java"
+      ],
+      "assertions": [
+        {
+          "category": "file",
+          "type": "contains",
+          "path": "/tmp/test-java-review-4/src/main/java/test/security/Auth.java",
+          "text": "javax.crypto"
+        },
+        {
+          "category": "skill",
+          "type": "invoked",
+          "skill": "java-security-audit"
+        }
+      ]
+    },
+    {
+      "name": "Reports findings by severity (CRITICAL/WARNING/NOTE)",
+      "description": "Should categorize findings as CRITICAL, WARNING, or NOTE",
+      "setup": [
+        "git init /tmp/test-java-review-5",
+        "cd /tmp/test-java-review-5 && mkdir -p src/main/java/test",
+        "cd /tmp/test-java-review-5 && cat > src/main/java/test/Mixed.java <<'EOF'\n@ApplicationScoped\npublic class Mixed {\n    private List<String> items = new ArrayList<>();  // Mutable shared state (CRITICAL)\n    public String get(int index) { return items.get(index); }  // No bounds check (WARNING)\n    public void log(String msg) { System.out.println(msg); }  // System.out (NOTE)\n}\nEOF",
+        "cd /tmp/test-java-review-5 && git add src/main/java/test/Mixed.java"
+      ],
+      "assertions": [
+        {
+          "category": "review",
+          "type": "has_findings",
+          "severities": ["CRITICAL", "WARNING", "NOTE"]
+        }
+      ]
+    },
+    {
+      "name": "Blocks commit on CRITICAL findings",
+      "description": "Should prevent commit when CRITICAL issues detected",
+      "setup": [
+        "git init /tmp/test-java-review-6",
+        "cd /tmp/test-java-review-6 && mkdir -p src/main/java/test",
+        "cd /tmp/test-java-review-6 && cat > src/main/java/test/Critical.java <<'EOF'\n@ApplicationScoped\npublic class Critical {\n    private int counter = 0;  // CRITICAL: shared mutable state\n    public void increment() { counter++; }\n}\nEOF",
+        "cd /tmp/test-java-review-6 && git add src/main/java/test/Critical.java"
+      ],
+      "assertions": [
+        {
+          "category": "review",
+          "type": "blocks",
+          "severity": "CRITICAL"
+        }
+      ]
+    },
+    {
+      "name": "Applies code-review-principles universally",
+      "description": "Should check against universal principles (DRY, KISS, YAGNI)",
+      "setup": [
+        "git init /tmp/test-java-review-7",
+        "cd /tmp/test-java-review-7 && mkdir -p src/main/java/test",
+        "cd /tmp/test-java-review-7 && cat > src/main/java/test/Service.java <<'EOF'\npublic class Service {\n    public void processA(String input) {\n        String cleaned = input.trim().toLowerCase();\n        // logic A\n    }\n    public void processB(String input) {\n        String cleaned = input.trim().toLowerCase();  // DRY violation\n        // logic B\n    }\n}\nEOF",
+        "cd /tmp/test-java-review-7 && git add src/main/java/test/Service.java"
+      ],
+      "assertions": [
+        {
+          "category": "review",
+          "type": "references",
+          "skill": "code-review-principles"
+        },
+        {
+          "category": "review",
+          "type": "finding",
+          "severity": "NOTE",
+          "contains": "DRY"
+        }
+      ]
+    }
+  ]
+}
