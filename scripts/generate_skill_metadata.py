@@ -1,16 +1,19 @@
 #!/usr/bin/env python3
 """
-Skill Metadata Generator - Task 1: Skill Scanner
+Skill Metadata Generator - Tasks 1-4
 
-Scans a directory structure to find all skill directories (those containing SKILL.md files).
-This is the foundation for the marketplace metadata generation system.
+Task 1: Scans a directory structure to find all skill directories (those containing SKILL.md files).
+Task 2: Parses SKILL.md frontmatter to extract skill name.
+Task 3: Parses SKILL.md Prerequisites section to extract dependencies.
+Task 4: Generates skill.json metadata file combining frontmatter + external inputs.
 
-Part of the skill marketplace implementation (Task 1 of 20).
+Part of the skill marketplace implementation (Tasks 1-4 of 20).
 """
 
+import json
 import re
 from pathlib import Path
-from typing import List
+from typing import Dict, List
 
 
 def scan_for_skills(root_dir: Path) -> List[Path]:
@@ -97,3 +100,38 @@ def parse_dependencies(skill_md_content: str) -> List[str]:
     dependencies = re.findall(r'\[`([^`]+)`\]', prereq_section)
 
     return dependencies
+
+
+def generate_skill_json(
+    skill_dir: Path,
+    repository_url: str,
+    version: str,
+    dependencies: List[Dict[str, str]]
+) -> None:
+    """
+    Generate skill.json metadata file.
+
+    Args:
+        skill_dir: Path to skill directory
+        repository_url: GitHub repository URL
+        version: Skill version (semver or semver-SNAPSHOT)
+        dependencies: List of dependency objects with name, repository, ref
+    """
+    skill_md_path = skill_dir / "SKILL.md"
+    skill_md_content = skill_md_path.read_text()
+
+    # Extract name from frontmatter
+    name = parse_frontmatter(skill_md_content)
+
+    # Create metadata object
+    metadata = {
+        "name": name,
+        "version": version,
+        "repository": repository_url,
+        "dependencies": dependencies
+    }
+
+    # Write skill.json
+    skill_json_path = skill_dir / "skill.json"
+    with open(skill_json_path, 'w') as f:
+        json.dump(metadata, f, indent=2)

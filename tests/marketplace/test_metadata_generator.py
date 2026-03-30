@@ -130,5 +130,93 @@ No prerequisites.
         self.assertEqual(deps, [])
 
 
+class TestSkillJsonGenerator(unittest.TestCase):
+    """Test skill.json metadata generation"""
+
+    def test_generate_skill_json_creates_metadata(self):
+        """Generator should create valid skill.json file"""
+        import json
+        with TemporaryDirectory() as tmpdir:
+            tmpdir = Path(tmpdir)
+
+            # Create skill directory with SKILL.md
+            skill_dir = tmpdir / "java-dev"
+            skill_dir.mkdir()
+            (skill_dir / "SKILL.md").write_text("""---
+name: java-dev
+---
+
+# Java Development
+""")
+
+            from scripts.generate_skill_metadata import generate_skill_json
+
+            generate_skill_json(
+                skill_dir=skill_dir,
+                repository_url="https://github.com/mdproctor/claude-skills",
+                version="1.0.0",
+                dependencies=[]
+            )
+
+            # Verify skill.json created
+            skill_json_path = skill_dir / "skill.json"
+            self.assertTrue(skill_json_path.exists())
+
+            # Verify content
+            with open(skill_json_path) as f:
+                data = json.load(f)
+
+            self.assertEqual(data, {
+                "name": "java-dev",
+                "version": "1.0.0",
+                "repository": "https://github.com/mdproctor/claude-skills",
+                "dependencies": []
+            })
+
+    def test_generate_skill_json_includes_dependencies(self):
+        """Generator should include dependency references"""
+        import json
+        with TemporaryDirectory() as tmpdir:
+            tmpdir = Path(tmpdir)
+
+            skill_dir = tmpdir / "quarkus-flow-dev"
+            skill_dir.mkdir()
+            (skill_dir / "SKILL.md").write_text("""---
+name: quarkus-flow-dev
+---
+
+## Prerequisites
+
+**This skill builds on [`java-dev`]**.
+""")
+
+            from scripts.generate_skill_metadata import generate_skill_json
+
+            generate_skill_json(
+                skill_dir=skill_dir,
+                repository_url="https://github.com/mdproctor/claude-skills",
+                version="1.2.0",
+                dependencies=[
+                    {
+                        "name": "java-dev",
+                        "repository": "https://github.com/mdproctor/claude-skills",
+                        "ref": "v1.0.0"
+                    }
+                ]
+            )
+
+            skill_json_path = skill_dir / "skill.json"
+            with open(skill_json_path) as f:
+                data = json.load(f)
+
+            self.assertEqual(data["dependencies"], [
+                {
+                    "name": "java-dev",
+                    "repository": "https://github.com/mdproctor/claude-skills",
+                    "ref": "v1.0.0"
+                }
+            ])
+
+
 if __name__ == '__main__':
     unittest.main()
