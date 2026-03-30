@@ -24,3 +24,24 @@ def fetch_registry(registry_url: str = REGISTRY_URL) -> Dict[str, Any]:
         return json.loads(response.text)
     except Exception as e:
         raise RuntimeError(f"Failed to fetch registry from {registry_url}: {e}")
+
+
+def find_skill(registry: Dict[str, Any], skill_name: str) -> Dict[str, Any]:
+    """
+    Find skill entry in registry by name.
+
+    Args:
+        registry: Parsed registry data
+        skill_name: Name of skill to find
+
+    Returns:
+        Skill registry entry
+
+    Raises:
+        ValueError: If skill not found
+    """
+    for skill in registry["skills"]:
+        if skill["name"] == skill_name:
+            return skill
+
+    raise ValueError(f"Skill '{skill_name}' not found in registry")

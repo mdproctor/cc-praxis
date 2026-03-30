@@ -37,3 +37,46 @@ def test_fetch_registry_raises_on_network_error():
 
         with pytest.raises(RuntimeError, match="Failed to fetch registry"):
             fetch_registry()
+
+
+def test_find_skill_returns_entry_when_found():
+    """Lookup should return skill entry from registry"""
+    registry = {
+        "version": "1.0",
+        "skills": [
+            {
+                "name": "java-dev",
+                "repository": "https://github.com/mdproctor/claude-skills",
+                "path": "java-dev",
+                "defaultRef": "v1.0.0",
+                "snapshotRef": "main"
+            },
+            {
+                "name": "quarkus-flow-dev",
+                "repository": "https://github.com/mdproctor/claude-skills",
+                "path": "quarkus-flow-dev",
+                "defaultRef": "v1.2.0",
+                "snapshotRef": "main"
+            }
+        ]
+    }
+
+    from scripts.marketplace.registry import find_skill
+
+    entry = find_skill(registry, "java-dev")
+
+    assert entry["name"] == "java-dev"
+    assert entry["defaultRef"] == "v1.0.0"
+
+
+def test_find_skill_raises_when_not_found():
+    """Lookup should raise error if skill not in registry"""
+    registry = {
+        "version": "1.0",
+        "skills": []
+    }
+
+    from scripts.marketplace.registry import find_skill
+
+    with pytest.raises(ValueError, match="Skill 'unknown-skill' not found"):
+        find_skill(registry, "unknown-skill")
