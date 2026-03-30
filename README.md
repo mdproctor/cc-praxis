@@ -318,6 +318,7 @@ and documentation completeness:
 - Cross-reference verification (bidirectional chaining)
 - Documentation completeness (Success Criteria, Common Pitfalls, Prerequisites)
 - Severity assignment (CRITICAL/WARNING/NOTE)
+- **Deep Analysis Mode:** Comprehensive validation beyond basic structural checks
 
 Builds quality assurance discipline specifically for skills repositories. Blocks commits
 on CRITICAL findings (invalid frontmatter, broken flowcharts, CSO violations).
@@ -325,6 +326,9 @@ on CRITICAL findings (invalid frontmatter, broken flowcharts, CSO violations).
 **Features:**
 - Review checklist by category (frontmatter, naming, cross-references, flowcharts)
 - Severity decision flowchart
+- Deep analysis procedures (reference accuracy, logical soundness, completeness)
+- Automated validation scripts (`scripts/validate_all.py` orchestrates 7 validators)
+- Integration with QA framework (see CLAUDE.md § Quality Assurance Framework)
 - Common Pitfalls table (8 skill authoring mistakes)
 - Cross-reference bidirectional verification
 
@@ -594,6 +598,13 @@ quarkus-observability
 - Architecture decision records in MADR format
 - Living design documentation
 - BOM-aligned dependency management
+
+### Quality Assurance Framework
+- Automated validation scripts (7 validators for structural integrity)
+- Deep analysis procedures for comprehensive skill review
+- Regression test framework with issue tracking
+- CI/CD integration with GitHub Actions
+- **Validated:** All skills pass frontmatter, CSO, flowchart, and cross-reference checks
 
 ### Test-Driven Quality
 - JUnit 5 + AssertJ

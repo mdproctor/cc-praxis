@@ -1,0 +1,41 @@
+{
+  "skill_name": "SKILL-NAME-HERE",
+  "tests": [
+    {
+      "id": "test-case-id",
+      "description": "Brief description of what this test validates",
+      "setup": "optional-setup-script.sh",
+      "prompt": "The exact prompt a user would type",
+      "expected_behavior": {
+        "invokes_skills": ["skill-a", "skill-b"],
+        "creates_commit": true,
+        "commit_message_matches": "^(feat|fix)\\(.*\\):.*",
+        "files_modified": ["path/to/file1", "path/to/file2"],
+        "exit_cleanly": true
+      },
+      "assertions": [
+        {
+          "type": "file_exists",
+          "path": "path/to/expected/file",
+          "description": "File should be created"
+        },
+        {
+          "type": "file_contains",
+          "path": "path/to/file",
+          "text": "expected text",
+          "description": "File should contain expected content"
+        },
+        {
+          "type": "git_commit_exists",
+          "message_contains": "Co-Authored-By: Claude",
+          "description": "Commit should have Claude co-author"
+        },
+        {
+          "type": "skill_invoked",
+          "skill": "skill-name",
+          "description": "Should invoke dependency skill"
+        }
+      ]
+    }
+  ]
+}

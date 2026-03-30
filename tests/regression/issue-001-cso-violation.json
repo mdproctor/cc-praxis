@@ -1,0 +1,50 @@
+{
+  "issue_id": "001",
+  "title": "CSO Violation - Workflow Summary in Description",
+  "description": "Skill description contained workflow keywords that caused Claude to follow the description instead of reading the full skill body",
+  "severity": "critical",
+  "date_discovered": "2026-01-15",
+  "date_fixed": "2026-03-30",
+
+  "original_violation": {
+    "skill": "superpowers:execute-plan",
+    "description": "Use when executing plans - dispatches subagent per task with code review between tasks"
+  },
+
+  "why_it_failed": "Description included workflow details ('dispatches', 'per task', 'code review between tasks'). This caused 'expensive wallpaper' - Claude read the description, thought it understood the workflow, and never loaded the full skill body. The skill became useless.",
+
+  "fix_applied": "Removed all workflow keywords from description. Description now focuses solely on WHEN to use (triggering conditions), not HOW it works (process steps).",
+
+  "correct_example": {
+    "description": "Use when executing implementation plans with independent tasks in the current session"
+  },
+
+  "validation": {
+    "type": "cso_check",
+    "validator": "validate_cso.py",
+    "workflow_keywords_banned": [
+      "step", "then", "invoke", "run", "execute", "dispatch",
+      "call", "trigger", "spawn", "per task", "code review"
+    ]
+  },
+
+  "test_cases": [
+    {
+      "test_name": "No CSO violations in any skill",
+      "command": "python scripts/validation/validate_cso.py",
+      "expected_exit_code": 0,
+      "expected_output_not_contains": "CSO violation"
+    },
+    {
+      "test_name": "Specific skill passes CSO check",
+      "command": "python scripts/validation/validate_cso.py superpowers:executing-plans/SKILL.md",
+      "expected_exit_code": 0
+    }
+  ],
+
+  "prevention": {
+    "automated_check": "validate_cso.py runs in pre-commit via git-commit → skill-review",
+    "documentation_updated": "CLAUDE.md § Frontmatter Requirements (CSO section)",
+    "checklist_item": "Deep analysis checklist includes CSO compliance check"
+  }
+}

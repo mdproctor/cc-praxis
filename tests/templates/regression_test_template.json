@@ -1,0 +1,43 @@
+{
+  "issue_id": "XXX",
+  "title": "Brief title of the issue",
+  "description": "Detailed description of what went wrong",
+  "severity": "critical|warning|note",
+  "date_discovered": "YYYY-MM-DD",
+  "date_fixed": "YYYY-MM-DD",
+
+  "original_violation": {
+    "skill": "skill-name",
+    "example": "The problematic code/text that caused the issue"
+  },
+
+  "why_it_failed": "Explanation of root cause and impact",
+
+  "fix_applied": "Description of how it was fixed",
+
+  "correct_example": {
+    "example": "The corrected code/text"
+  },
+
+  "validation": {
+    "type": "validation_type",
+    "validator": "validate_xxx.py",
+    "additional_checks": ["list", "of", "checks"]
+  },
+
+  "test_cases": [
+    {
+      "test_name": "Descriptive name of what we're testing",
+      "command": "python scripts/validation/validate_xxx.py",
+      "expected_exit_code": 0,
+      "expected_output_contains": "optional text",
+      "expected_output_not_contains": "text that should not appear"
+    }
+  ],
+
+  "prevention": {
+    "automated_check": "validate_xxx.py runs in pre-commit",
+    "documentation_updated": "CLAUDE.md § Section Name",
+    "checklist_item": "Item added to deep analysis checklist"
+  }
+}

@@ -1,0 +1,182 @@
+name: Skill Validation
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Run full validation nightly at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    # Allow manual triggering
+
+jobs:
+  validate:
+    name: Validate Skills
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for better diffs
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Graphviz
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y graphviz
+
+      - name: Run Automated Validation
+        id: validation
+        run: |
+          python scripts/validate_all.py --json > validation-report.json
+          EXIT_CODE=$?
+
+          # Always output report for later steps
+          cat validation-report.json
+
+          # Set output for use in later steps
+          echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
+
+          exit $EXIT_CODE
+        continue-on-error: true
+
+      - name: Parse Validation Results
+        id: parse
+        if: always()
+        run: |
+          # Extract summary from JSON
+          CRITICAL=$(jq -r '.summary.total_critical' validation-report.json)
+          WARNING=$(jq -r '.summary.total_warning' validation-report.json)
+          NOTE=$(jq -r '.summary.total_note' validation-report.json)
+          FILES=$(jq -r '.summary.files_checked' validation-report.json)
+
+          echo "critical=$CRITICAL" >> $GITHUB_OUTPUT
+          echo "warning=$WARNING" >> $GITHUB_OUTPUT
+          echo "note=$NOTE" >> $GITHUB_OUTPUT
+          echo "files=$FILES" >> $GITHUB_OUTPUT
+
+          # Create summary
+          echo "## Validation Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Files checked: **$FILES**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Severity | Count |" >> $GITHUB_STEP_SUMMARY
+          echo "|----------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Critical | $CRITICAL |" >> $GITHUB_STEP_SUMMARY
+          echo "| Warning  | $WARNING |" >> $GITHUB_STEP_SUMMARY
+          echo "| Note     | $NOTE |" >> $GITHUB_STEP_SUMMARY
+
+      - name: Generate Detailed Report
+        if: always()
+        run: |
+          echo "### Validation Details" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Extract issues by validator
+          jq -r '.validators[] | "#### \(.name)\n\n" + if .result.passed then "✅ PASSED\n" else "❌ FAILED\n\nIssues: \(.result.critical_count) critical, \(.result.warning_count) warning, \(.result.note_count) note\n" end' validation-report.json >> $GITHUB_STEP_SUMMARY
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = JSON.parse(fs.readFileSync('validation-report.json', 'utf8'));
+
+            const summary = report.summary;
+            const passed = summary.total_critical === 0;
+            const emoji = passed ? '✅' : '❌';
+
+            let body = `## ${emoji} Skill Validation Report\n\n`;
+            body += `**Files checked:** ${summary.files_checked}\n`;
+            body += `**Issues:** ${summary.total_critical} critical, ${summary.total_warning} warning, ${summary.total_note} note\n\n`;
+
+            if (!passed) {
+              body += '### ❌ Failed Validators\n\n';
+              for (const failed of summary.failed_validators) {
+                body += `- ${failed}\n`;
+              }
+              body += '\n';
+            }
+
+            body += '<details>\n<summary>Validator Results</summary>\n\n';
+            for (const validator of report.validators) {
+              const result = validator.result;
+              const status = result.passed ? '✅' : '❌';
+              body += `#### ${status} ${validator.name}\n\n`;
+              if (!result.passed) {
+                body += `Issues: ${result.critical_count} critical, ${result.warning_count} warning, ${result.note_count} note\n\n`;
+              }
+            }
+            body += '</details>\n';
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
+
+      - name: Upload Validation Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-report
+          path: validation-report.json
+          retention-days: 30
+
+      - name: Fail if Critical Issues
+        if: steps.parse.outputs.critical != '0'
+        run: |
+          echo "::error::Validation failed with ${{ steps.parse.outputs.critical }} critical issues"
+          exit 1
+
+  regression-tests:
+    name: Regression Tests
+    runs-on: ubuntu-latest
+    if: github.event_name != 'schedule'  # Skip on nightly runs
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run Regression Tests
+        run: |
+          # TODO: Implement when run_regression_tests.py is ready
+          echo "Regression tests will run here"
+          echo "python scripts/testing/run_regression_tests.py"
+
+  documentation-sync:
+    name: Check Documentation Sync
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Check README.md Sync
+        run: |
+          # TODO: Implement check_readme_sync.py
+          echo "Would check README.md is in sync with skills"
+
+      - name: Check CLAUDE.md Sync
+        run: |
+          # TODO: Implement check_claude_md_sync.py
+          echo "Would check CLAUDE.md is in sync with changes"

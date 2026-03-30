@@ -299,3 +299,104 @@ echo 'digraph test { ... }' | dot -Tsvg > /dev/null 2>&1 && echo "valid" || echo
 | Skill references external file | Verify file exists in skill directory |
 | Multiple SKILL.md files staged | Review all, report findings together |
 | Skill naming doesn't match pattern | WARNING if functional, NOTE if just style |
+
+## Deep Analysis Mode
+
+**When user explicitly requests "deep analysis" or "comprehensive review", perform extended validation beyond basic structural checks.**
+
+See **CLAUDE.md § Quality Assurance Framework** for complete deep analysis procedures.
+
+### Deep Analysis Checklist
+
+When deep analysis mode is requested, systematically perform:
+
+#### Level 1: Automated Checks (Run/Verify)
+- [ ] Frontmatter validation (YAML, required fields, CSO compliance)
+- [ ] Cross-reference integrity (all references resolve, bidirectional)
+- [ ] Flowchart validation (syntax, semantic labels)
+- [ ] Naming convention compliance (patterns correct)
+- [ ] Required sections (by skill type)
+
+#### Level 2: Manual Analysis (Systematic Review)
+- [ ] **Reference Accuracy**: Read every referenced skill, verify bidirectional links, check for stale references (renamed skills, deprecated tools, moved files)
+- [ ] **Logical Soundness**: Walk through workflow as if executing, verify commands work, check decision logic covers all cases, confirm prerequisites in correct order
+- [ ] **Contradiction Detection**: Find within-skill contradictions, cross-skill contradictions, documentation vs behavior mismatches
+- [ ] **Completeness Analysis**: Check edge case coverage, error handling, documentation gaps, missing examples
+- [ ] **Readability & Clarity**: Check language clarity (no ambiguous pronouns, consistent terminology), structure coherence, cognitive load
+- [ ] **Duplication & Overlap**: Find unnecessary duplication, troublesome overlap, gaps between skills
+- [ ] **Skill Chaining Correctness**: Build complete chain graph, verify each link, check chain completeness
+
+#### Level 3: Functional Validation
+- [ ] Test cases exist for skill (if user-invocable)
+- [ ] Regression tests cover known issues
+- [ ] Examples still work with current tools/syntax
+
+#### Documentation Sync
+- [ ] README.md mentions skill correctly
+- [ ] CLAUDE.md architecture section accurate
+- [ ] Cross-references match actual behavior
+
+### Deep Analysis Report Format
+
+When deep analysis is complete, present findings in this structure:
+
+```markdown
+# Deep Analysis Report: [skill-name]
+
+## Summary
+- Automated checks: X passed, Y failed
+- Manual review: [completed/partial]
+- Total issues: Z (A critical, B warning, C note)
+
+## CRITICAL Issues (Must Fix Before Commit)
+1. [Issue with specific line reference]
+2. ...
+
+## WARNING Issues (Should Fix Before Commit)
+1. [Issue with specific line reference]
+2. ...
+
+## NOTE Issues (Improve When Possible)
+1. [Suggestion with reasoning]
+2. ...
+
+## Validation Details
+
+### Reference Accuracy
+- [✅/❌] All cross-references resolve
+- [✅/❌] Bidirectional links verified
+- [✅/❌] No stale references found
+
+### Logical Soundness
+- [✅/❌] Workflow executable as written
+- [✅/❌] Decision logic complete
+- [✅/❌] Prerequisites verified
+
+### Completeness
+- [✅/❌] Edge cases handled
+- [✅/❌] Error handling present
+- [✅/❌] Documentation complete
+
+### Documentation Sync
+- [✅/❌] README.md accurate
+- [✅/❌] CLAUDE.md accurate
+
+## Recommendations
+1. [Prioritized action items]
+2. ...
+```
+
+### Common Deep Analysis Findings
+
+**These patterns emerge frequently in deep analysis:**
+
+| Finding Type | Example | How to Fix |
+|--------------|---------|------------|
+| **Stale reference** | "invoked by old-skill-name" (skill renamed) | Update to current skill name |
+| **Broken link** | "see docs/ARCHITECTURE.md" (moved to DESIGN.md) | Update file path |
+| **Outdated syntax** | "uses TodoWrite tool" (deprecated) | Update to current tool names |
+| **Missing error handling** | "Read DESIGN.md" (no check if exists) | Add existence check first |
+| **Logic gap** | "If Java... else if Skills" (missing other types) | Add else clause or default case |
+| **Contradiction** | Skill says "always X", later says "never X" | Resolve which is correct |
+| **Ambiguous reference** | "it updates the file" (which file?) | Specify the antecedent |
+| **Missing example** | Complex instruction without example | Add concrete example |
