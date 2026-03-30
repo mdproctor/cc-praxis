@@ -248,38 +248,23 @@ Claude analyzes:
 
 **Proportional cost: light checks for small changes, heavy checks for big changes, heaviest for sharing.**
 
-### Level 1: Quick (On Save) — <100ms
+**Implementation:** 3 automated tiers matching `validate_all.py --tier <commit|push|ci>`
 
-**When:** File save during editing (editor integration)
-**Goal:** Instant feedback, no friction
-
-**Checks:**
-- ✅ Heading hierarchy (no skipped levels)
-- ✅ Code blocks have language tags
-- ✅ Basic markdown syntax
-- ✅ Internal anchor links (within same file)
-
-**Exit:** Never blocks, warnings only
-
-**Example:**
-```bash
-python scripts/validate_document.py README.md --level quick
-# ✅ No issues (85ms)
-```
-
-### Level 2: Commit (Pre-commit Hook) — <2s
+### COMMIT Tier (Pre-commit Hook) — <2s
 
 **When:** Before `git commit`
 **Goal:** Catch corruption before git history
 
 **Checks:**
-- ✅ All Level 1 checks
 - ✅ **Duplicate section headers** (CRITICAL)
 - ✅ **Corrupted table structures** (CRITICAL)
 - ✅ **Orphaned sections** (WARNING)
 - ✅ **Dangling references** ("see § X" where X doesn't exist)
 - ✅ **Example syntax** (bash/python, no execution)
 - ✅ **Cross-file links** (CLAUDE.md#section exists)
+- ✅ Heading hierarchy (no skipped levels)
+- ✅ Code blocks have language tags
+- ✅ Basic markdown syntax
 
 **Exit:** Blocks on CRITICAL, warns on WARNING (user can proceed)
 
@@ -295,43 +280,13 @@ git commit -m "docs: update readme"
 ✅ Validation passed (1.2s)
 ```
 
-### Level 3: Review (User-Invoked) — User-Driven
-
-**When:** User requests `/java-code-review`, `/skill-review`, or "deep analysis"
-**Goal:** Validate significant refactors, ensure quality
-
-**Checks:**
-- ✅ All Level 2 checks (scripts)
-- ✅ **Claude deep semantic analysis:**
-  - Logical soundness (workflow executable?)
-  - Semantic contradictions
-  - Strategic completeness
-  - Cross-document consistency
-  - Quality judgment
-
-**Exit:** Reports findings (CRITICAL/WARNING/NOTE), user decides next steps
-
-**Example:**
-```bash
-User: "/java-code-review"
-
-# → Scripts run all automated checks first
-# → Claude performs deep analysis
-Reading staged Java files...
-Comparing with DESIGN.md...
-
-❌ CRITICAL: Resource leak in UserService.java:45
-⚠️  WARNING: DESIGN.md says sync but code uses async
-ℹ️  NOTE: Consider adding example for gateway pattern
-```
-
-### Level 4: Push (Pre-push Hook) — <30s
+### PUSH Tier (Pre-push Hook) — <30s
 
 **When:** Before `git push`
 **Goal:** Ensure quality before sharing with others
 
 **Checks:**
-- ✅ All Level 2 checks
+- ✅ All COMMIT tier checks
 - ✅ **Cross-document consistency** (CLAUDE.md vs README.md vs SKILL.md)
 - ✅ **Terminology consistency** ("primary doc" vs "main document")
 - ✅ **Duplication detection** (same content in multiple files)
@@ -351,19 +306,21 @@ git push origin main
 ✅ Push validation passed (12s)
 ```
 
-### Level 5: Full (CI/Scheduled) — Unlimited
+### CI Tier (GitHub Actions / Scheduled) — <5min
 
 **When:** GitHub PR, scheduled nightly, before releases
 **Goal:** Comprehensive analysis, catch everything
 
 **Checks:**
-- ✅ All Level 4 checks
+- ✅ All COMMIT tier checks
+- ✅ All PUSH tier checks
+- ✅ **Functional tests** (git worktree isolation, skill execution)
+- ✅ **Python quality** (mypy, flake8, bandit)
 - ✅ **External URL validation** (HTTP requests)
 - ✅ **Example execution** (run bash examples in sandbox)
 - ✅ **Readability scoring** (Flesch-Kincaid)
 - ✅ **Grammar** (LanguageTool)
 - ✅ **Accessibility** (WCAG guidelines)
-- ✅ **Self-testing examples** (CI integration)
 
 **Exit:** Fails PR if CRITICAL, comments with suggestions
 
@@ -371,22 +328,22 @@ git push origin main
 ```yaml
 # In CI (GitHub Actions)
 - name: Run full validation
-  run: python scripts/validate_all.py --level full --verbose
+  run: python scripts/validate_all.py --tier ci --verbose
 
 # → Results posted as PR comment
 ```
 
 ### Performance Budget
 
-| Level | Target Time | Max Acceptable | Checks |
-|-------|-------------|----------------|--------|
-| Quick | <100ms | <500ms | ~4 |
-| Commit | <1s | <2s | ~10 |
-| Push | <10s | <30s | ~17 |
-| Full | <2min | <5min | ~25 |
+| Tier | Target Time | Max Acceptable | Validators |
+|------|-------------|----------------|------------|
+| COMMIT | <1s | <2s | 7 validators |
+| PUSH | <10s | <30s | 6 validators + tests |
+| CI | <2min | <5min | All + functional tests |
 
 **Optimization strategies:**
 - Cache results (don't re-check unchanged files)
+- Accumulative tiers (PUSH includes COMMIT, CI includes both)
 - Parallel execution (multiple files concurrently)
 - Incremental mode (only changed sections)
 - Short-circuit on CRITICAL (fail fast)
@@ -957,3 +914,156 @@ checks:
 - Universal (same principles, all project types)
 
 **Result:** Production-grade quality by default, not by remembering to check.
+
+---
+
+## Future Enhancements
+
+**Planned capabilities to extend quality framework universality and performance.**
+
+### Universal Quality Framework Extraction
+
+**Status:** Vision, not implemented
+**Priority:** Medium (after current optimization complete)
+
+**Goal:** Extract validation infrastructure to standalone package usable across all Claude Code project types.
+
+**Package structure:**
+```
+claude-quality-framework/
+  ├── core/
+  │   ├── validate_all.py (tier orchestrator)
+  │   ├── document_validator.py (universal .md validation)
+  │   ├── link_validator.py (universal link checking)
+  │   └── quick_validator.py (future: <100ms checks)
+  │
+  ├── validators/
+  │   ├── markdown/ (universal markdown validators)
+  │   ├── code/ (language-specific code validators)
+  │   └── custom/ (project-specific validators)
+  │
+  ├── integrations/
+  │   ├── git-hooks/ (pre-commit, pre-push hooks)
+  │   ├── editors/ (VS Code, vim plugins)
+  │   └── ci/ (GitHub Actions, GitLab CI configs)
+  │
+  └── config/
+      └── quality.config.json (project-specific rules)
+```
+
+**Consumption:**
+```bash
+# Type: skills repository
+npm install @claude/quality-framework
+claude-quality init --type skills
+
+# Type: java repository
+npm install @claude/quality-framework
+claude-quality init --type java
+
+# Type: custom repository
+npm install @claude/quality-framework
+claude-quality init --type custom --primary-doc docs/vision.md
+```
+
+**Benefits:**
+- Any project can use validation infrastructure (not just skills repos)
+- Plugin architecture for project-specific validators
+- Editor integrations work across all project types
+- Shared validator maintenance (fix once, applies everywhere)
+
+**Estimated effort:** 200-400 hours for complete extraction and plugin system
+
+---
+
+### Quick Tier (On-Save Validation)
+
+**Status:** Planned, not implemented
+**Priority:** Low for type: skills, HIGH for type: java/custom (active development)
+
+**What it would provide:**
+- Instant feedback (<100ms) while editing files
+- Basic syntax/format validation on file save
+- Editor integration (VS Code, IntelliJ, vim)
+
+**Implementation requirements:**
+- Editor extensions or Language Server Protocol
+- Ultra-fast validators (separate from COMMIT tier)
+- File watcher or editor integration hooks
+
+**Priority by project type:**
+
+| Project Type | Quick Tier Priority | Reason |
+|--------------|-------------------|---------|
+| **type: java** | HIGH | Active code development, frequent edits, compilation feedback needed |
+| **type: custom (active)** | MEDIUM | Research/docs with frequent updates (active thesis writing, daily vision updates) |
+| **type: skills** | LOW | Infrequent edits, COMMIT tier validation fast enough (<2s) |
+| **type: generic** | LOW | Minimal validation needs |
+
+**What Quick Tier would check (<100ms budget):**
+
+**For ANY .md file:**
+- ✅ Basic markdown syntax (CommonMark parser)
+- ✅ Duplicate headers (regex scan)
+- ✅ Broken internal links - file existence only (not anchors)
+- ✅ Orphaned sections (header with no content)
+
+**For code files (.java, .py, .ts):**
+- ✅ Syntax errors (use language parser)
+- ✅ Missing imports (static analysis)
+- ✅ Unused variables (linter warnings)
+- ✅ Basic formatting (indentation, spacing)
+
+**For project-specific:**
+- ✅ YAML frontmatter validity (parse only, not content)
+- ✅ Table structure (basic format check)
+- ✅ Code block language tags present
+
+**What it CANNOT check in <100ms:**
+- ❌ Cross-document consistency (requires reading multiple files)
+- ❌ Semantic validation (requires understanding content)
+- ❌ External link validation (network calls)
+- ❌ Cross-references (requires building dependency graph)
+
+**When to implement:**
+- When extracting quality framework for universal use
+- Prioritize for type: java projects (active code development)
+- Consider for type: custom projects with frequent editing
+
+**Estimated effort:** 40-80 hours for basic implementation
+
+**See:** Universal quality framework extraction vision above
+
+---
+
+### Additional Validators (Low Priority)
+
+**Planned validators for comprehensive quality coverage:**
+
+**External link validation:**
+- HTTP requests to validate URLs
+- Detect link rot (404s, redirects)
+- Tier: CI only (too slow for commit/push)
+- Estimated effort: 8-16 hours
+
+**Spelling/grammar:**
+- aspell or hunspell for spelling
+- LanguageTool for grammar
+- Tier: PUSH/CI
+- Estimated effort: 16-24 hours
+
+**Visual aids quality:**
+- Alt text presence for images
+- Color contrast validation
+- Diagram/flowchart accessibility
+- Tier: CI
+- Estimated effort: 24-40 hours
+
+**Accessibility compliance:**
+- WCAG 2.1 AA guidelines
+- Readability scoring (Flesch-Kincaid)
+- Heading structure analysis
+- Tier: CI
+- Estimated effort: 40-60 hours
+
+**Total estimated effort for all additional validators:** 88-140 hours
