@@ -12,8 +12,23 @@ Maintains README.md documentation in sync with skill collection changes in skill
 repositories. Detects when skills are added, removed, renamed, or chained differently,
 and proposes surgical updates to keep documentation accurate.
 
+## When to Use This Skill
+
+**Only for type: skills repositories.**
+
+This skill is invoked by `git-commit` when:
+- CLAUDE.md declares `type: skills`
+- README.md exists
+- Staged changes include SKILL.md files or skill directory changes
+
+**Do NOT use this skill for:**
+- type: java repositories (no automatic README sync)
+- type: custom repositories (no automatic README sync)
+- type: generic repositories (no automatic README sync)
+
 ## Core Rules
 
+- **Only operates in type: skills repositories** — other project types don't use automatic README sync
 - README.md lives at repository root. Never move or rename it.
 - **Never apply changes without explicit user confirmation** (a plain "YES" or equivalent).
 - Focus on **skill collection changes**: new/removed skills, chaining modifications,
@@ -109,6 +124,7 @@ Avoid these mistakes when updating README.md:
 
 | Mistake | Why It's Wrong | Fix |
 |---------|----------------|-----|
+| Using in non-skills repositories | Wrong project type, no auto-sync | Only invoke for type: skills repositories |
 | Applying changes without confirmation | User loses control of docs | Always wait for explicit YES |
 | Updating for internal refactors | Creates noise in README | Only update for user-visible changes |
 | Missing renamed skill in chaining table | Broken references | Search and replace all occurrences |

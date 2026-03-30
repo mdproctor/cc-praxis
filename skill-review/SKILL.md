@@ -12,8 +12,22 @@ description: >
 Pre-commit review for Claude Code skills to ensure structural integrity, CSO compliance,
 and documentation completeness before committing to the repository.
 
+## When to Use This Skill
+
+**Only for type: skills repositories.**
+
+This skill is invoked by `git-commit` when:
+- CLAUDE.md declares `type: skills`
+- Staged changes include SKILL.md files
+
+**Do NOT use this skill for:**
+- type: java repositories (use java-code-review instead)
+- type: custom repositories (no SKILL.md files)
+- type: generic repositories (no SKILL.md files)
+
 ## Core Rules
 
+- **Only operates in type: skills repositories** — other project types don't have SKILL.md files
 - **Block commits on CRITICAL findings** — structural violations must be fixed first
 - Focus on **format compliance and conventions**, not subjective quality
 - Check **cross-references bidirectionally** — if A references B, verify B references A
@@ -156,6 +170,7 @@ digraph severity_flow {
 
 | Mistake | Why It's Wrong | Fix |
 |---------|----------------|-----|
+| Using in non-skills repositories | Wrong project type, no SKILL.md files | Only invoke for type: skills repositories |
 | Workflow summary in description | Claude follows description instead of reading skill body (skill becomes expensive wallpaper) | Remove workflow details, describe *when to use* only |
 | Missing name or description field | Skill won't load | Add required frontmatter fields |
 | Generic flowchart labels | Unreadable, unclear intent | Use semantic labels (e.g., "Check BOM alignment" not "step1") |

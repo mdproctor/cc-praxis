@@ -1,11 +1,12 @@
 ---
 name: git-commit
 description: >
-  Use when user wants to create a commit NOW in non-Java repositories - says
-  "commit this", "commit these changes", "create a commit", or invokes
-  /git-commit. Does NOT trigger on discussions about past commits or asking
-  "should I commit?". For Java/Maven/Gradle repositories, use java-git-commit
-  instead (detects pom.xml or build.gradle).
+  Use when user wants to create a commit NOW - says "commit this", "commit
+  these changes", "create a commit", or invokes /git-commit. Reads CLAUDE.md
+  to detect project type and routes to specialized skills (java-git-commit
+  for type: java, custom-git-commit for type: custom). Handles type: skills
+  and type: generic directly. Does NOT trigger on discussions about past
+  commits or "should I commit?" questions.
 ---
 
 # Git Commit Helper
@@ -25,6 +26,183 @@ Conventional Commits 1.0.0 specification.
   - Commit messages describe WHAT changed and WHY, not WHO/WHAT wrote it
 
 ## Workflow
+
+### Step 0 — Verify or Setup Project Type
+
+**Read CLAUDE.md for project type:**
+```bash
+cat CLAUDE.md 2>/dev/null | grep -A 2 "## Project Type"
+```
+
+**If CLAUDE.md exists and has Project Type declaration:**
+
+Extract the type (skills | java | custom | generic).
+
+**Route based on type:**
+- **type: skills** → Continue with Step 1 (this skill handles skills repos)
+- **type: java** → STOP and tell user:
+  > This is a type: java project. Please use `java-git-commit` instead:
+  > `/java-git-commit` or say "java commit"
+
+- **type: custom** → STOP and tell user:
+  > This is a type: custom project. Please use `custom-git-commit` instead:
+  > `/custom-git-commit` or say "custom commit"
+
+- **type: generic** → Continue with Step 1 (this skill handles generic repos)
+
+**If CLAUDE.md missing or no Project Type section:**
+
+Interactively set up project type:
+
+> I notice this repository doesn't have a Project Type declared in CLAUDE.md.
+> Let me help you set this up - it only takes a moment.
+>
+> **What kind of project is this?**
+>
+> 1. **Skills repository** - Claude Code skills (has */SKILL.md files)
+> 2. **Java project** - Maven/Gradle (has pom.xml or build.gradle)
+> 3. **Custom project** - Working groups, research, docs, etc.
+> 4. **Generic project** - No special handling needed
+>
+> Reply with the number (1-4) or type the name.
+
+Wait for user response.
+
+**Based on response:**
+
+**If 1 (skills):**
+Create or update CLAUDE.md:
+```markdown
+## Project Type
+
+**Type:** skills
+```
+
+Stage CLAUDE.md:
+```bash
+git add CLAUDE.md
+```
+
+Tell user:
+> ✅ Created CLAUDE.md with type: skills
+>
+> This enables:
+> - Automatic SKILL.md validation (skill-review)
+> - README.md synchronization (update-readme)
+> - CLAUDE.md synchronization (update-claude-md)
+>
+> Note: I've staged CLAUDE.md - it will be included in this commit.
+>
+> Proceeding with your commit...
+
+Continue to Step 1.
+
+**If 2 (java):**
+Create or update CLAUDE.md:
+```markdown
+## Project Type
+
+**Type:** java
+```
+
+Stage CLAUDE.md, then tell user:
+> ✅ Created CLAUDE.md with type: java
+>
+> This is a Java project. For best results, please use `java-git-commit`
+> instead of `git-commit`. It provides:
+> - DESIGN.md synchronization
+> - Java-specific code review
+> - Java-specific commit scopes
+>
+> Would you like me to:
+> 1. Continue with basic commit (not recommended for Java)
+> 2. Switch to java-git-commit (recommended)
+>
+> Reply with 1 or 2.
+
+Wait for response. If 2, stop and tell user to invoke java-git-commit.
+If 1, continue to Step 1 (but warn about missing DESIGN.md sync).
+
+**If 3 (custom):**
+Prompt for configuration:
+> Great! Custom projects need a bit more configuration.
+>
+> **What's your primary document?** (The main document that should stay
+> synchronized with changes)
+>
+> Examples:
+> - `docs/vision.md` (working groups)
+> - `THESIS.md` (research)
+> - `docs/api-design.md` (API docs)
+>
+> Enter the path:
+
+Wait for response (get primary_doc_path).
+
+> **What's your current milestone?** (e.g., "Phase 1 - Discovery",
+> "Chapter 3 - Methodology", "Version 2.1.0")
+>
+> Enter milestone name:
+
+Wait for response (get milestone).
+
+Create CLAUDE.md:
+```markdown
+## Project Type
+
+**Type:** custom
+**Primary Document:** {primary_doc_path}
+
+**Sync Strategy:** bidirectional-consistency
+
+**Sync Rules:**
+| Changed Files | Document Section | Update Type |
+|---------------|------------------|-------------|
+| [Add your rules here] | [Section name] | [What to update] |
+
+**Consistency Checks:**
+- [Add your checks here]
+
+**Current Milestone:** {milestone}
+```
+
+Stage CLAUDE.md, then tell user:
+> ✅ Created CLAUDE.md with type: custom
+>
+> I've added a template Sync Rules table. You'll need to fill this in to
+> enable automatic document synchronization.
+>
+> For now, I'll proceed with basic commit without auto-sync. You can
+> configure sync rules anytime by editing CLAUDE.md.
+>
+> Would you like to:
+> 1. Continue with basic commit now
+> 2. Edit CLAUDE.md to add sync rules first
+>
+> Reply with 1 or 2.
+
+If 1, continue to Step 1. If 2, stop and let user edit.
+
+**If 4 (generic):**
+Create or update CLAUDE.md:
+```markdown
+## Project Type
+
+**Type:** generic
+```
+
+Stage CLAUDE.md, then tell user:
+> ✅ Created CLAUDE.md with type: generic
+>
+> This enables basic conventional commits with optional CLAUDE.md sync.
+>
+> Note: I've staged CLAUDE.md - it will be included in this commit.
+>
+> Proceeding with your commit...
+
+Continue to Step 1.
+
+---
 
 ### Step 1 — Inspect staged changes
 
@@ -166,6 +344,11 @@ git log --oneline -1
 ```dot
 digraph commit_flow {
     "Start" [shape=doublecircle];
+    "CLAUDE.md exists?" [shape=diamond];
+    "Interactive setup" [shape=box];
+    "Type declared?" [shape=diamond];
+    "Route to skill?" [shape=diamond];
+    "Stop: Use specialized skill" [shape=box];
     "Staged changes?" [shape=diamond];
     "Stop: ask user to stage" [shape=box];
     "SKILL.md files?" [shape=diamond];
@@ -177,7 +360,14 @@ digraph commit_flow {
     "Execute git commit" [shape=box];
     "Done" [shape=doublecircle];
 
-    "Start" -> "Staged changes?";
+    "Start" -> "CLAUDE.md exists?";
+    "CLAUDE.md exists?" -> "Type declared?" [label="yes"];
+    "CLAUDE.md exists?" -> "Interactive setup" [label="no"];
+    "Type declared?" -> "Interactive setup" [label="no"];
+    "Type declared?" -> "Route to skill?" [label="yes"];
+    "Interactive setup" -> "Route to skill?";
+    "Route to skill?" -> "Stop: Use specialized skill" [label="java/custom"];
+    "Route to skill?" -> "Staged changes?" [label="skills/generic"];
     "Staged changes?" -> "Stop: ask user to stage" [label="no"];
     "Staged changes?" -> "SKILL.md files?" [label="yes"];
     "SKILL.md files?" -> "Review skills" [label="yes"];
@@ -225,11 +415,20 @@ Commit is complete when:
 
 **Invoked by:** User says "commit", "make a commit", or invokes `/git-commit`
 
-**Invokes:** [`skill-review`] for SKILL.md validation (automatic if SKILL.md files staged), [`update-claude-md`] for workflow sync (automatic if CLAUDE.md exists), [`update-readme`] for skill collection sync (automatic if README.md exists and skill changes detected)
+**Routes to specialized skills based on CLAUDE.md declaration:**
+- type: java → Redirects to `java-git-commit`
+- type: custom → Redirects to `custom-git-commit`
+- type: skills → Handles directly (this skill)
+- type: generic → Handles directly (this skill)
 
-**Can be invoked independently:** Yes, this is the primary commit workflow for non-Java repositories
+**Invokes (when handling directly):**
+- [`skill-review`] for SKILL.md validation (automatic if SKILL.md files staged, type: skills only)
+- [`update-claude-md`] for workflow sync (automatic if CLAUDE.md exists)
+- [`update-readme`] for skill collection sync (automatic if README.md exists and skill changes detected, type: skills only)
 
-**Note:** For Java repositories with DESIGN.md, use `java-git-commit` instead (extends this skill with DESIGN.md sync)
+**Interactive setup:** If CLAUDE.md missing or no Project Type declared, guides user through setup and creates CLAUDE.md
+
+**Can be invoked independently:** Yes, this is the entry point for all commit workflows. It reads project type and routes accordingly.
 
 ## Message Format
 

@@ -41,6 +41,8 @@ Then apply the Java/Quarkus-specific commit patterns below.
 ```dot
 digraph commit_flow {
     "Start" [shape=doublecircle];
+    "Type: java declared?" [shape=diamond];
+    "Setup CLAUDE.md" [shape=box];
     "Staged changes?" [shape=diamond];
     "Stop: ask user to stage" [shape=box];
     "DESIGN.md exists?" [shape=diamond];
@@ -57,7 +59,10 @@ digraph commit_flow {
     "Done" [shape=doublecircle];
     "Adjust proposal" [shape=box];
 
-    "Start" -> "Staged changes?";
+    "Start" -> "Type: java declared?";
+    "Type: java declared?" -> "Setup CLAUDE.md" [label="no/wrong"];
+    "Type: java declared?" -> "Staged changes?" [label="yes"];
+    "Setup CLAUDE.md" -> "Staged changes?";
     "Staged changes?" -> "Stop: ask user to stage" [label="no"];
     "Staged changes?" -> "DESIGN.md exists?" [label="yes"];
     "DESIGN.md exists?" -> "Error: Create DESIGN.md first" [label="no"];
@@ -80,6 +85,84 @@ digraph commit_flow {
 ## Workflow
 
 Follow the `git-commit` workflow with these Java-specific enhancements:
+
+### Step 0 — Verify Project Type Declaration
+
+**Read CLAUDE.md for project type:**
+```bash
+cat CLAUDE.md 2>/dev/null | grep -A 2 "## Project Type"
+```
+
+**If CLAUDE.md missing:**
+Offer to create it:
+> This skill requires CLAUDE.md to declare the project type.
+>
+> I can create it for you. This is a Java project, so I'll set it up
+> with type: java.
+>
+> Proceed? (YES/no)
+
+If YES:
+Create CLAUDE.md:
+```markdown
+## Project Type
+
+**Type:** java
+```
+
+Stage it:
+```bash
+git add CLAUDE.md
+```
+
+Tell user:
+> ✅ Created CLAUDE.md with type: java
+>
+> Note: I've staged CLAUDE.md - it will be included in this commit.
+>
+> Proceeding with Java commit workflow...
+
+Continue to Step 1.
+
+**If CLAUDE.md exists but no Project Type section:**
+Offer to add it:
+> I notice CLAUDE.md exists but doesn't declare a project type.
+>
+> I'll add the Project Type section for a Java project. Proceed? (YES/no)
+
+If YES:
+Update CLAUDE.md (prepend after header):
+```markdown
+## Project Type
+
+**Type:** java
+
+[existing content...]
+```
+
+Stage and continue to Step 1.
+
+**If CLAUDE.md declares different type:**
+Show mismatch error:
+> ⚠️  Project type mismatch detected.
+>
+> CLAUDE.md declares: type: {detected_type}
+> You invoked: java-git-commit (expects type: java)
+>
+> Options:
+> 1. Update CLAUDE.md to type: java (if this is correct)
+> 2. Use the correct commit skill for type: {detected_type}
+>
+> Which option? (1/2)
+
+Handle based on response.
+If 1: Update CLAUDE.md, stage, continue.
+If 2: Stop and tell user which skill to use.
+
+**If CLAUDE.md correctly declares type: java:**
+Continue to Step 1.
+
+---
 
 ### Step 1 — Inspect staged changes and verify DESIGN.md
 

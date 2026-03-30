@@ -6,6 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a skill collection for Claude Code, providing specialized guidance for Java/Quarkus development workflows. Skills are markdown files with YAML frontmatter that Claude Code loads to execute specific development tasks.
 
+## Project Type
+
+**Type:** skills
+
 ## Project Type Awareness
 
 **CRITICAL: Skills must handle different project types with appropriate workflows.**
@@ -709,8 +713,9 @@ When modifying existing skills:
 - `git-commit` — generic conventional commits (extended by `java-git-commit`)
 
 **Workflow integrators** (chain multiple skills):
-- `git-commit` — automatically invokes `skill-review` (if SKILL.md staged), `update-claude-md` (if CLAUDE.md exists), and `update-readme` (if README.md exists and skill changes)
-- `java-git-commit` — automatically invokes `update-design` and `update-claude-md` (if docs exist)
+- `git-commit` — automatically invokes `skill-review` (if SKILL.md staged), `update-claude-md` (if CLAUDE.md exists), and `update-readme` (if README.md exists and skill changes). Routes to java-git-commit or custom-git-commit based on project type
+- `java-git-commit` — automatically invokes `update-design` and `update-claude-md` (if docs exist). For type: java projects only
+- `custom-git-commit` — automatically invokes `sync-primary-doc` (if Sync Rules configured) and `update-claude-md` (if exists). For type: custom projects (working groups, research, docs)
 - `java-code-review` — triggers `java-security-audit` for security-critical code
 - `skill-review` — blocks `git-commit` if CRITICAL findings exist
 
@@ -720,9 +725,10 @@ When modifying existing skills:
 - `maven-dependency-update` — Maven BOM management, builds on `dependency-management-principles`
 - `quarkus-observability` — Quarkus observability config, builds on `observability-principles`
 - `skill-review` — SKILL.md validation (frontmatter, CSO, cross-references, flowcharts), invoked by `git-commit`
-- `update-design` — DESIGN.md synchronization (architecture documentation), invoked by `java-git-commit`
-- `update-claude-md` — CLAUDE.md synchronization (workflow documentation), invoked by `git-commit` and `java-git-commit`
-- `update-readme` — README.md synchronization (skills repository documentation), invoked by `git-commit`
+- `sync-primary-doc` — Generic table-driven primary document sync (VISION.md, THESIS.md, etc.), invoked by `custom-git-commit`. Reads Sync Rules from CLAUDE.md
+- `update-design` — DESIGN.md synchronization (architecture documentation), invoked by `java-git-commit`. For type: java projects only
+- `update-claude-md` — CLAUDE.md synchronization (workflow documentation), invoked by `git-commit`, `java-git-commit`, and `custom-git-commit`
+- `update-readme` — README.md synchronization (skills repository documentation), invoked by `git-commit`. For type: skills projects only
 
 ## README Synchronization
 

@@ -18,6 +18,123 @@ These skills transform Claude Code into an expert Java/Quarkus development assis
 - ✅ **Quarkus/Vert.x specialized** (event loop, BOM, reactive patterns)
 - ✅ **RED-GREEN-REFACTOR validated** (tested under pressure scenarios)
 
+## Getting Started: Project Type Setup
+
+**IMPORTANT:** Skills route differently based on project type. First-time commit in any repository will guide you through setup interactively, or you can set it up manually.
+
+### The 4 Project Types
+
+| Type | When to Use | Documentation | Commit Skill |
+|------|-------------|---------------|--------------|
+| **skills** | Claude Code skill repositories (has `*/SKILL.md` files) | README.md + CLAUDE.md (auto-synced) | `git-commit` |
+| **java** | Java/Maven/Gradle projects | DESIGN.md (required) + CLAUDE.md (optional, auto-synced) | `java-git-commit` |
+| **custom** | Working groups, research, docs, advocacy | User-configured primary document (auto-synced) | `custom-git-commit` |
+| **generic** | Everything else | CLAUDE.md optional (auto-synced) | `git-commit` |
+
+### Quick Setup
+
+**Option 1: Automatic (Recommended)**
+
+Just try to commit. If `CLAUDE.md` is missing or has no project type, `git-commit` will ask you 4 questions and create it for you:
+
+```bash
+git add <your files>
+# Then say "commit" to Claude - it will guide you through setup
+```
+
+**Option 2: Manual**
+
+Create `CLAUDE.md` in your repository root:
+
+**For Skills Repositories:**
+```markdown
+## Project Type
+
+**Type:** skills
+```
+
+**For Java Projects:**
+```markdown
+## Project Type
+
+**Type:** java
+```
+Then create `docs/DESIGN.md` (java-git-commit will block without it).
+
+**For Custom Projects** (working groups, research, docs, etc.):
+```markdown
+## Project Type
+
+**Type:** custom
+**Primary Document:** docs/vision.md
+
+**Sync Strategy:** bidirectional-consistency
+
+**Sync Rules:**
+| Changed Files | Document Section | Update Type |
+|---------------|------------------|-------------|
+| catalog/*.md | Vision - Current Landscape | Add project summary |
+| docs/meetings/*.md | Governance | Add meeting summary |
+
+**Current Milestone:** Phase 1 - Discovery
+```
+
+**For Generic Projects:**
+```markdown
+## Project Type
+
+**Type:** generic
+```
+
+### What Happens at Commit Time
+
+**type: skills** → `git-commit`:
+- Validates SKILL.md files with `skill-review`
+- Auto-syncs README.md (skill catalog)
+- Auto-syncs CLAUDE.md (workflow conventions)
+
+**type: java** → `java-git-commit`:
+- Requires docs/DESIGN.md (blocks if missing)
+- Auto-syncs DESIGN.md (architecture)
+- Auto-syncs CLAUDE.md (workflow conventions)
+- Java-specific commit scopes (`rest`, `repository`, `service`, etc.)
+
+**type: custom** → `custom-git-commit`:
+- Syncs user-configured primary document (VISION.md, THESIS.md, etc.)
+- Follows user's Sync Rules table
+- Auto-syncs CLAUDE.md (workflow conventions)
+
+**type: generic** → `git-commit`:
+- Auto-syncs CLAUDE.md if it exists
+- Basic conventional commits
+
+### Why Explicit Type Declaration?
+
+**We tried auto-detection.** It was fragile:
+- Research repos with pom.xml files got treated as Java projects
+- Java projects without pom.xml yet got treated as generic
+- Renaming files broke detection mid-project
+
+**Explicit declaration is better:**
+- You know exactly what workflow you're getting
+- Type won't change unexpectedly
+- Easy to override if project evolves
+- Clear error messages when using wrong skill
+
+### Changing Project Types
+
+Just edit CLAUDE.md and change the type. Example: research project graduates to production Java service:
+
+```diff
+## Project Type
+
+-**Type:** custom
+-**Primary Document:** THESIS.md
++**Type:** java
+```
+
+Remove custom-specific fields, create `docs/DESIGN.md`, and you're done.
+
 ## Why Commit Messages and Design Docs Actually Matter (Yes, Really)
 
 Let's be honest: writing good commit messages and keeping design documentation in sync with code is about as exciting as watching paint dry. It ranks somewhere between "updating Jira tickets" and "mandatory corporate training videos" on the Developer Fun Scale™.
@@ -255,9 +372,11 @@ Builds on security-audit-principles with Java/Quarkus-specific patterns.
 #### **git-commit**
 Generic conventional commit workflow for any repository:
 - Generates conventional commit messages (Conventional Commits 1.0.0)
+- **Routes to specialized skills** based on project type (java-git-commit for type: java, custom-git-commit for type: custom)
+- **Interactive setup** if CLAUDE.md missing (prompts for project type)
 - Works with any codebase or file types
 - Proposes commit message for user review before committing
-- Base workflow extended by java-git-commit
+- Base workflow extended by java-git-commit and custom-git-commit
 
 **Features:**
 - Decision Flow flowchart (stage → generate → propose → commit)
@@ -280,7 +399,24 @@ Intelligent commit workflow that extends git-commit with:
 - Java-specific scope and type examples
 - Simplified workflow (references git-commit, adds DESIGN.md sync)
 
-**Triggers:** "commit", "smart commit", "update design and commit", `/java-git-commit` in Java/Maven/Gradle repositories.
+**Triggers:** "commit" in repositories with `type: java` declared in CLAUDE.md, or explicitly via "smart commit", "update design and commit", `/java-git-commit`.
+
+#### **custom-git-commit**
+Intelligent commit workflow for custom project types (working groups, research, documentation, advocacy):
+- **User-configured primary document sync** — reads sync strategy from CLAUDE.md
+- Flexible sync via Sync Rules table (file patterns → document sections)
+- Support for multiple sync strategies (bidirectional-consistency, research-progress, api-spec-sync, architectural-changes)
+- Milestone alignment tracking
+
+Extends git-commit with user-configured synchronization for projects that don't fit skills/java patterns.
+
+**Features:**
+- Decision flowchart showing complete commit + primary doc sync process
+- Common Pitfalls table (custom project mistakes)
+- Examples for 4 custom project archetypes (working groups, research, API docs, standards)
+- Flexible table-driven sync (no hardcoded project knowledge)
+
+**Triggers:** "commit" in repositories with `type: custom` declared in CLAUDE.md.
 
 #### **update-design**
 Maintains DESIGN.md documentation in sync with code changes, capturing:
@@ -325,6 +461,22 @@ Maintains README.md documentation in sync with skill collection changes in skill
 - Surgical update strategy (preserves user's voice)
 
 Invoked automatically by `git-commit` (if README.md exists and skill changes detected), or independently. Specific to skills repositories; for code repositories, use project-specific documentation tools.
+
+#### **sync-primary-doc**
+Generic table-driven primary document synchronization for custom projects:
+- Syncs VISION.md, THESIS.md, or user-configured primary documents
+- Reads Sync Rules from CLAUDE.md (file patterns → document sections)
+- Supports 4 built-in sync strategies + custom strategies
+- Section-aware updates (headings, subsections)
+- Glob pattern matching (*, **, exact paths)
+
+**Features:**
+- Common Pitfalls table (sync configuration mistakes)
+- 4 sync strategies documented (bidirectional-consistency, research-progress, api-spec-sync, architectural-changes)
+- Pattern matching examples
+- Proposal-only (returns changes to calling skill for user confirmation)
+
+Invoked automatically by `custom-git-commit` when Sync Rules configured in CLAUDE.md. Generic processor with no hardcoded project knowledge—all behavior driven by user's Sync Rules table.
 
 #### **adr**
 Creates and manages Architecture Decision Records (ADRs) in MADR format:

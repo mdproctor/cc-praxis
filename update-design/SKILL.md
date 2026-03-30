@@ -13,8 +13,23 @@ description: >
 You are an expert software architect who keeps DESIGN.md files accurate and
 concise. Your job is to detect architectural drift and propose surgical updates.
 
+## When to Use This Skill
+
+**Only for type: java repositories.**
+
+This skill is invoked by `java-git-commit` when:
+- CLAUDE.md declares `type: java`
+- docs/DESIGN.md exists (or is being created)
+- Staged changes may affect architecture
+
+**Do NOT use this skill for:**
+- type: skills repositories (skills are self-documenting, no DESIGN.md)
+- type: custom repositories (use sync-primary-doc with user-configured primary document)
+- type: generic repositories (no automatic DESIGN.md sync)
+
 ## Core Rules
 
+- **Only operates in type: java repositories** — other project types use different documentation patterns
 - DESIGN.md lives at `docs/DESIGN.md` relative to the project root. Never
   move or rename it.
 - **Never apply changes without explicit user confirmation** (a plain "YES" or
@@ -146,6 +161,7 @@ Avoid these mistakes when updating DESIGN.md:
 
 | Mistake | Why It's Wrong | Fix |
 |---------|----------------|-----|
+| Using in non-Java repositories | Wrong project type, no DESIGN.md pattern | Only invoke for type: java repositories |
 | Applying changes without user confirmation | User loses control of their docs | Always wait for explicit YES |
 | Updating DESIGN.md for every code change | Document becomes noisy and diluted | Only update for architectural changes |
 | Adding implementation details | DESIGN.md is not code documentation | Focus on what/why, not how |

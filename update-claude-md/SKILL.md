@@ -27,6 +27,7 @@ changes.
 
 - CLAUDE.md lives at repository root
 - **Never apply changes without explicit user confirmation** (a plain "YES" or equivalent)
+- **Never modify the Project Type section** — this is user-configured and defines repository behavior (type: skills, type: java, type: custom, type: generic)
 - Focus on **workflow and convention changes**: new tools, build commands, testing
   patterns, naming conventions, repository structure changes
 - Keep prose concise and professional. Prefer bullet points and tables
@@ -89,6 +90,7 @@ Map changes to CLAUDE.md sections:
 | Frontmatter CSO change | Claude Search Optimization section |
 
 **What to skip:**
+- **Project Type section** — never modify this user-configured section
 - Code implementation details (that's for DESIGN.md)
 - Architecture changes (that's for DESIGN.md)
 - Individual bug fixes that don't change workflow
@@ -131,6 +133,7 @@ Avoid these mistakes when updating CLAUDE.md:
 
 | Mistake | Why It's Wrong | Fix |
 |---------|----------------|-----|
+| Modifying Project Type section | Breaks repository behavior, user-configured | Never touch this section, skip it entirely |
 | Applying changes without confirmation | User loses control | Always wait for explicit YES |
 | Documenting architecture in CLAUDE.md | Wrong file - DESIGN.md is for architecture | Focus on workflow/conventions only |
 | Over-documenting obvious things | Clutter, maintenance burden | Only document non-obvious workflows |
@@ -167,6 +170,10 @@ Use this when creating CLAUDE.md for a skills repository:
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Project Type
+
+**Type:** skills
+
 ## Repository Purpose
 
 [Brief description of what this skills collection provides]
@@ -202,6 +209,10 @@ Use this when creating CLAUDE.md for a code repository:
 # CLAUDE.md
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project Type
+
+**Type:** [java | custom | generic]
 
 ## Repository Purpose
 
