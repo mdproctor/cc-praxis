@@ -65,3 +65,45 @@ def test_build_graph_with_single_dependency():
         # java-dev should come first (dependency)
         assert graph[0]["name"] == "java-dev"
         assert graph[1]["name"] == "quarkus-flow-dev"
+
+
+def test_build_graph_detects_circular_dependency():
+    """Graph builder should detect circular dependencies"""
+    skill_a = {
+        "name": "skill-a",
+        "version": "1.0.0",
+        "repository": "https://github.com/test/repo",
+        "dependencies": [
+            {
+                "name": "skill-b",
+                "repository": "https://github.com/test/repo",
+                "ref": "main"
+            }
+        ]
+    }
+
+    skill_b = {
+        "name": "skill-b",
+        "version": "1.0.0",
+        "repository": "https://github.com/test/repo",
+        "dependencies": [
+            {
+                "name": "skill-a",  # Circular!
+                "repository": "https://github.com/test/repo",
+                "ref": "main"
+            }
+        ]
+    }
+
+    def mock_fetch(repo, path, ref):
+        if path == "skill-a":
+            return skill_a
+        elif path == "skill-b":
+            return skill_b
+        raise ValueError(f"Unknown skill: {path}")
+
+    with patch('scripts.marketplace.dependency_resolver.fetch_skill_metadata', side_effect=mock_fetch):
+        from scripts.marketplace.dependency_resolver import build_dependency_graph
+
+        with pytest.raises(ValueError, match="Circular dependency detected"):
+            build_dependency_graph("skill-a", registry={})

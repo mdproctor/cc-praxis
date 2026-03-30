@@ -101,15 +101,21 @@ def build_dependency_graph(
         subprocess.CalledProcessError: If git operations fail
         FileNotFoundError: If skill metadata cannot be found
         json.JSONDecodeError: If skill.json is malformed
+        ValueError: If circular dependency is detected
     """
     visited = set()
+    active = set()  # Currently being processed
     graph = []
 
     def visit(name: str, repo: str, git_ref: str):
         """Visit a skill node and recursively visit its dependencies."""
+        if name in active:
+            raise ValueError(f"Circular dependency detected: {name}")
+
         if name in visited:
             return
 
+        active.add(name)
         visited.add(name)
 
         # Fetch metadata
@@ -119,6 +125,7 @@ def build_dependency_graph(
         for dep in metadata.get("dependencies", []):
             visit(dep["name"], dep["repository"], dep["ref"])
 
+        active.remove(name)
         # Add to graph after dependencies
         graph.append(metadata)
 
