@@ -2374,29 +2374,29 @@ jobs:
 
 #### PRE-PUSH Tier (<30s budget)
 
-**New validators (cross-document/semantic checks - TO BE CREATED):**
-8. **`validate_cross_document.py`** - Cross-document consistency [PRE-PUSH]
-9. **`validate_temporal.py`** - Temporal consistency (stale references) [PRE-PUSH]
-10. **`validate_usability.py`** - Usability/UX validator [PRE-PUSH]
-11. **`validate_edge_cases.py`** - Edge case coverage validator [PRE-PUSH]
-12. **`validate_behavior.py`** - Behavioral consistency validator [PRE-PUSH]
+**Semantic validators (cross-document/consistency checks):**
+8. ✅ **`validate_cross_document.py`** - Cross-document consistency [PRE-PUSH]
+9. ✅ **`validate_temporal.py`** - Temporal consistency (stale references) [PRE-PUSH]
+10. ✅ **`validate_usability.py`** - Usability/UX validator [PRE-PUSH]
+11. ✅ **`validate_edge_cases.py`** - Edge case coverage validator [PRE-PUSH]
+12. ✅ **`validate_behavior.py`** - Behavioral consistency validator [PRE-PUSH]
 
-**Test infrastructure (TO BE CREATED):**
-13. **`validate_readme_sync.py`** - README/CLAUDE sync validator [PRE-PUSH]
-14. **`run_regression_tests.py`** - Regression test runner [PRE-PUSH]
-15. **`test_coverage.py`** - Coverage reporting [PRE-PUSH]
-16. **`run_skill_tests.py`** - Functional test runner (git worktrees) [CI]
+**Test infrastructure:**
+13. ✅ **`validate_readme_sync.py`** - README/CLAUDE sync validator [PRE-PUSH]
+14. ✅ **`run_regression_tests.py`** - Regression test runner [PRE-PUSH]
+15. ✅ **`test_coverage.py`** - Coverage reporting [PRE-PUSH]
+16. ✅ **`run_skill_tests.py`** - Functional test runner (git worktrees) [CI]
 
 **Why pre-push:** Moderate cost (<30s), cross-file checks, prevents bad state reaching remote.
 
 #### CI/Scheduled Tier (<5min budget)
 
-**Expensive tests (TO BE CREATED):**
-17. **`validate_python_quality.py`** - mypy, flake8, bandit [CI]
+**Expensive tests:**
+17. ✅ **`validate_python_quality.py`** - mypy, flake8, bandit [CI]
 
-**Orchestration & Reporting (TO BE CREATED):**
-18. **`validate_all.py`** - Master orchestrator with `--tier` support [UNIVERSAL]
-19. **`generate_report.py`** - Comprehensive reporting [CI]
+**Orchestration & Reporting:**
+18. ✅ **`validate_all.py`** - Master orchestrator with `--tier` support [UNIVERSAL]
+19. **`generate_report.py`** - Comprehensive reporting [CI] (TO BE CREATED)
 
 **Why CI:** Expensive operations (worktrees, static analysis), comprehensive validation before merging.
 
