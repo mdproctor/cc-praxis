@@ -217,6 +217,68 @@ name: quarkus-flow-dev
                 }
             ])
 
+    def test_generate_skill_json_raises_on_missing_skill_md(self):
+        """Generator should raise FileNotFoundError if SKILL.md doesn't exist"""
+        with TemporaryDirectory() as tmpdir:
+            tmpdir = Path(tmpdir)
+
+            # Create skill directory WITHOUT SKILL.md
+            skill_dir = tmpdir / "java-dev"
+            skill_dir.mkdir()
+
+            from scripts.generate_skill_metadata import generate_skill_json
+
+            with self.assertRaisesRegex(FileNotFoundError, "SKILL.md not found"):
+                generate_skill_json(
+                    skill_dir=skill_dir,
+                    repository_url="https://github.com/mdproctor/claude-skills",
+                    version="1.0.0",
+                    dependencies=[]
+                )
+
+    def test_generate_skill_json_raises_on_malformed_frontmatter(self):
+        """Generator should raise ValueError if frontmatter is invalid"""
+        with TemporaryDirectory() as tmpdir:
+            tmpdir = Path(tmpdir)
+
+            skill_dir = tmpdir / "java-dev"
+            skill_dir.mkdir()
+            # SKILL.md with missing name field
+            (skill_dir / "SKILL.md").write_text("""---
+description: No name field
+---
+
+# Java Development
+""")
+
+            from scripts.generate_skill_metadata import generate_skill_json
+
+            with self.assertRaisesRegex(ValueError, "Missing 'name' field"):
+                generate_skill_json(
+                    skill_dir=skill_dir,
+                    repository_url="https://github.com/mdproctor/claude-skills",
+                    version="1.0.0",
+                    dependencies=[]
+                )
+
+    def test_generate_skill_json_raises_on_nonexistent_dir(self):
+        """Generator should raise ValueError if skill_dir doesn't exist"""
+        with TemporaryDirectory() as tmpdir:
+            tmpdir = Path(tmpdir)
+
+            # Reference non-existent directory
+            skill_dir = tmpdir / "does-not-exist"
+
+            from scripts.generate_skill_metadata import generate_skill_json
+
+            with self.assertRaisesRegex(ValueError, "does not exist"):
+                generate_skill_json(
+                    skill_dir=skill_dir,
+                    repository_url="https://github.com/mdproctor/claude-skills",
+                    version="1.0.0",
+                    dependencies=[]
+                )
+
 
 if __name__ == '__main__':
     unittest.main()

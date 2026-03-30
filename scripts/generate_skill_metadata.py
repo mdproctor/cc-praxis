@@ -116,9 +116,28 @@ def generate_skill_json(
         repository_url: GitHub repository URL
         version: Skill version (semver or semver-SNAPSHOT)
         dependencies: List of dependency objects with name, repository, ref
+
+    Raises:
+        ValueError: If skill_dir doesn't exist or is not a directory
+        FileNotFoundError: If SKILL.md doesn't exist in skill_dir
+        IOError: If SKILL.md cannot be read due to permissions or I/O error
     """
+    # Validate input parameters
+    if not skill_dir.exists():
+        raise ValueError(f"Skill directory does not exist: {skill_dir}")
+    if not skill_dir.is_dir():
+        raise ValueError(f"Not a directory: {skill_dir}")
+
+    # Check SKILL.md exists
     skill_md_path = skill_dir / "SKILL.md"
-    skill_md_content = skill_md_path.read_text()
+    if not skill_md_path.exists():
+        raise FileNotFoundError(f"SKILL.md not found in {skill_dir}")
+
+    # Read SKILL.md with error handling
+    try:
+        skill_md_content = skill_md_path.read_text()
+    except (OSError, PermissionError) as e:
+        raise IOError(f"Failed to read {skill_md_path}: {e}")
 
     # Extract name from frontmatter
     name = parse_frontmatter(skill_md_content)
