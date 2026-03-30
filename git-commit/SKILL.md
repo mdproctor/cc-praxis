@@ -426,6 +426,9 @@ digraph commit_flow {
 | Using past tense ("Added X") | Not imperative mood (wrong mental model for git revert/cherry-pick) | Use "Add X" (command form) |
 | Type `chore` for production code | Wrong semantics | Use `feat`, `fix`, or `refactor` |
 | Wrong type (`refactor` for bug fix) | Misleading git history | `fix` if it was wrong, `refactor` if working |
+| Vague scope (`(skills)`, `(stuff)`) | Unclear what changed, hard to search history | Use specific component name or omit scope entirely |
+| Wrong scope level (too broad/narrow) | Misleading - doesn't match actual change scope | Choose primary affected component, omit if 5+ components |
+| Inconsistent scope names | Hard to track changes across commits | Stick to established component names in the repo |
 | No body for complex changes | Reviewers lack context | Add why/what in body (not how) |
 | Committing merge conflict markers | Broken code in history | Check diff for `<<<<<<<` markers first |
 | Forgetting BREAKING CHANGE footer | Hidden breaking changes | Add footer with `!` in type/scope |
@@ -490,18 +493,35 @@ Commit is complete when:
 > `fix` vs `refactor`: if it corrects wrong behaviour → `fix`. If behaviour
 > was already correct but code is cleaner → `refactor`.
 
-### Scopes
+### Scopes (Optional)
 
-Scope depends on repository structure. Common patterns:
+**Scope indicates what changed.** Only use when it accurately summarizes the **entire commit**. If the scope only describes part of the changes, omit it.
+
+**When scopes add value:**
+- Large repos with clear modules: `feat(api): add export endpoint`, `fix(cli): handle empty input`
+- Monorepos with packages: `feat(auth-service): add 2FA support`
+- Component-specific changes: `docs(readme): add installation guide`
+- Helps others search history: "show me all API changes"
+
+**When to omit scope (no parentheses):**
+- Changes span multiple unrelated components
+- Scope would be vague: `(misc)`, `(various)`, `(stuff)` tells you nothing
+- Small repos where component is obvious
+- Cross-cutting changes: `feat: add project type taxonomy`
+
+**Common scope patterns:**
 
 | Repository Type | Scope Examples |
 |---|---|
-| Monorepo | Module names: `api`, `cli`, `web`, `docs` |
-| Documentation | `readme`, `guide`, `tutorial`, `api-docs` |
-| Libraries | `core`, `utils`, `parser`, `client` |
+| Monorepo | Module/package names: `api`, `cli`, `web`, `auth-service` |
 | Applications | Feature areas: `auth`, `search`, `config`, `ui` |
+| Libraries | Components: `core`, `utils`, `parser`, `client` |
+| Documentation | Document names: `readme`, `guide`, `tutorial` |
+| Infrastructure | `ci`, `scripts`, `deps`, `infra` |
 
-> When in doubt, use the directory name or component being modified.
+**Consistency matters:** If you use scopes, stick to established names. Don't mix `(auth)`, `(authentication)`, `(user-auth)` across commits.
+
+> **When in doubt, omit the scope.** A clear description is better than a forced/inaccurate scope.
 
 ### Breaking changes
 
@@ -548,4 +568,20 @@ docs(readme): add installation instructions for Windows
 refactor(utils): extract validation logic to separate module
 
 No functional changes, improves testability and reusability.
+```
+
+**Cross-cutting change (no scope):**
+```
+feat: add project type taxonomy and routing
+
+Updated 13 files across multiple components.
+No single scope accurately describes all changes.
+```
+
+**Dependency update:**
+```
+build(deps): upgrade Quarkus from 3.8.1 to 3.10.0
+
+Updated quarkus.version property and verified compatibility.
+All tests pass with new platform version.
 ```
