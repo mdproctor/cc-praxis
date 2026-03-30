@@ -1154,23 +1154,115 @@ When modifying existing skills:
 
 ## Pre-Commit Checklist for Skills
 
-**MANDATORY checks when committing changes to this repository:**
+**CRITICAL: All items are MANDATORY by default unless explicitly marked (advisory).**
 
-- [ ] **SKILL.md files modified?** → Follow readme-sync.md workflow (do NOT skip, let it decide if README needs updates)
+**This is NOT a judgment call. This is NOT optional. This is a DISCIPLINE.**
+
+Failing to execute these checks before committing is a failure, not a decision. The bigger the change, the more critical the checklist becomes. Infrastructure changes especially require documentation sync.
+
+### Mandatory Checks
+
+Run these checks **before every commit** to this repository:
+
+- [ ] **SKILL.md files modified?** → Follow readme-sync.md workflow (NEVER skip, let it decide if README needs updates)
 - [ ] **CLAUDE.md modified?** → Follow relevant update workflow if applicable
-- [ ] **New validation/testing added?** → Update README.md § Skill Quality & Validation
+- [ ] **New validation/testing added?** → Update README.md § Skill Quality & Validation AND QUALITY.md § Implementation Status
 - [ ] **New scripts/ files added?** → Update README.md § Repository Structure
 - [ ] **New chaining relationships?** → Update README.md § Skill Chaining Reference
 - [ ] **New features added to skills?** → Update README.md § Key Features
-- [ ] **Framework changes** (same pattern across multiple skills)? → Document in README.md
+- [ ] **Framework changes** (same pattern across multiple skills)? → Document in README.md AND QUALITY.md if validation-related
+- [ ] **Infrastructure changes** (validators, test infrastructure, orchestrators)? → Update README.md § Repository Structure, QUALITY.md § Implementation Status, and this file § Validation Script Roadmap
+
+### Anti-Rationalization Rules
 
 **Do NOT rationalize skipping these checks:**
 - ❌ "Just internal changes" → Wrong, internal changes can warrant documentation
 - ❌ "Not significant enough" → Wrong, let the workflow decide significance
-- ❌ "I know what needs updating" → Wrong, you'll miss things (like the validation framework gap)
-- ✅ **Always run the workflows** — they exist to catch what you miss
+- ❌ "I know what needs updating" → Wrong, you'll miss things (proven multiple times)
+- ❌ "The completion doc is sufficient" → Wrong, README/QUALITY.md must stay current
+- ❌ "This is meta-work about infrastructure" → Wrong, infrastructure changes need MORE documentation, not less
+- ✅ **ALWAYS execute the checklist** — it exists to catch what you miss
 
-**Recent regression:** Validation framework added to 4 sync workflows but README.md not updated. Root cause: Skipped readme-sync.md workflow, rationalized "just internal changes". Fix: Never skip workflows when SKILL.md files change.
+### Enforcement Pattern
+
+**Before committing:**
+1. Read this checklist top to bottom
+2. For each item that applies: Execute it (don't just think about it)
+3. If you're unsure if an item applies: Execute it anyway
+4. Only after all applicable items executed: Commit
+
+**This is the same discipline as:**
+- Running tests before committing code
+- Validating syntax before pushing
+- Code review before merging
+
+### Known Regressions (Learn From These)
+
+**Regression 1:** Validation framework added to 4 sync workflows but README.md not updated. Root cause: Skipped readme-sync.md workflow, rationalized "just internal changes". Result: Documentation drift. Fix: Never skip workflows when SKILL.md files change.
+
+**Regression 2:** Created 14 validators + test infrastructure (17 new files, ~2,800 LOC), committed completion document, but didn't update README.md § Repository Structure or QUALITY.md § Implementation Status until user asked. Root cause: Tunnel vision on Options A/B/C, didn't check Pre-Commit Checklist, rationalized "completion doc is sufficient". Result: Primary documentation out of date. Fix: Infrastructure changes require MORE documentation sync, not less. Checklist is mandatory, not advisory.
+
+---
+
+## Meta-Rule: Checklists Are Mandatory By Default
+
+**CRITICAL: All checklists in this file and in skills are MANDATORY unless explicitly marked (advisory).**
+
+**This applies to:**
+- Pre-Commit Checklists
+- Success Criteria sections in skills
+- Validation checklists
+- Deep Analysis checklists
+- Review checklists
+- Any numbered or bulleted procedure
+
+**Default assumption: MANDATORY.**
+
+If an item is truly optional or advisory, it will be explicitly marked:
+- "(advisory)" suffix
+- "Optional:" prefix
+- "Consider:" prefix (judgment call)
+
+**If not marked advisory, it's mandatory. Period.**
+
+**Why this matters:**
+
+Treating checklists as advisory leads to:
+- Skipped steps
+- Incomplete work
+- Documentation drift
+- Rationalization ("I know better")
+- Repeated regressions
+
+Treating checklists as mandatory ensures:
+- Consistent execution
+- Complete work
+- Up-to-date documentation
+- Discipline over judgment
+- Prevention of known failures
+
+**The test:**
+- "Should I do this?" → Wrong question
+- "Is this marked (advisory)?" → Right question
+  - If no → Do it
+  - If yes → Use judgment
+
+**This is fundamental discipline, like:**
+- Running tests before committing
+- Reading the file before editing it
+- Validating syntax before pushing
+- Following TDD cycle (red-green-refactor)
+
+**Exception handling:**
+If you believe a checklist item doesn't apply to your situation, that's a flag to:
+1. Re-read the item carefully
+2. Check if you're rationalizing
+3. If still uncertain → Execute it anyway (safer to over-apply than skip)
+4. If it truly doesn't apply → Document why in commit message
+
+**Never skip checklist items silently.**
+
+---
 
 ## Meta-Rule: Consider Universality First
 
