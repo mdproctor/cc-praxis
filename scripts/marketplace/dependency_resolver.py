@@ -131,3 +131,32 @@ def build_dependency_graph(
 
     visit(skill_name, repository, ref)
     return graph
+
+
+def detect_conflicts(graph: List[Dict[str, Any]]) -> None:
+    """
+    Detect version conflicts in dependency graph.
+
+    In v1, we reject any conflicts (same skill, different refs).
+
+    Args:
+        graph: Dependency graph
+
+    Raises:
+        RuntimeError: If conflict detected
+    """
+    seen = {}
+
+    for skill in graph:
+        name = skill["name"]
+        ref = skill.get("ref", skill.get("version"))
+
+        if name in seen:
+            if seen[name] != ref:
+                raise RuntimeError(
+                    f"Dependency conflict: '{name}' required with both "
+                    f"'{seen[name]}' and '{ref}'. "
+                    f"Cannot install multiple versions of the same skill."
+                )
+        else:
+            seen[name] = ref

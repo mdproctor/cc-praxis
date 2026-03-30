@@ -107,3 +107,49 @@ def test_build_graph_detects_circular_dependency():
 
         with pytest.raises(ValueError, match="Circular dependency detected"):
             build_dependency_graph("skill-a", registry={})
+
+
+def test_detect_conflict_raises_on_version_mismatch():
+    """Conflict detector should raise error when same skill required with different refs"""
+    from scripts.marketplace.dependency_resolver import detect_conflicts
+
+    graph = [
+        {
+            "name": "java-dev",
+            "version": "1.0.0",
+            "dependencies": [],
+            "ref": "v1.0.0"
+        },
+        {
+            "name": "java-dev",
+            "version": "2.0.0",
+            "dependencies": [],
+            "ref": "v2.0.0"
+        }
+    ]
+
+    with pytest.raises(RuntimeError, match="Dependency conflict"):
+        detect_conflicts(graph)
+
+
+def test_detect_conflict_passes_on_same_ref():
+    """Conflict detector should allow same skill with same ref"""
+    from scripts.marketplace.dependency_resolver import detect_conflicts
+
+    graph = [
+        {
+            "name": "java-dev",
+            "version": "1.0.0",
+            "dependencies": [],
+            "ref": "v1.0.0"
+        },
+        {
+            "name": "quarkus-flow-dev",
+            "version": "1.2.0",
+            "dependencies": [],
+            "ref": "v1.2.0"
+        }
+    ]
+
+    # Should not raise
+    detect_conflicts(graph)
