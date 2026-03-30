@@ -90,7 +90,7 @@ Then create `docs/DESIGN.md` (java-git-commit will block without it).
 ### What Happens at Commit Time
 
 **type: skills** → `git-commit`:
-- Validates SKILL.md files with `skill-review`
+- Validates SKILL.md files (follows skill-validation.md workflow)
 - Auto-syncs README.md (skill catalog)
 - Auto-syncs CLAUDE.md (workflow conventions)
 
@@ -208,15 +208,16 @@ This collection follows a **layered architecture** where foundation skills provi
 | **readme-sync.md** | README.md (skill catalog) | skills | git-commit |
 | **update-primary-doc** | User-configured doc | custom | custom-git-commit |
 
-### Layer 3: Review (3 skills)
+### Layer 3: Review (2 skills)
 
 **Pattern:** Domain-Specific Review Specialists
 
 | Skill | Reviews | Auto-Invoked By | Blocks On |
 |-------|---------|-----------------|-----------|
-| **skill-review** | SKILL.md structure | git-commit | CRITICAL findings |
 | **java-code-review** | Java code quality | java-git-commit | CRITICAL findings |
 | **java-security-audit** | OWASP Top 10 | java-code-review | Security vulnerabilities |
+
+**Note:** SKILL.md validation for type: skills repositories is handled by the skill-validation.md workflow (not a portable skill), automatically invoked by git-commit when SKILL.md files are staged.
 
 ### Layer 4: Principles (4 skills)
 
@@ -363,30 +364,22 @@ Invoked automatically by `custom-git-commit` when Sync Rules configured in CLAUD
 
 ### Layer 3: Review
 
-#### **skill-review**
-Pre-commit review for Claude Code skills ensuring structural integrity, CSO compliance,
-and documentation completeness:
-- Frontmatter validation (name, description, CSO rules)
-- Flowchart syntax testing (Graphviz validation)
-- Naming convention compliance (generic `-principles`, language prefixes)
-- Cross-reference verification (bidirectional chaining)
+#### **SKILL.md Validation (Modular Workflow)**
+
+**Note:** SKILL.md validation for type: skills repositories is handled by the **skill-validation.md workflow**, not a portable skill. This modular documentation file is automatically referenced by git-commit when SKILL.md files are staged.
+
+**What it validates:**
+- Frontmatter structure (name, description, CSO compliance)
+- Flowchart syntax (Graphviz validation)
+- Naming conventions (generic `-principles`, language prefixes)
+- Cross-reference integrity (bidirectional chaining)
 - Documentation completeness (Success Criteria, Common Pitfalls, Prerequisites)
-- Severity assignment (CRITICAL/WARNING/NOTE)
-- **Deep Analysis Mode:** Comprehensive validation beyond basic structural checks
 
-Builds quality assurance discipline specifically for skills repositories. Blocks commits
-on CRITICAL findings (invalid frontmatter, broken flowcharts, CSO violations).
+**Automated validators:** `scripts/validate_all.py` orchestrates 14 validators across 3 tiers (commit/push/ci). See CLAUDE.md § Quality Assurance Framework for complete validation architecture.
 
-**Features:**
-- Review checklist by category (frontmatter, naming, cross-references, flowcharts)
-- Severity decision flowchart
-- Deep analysis procedures (reference accuracy, logical soundness, completeness)
-- Automated validation scripts (`scripts/validate_all.py` orchestrates 7 validators)
-- Integration with QA framework (see CLAUDE.md § Quality Assurance Framework)
-- Common Pitfalls table (8 skill authoring mistakes)
-- Cross-reference bidirectional verification
+**Why modular, not a skill:** Skills-specific validation only applies to THIS repository (type: skills). Loading as a portable skill would waste ~800 lines of tokens in all other projects (java, custom, generic). See CLAUDE.md § Skills-Repository-Specific Documentation.
 
-**Triggers:** "review my skill", "check this skill", `/skill-review`, or automatically when SKILL.md files are staged for commit.
+---
 
 #### **java-code-review**
 Pre-commit code review for Java/Quarkus applications enforcing:
@@ -601,8 +594,8 @@ java-dev or quarkus-flow-dev
 ### Skill Development → Review → Commit (Skills repositories)
 ```
 superpowers:writing-skills
-  → skill-review (automatic when SKILL.md staged)
   → git-commit
+    → Validates SKILL.md (follows skill-validation.md workflow if staged)
     → update-claude-md + readme-sync.md (automatic)
 ```
 
@@ -923,7 +916,7 @@ Claude: [Uses superpowers:writing-skills] Drafts skill with proper structure
 ```
 You: "commit"
 Claude: [Uses git-commit]
-  → Validates SKILL.md via skill-review
+  → Validates SKILL.md (follows skill-validation.md workflow)
   → Generates conventional commit message
   → Updates README.md via readme-sync.md
   → Updates CLAUDE.md via update-claude-md
@@ -1093,8 +1086,6 @@ See [QUALITY.md § Why Quality Matters](QUALITY.md#why-quality-matters) for comp
 │   ├── SKILL.md
 │   └── funcDSL-reference.md            # Complete FuncDSL API reference
 ├── quarkus-flow-testing/                # Workflow testing patterns
-│   └── SKILL.md
-├── skill-review/                        # SKILL.md validation and review
 │   └── SKILL.md
 ├── java-code-review/                    # Java-specific code review
 │   └── SKILL.md
