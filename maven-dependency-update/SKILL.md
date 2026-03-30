@@ -158,6 +158,31 @@ Then ask:
 > "Does this look good? Reply **YES** to apply these changes to pom.xml,
 > or tell me what to adjust."
 
+### Step 5a — Detect major version changes and offer ADR
+
+**After user confirms YES**, but before applying changes:
+
+**Check for major version upgrades:**
+- Quarkus platform: Major version change (e.g., 2.x → 3.x, 3.x → 4.x)
+- Major dependency: Major version change per semver (e.g., 1.x → 2.x)
+- New Quarkus extension: First time adding a significant extension (messaging, security, persistence)
+
+**If major change detected:**
+> I notice this is a major version upgrade:
+> - [Dependency] [old version] → [new version]
+>
+> Major version changes are architectural decisions (new capabilities, breaking changes, different patterns).
+>
+> Would you like to create an ADR documenting why we're making this upgrade? (YES/no)
+
+**If user says YES:**
+- Invoke `adr` skill with context about the upgrade
+- Let user draft the ADR
+- After ADR is created, continue to Step 6
+
+**If user says NO or it's not a major change:**
+- Continue to Step 6
+
 ### Step 6 — Apply and verify
 
 Only after explicit YES:
@@ -212,6 +237,8 @@ Dependency update is complete when:
 
 **Invoked by:** None (user-initiated)
 
-**Invokes:** [`java-git-commit`] after successful dependency updates
+**Invokes:**
+- [`adr`] when major version upgrades or new extensions detected (offers to user)
+- [`java-git-commit`] after successful dependency updates
 
 **Can be invoked independently:** User says "update dependencies", "upgrade Quarkus", or explicitly invokes when pom.xml changes are needed

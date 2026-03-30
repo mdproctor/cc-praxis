@@ -713,19 +713,23 @@ Each skill explicitly declares when to chain to other skills:
 | `git-commit` | `update-claude-md` | CLAUDE.md exists |
 | `git-commit` | `java-git-commit` | Routes if type: java declared |
 | `git-commit` | `custom-git-commit` | Routes if type: custom declared |
-| `java-git-commit` | `java-code-review` | Automatic (if not done this session) |
 | `java-git-commit` | `java-update-design` | Always (automatic) |
 | `java-git-commit` | `update-claude-md` | CLAUDE.md exists (automatic) |
 | `custom-git-commit` | `update-primary-doc` | Sync Rules configured (automatic) |
 | `custom-git-commit` | `update-claude-md` | CLAUDE.md exists (automatic) |
 | `java-code-review` | `java-security-audit` | Security-critical code detected |
+| `java-code-review` | `java-git-commit` | After approval if user wants to commit |
 | `java-dev` | `java-code-review` | User triggers review |
 | `quarkus-flow-dev` | `quarkus-flow-testing` | Writing tests for workflows |
+| `quarkus-flow-dev` | `quarkus-observability` | Workflow tracing/MDC setup |
 | `quarkus-flow-dev` | `java-code-review` | User triggers review |
+| `quarkus-flow-dev` | `java-git-commit` | When ready to commit |
 | `quarkus-flow-testing` | `java-code-review` | User triggers review |
-| `maven-dependency-update` | `java-code-review` | Code compatibility changes needed |
+| `quarkus-flow-testing` | `java-git-commit` | When ready to commit |
 | `maven-dependency-update` | `adr` | Major version jump or new extension |
+| `maven-dependency-update` | `java-git-commit` | After successful dependency updates |
 | `quarkus-observability` | `maven-dependency-update` | Adding OTEL/Micrometer deps |
+| `quarkus-observability` | `java-git-commit` | Observability config changes |
 | `adr` | `java-git-commit` | Stage ADR with related changes |
 | `java-update-design` | (companion: `update-claude-md`) | Architecture changes often need workflow doc updates |
 | `readme-sync.md` | (companion: `update-claude-md`) | Skill changes often need workflow doc updates |
