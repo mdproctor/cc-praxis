@@ -1,4 +1,4 @@
-# README.md Synchronization
+# README.md Synchronization (Skills Repositories)
 
 Maintains README.md documentation in sync with skill collection changes in skills
 repositories. Detects when skills are added, removed, renamed, or chained differently,
@@ -15,6 +15,20 @@ This workflow is invoked by `git-commit` when:
 - type: java repositories (no automatic README sync)
 - type: custom repositories (no automatic README sync)
 - type: generic repositories (no automatic README sync)
+
+## Prerequisites
+
+**This skill extends `update-primary-doc`** with skills-repository-specific knowledge:
+
+- **update-primary-doc**: Generic document sync patterns (read path, match files, propose updates, validate)
+
+**Skills-specific additions:**
+- Hardcoded Primary Document: `README.md`
+- Hardcoded skill collection mappings:
+  - New/removed SKILL.md → Update "Skills" section
+  - Skill renamed → Update all references (Skills, Chaining table, Repository Structure)
+  - New skill chaining → Update "Skill Chaining Reference" table
+  - New features added → Update "Key Features" section
 
 ## Core Rules
 
@@ -89,7 +103,7 @@ Skip the following changes, unless they signal a broader pattern:
 | **New documentation sync capability** | Update Key Features section |
 
 **Recent example (learned from regression):**
-- **What happened:** Validation added to 4 sync workflows (update-claude-md, update-design, sync-primary-doc, readme-sync.md)
+- **What happened:** Validation added to 4 sync workflows (update-claude-md, java-update-design, update-primary-doc, readme-sync.md)
 - **Framework change:** All sync workflows now validate documents before staging
 - **README.md impact:** Should have updated:
   - Key Features: "Universal document validation"

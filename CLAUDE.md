@@ -118,13 +118,13 @@ Instead: One `custom-git-commit` reads user's config. Infinite flexibility, zero
 git-commit (for type: skills)
   ├─ skill-review (validates SKILL.md if staged)
   │   └─ Blocks on CRITICAL findings
-  ├─ skills-update-readme (syncs README.md if skill changes)
+  ├─ readme-sync.md (syncs README.md if skill changes)
   ├─ update-claude-md (syncs CLAUDE.md if exists)
   └─ Conventional commit
 ```
 
 **Sync Logic (Hardcoded):**
-- `skills-update-readme` knows: SKILL.md changes → update Skills section, chaining table
+- `readme-sync.md` knows: SKILL.md changes → update Skills section, chaining table
 - `skill-review` knows: Check frontmatter format, CSO compliance, cross-refs
 
 **This type is ONLY for skills repositories.** Don't use for other documentation projects.
@@ -365,7 +365,7 @@ Step 1: Read CLAUDE.md
 Step 2: Route based on type
   ├─ skills → Continue with git-commit (skills mode)
   │           ├─ skill-review
-  │           ├─ skills-update-readme
+  │           ├─ readme-sync.md
   │           └─ update-claude-md
   │
   ├─ java → STOP: "Use java-git-commit instead"
@@ -624,7 +624,7 @@ Skills-repository-specific logic (SKILL.md validation, README synchronization) i
 | File | Purpose | Used By |
 |------|---------|---------|
 | **skill-validation.md** | SKILL.md validation workflow (frontmatter, CSO, flowcharts, cross-references) | `git-commit` when type: skills AND SKILL.md files staged |
-| **skills-update-readme** | README.md synchronization workflow (skill collection changes) | `git-commit` when type: skills AND skill changes detected |
+| **readme-sync.md** | README.md synchronization workflow (skill collection changes) | `git-commit` when type: skills AND skill changes detected |
 
 **Why modularized (not skills):**
 - These workflows only apply to THIS repository
@@ -635,7 +635,7 @@ Skills-repository-specific logic (SKILL.md validation, README synchronization) i
 
 **When git-commit operates in type: skills mode:**
 1. Check for staged SKILL.md files → Follow skill-validation.md workflow
-2. Check for skill collection changes → Follow skills-update-readme workflow
+2. Check for skill collection changes → Follow readme-sync.md workflow
 3. Both workflows maintain the same confirmation pattern (propose → user YES → apply)
 
 **These files are NOT:**
@@ -762,7 +762,7 @@ When modifying existing skills:
 
 **MANDATORY checks when committing changes to this repository:**
 
-- [ ] **SKILL.md files modified?** → Follow skills-update-readme workflow (do NOT skip, let it decide if README needs updates)
+- [ ] **SKILL.md files modified?** → Follow readme-sync.md workflow (do NOT skip, let it decide if README needs updates)
 - [ ] **CLAUDE.md modified?** → Follow relevant update workflow if applicable
 - [ ] **New validation/testing added?** → Update README.md § Skill Quality & Validation
 - [ ] **New scripts/ files added?** → Update README.md § Repository Structure
@@ -776,7 +776,7 @@ When modifying existing skills:
 - ❌ "I know what needs updating" → Wrong, you'll miss things (like the validation framework gap)
 - ✅ **Always run the workflows** — they exist to catch what you miss
 
-**Recent regression:** Validation framework added to 4 sync workflows but README.md not updated. Root cause: Skipped skills-update-readme workflow, rationalized "just internal changes". Fix: Never skip workflows when SKILL.md files change.
+**Recent regression:** Validation framework added to 4 sync workflows but README.md not updated. Root cause: Skipped readme-sync.md workflow, rationalized "just internal changes". Fix: Never skip workflows when SKILL.md files change.
 
 ## Meta-Rule: Consider Universality First
 
@@ -793,7 +793,7 @@ When you identify a problem and prepare a solution, STOP and consider:
 
 | Situation | Narrow Fix | Universal Fix | Correct Choice |
 |-----------|------------|---------------|----------------|
-| README.md sync missing | Add check to skills-update-readme only | Add framework change detection to ALL sync workflows | Universal (ADR-0001) |
+| README.md sync missing | Add check to readme-sync.md only | Add framework change detection to ALL sync workflows | Universal (ADR-0001) |
 | Java-specific BOM issue | Fix in maven-dependency-update | Make dependency management universal | Narrow (Java-specific) |
 | Rationalization bypass | Strengthen git-commit Step 2b | Add mandatory checks to all workflows | Universal |
 | Quarkus event loop bug | Fix in quarkus-flow-dev | Make concurrency universal | Already universal (code-review-principles) |
@@ -833,7 +833,7 @@ When you identify a problem and prepare a solution, STOP and consider:
 - `git-commit` — generic conventional commits (extended by `java-git-commit`)
 
 **Workflow integrators** (chain multiple skills):
-- `git-commit` — automatically invokes `skill-review` (if SKILL.md staged), `update-claude-md` (if CLAUDE.md exists), and `skills-update-readme` (if README.md exists and skill changes). Routes to java-git-commit or custom-git-commit based on project type
+- `git-commit` — automatically invokes `skill-review` (if SKILL.md staged), `update-claude-md` (if CLAUDE.md exists), and `readme-sync.md` (if README.md exists and skill changes). Routes to java-git-commit or custom-git-commit based on project type
 - `java-git-commit` — automatically invokes `java-update-design` and `update-claude-md` (if docs exist). For type: java projects only
 - `custom-git-commit` — automatically invokes `update-primary-doc` (if Sync Rules configured) and `update-claude-md` (if exists). For type: custom projects (working groups, research, docs)
 - `java-code-review` — triggers `java-security-audit` for security-critical code
@@ -848,7 +848,7 @@ When you identify a problem and prepare a solution, STOP and consider:
 - `update-primary-doc` — Generic table-driven primary document sync (VISION.md, THESIS.md, etc.), invoked by `custom-git-commit`. Reads Sync Rules from CLAUDE.md
 - `java-update-design` — DESIGN.md synchronization (architecture documentation), invoked by `java-git-commit`. For type: java projects only
 - `update-claude-md` — CLAUDE.md synchronization (workflow documentation), invoked by `git-commit`, `java-git-commit`, and `custom-git-commit`
-- `skills-update-readme` — README.md synchronization (skills repository documentation), invoked by `git-commit`. For type: skills projects only
+- `readme-sync.md` — README.md synchronization (skills repository documentation), invoked by `git-commit`. For type: skills projects only
 
 ## README Synchronization
 
@@ -1227,7 +1227,7 @@ For each instruction:
    ```
    git-commit (skills mode)
      ├─ skill-review (if SKILL.md staged)
-     ├─ skills-update-readme (if skill changes)
+     ├─ readme-sync.md (if skill changes)
      └─ update-claude-md (if CLAUDE.md exists)
 
    git-commit (java mode)
@@ -1479,7 +1479,7 @@ git-commit (for type: skills)
   │   ├─ Completeness
   │   └─ Block on CRITICAL findings
   │
-  ├─ skills-update-readme (if skills changed)
+  ├─ readme-sync.md (if skills changed)
   └─ update-claude-md (if exists)
 ```
 
@@ -1741,7 +1741,7 @@ Document corruption can occur during any sync operation (README.md, CLAUDE.md, D
 ### When This Applies
 
 **All project types:**
-- **type: skills** → README.md, CLAUDE.md (via skills-update-readme, update-claude-md)
+- **type: skills** → README.md, CLAUDE.md (via readme-sync.md, update-claude-md)
 - **type: java** → DESIGN.md, CLAUDE.md (via java-update-design, update-claude-md)
 - **type: custom** → Primary doc (VISION.md, THESIS.md, API.md, etc.), CLAUDE.md (via update-primary-doc, update-claude-md)
 - **type: generic** → CLAUDE.md (via update-claude-md)
@@ -1824,7 +1824,7 @@ if [ $? -eq 1 ]; then
 fi
 ```
 
-#### skills-update-readme Step 6 (after user confirms YES)
+#### readme-sync.md Step 6 (after user confirms YES)
 
 ```bash
 # Apply proposed changes
@@ -1929,6 +1929,6 @@ Document sync quality assurance is working when:
 
 **Not complete until:**
 - validate_document.py created and tested
-- All 4 sync workflows updated (update-claude-md, java-update-design, update-primary-doc, skills-update-readme)
+- All 4 sync workflows updated (update-claude-md, java-update-design, update-primary-doc, readme-sync.md)
 - git-commit updated to validate all .md files
 - CLAUDE.md documentation complete

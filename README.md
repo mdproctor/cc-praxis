@@ -204,7 +204,7 @@ This collection follows a **layered architecture** where foundation skills provi
 |-------|----------|---------------|-----------------|
 | **update-claude-md** | CLAUDE.md (workflows) | all | git-commit, java-git-commit, custom-git-commit |
 | **java-update-design** | DESIGN.md (architecture) | java | java-git-commit |
-| **skills-update-readme** | README.md (skill catalog) | skills | git-commit |
+| **readme-sync.md** | README.md (skill catalog) | skills | git-commit |
 | **update-primary-doc** | User-configured doc | custom | custom-git-commit |
 
 ### Layer 3: Review (3 skills)
@@ -331,7 +331,7 @@ Maintains DESIGN.md documentation in sync with code changes, capturing:
 
 Invoked automatically by `java-git-commit` or independently. Handles architectural documentation; for workflow/convention documentation, see `update-claude-md`.
 
-#### **skills-update-readme**
+#### **readme-sync.md**
 Maintains README.md documentation in sync with skill collection changes in skills repositories:
 - Skill descriptions (Skills section)
 - Chaining relationships (Skill Chaining Reference table)
@@ -602,7 +602,7 @@ java-dev or quarkus-flow-dev
 superpowers:writing-skills
   → skill-review (automatic when SKILL.md staged)
   → git-commit
-    → update-claude-md + skills-update-readme (automatic)
+    → update-claude-md + readme-sync.md (automatic)
 ```
 
 ### Architecture Decision → Documentation
@@ -686,7 +686,7 @@ You: "commit"
 Claude: [Uses git-commit]
   → Validates SKILL.md via skill-review
   → Generates conventional commit message
-  → Updates README.md via skills-update-readme
+  → Updates README.md via readme-sync.md
   → Updates CLAUDE.md via update-claude-md
   → Commits all changes together
 ```
@@ -709,7 +709,7 @@ Each skill explicitly declares when to chain to other skills:
 | From Skill | To Skill | When |
 |------------|----------|------|
 | `git-commit` | skill-validation.md workflow | SKILL.md files staged (type: skills) |
-| `git-commit` | skills-update-readme workflow | README.md exists + skill changes (type: skills) |
+| `git-commit` | readme-sync.md workflow | README.md exists + skill changes (type: skills) |
 | `git-commit` | `update-claude-md` | CLAUDE.md exists |
 | `git-commit` | `java-git-commit` | Routes if type: java declared |
 | `git-commit` | `custom-git-commit` | Routes if type: custom declared |
@@ -728,7 +728,7 @@ Each skill explicitly declares when to chain to other skills:
 | `quarkus-observability` | `maven-dependency-update` | Adding OTEL/Micrometer deps |
 | `adr` | `java-git-commit` | Stage ADR with related changes |
 | `java-update-design` | (companion: `update-claude-md`) | Architecture changes often need workflow doc updates |
-| `skills-update-readme` | (companion: `update-claude-md`) | Skill changes often need workflow doc updates |
+| `readme-sync.md` | (companion: `update-claude-md`) | Skill changes often need workflow doc updates |
 
 ---
 ## License
@@ -786,7 +786,7 @@ All skills have been systematically improved following the [superpowers:writing-
 - ✅ All .md files before commit (git-commit Step 1c)
 - ✅ CLAUDE.md after sync (update-claude-md)
 - ✅ DESIGN.md after sync (java-update-design)
-- ✅ README.md after sync (skills-update-readme)
+- ✅ README.md after sync (readme-sync.md)
 - ✅ Primary documents after sync (update-primary-doc for VISION.md, THESIS.md, etc.)
 
 **Validation checks:**
@@ -820,7 +820,7 @@ See **CLAUDE.md § Document Sync Quality Assurance** for complete framework docu
 ├── scripts/                             # Validation and automation
 │   └── validate_document.py            # Universal .md corruption detector
 ├── skill-validation.md                  # Skills-specific SKILL.md validation workflow
-├── skills-update-readme                       # Skills-specific README.md sync workflow
+├── readme-sync.md                       # Skills-specific README.md sync workflow
 ├── code-review-principles/              # Generic code review principles
 │   └── SKILL.md
 ├── security-audit-principles/           # Generic security audit principles
@@ -849,8 +849,6 @@ See **CLAUDE.md § Document Sync Quality Assurance** for complete framework docu
 ├── java-update-design/                       # DESIGN.md maintenance
 │   └── SKILL.md
 ├── update-claude-md/                    # CLAUDE.md maintenance
-│   └── SKILL.md
-├── skills-update-readme/                       # README.md maintenance
 │   └── SKILL.md
 ├── adr/                                 # Architecture Decision Records
 │   └── SKILL.md
