@@ -14,22 +14,22 @@ import json
 VALIDATORS = {
     'commit': [
         # Pre-commit tier: <2s budget, fast mechanical checks
-        {'script': 'validate_frontmatter.py', 'name': 'Frontmatter', 'target': '.'},
-        {'script': 'validate_cso.py', 'name': 'CSO Compliance', 'target': '.'},
-        {'script': 'validate_flowcharts.py', 'name': 'Flowcharts', 'target': '.'},
-        {'script': 'validate_references.py', 'name': 'References', 'target': '.'},
-        {'script': 'validate_naming.py', 'name': 'Naming', 'target': '.'},
-        {'script': 'validate_sections.py', 'name': 'Sections', 'target': '.'},
-        {'script': 'validate_structure.py', 'name': 'Structure', 'target': '.'},
+        {'script': 'validate_frontmatter.py', 'name': 'Frontmatter', 'target': None},
+        {'script': 'validate_cso.py', 'name': 'CSO Compliance', 'target': None},
+        {'script': 'validate_flowcharts.py', 'name': 'Flowcharts', 'target': None},
+        {'script': 'validate_references.py', 'name': 'References', 'target': None},
+        {'script': 'validate_naming.py', 'name': 'Naming', 'target': None},
+        {'script': 'validate_sections.py', 'name': 'Sections', 'target': None},
+        {'script': 'validate_structure.py', 'name': 'Structure', 'target': None},
     ],
     'push': [
         # Pre-push tier: <30s budget, moderate validators + regression
-        {'script': 'validate_cross_document.py', 'name': 'Cross-Document', 'target': '.'},
-        {'script': 'validate_temporal.py', 'name': 'Temporal', 'target': '.'},
-        {'script': 'validate_usability.py', 'name': 'Usability', 'target': '.'},
-        {'script': 'validate_edge_cases.py', 'name': 'Edge Cases', 'target': '.'},
-        {'script': 'validate_behavior.py', 'name': 'Behavior', 'target': '.'},
-        {'script': 'validate_readme_sync.py', 'name': 'README Sync', 'target': '.'},
+        {'script': 'validate_cross_document.py', 'name': 'Cross-Document', 'target': None},
+        {'script': 'validate_temporal.py', 'name': 'Temporal', 'target': None},
+        {'script': 'validate_usability.py', 'name': 'Usability', 'target': None},
+        {'script': 'validate_edge_cases.py', 'name': 'Edge Cases', 'target': None},
+        {'script': 'validate_behavior.py', 'name': 'Behavior', 'target': None},
+        {'script': 'validate_readme_sync.py', 'name': 'README Sync', 'target': None},
     ],
     'ci': [
         # CI tier: <5min budget, expensive tests
@@ -42,8 +42,13 @@ def run_validator(validator: Dict[str, str]) -> Dict[str, Any]:
     script_path = Path('scripts/validation') / validator['script']
 
     try:
+        # Build command - only add target if not None
+        cmd = ['python3', str(script_path)]
+        if validator['target'] is not None:
+            cmd.append(validator['target'])
+
         result = subprocess.run(
-            ['python3', str(script_path), validator['target']],
+            cmd,
             capture_output=True,
             text=True,
             timeout=120
