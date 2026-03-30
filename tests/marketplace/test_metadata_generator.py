@@ -327,5 +327,49 @@ description: No name field
                 os.chmod(skill_md, 0o644)
 
 
+class TestMainCLI(unittest.TestCase):
+    """Test main CLI function"""
+
+    def test_main_generates_metadata_for_all_skills(self):
+        """Main function should generate skill.json for all discovered skills"""
+        import json
+        with TemporaryDirectory() as tmpdir:
+            tmpdir = Path(tmpdir)
+
+            # Create multiple skills
+            for skill_name in ["java-dev", "quarkus-flow-dev"]:
+                skill_dir = tmpdir / skill_name
+                skill_dir.mkdir()
+                (skill_dir / "SKILL.md").write_text(f"""---
+name: {skill_name}
+---
+
+# Skill
+""")
+
+            from scripts.generate_skill_metadata import main
+
+            # Run main with test directory
+            result = main(
+                root_dir=tmpdir,
+                repository_url="https://github.com/test/repo",
+                version="1.0.0"
+            )
+
+            # Verify skill.json created for each
+            assert (tmpdir / "java-dev" / "skill.json").exists()
+            assert (tmpdir / "quarkus-flow-dev" / "skill.json").exists()
+
+            # Verify return value
+            assert result == 2  # Number of skills processed
+
+            # Verify content of generated files
+            with open(tmpdir / "java-dev" / "skill.json") as f:
+                data = json.load(f)
+            assert data["name"] == "java-dev"
+            assert data["version"] == "1.0.0"
+            assert data["repository"] == "https://github.com/test/repo"
+
+
 if __name__ == '__main__':
     unittest.main()

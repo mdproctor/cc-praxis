@@ -11,3 +11,6 @@ __MACOSX
 #existing skill not added by me.
 skill-creator/
 __pycache__/
+
+# Generated skill metadata (not committed)
+**/skill.json

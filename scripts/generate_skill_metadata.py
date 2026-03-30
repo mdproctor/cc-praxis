@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
 """
-Skill Metadata Generator - Tasks 1-4
+Skill Metadata Generator - Tasks 1-5
 
 Task 1: Scans a directory structure to find all skill directories (those containing SKILL.md files).
 Task 2: Parses SKILL.md frontmatter to extract skill name.
 Task 3: Parses SKILL.md Prerequisites section to extract dependencies.
 Task 4: Generates skill.json metadata file combining frontmatter + external inputs.
+Task 5: Main CLI for metadata generation - orchestrates all functions.
 
-Part of the skill marketplace implementation (Tasks 1-4 of 20).
+Part of the skill marketplace implementation (Tasks 1-5 of 20).
 """
 
 import json
 import re
+import sys
 from pathlib import Path
 from typing import Dict, List
 
@@ -157,3 +159,72 @@ def generate_skill_json(
             json.dump(metadata, f, indent=2)
     except (OSError, PermissionError) as e:
         raise IOError(f"Failed to write {skill_json_path}: {e}")
+
+
+def main(
+    root_dir: Path = None,
+    repository_url: str = "https://github.com/mdproctor/claude-skills",
+    version: str = "1.0.0-SNAPSHOT"
+) -> int:
+    """
+    Generate skill.json metadata for all skills in repository.
+
+    Args:
+        root_dir: Root directory to scan (default: script parent directory)
+        repository_url: GitHub repository URL
+        version: Default version for skills
+
+    Returns:
+        Number of skills processed
+    """
+    if root_dir is None:
+        root_dir = Path(__file__).parent.parent
+
+    print(f"Scanning for skills in {root_dir}...")
+    skills = scan_for_skills(root_dir)
+    print(f"Found {len(skills)} skills\n")
+
+    if not skills:
+        print("No skills found.")
+        return 0
+
+    print("Generating skill metadata...")
+
+    for skill_dir in skills:
+        skill_md_path = skill_dir / "SKILL.md"
+        skill_md_content = skill_md_path.read_text()
+
+        # Extract name
+        name = parse_frontmatter(skill_md_content)
+
+        # Extract dependencies
+        dep_names = parse_dependencies(skill_md_content)
+
+        # Build dependency objects (simplified for v1 - all same repo, version TBD)
+        dependencies = [
+            {
+                "name": dep_name,
+                "repository": repository_url,
+                "ref": "main"  # Snapshot for now
+            }
+            for dep_name in dep_names
+        ]
+
+        # Generate skill.json
+        generate_skill_json(
+            skill_dir=skill_dir,
+            repository_url=repository_url,
+            version=version,
+            dependencies=dependencies
+        )
+
+        deps_str = f", {len(dependencies)} dependencies" if dependencies else ", 0 dependencies"
+        print(f"  ✓ {name}/skill.json (v{version}{deps_str})")
+
+    print(f"\nGenerated metadata for {len(skills)} skills.")
+    return len(skills)
+
+
+if __name__ == "__main__":
+    count = main()
+    sys.exit(0 if count > 0 else 1)
