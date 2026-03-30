@@ -32,6 +32,8 @@ These skills transform Claude Code into an expert Java/Quarkus development assis
 | **custom** | Working groups, research, docs, advocacy | User-configured primary document (auto-synced) | `custom-git-commit` |
 | **generic** | Everything else | CLAUDE.md optional (auto-synced) | `git-commit` |
 
+📖 **[Complete Project Type Documentation: docs/PROJECT-TYPES.md](docs/PROJECT-TYPES.md)** — Detailed taxonomy, routing logic, decision matrix, and examples for all project types.
+
 ### Quick Setup
 
 **Option 1: Automatic (Recommended)**
