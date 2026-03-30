@@ -10,3 +10,4 @@ __MACOSX
 
 #existing skill not added by me.
 skill-creator/
+__pycache__/
