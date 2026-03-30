@@ -77,18 +77,6 @@ Map changes to CLAUDE.md sections:
 | Skill renamed (skills repo) | Update all references |
 | New skill cross-reference pattern (skills repo) | Editing Skills section |
 
-**For skills repositories specifically:**
-
-| Skill change | CLAUDE.md section |
-|---|---|
-| New skill added | Key Skills section |
-| Skill renamed | All skill name references |
-| New generic base skill (*-principles) | Key Skills (foundation list) |
-| New naming pattern (java-*, maven-*) | Naming Conventions |
-| New Prerequisites pattern | Skill Chaining, Editing Skills |
-| New cross-reference approach | Editing Skills |
-| Frontmatter CSO change | Claude Search Optimization section |
-
 **What to skip:**
 - **Project Type section** — never modify this user-configured section
 - Code implementation details (that's for DESIGN.md)
