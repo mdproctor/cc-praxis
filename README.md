@@ -1060,16 +1060,27 @@ See [QUALITY.md § Why Quality Matters](QUALITY.md#why-quality-matters) for comp
 ├── README.md                            # This file
 ├── CLAUDE.md                            # Guidance for Claude Code
 ├── scripts/                             # Validation and automation
-│   ├── validate_all.py                 # Master validator (runs all checks)
+│   ├── validate_all.py                 # Master orchestrator (3-tier validation)
 │   ├── validate_document.py            # Universal .md corruption detector
-│   ├── validate_naming.py              # Skill naming conventions
-│   └── validation/                     # SKILL.md validators
-│       ├── validate_frontmatter.py    # YAML structure, required fields
-│       ├── validate_cso.py            # Description CSO compliance
-│       ├── validate_flowcharts.py     # Graphviz syntax validation
-│       ├── validate_references.py     # Cross-reference integrity
-│       ├── validate_sections.py       # Required sections by type
-│       └── validate_structure.py      # File organization
+│   ├── testing/                        # Test infrastructure
+│   │   ├── run_skill_tests.py         # Functional test runner (git worktrees)
+│   │   ├── run_regression_tests.py    # Regression test runner
+│   │   └── test_coverage.py           # Coverage reporting (95% skills)
+│   └── validation/                     # SKILL.md validators (14 total)
+│       ├── validate_frontmatter.py    # YAML structure, required fields [COMMIT]
+│       ├── validate_cso.py            # Description CSO compliance [COMMIT]
+│       ├── validate_flowcharts.py     # Graphviz syntax validation [COMMIT]
+│       ├── validate_references.py     # Cross-reference integrity [COMMIT]
+│       ├── validate_naming.py         # Naming conventions [COMMIT]
+│       ├── validate_sections.py       # Required sections by type [COMMIT]
+│       ├── validate_structure.py      # File organization [COMMIT]
+│       ├── validate_cross_document.py # Cross-document consistency [PUSH]
+│       ├── validate_temporal.py       # Stale references [PUSH]
+│       ├── validate_usability.py      # Readability, UX [PUSH]
+│       ├── validate_edge_cases.py     # Edge case coverage [PUSH]
+│       ├── validate_behavior.py       # Behavioral consistency [PUSH]
+│       ├── validate_readme_sync.py    # README/CLAUDE sync [PUSH]
+│       └── validate_python_quality.py # mypy, flake8, bandit [CI]
 ├── skill-validation.md                  # Skills-specific SKILL.md validation workflow
 ├── readme-sync.md                       # Skills-specific README.md sync workflow
 ├── code-review-principles/              # Generic code review principles

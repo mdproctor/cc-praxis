@@ -815,13 +815,49 @@ Claude:
 - ✅ Pre-commit validation (git-commit Step 1c)
 - ✅ Post-sync validation (all sync workflows)
 - ✅ Automatic revert on corruption
+- ✅ Modular documentation support (primary + modules)
+
+**Validation Infrastructure (14 validators across 3 tiers):**
+
+**COMMIT Tier (<2s budget):**
+- ✅ `validate_frontmatter.py` — YAML structure, required fields
+- ✅ `validate_cso.py` — Description CSO compliance
+- ✅ `validate_flowcharts.py` — Graphviz syntax, semantic labels
+- ✅ `validate_references.py` — Cross-reference integrity
+- ✅ `validate_naming.py` — Naming conventions
+- ✅ `validate_sections.py` — Required sections by type
+- ✅ `validate_structure.py` — File organization
+
+**PUSH Tier (<30s budget):**
+- ✅ `validate_cross_document.py` — Cross-document consistency
+- ✅ `validate_temporal.py` — Stale references (deprecated tools, moved files)
+- ✅ `validate_usability.py` — Readability, dense paragraphs, ambiguous pronouns
+- ✅ `validate_edge_cases.py` — Edge case coverage, error handling
+- ✅ `validate_behavior.py` — Behavioral consistency (invocation claims, blocking logic)
+- ✅ `validate_readme_sync.py` — README/CLAUDE.md sync validation
+
+**CI Tier (<5min budget):**
+- ✅ `validate_python_quality.py` — mypy, flake8, bandit (static analysis)
+
+**Test Infrastructure:**
+- ✅ `run_skill_tests.py` — Functional test runner with git worktree isolation
+- ✅ `run_regression_tests.py` — Regression test runner (prevents known issues)
+- ✅ `test_coverage.py` — Coverage reporting (95% skills, 79 scenarios)
+- ✅ `validate_all.py` — Master orchestrator with tier support
+
+**Test Coverage Status:**
+- ✅ 95% skill coverage (18/19 skills, 79 test scenarios)
+- ✅ CI tier: 14 skills, 67 functional test scenarios
+- ✅ PUSH tier: 4 foundation skills, 12 content validation scenarios
+- ✅ Tier-appropriate testing (functional for invoke-able, content for foundation)
 
 **Type: skills:**
 - ✅ SKILL.md frontmatter validation (skill-validation.md workflow)
-- ✅ CSO compliance checking
+- ✅ CSO compliance checking (prevents expensive wallpaper)
 - ✅ Flowchart syntax validation (Graphviz)
-- ✅ Cross-reference integrity
+- ✅ Cross-reference integrity (bidirectional verification)
 - ✅ README.md sync (readme-sync.md)
+- ✅ Comprehensive quality review complete (278 issues found, 2 CRITICAL fixed)
 
 **Type: java:**
 - ✅ Code review (java-code-review)
@@ -829,32 +865,44 @@ Claude:
 - ✅ DESIGN.md sync (java-update-design)
 - ✅ DESIGN.md enforcement (blocks if missing)
 - ✅ BOM alignment (maven-dependency-update)
+- ✅ Modular DESIGN.md support (primary + architecture/api/data-model modules)
 
 **Type: custom:**
 - ✅ Primary document sync (update-primary-doc)
 - ✅ Sync Rules enforcement (custom-git-commit)
+- ✅ Modular document support (VISION.md, THESIS.md, etc. + modules)
+- ✅ Table-driven sync configuration
+
+**Comprehensive Quality Review (Completed 2026-03-30):**
+- ✅ 26 commits created (validation + test infrastructure + fixes)
+- ✅ 278 issues found and triaged (2 CRITICAL fixed immediately)
+- ✅ ~2,800 lines of validation code
+- ✅ ~1,500 lines of documentation
+- ✅ All validators tested and working
+- ✅ See `docs/comprehensive-quality-review-complete.md` for full report
 
 ### Planned Implementation 🚧
 
-**Phase 1: High-Impact (Next)**
-- 🚧 `validate_links.py` — Link validation (internal, cross-doc, external)
-- 🚧 `validate_examples.py` — Code example syntax + optional execution
-- 🚧 `validate_consistency.py` — Cross-document contradiction detection
-- 🚧 `check_terminology.py` — Terminology consistency
-- 🚧 Dangling reference detection (add to validate_document.py)
+**Phase 1: Refinement (Medium Priority)**
+- 🚧 `generate_report.py` — Comprehensive reporting (JSON/HTML/Markdown, CI integration)
+- 🚧 Refine `validate_cross_document.py` — Distinguish scope names from skill references (reduce false positives)
+- 🚧 `validate_links.py` — External URL validation (PUSH/CI tier)
+- 🚧 Usability improvements — Break up 82 dense paragraphs across skills
+- 🚧 Error handling improvements — Add checks to 25 bash blocks, 25 file operations
 
-**Phase 2: Medium-Impact**
-- 🚧 Prose quality analysis (passive voice, pronouns)
+**Phase 2: Enhanced Analysis (Low Priority)**
+- 🚧 `validate_examples.py` — Code example syntax + optional execution
+- 🚧 Prose quality analysis — Passive voice detection, sentence length
 - 🚧 `find_duplicates.py` — Corpus-wide duplication detection
+- 🚧 `check_terminology.py` — Terminology consistency across documents
 - 🚧 markdownlint integration
 - 🚧 Spelling/grammar (aspell, LanguageTool)
-- 🚧 Advanced corruption detection (encoding, line endings)
 
 **Phase 3: Aspirational**
-- 🚧 Self-testing examples (CI integration)
-- 🚧 Readability scoring (textstat)
+- 🚧 Self-testing examples (CI integration for code snippets)
+- 🚧 Readability scoring (textstat, Flesch-Kincaid)
 - 🚧 Accessibility compliance (WCAG)
-- 🚧 Visual aids quality checks
+- 🚧 Visual aids quality checks (alt text, contrast)
 
 ### Configuration
 
