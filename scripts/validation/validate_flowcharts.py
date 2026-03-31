@@ -1,186 +1,211 @@
 #!/usr/bin/env python3
 """
-Validate Graphviz flowcharts in SKILL.md files.
+Validate Mermaid flowcharts in SKILL.md files.
 
 Checks:
-- Flowcharts use valid Graphviz dot syntax
+- Flowcharts use valid Mermaid syntax (via mmdc)
 - No generic labels (step1, step2, helper1, pattern2, etc.)
 - All node labels are semantic and descriptive
-- Flowcharts are appropriate (for decisions/loops, not reference material)
+
+Runs at PUSH tier: mmdc requires puppeteer (~5-10s startup), so this
+does not meet the COMMIT tier <2s budget. Parallel execution keeps
+total runtime within the PUSH tier 30s budget.
 """
 
 import sys
 import re
 import subprocess
+import tempfile
 from pathlib import Path
-from tempfile import NamedTemporaryFile
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from utils.common import (
     ValidationIssue, ValidationResult, Severity,
-    find_all_skill_files, read_file_with_line_numbers,
-    print_summary
+    find_all_skill_files, print_summary
 )
-from utils.skill_parser import extract_flowcharts
+from utils.skill_parser import extract_mermaid_charts
 
 
-# Generic label patterns that should not be used
+# Generic label patterns that should not be used in node labels.
+# Note: "Start" and "End" are intentionally excluded — they are the standard
+# convention for start/end circle nodes in flowcharts and are semantic, not generic.
 GENERIC_PATTERNS = [
-    r'\b(step|phase|stage)\s*\d+\b',  # "step 1", "phase2"
-    r'\b(helper|pattern|node|task)\s*\d+\b',  # "helper1", "pattern2"
-    r'^(start|end|\d+)$',  # Too generic single words or numbers
+    r'\b(step|phase|stage)\s*\d+\b',        # "step 1", "phase2"
+    r'\b(helper|pattern|node|task)\s*\d+\b', # "helper1", "pattern2"
+    r'^\d+$',                                # bare numbers ("1", "42")
 ]
 
+# Label text extraction: matches content inside Mermaid shape markers
+# Handles: [label], {label}, ((label)), (label), ["label"], {"label"}
+_LABEL_RE = re.compile(
+    r'(?:'
+    r'\[\["([^"]+)"\]\]'    # [["quoted"]]
+    r'|\["([^"]+)"\]'       # ["quoted"]
+    r'|\{"([^"]+)"\}'       # {"quoted"}
+    r'|\(\("([^"]+)"\)\)'   # (("quoted"))
+    r'|\(\[([^\]]+)\]\)'    # ([unquoted])
+    r'|\[\[([^\]]+)\]\]'    # [[unquoted]]
+    r'|\[([^\]]+)\]'        # [unquoted]
+    r'|\{([^}]+)\}'         # {unquoted}
+    r'|\(\(([^)]+)\)\)'     # ((unquoted))
+    r'|\(([^)]+)\)'         # (unquoted)
+    r')'
+)
 
-def check_graphviz_syntax(flowchart_code: str) -> tuple[bool, str]:
+
+def _mmdc_available() -> bool:
+    """Check if mmdc (mermaid CLI) is accessible via npx."""
+    try:
+        result = subprocess.run(
+            ['npx', '--yes', '@mermaid-js/mermaid-cli', '--version'],
+            capture_output=True, text=True, timeout=30
+        )
+        return result.returncode == 0
+    except (FileNotFoundError, subprocess.TimeoutExpired):
+        return False
+
+
+def check_mermaid_syntax(chart_code: str) -> tuple[bool, str]:
     """
-    Check if flowchart is valid Graphviz syntax.
+    Validate Mermaid syntax using mmdc.
 
     Returns:
         (is_valid, error_message)
     """
     try:
-        # Write to temp file
-        with NamedTemporaryFile(mode='w', suffix='.dot', delete=False) as f:
-            f.write(flowchart_code)
-            temp_path = f.name
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.mmd', delete=False) as f:
+            f.write(chart_code)
+            in_path = f.name
 
-        # Try to compile with dot
+        out_path = in_path.replace('.mmd', '.svg')
+
         result = subprocess.run(
-            ['dot', '-Tsvg', temp_path],
-            capture_output=True,
-            text=True,
-            timeout=5
+            ['npx', '--yes', '@mermaid-js/mermaid-cli', '-i', in_path, '-o', out_path],
+            capture_output=True, text=True, timeout=30
         )
 
-        # Clean up
-        Path(temp_path).unlink()
+        # Clean up temp files
+        Path(in_path).unlink(missing_ok=True)
+        Path(out_path).unlink(missing_ok=True)
 
-        if result.returncode == 0:
-            return True, ""
-        else:
-            return False, result.stderr
+        combined = result.stdout + result.stderr
+        if 'Error:' in combined or result.returncode != 0:
+            # Extract the first meaningful error line
+            for line in combined.splitlines():
+                if 'Parse error' in line or ('Error:' in line and 'puppeteer' not in line):
+                    return False, line.strip()
+            return False, combined.strip()[:200]
 
-    except FileNotFoundError:
-        # Graphviz not installed - skip validation
-        return True, "Graphviz not installed - skipping syntax check"
+        return True, ""
+
     except subprocess.TimeoutExpired:
-        return False, "Graphviz compilation timeout"
+        return False, "mmdc timeout (>30s)"
     except Exception as e:
-        return False, f"Error checking syntax: {str(e)}"
+        return False, f"mmdc error: {e}"
 
 
-def find_generic_labels(flowchart_code: str) -> list[str]:
-    """Find generic/non-semantic labels in flowchart."""
-    generic_labels = []
-
-    # Extract all quoted labels from nodes
-    # Pattern: "label text" [shape=...]
-    label_pattern = r'"([^"]+)"'
-    labels = re.findall(label_pattern, flowchart_code)
-
-    for label in labels:
-        # Check against generic patterns
+def find_generic_labels(chart_code: str) -> list[str]:
+    """Find generic/non-semantic labels in a Mermaid chart."""
+    generic = []
+    for match in _LABEL_RE.finditer(chart_code):
+        # Get whichever capture group matched
+        label = next((g for g in match.groups() if g is not None), '')
+        label = label.strip()
         for pattern in GENERIC_PATTERNS:
             if re.search(pattern, label, re.IGNORECASE):
-                generic_labels.append(label)
+                generic.append(label)
                 break
+    return list(set(generic))
 
-    return list(set(generic_labels))
 
-
-def find_flowchart_line_number(content: str, flowchart_code: str) -> int:
-    """Find the line number where flowchart starts."""
+def find_chart_line(content: str, chart_code: str) -> int:
+    """Return line number of the ```mermaid opening for this chart."""
+    first_line = chart_code.split('\n')[0].strip() if chart_code else ''
     lines = content.split('\n')
-
-    # Find the ```dot line before this flowchart
-    flowchart_start = flowchart_code.split('\n')[0] if flowchart_code else ""
-
     for i, line in enumerate(lines, start=1):
-        if line.strip() == '```dot':
-            # Check if next lines match flowchart
-            if flowchart_start and i < len(lines):
-                if flowchart_start.strip() in lines[i].strip():
+        if line.strip() == '```mermaid':
+            # Confirm by checking the next non-empty line
+            for j in range(i, min(i + 3, len(lines))):
+                if lines[j].strip() and lines[j].strip() == first_line:
                     return i
+            return i
     return 0
 
 
-def validate_skill_flowcharts(skill_path: Path) -> list[ValidationIssue]:
-    """Validate flowcharts for a single skill."""
+def validate_one_skill(skill_path: Path, mmdc_ok: bool) -> list[ValidationIssue]:
+    """Validate Mermaid charts in a single SKILL.md."""
     issues = []
 
-    # Read file content
     with open(skill_path, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    # Extract flowcharts
-    flowcharts = extract_flowcharts(content)
-
-    if not flowcharts:
-        # No flowcharts - not an issue
+    charts = extract_mermaid_charts(content)
+    if not charts:
         return issues
 
-    # Validate each flowchart
-    for i, flowchart in enumerate(flowcharts, start=1):
-        line_number = find_flowchart_line_number(content, flowchart)
+    for idx, chart in enumerate(charts, start=1):
+        line_no = find_chart_line(content, chart)
 
-        # Check Graphviz syntax
-        is_valid, error_msg = check_graphviz_syntax(flowchart)
-        if not is_valid and "not installed" not in error_msg:
-            issues.append(ValidationIssue(
-                severity=Severity.CRITICAL,
-                file_path=str(skill_path),
-                line_number=line_number,
-                message=f"Flowchart {i} has invalid Graphviz syntax: {error_msg}",
-                fix_suggestion="Fix dot syntax - test with: echo 'digraph { ... }' | dot -Tsvg"
-            ))
+        if mmdc_ok:
+            is_valid, error_msg = check_mermaid_syntax(chart)
+            if not is_valid:
+                issues.append(ValidationIssue(
+                    severity=Severity.CRITICAL,
+                    file_path=str(skill_path),
+                    line_number=line_no,
+                    message=f"Chart {idx}: invalid Mermaid syntax — {error_msg}",
+                    fix_suggestion=(
+                        "Quote labels that contain parentheses: "
+                        "|\"yes (label)\"| or [\"node (label)\"]"
+                    )
+                ))
 
-        # Check for generic labels
-        generic_labels = find_generic_labels(flowchart)
-        if generic_labels:
+        generic = find_generic_labels(chart)
+        if generic:
             issues.append(ValidationIssue(
                 severity=Severity.WARNING,
                 file_path=str(skill_path),
-                line_number=line_number,
-                message=f"Flowchart {i} has generic labels: {', '.join(generic_labels[:3])}",
-                fix_suggestion="Use semantic labels that describe what each node does"
+                line_number=line_no,
+                message=f"Chart {idx}: generic labels: {', '.join(generic[:3])}",
+                fix_suggestion="Use semantic labels (e.g. 'Check BOM alignment' not 'step1')"
             ))
 
     return issues
 
 
 def main():
-    """Main validation entry point."""
     import argparse
     import json
 
-    parser = argparse.ArgumentParser(description='Validate skill flowcharts')
+    parser = argparse.ArgumentParser(description='Validate Mermaid flowcharts in SKILL.md files')
     parser.add_argument('--verbose', action='store_true', help='Verbose output')
     parser.add_argument('--json', action='store_true', help='JSON output')
     parser.add_argument('files', nargs='*', help='Specific files to check')
     args = parser.parse_args()
 
-    # Find skills to validate
-    if args.files:
-        skill_files = [Path(f) for f in args.files]
-    else:
-        skill_files = find_all_skill_files()
+    skill_files = [Path(f) for f in args.files] if args.files else find_all_skill_files()
 
-    # Validate each skill
-    all_issues = []
-    for skill_path in skill_files:
-        issues = validate_skill_flowcharts(skill_path)
-        all_issues.extend(issues)
+    mmdc_ok = _mmdc_available()
+    if not mmdc_ok and args.verbose:
+        print("⚠️  mmdc not available — skipping syntax check, checking labels only",
+              file=sys.stderr)
 
-    # Create result
+    all_issues: list[ValidationIssue] = []
+
+    # Validate in parallel: mmdc is I/O-bound (puppeteer subprocess)
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        futures = {pool.submit(validate_one_skill, p, mmdc_ok): p for p in skill_files}
+        for future in as_completed(futures):
+            all_issues.extend(future.result())
+
     result = ValidationResult(
-        validator_name='Flowchart Validation',
+        validator_name='Mermaid Flowchart Validation',
         issues=all_issues,
         files_checked=len(skill_files)
     )
 
-    # Output results
     if args.json:
         print(json.dumps(result.to_dict(), indent=2))
     else:

@@ -223,7 +223,7 @@ Skills-repository-specific logic (SKILL.md validation, README synchronization) i
 
 ### Flowcharts
 
-Skills use Graphviz dot notation for decision flows. Add flowcharts when:
+Skills use Mermaid `flowchart TD` notation for decision flows. Add flowcharts when:
 
 - Decision points are non-obvious
 - Process has loops where you might stop too early

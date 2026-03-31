@@ -39,7 +39,7 @@ This framework ensures reliability, consistency, and correctness across all docu
 - ❌ API design doc diverges from OpenAPI spec (implementation confusion)
 
 **In skills projects:**
-- ❌ Invalid Graphviz → skill fails to load → workflow blocked
+- ❌ Invalid Mermaid → skill fails to load → workflow blocked
 - ❌ CSO violation → Claude ignores skill body → "expensive wallpaper"
 - ❌ Broken cross-references → runtime errors when skills chain
 
@@ -138,9 +138,9 @@ This framework ensures reliability, consistency, and correctness across all docu
 | **Cross-reference integrity** | Broken skill chains, dangling references | validate_references.py (bidirectional) |
 | **README.md sync accuracy** | Skill catalog drifting from actual skills | After readme-sync.md applies changes |
 | **Naming convention enforcement** | Inconsistent skill hierarchy | validate_naming.py checks prefixes |
-| **Flowchart validation** | Invalid Graphviz syntax | validate_flowcharts.py |
+| **Flowchart validation** | Invalid Mermaid syntax | validate_flowcharts.py (PUSH tier) |
 
-**Example:** This skills repository prevents skills with workflow summaries in descriptions, invalid Graphviz syntax, broken cross-references, and README drift.
+**Example:** This skills repository prevents skills with workflow summaries in descriptions, invalid Mermaid syntax, broken cross-references, and README drift.
 
 ### Type: Generic (Simple Projects)
 
@@ -382,7 +382,7 @@ git push origin main
 **Type: skills only:**
 - SKILL.md frontmatter (name, description fields)
 - CSO compliance (description format)
-- Flowchart syntax (Graphviz validation)
+- Flowchart syntax (Mermaid validation via mmdc, PUSH tier)
 - Cross-reference integrity (bidirectional)
 - Naming conventions (prefixes, hierarchies)
 
@@ -779,13 +779,13 @@ Claude:
 **COMMIT Tier (<2s budget):**
 - ✅ `validate_frontmatter.py` — YAML structure, required fields
 - ✅ `validate_cso.py` — Description CSO compliance
-- ✅ `validate_flowcharts.py` — Graphviz syntax, semantic labels
 - ✅ `validate_references.py` — Cross-reference integrity
 - ✅ `validate_naming.py` — Naming conventions
 - ✅ `validate_sections.py` — Required sections by type
 - ✅ `validate_structure.py` — File organization
 
 **PUSH Tier (<30s budget):**
+- ✅ `validate_flowcharts.py` — Mermaid syntax via mmdc (puppeteer, too slow for COMMIT), semantic labels
 - ✅ `validate_cross_document.py` — Cross-document consistency
 - ✅ `validate_temporal.py` — Stale references (deprecated tools, moved files)
 - ✅ `validate_usability.py` — Readability, dense paragraphs, ambiguous pronouns
@@ -811,7 +811,7 @@ Claude:
 **Type: skills:**
 - ✅ SKILL.md frontmatter validation (skill-validation.md workflow)
 - ✅ CSO compliance checking (prevents expensive wallpaper)
-- ✅ Flowchart syntax validation (Graphviz)
+- ✅ Flowchart syntax validation (Mermaid, PUSH tier)
 - ✅ Cross-reference integrity (bidirectional verification)
 - ✅ README.md sync (readme-sync.md)
 - ✅ Comprehensive quality review complete (278 issues found, 2 CRITICAL fixed)

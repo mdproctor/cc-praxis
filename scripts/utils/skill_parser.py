@@ -87,6 +87,20 @@ def extract_flowcharts(content: str) -> List[str]:
     return flowcharts
 
 
+def extract_mermaid_charts(content: str) -> List[str]:
+    """
+    Extract all Mermaid diagrams (```mermaid ... ``` blocks) from content.
+
+    Returns list of Mermaid source code strings.
+    """
+    import re
+    charts = []
+    pattern = r'```mermaid\n(.*?)\n```'
+    for match in re.finditer(pattern, content, re.DOTALL):
+        charts.append(match.group(1))
+    return charts
+
+
 def extract_chaining_info(sections: Dict[str, str]) -> Dict[str, List[str]]:
     """
     Extract skill chaining information.

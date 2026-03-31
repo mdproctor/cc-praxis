@@ -45,14 +45,14 @@ flowchart TD
     Apply_Code_Quality_rules[Apply Code Quality rules]
     Code_complete((Code complete))
     Writing_code --> Safety_violation_
-    Safety_violation_ -->|yes (NEVER compromise)| Apply_Safety_rules
+    Safety_violation_ -->|"yes (NEVER compromise)"| Apply_Safety_rules
     Safety_violation_ -->|no| Concurrency_issue_
     Apply_Safety_rules --> Code_complete
-    Concurrency_issue_ -->|yes (shared state/threading)| Apply_Concurrency_rules
+    Concurrency_issue_ -->|"yes (shared state/threading)"| Apply_Concurrency_rules
     Concurrency_issue_ -->|no| Performance_critical_path_
     Apply_Concurrency_rules --> Code_complete
-    Performance_critical_path_ -->|yes (hot path/tight loop)| Apply_Performance_rules
-    Performance_critical_path_ -->|no (cold path)| Apply_Code_Quality_rules
+    Performance_critical_path_ -->|"yes (hot path/tight loop)"| Apply_Performance_rules
+    Performance_critical_path_ -->|"no (cold path)"| Apply_Code_Quality_rules
     Apply_Performance_rules --> Code_complete
     Apply_Code_Quality_rules --> Code_complete
 ```
@@ -328,6 +328,22 @@ If IntelliJ MCP is unavailable:
 2. Ask: continue with Bash-based tools, or start IntelliJ MCP first?
 3. If continuing without it: use `git diff` to validate scope, make changes
    conservatively, and run the build/tests after each logical step
+
+  ## Refactoring
+
+  Use a **hybrid tool strategy**:
+
+  - **Native tools** (Read, Edit, Grep, Glob) for all routine file operations —
+    reading, searching, and text edits — regardless of whether IntelliJ MCP is available.
+  - **IntelliJ MCP** (`mcp__intellij__rename_refactoring`) only when the operation
+    requires type-safe, semantic awareness — e.g. renaming a symbol and having all
+    references across the project updated correctly. Text search/replace is not safe
+    for these cases.
+
+  If IntelliJ MCP is needed but unavailable:
+    1. Inform the user
+    2. Ask: continue with text-based tools (with risk of missed references), or start IntelliJ first?
+    3. If continuing without it: use `git diff` to validate scope, make changes conservatively, and run the build/tests after each logical step
 
 ## Compilation and errors
 

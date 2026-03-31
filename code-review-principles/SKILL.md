@@ -206,7 +206,7 @@ flowchart TD
     Safety_violation_ -->|no| Concurrency_issue_in_shared_code_
     Concurrency_issue_in_shared_code_ -->|yes| CRITICAL
     Concurrency_issue_in_shared_code_ -->|no| In_hot_path_
-    In_hot_path_ -->|yes (perf/repro)| WARNING
+    In_hot_path_ -->|"yes (perf/repro)"| WARNING
     In_hot_path_ -->|no| NOTE
 ```
 

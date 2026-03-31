@@ -151,15 +151,15 @@ flowchart TD
     Better_approach_found_{Better approach found?}
     Mark_Superseded[Mark Superseded]
     Mark_Deprecated[Mark Deprecated]
-    Create_new_ADR__replacement_[Create new ADR (replacement)]
+    Create_new_ADR__replacement_["Create new ADR (replacement)"]
     Continue_using[Continue using]
     Significant_decision_made --> Create_new_ADR
     Create_new_ADR --> Status__Accepted
     Status__Accepted -->|time passes| Decision_still_valid_
-    Decision_still_valid_ -->|yes (still applies)| Continue_using
+    Decision_still_valid_ -->|"yes (still applies)"| Continue_using
     Decision_still_valid_ -->|no| Still_relevant_
     Still_relevant_ -->|yes| Better_approach_found_
-    Still_relevant_ -->|no (obsolete)| Mark_Deprecated
+    Still_relevant_ -->|"no (obsolete)"| Mark_Deprecated
     Better_approach_found_ -->|yes| Mark_Superseded
     Better_approach_found_ -->|no| Mark_Deprecated
     Mark_Superseded --> Create_new_ADR__replacement_

@@ -412,11 +412,11 @@ flowchart TD
     NOTE[NOTE]
     Finding_detected --> Exploitable_remotely_
     Exploitable_remotely_ -->|yes| Leads_to_data_breach_or_RCE_
-    Exploitable_remotely_ -->|no (local only)| NOTE
+    Exploitable_remotely_ -->|"no (local only)"| NOTE
     Leads_to_data_breach_or_RCE_ -->|yes| CRITICAL
     Leads_to_data_breach_or_RCE_ -->|no| Requires_authentication_
-    Requires_authentication_ -->|yes (auth required)| WARNING
-    Requires_authentication_ -->|no (unauthenticated)| CRITICAL
+    Requires_authentication_ -->|"yes (auth required)"| WARNING
+    Requires_authentication_ -->|"no (unauthenticated)"| CRITICAL
 ```
 
 ---

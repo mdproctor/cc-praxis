@@ -16,7 +16,6 @@ VALIDATORS = {
         # Pre-commit tier: <2s budget, fast mechanical checks
         {'script': 'validate_frontmatter.py', 'name': 'Frontmatter', 'target': None},
         {'script': 'validate_cso.py', 'name': 'CSO Compliance', 'target': None},
-        {'script': 'validate_flowcharts.py', 'name': 'Flowcharts', 'target': None},
         {'script': 'validate_references.py', 'name': 'References', 'target': None},
         {'script': 'validate_naming.py', 'name': 'Naming', 'target': None},
         {'script': 'validate_sections.py', 'name': 'Sections', 'target': None},
@@ -24,6 +23,8 @@ VALIDATORS = {
     ],
     'push': [
         # Pre-push tier: <30s budget, moderate validators + regression
+        # Flowcharts: mmdc requires puppeteer (~5-10s/chart), too slow for commit tier
+        {'script': 'validate_flowcharts.py', 'name': 'Mermaid Flowcharts', 'target': None},
         {'script': 'validate_cross_document.py', 'name': 'Cross-Document', 'target': None},
         {'script': 'validate_temporal.py', 'name': 'Temporal', 'target': None},
         {'script': 'validate_usability.py', 'name': 'Usability', 'target': None},

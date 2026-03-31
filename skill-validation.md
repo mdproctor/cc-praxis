@@ -10,7 +10,7 @@ and documentation completeness before committing to the repository.
 - **Block commits on CRITICAL findings** — structural violations must be fixed first
 - Focus on **format compliance and conventions**, not subjective quality
 - Check **cross-references bidirectionally** — if A references B, verify B references A
-- Validate **Graphviz syntax** — invalid flowcharts break skill loading
+- Validate **Mermaid syntax** — invalid flowcharts break skill loading
 - Ensure **CSO description compliance** — no workflow summaries in frontmatter
 
 ## Workflow
@@ -93,20 +93,19 @@ Check: Does `other-skill/SKILL.md` mention being invoked by this skill?
 
 ### Step 5 — Test flowcharts (if present)
 
-Extract flowchart blocks and test:
+Extract Mermaid blocks and validate with the automated validator:
 
 ```bash
-# Extract flowchart from markdown (between ```dot and ```)
-sed -n '/```dot/,/```/p' <skill-path>/SKILL.md | sed '1d;$d' > /tmp/test.dot
+# Run automated Mermaid validation (PUSH tier)
+python3 scripts/validation/validate_flowcharts.py <skill-path>/SKILL.md
 
-# Test validity
-dot -Tsvg /tmp/test.dot > /dev/null 2>&1
-if [ $? -eq 0 ]; then
-  echo "✅ Flowchart syntax valid"
-else
-  echo "❌ CRITICAL: Flowchart syntax invalid"
-fi
+# Or validate all skills at once
+python3 scripts/validate_all.py --tier push
 ```
+
+**Common Mermaid syntax errors to watch for:**
+- Parentheses inside edge labels: `-->|yes (label)|` → fix: `-->|"yes (label)"|`
+- Parentheses inside node labels: `[Node (detail)]` → fix: `["Node (detail)"]`
 
 ## Review Severity Decision Flow
 
@@ -193,7 +192,7 @@ skip reading the skill body.
 
 | Check | What to verify |
 |-------|---------------|
-| **Valid Graphviz** | Syntax is valid `digraph` with proper node/edge format |
+| **Valid Mermaid** | Syntax is valid `flowchart TD` with proper node/edge format |
 | **Semantic labels** | No generic labels like `step1`, `helper2`, `pattern3` |
 | **Appropriate use** | Used for decisions, not for reference material or linear steps |
 
@@ -201,7 +200,7 @@ skip reading the skill body.
 
 Test validity:
 ```bash
-echo 'digraph test { ... }' | dot -Tsvg > /dev/null 2>&1 && echo "valid" || echo "INVALID"
+python3 scripts/validation/validate_flowcharts.py <skill-path>/SKILL.md
 ```
 
 ### Documentation Completeness (NOTE)
@@ -235,7 +234,7 @@ echo 'digraph test { ... }' | dot -Tsvg > /dev/null 2>&1 && echo "valid" || echo
 | Generic flowchart labels | Unreadable, unclear intent | Use semantic labels (e.g., "Check BOM alignment" not "step1") |
 | Dangling cross-references | Skill references non-existent skill | Verify all referenced skills exist |
 | Missing Success Criteria | Premature completion claims | Add checklist for artifact-producing skills |
-| Invalid Graphviz syntax | Skill loading fails | Test with `dot` before committing |
+| Invalid Mermaid syntax | Skill loading fails | Run `validate_flowcharts.py` before committing |
 | Unidirectional chaining | Incomplete documentation graph | Make cross-references bidirectional |
 | First-person in description | Injected into system prompt | Use third person ("Use when..." not "I help you...") |
 | No Common Pitfalls table | Users repeat known mistakes | Document mistakes with fixes |

@@ -480,7 +480,7 @@ Invoked automatically by `custom-git-commit` when Sync Rules configured in CLAUD
 
 **What it validates:**
 - Frontmatter structure (name, description, CSO compliance)
-- Flowchart syntax (Graphviz validation)
+- Flowchart syntax (Mermaid validation, PUSH tier)
 - Naming conventions (generic `-principles`, language prefixes)
 - Cross-reference integrity (bidirectional chaining)
 - Documentation completeness (Success Criteria, Common Pitfalls, Prerequisites)
@@ -1122,7 +1122,7 @@ python scripts/validate_document.py docs/vision.md
 ```bash
 python scripts/validate_all.py                    # All skills
 python scripts/validation/validate_cso.py         # CSO compliance
-python scripts/validation/validate_flowcharts.py  # Graphviz syntax
+python scripts/validation/validate_flowcharts.py  # Mermaid syntax (PUSH tier)
 ```
 
 **Automatic validation:** Pre-commit gates block CRITICAL issues. Post-sync validation auto-reverts corruption. See [QUALITY.md § When Validation Runs](QUALITY.md#when-validation-runs).
@@ -1179,7 +1179,7 @@ See [QUALITY.md § Why Quality Matters](QUALITY.md#why-quality-matters) for comp
 │   └── validation/                     # SKILL.md validators (14 total)
 │       ├── validate_frontmatter.py    # YAML structure, required fields [COMMIT]
 │       ├── validate_cso.py            # Description CSO compliance [COMMIT]
-│       ├── validate_flowcharts.py     # Graphviz syntax validation [COMMIT]
+│       ├── validate_flowcharts.py     # Mermaid syntax validation [PUSH]
 │       ├── validate_references.py     # Cross-reference integrity [COMMIT]
 │       ├── validate_naming.py         # Naming conventions [COMMIT]
 │       ├── validate_sections.py       # Required sections by type [COMMIT]

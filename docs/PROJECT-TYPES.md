@@ -51,7 +51,7 @@
 - Frontmatter must have `name` and `description`
 - CSO rules: descriptions = WHEN to use, not HOW it works
 - Cross-references must be bidirectional
-- Flowcharts use Graphviz dot notation
+- Flowcharts use Mermaid `flowchart TD` notation
 - README.md documents the skill collection
 
 **Built-in Behavior:**
