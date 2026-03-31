@@ -12,7 +12,6 @@ Orchestrates installation workflow:
 
 import sys
 from pathlib import Path
-from typing import Optional
 
 from scripts.marketplace.registry import fetch_registry, find_skill
 from scripts.marketplace.dependency_resolver import build_dependency_graph, detect_conflicts
@@ -71,8 +70,8 @@ def install_command(
         detect_conflicts(graph)
 
         # Confirm
-        response = input("\nProceed? (Y/n): ")
-        if response.lower() == 'n':
+        response = input("\nProceed? (Y/n): ").strip().lower()
+        if response == 'n' or response == 'no':
             print("Cancelled.")
             return 1
 

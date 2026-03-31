@@ -58,6 +58,7 @@ def test_cli_install_downloads_skill_with_dependencies():
 
                             # Verify both skills installed
                             assert mock_install.call_count == 2
+                            assert mock_validate.call_count == 2  # Once per skill
                             assert result == 0  # Success exit code
 
 
