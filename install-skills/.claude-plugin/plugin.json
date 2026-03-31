@@ -1,0 +1,6 @@
+{
+  "name": "install-skills",
+  "description": "/install-skills - one-time marketplace bootstrap",
+  "version": "1.0.0",
+  "dependencies": []
+}

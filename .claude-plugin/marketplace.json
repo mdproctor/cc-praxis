@@ -7,6 +7,13 @@
   },
   "plugins": [
     {
+      "name": "install-skills",
+      "source": "https://github.com/mdproctor/claude-skills",
+      "path": "install-skills",
+      "description": "One-time marketplace bootstrap: configure hooks and install skills",
+      "version": "1.0.0"
+    },
+    {
       "name": "code-review-principles",
       "source": "https://github.com/mdproctor/claude-skills",
       "path": "code-review-principles",

@@ -4,20 +4,41 @@ A curated collection of specialized skills for Claude Code that streamline Java 
 
 ## Installation
 
-**Two ways to install:** Use the official Claude Code marketplace for quick discovery, or use our custom installer for automatic dependency resolution.
+**Quick Start (Recommended):**
 
-### Method 1: Official Claude Code (Quick Discovery, Manual Dependencies)
+```bash
+# Add marketplace
+/plugin marketplace add github.com/mdproctor/claude-skills
+
+# Run one-time bootstrap (installs skills + configures hooks)
+/plugin install install-skills
+/install-skills
+```
+
+The `install-skills` wizard will:
+- ✅ Configure session-start hook for automatic CLAUDE.md detection
+- ✅ Let you choose which skills to install (all, Java/Quarkus bundle, foundation, or custom)
+- ✅ Automatically resolve and install all dependencies
+- ✅ Verify everything works
+
+After setup completes, close that conversation - skills will be available in all future sessions.
+
+---
+
+### Method 1: Official Claude Code (Manual Installation)
 
 ```bash
 # Add marketplace to Claude Code
 /plugin marketplace add github.com/mdproctor/claude-skills
 
-# Install skills (dependencies must be installed manually)
+# Install individual skills (dependencies must be installed manually)
 /plugin install java-dev
 /plugin install quarkus-flow-dev  # You'll need to install java-dev first
 ```
 
 **Limitation:** Official Claude Code doesn't support automatic dependency resolution yet ([Issue #9444](https://github.com/anthropics/claude-code/issues/9444), [Issue #27113](https://github.com/anthropics/claude-code/issues/27113)). You must manually install all dependencies.
+
+**Tip:** Use the Quick Start method above for automatic dependency handling via `/install-skills`.
 
 ### Method 2: Custom Installer (Automatic Dependencies, Recommended)
 
