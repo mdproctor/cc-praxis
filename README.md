@@ -138,6 +138,39 @@ Just edit CLAUDE.md and change the type. Example: research project graduates to 
 
 Remove custom-specific fields, create `docs/DESIGN.md`, and you're done.
 
+## Installing Individual Skills
+
+**Install the marketplace CLI:**
+
+The skill marketplace is built into this repository. Clone it to get started:
+
+```bash
+git clone https://github.com/mdproctor/claude-skills.git ~/claude-skills-dev
+cd ~/claude-skills-dev
+```
+
+**Install specific skills:**
+
+```bash
+# Install stable version
+scripts/claude-skill install java-dev
+
+# Install snapshot (latest development)
+scripts/claude-skill install quarkus-flow-dev --snapshot
+
+# List installed skills
+scripts/claude-skill list
+
+# Uninstall
+scripts/claude-skill uninstall java-dev
+```
+
+**Installed skills location:** `~/.claude/skills/.marketplace/`
+
+**Dependencies:** Automatically resolved and installed.
+
+**See:** [Registry Documentation](docs/marketplace/REGISTRY.md) for publishing your own skills.
+
 ## Why Commit Messages and Design Docs Actually Matter (Yes, Really)
 
 Let's be honest: writing good commit messages and keeping design documentation in sync with code is about as exciting as watching paint dry. It ranks somewhere between "updating Jira tickets" and "mandatory corporate training videos" on the Developer Fun Scale™.
