@@ -2,6 +2,69 @@
 
 A curated collection of specialized skills for Claude Code that streamline Java development, focusing on Quarkus applications, quarkus-flow workflows, and professional software engineering practices.
 
+## Installation
+
+**Two ways to install:** Use the official Claude Code marketplace for quick discovery, or use our custom installer for automatic dependency resolution.
+
+### Method 1: Official Claude Code (Quick Discovery, Manual Dependencies)
+
+```bash
+# Add marketplace to Claude Code
+/plugin marketplace add github.com/mdproctor/claude-skills
+
+# Install skills (dependencies must be installed manually)
+/plugin install java-dev
+/plugin install quarkus-flow-dev  # You'll need to install java-dev first
+```
+
+**Limitation:** Official Claude Code doesn't support automatic dependency resolution yet ([Issue #9444](https://github.com/anthropics/claude-code/issues/9444), [Issue #27113](https://github.com/anthropics/claude-code/issues/27113)). You must manually install all dependencies.
+
+### Method 2: Custom Installer (Automatic Dependencies, Recommended)
+
+```bash
+# Clone the marketplace repository
+git clone https://github.com/mdproctor/claude-skills.git ~/claude-skills
+cd ~/claude-skills
+```
+
+**Available commands:**
+
+```bash
+# Install individual skills (with automatic dependency resolution)
+scripts/claude-skill install java-dev
+scripts/claude-skill install quarkus-flow-testing  # Auto-installs java-dev + quarkus-flow-dev
+
+# Install ALL marketplace skills at once
+scripts/claude-skill install-all           # With confirmation
+scripts/claude-skill install-all -y        # Skip confirmation
+
+# List installed skills
+scripts/claude-skill list
+
+# Uninstall individual skills
+scripts/claude-skill uninstall java-dev
+
+# Uninstall ALL installed skills
+scripts/claude-skill uninstall-all         # With confirmation
+scripts/claude-skill uninstall-all -y      # Skip confirmation
+
+# Install snapshots (latest development, not stable tagged release)
+scripts/claude-skill install quarkus-flow-dev --snapshot
+```
+
+**Features:**
+- ✅ **Automatic dependency resolution** - Install `quarkus-flow-testing` and it auto-installs `java-dev` + `quarkus-flow-dev`
+- ✅ **Circular dependency detection** - Prevents infinite loops with DFS-based cycle detection
+- ✅ **Version conflict detection** - Warns when dependencies require incompatible versions
+- ✅ **Atomic installation** - Safe failure handling, rollback on errors
+- ✅ **Batch operations** - Install/uninstall all skills with one command
+
+**Installed skills location:** `~/.claude/skills/.marketplace/`
+
+**Publishing your own skills:** See [Registry Documentation](docs/marketplace/REGISTRY.md)
+
+---
+
 ## Overview
 
 These skills transform Claude Code into an expert Java/Quarkus development assistant that understands enterprise-grade code quality, safety requirements, and modern cloud-native patterns. Each skill encodes best practices, common pitfalls, and project-specific conventions to ensure consistent, production-ready code.
@@ -137,39 +200,6 @@ Just edit CLAUDE.md and change the type. Example: research project graduates to 
 ```
 
 Remove custom-specific fields, create `docs/DESIGN.md`, and you're done.
-
-## Installing Individual Skills
-
-**Install the marketplace CLI:**
-
-The skill marketplace is built into this repository. Clone it to get started:
-
-```bash
-git clone https://github.com/mdproctor/claude-skills.git ~/claude-skills-dev
-cd ~/claude-skills-dev
-```
-
-**Install specific skills:**
-
-```bash
-# Install stable version
-scripts/claude-skill install java-dev
-
-# Install snapshot (latest development)
-scripts/claude-skill install quarkus-flow-dev --snapshot
-
-# List installed skills
-scripts/claude-skill list
-
-# Uninstall
-scripts/claude-skill uninstall java-dev
-```
-
-**Installed skills location:** `~/.claude/skills/.marketplace/`
-
-**Dependencies:** Automatically resolved and installed.
-
-**See:** [Registry Documentation](docs/marketplace/REGISTRY.md) for publishing your own skills.
 
 ## Why Commit Messages and Design Docs Actually Matter (Yes, Really)
 
