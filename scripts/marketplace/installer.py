@@ -71,11 +71,27 @@ def fetch_skill_files(repository: str, path: str, ref: str) -> tuple[Path, Path]
             capture_output=True
         )
 
-        return tmpdir / path, tmpdir
+        skill_dir = tmpdir / path
 
+        # Validate fetched directory exists
+        if not skill_dir.exists():
+            raise RuntimeError(
+                f"Skill directory {path} not found after checkout from {repository}@{ref}"
+            )
+
+        return skill_dir, tmpdir
+
+    except subprocess.CalledProcessError as e:
+        shutil.rmtree(tmpdir, ignore_errors=True)
+        stderr = e.stderr.decode() if e.stderr else ""
+        raise RuntimeError(
+            f"Failed to fetch skill from {repository}/{path}@{ref}: {e}\n{stderr}"
+        ) from e
     except Exception as e:
         shutil.rmtree(tmpdir, ignore_errors=True)
-        raise RuntimeError(f"Failed to fetch skill from {repository}/{path}@{ref}: {e}")
+        raise RuntimeError(
+            f"Failed to fetch skill from {repository}/{path}@{ref}: {e}"
+        ) from e
 
 
 def install_skill(
@@ -92,21 +108,41 @@ def install_skill(
         ref: Git reference to install
 
     Raises:
+        ValueError: If skill metadata is invalid or marketplace_dir doesn't exist
         RuntimeError: If installation fails
     """
-    name = skill_metadata["name"]
-    repository = skill_metadata["repository"]
+    # Validate metadata
+    try:
+        name = skill_metadata["name"]
+        repository = skill_metadata["repository"]
+    except KeyError as e:
+        raise ValueError(f"Invalid skill metadata: missing required field {e}") from e
+
+    # Validate marketplace directory exists
+    if not marketplace_dir.exists():
+        raise ValueError(f"Marketplace directory does not exist: {marketplace_dir}")
+    if not marketplace_dir.is_dir():
+        raise ValueError(f"Marketplace path is not a directory: {marketplace_dir}")
 
     # Fetch files
     temp_skill_dir, temp_root = fetch_skill_files(repository, name, ref)
 
     try:
-        # Copy to marketplace
+        # Use atomic installation pattern to prevent data loss
         install_dir = marketplace_dir / name
+        temp_install_dir = marketplace_dir / f".{name}.tmp"
+
+        # Copy to temporary location first
+        if temp_install_dir.exists():
+            shutil.rmtree(temp_install_dir)
+
+        shutil.copytree(temp_skill_dir, temp_install_dir)
+
+        # Atomic swap: remove old and rename new
         if install_dir.exists():
             shutil.rmtree(install_dir)
 
-        shutil.copytree(temp_skill_dir, install_dir)
+        temp_install_dir.rename(install_dir)
 
     finally:
         # Cleanup temp directory
