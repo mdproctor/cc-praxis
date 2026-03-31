@@ -11,6 +11,8 @@ Orchestrates installation workflow:
 """
 
 import sys
+import shutil
+import json
 from pathlib import Path
 
 from scripts.marketplace.registry import fetch_registry, find_skill
@@ -96,6 +98,87 @@ def install_command(
             print(f"✓ Installed to {marketplace_dir}/{skill_name_install}/\n")
 
         print(f"Successfully installed {len(graph)} skill(s).")
+        return 0
+
+    except Exception as e:
+        print(f"Error: {e}", file=sys.stderr)
+        return 1
+
+
+def find_dependents(skill_name: str, marketplace_dir: Path) -> list:
+    """
+    Find installed skills that depend on given skill.
+
+    Args:
+        skill_name: Name of skill to check
+        marketplace_dir: Path to .marketplace directory
+
+    Returns:
+        List of dependent skill names
+    """
+    dependents = []
+
+    for skill_dir in marketplace_dir.iterdir():
+        if not skill_dir.is_dir():
+            continue
+
+        skill_json_path = skill_dir / "skill.json"
+        if not skill_json_path.exists():
+            continue
+
+        with open(skill_json_path) as f:
+            metadata = json.load(f)
+
+        for dep in metadata.get("dependencies", []):
+            if dep["name"] == skill_name:
+                dependents.append(metadata["name"])
+                break
+
+    return dependents
+
+
+def uninstall_command(skill_name: str, marketplace_dir: Path) -> int:
+    """
+    Uninstall skill from marketplace.
+
+    Args:
+        skill_name: Name of skill to uninstall
+        marketplace_dir: Path to .marketplace directory
+
+    Returns:
+        Exit code (0 = success, 1 = error/cancelled)
+    """
+    try:
+        skill_dir = marketplace_dir / skill_name
+
+        if not skill_dir.exists():
+            print(f"Skill '{skill_name}' not installed.")
+            return 1
+
+        # Check for dependents
+        dependents = find_dependents(skill_name, marketplace_dir)
+
+        if dependents:
+            print(f"\n⚠️  Warning: The following skills depend on {skill_name}:")
+            for dep in dependents:
+                print(f"  - {dep}")
+            print()
+
+        response = input(f"Uninstall anyway? (y/N): ")
+        if response.lower() != 'y':
+            print("Cancelled.")
+            return 1
+
+        # Remove directory
+        print(f"Removing {skill_name}...")
+        shutil.rmtree(skill_dir)
+        print(f"✓ Uninstalled {skill_name} from {marketplace_dir}/")
+
+        if dependents:
+            print(f"\n⚠️  The following skills may not work correctly:")
+            for dep in dependents:
+                print(f"  - {dep}")
+
         return 0
 
     except Exception as e:

@@ -114,3 +114,61 @@ def test_cli_install_handles_errors_gracefully():
             result = install_command("java-dev", marketplace_dir, snapshot=False)
 
             assert result == 1  # Error exit code
+
+
+def test_cli_uninstall_removes_skill():
+    """CLI uninstall should remove skill directory"""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        marketplace_dir = Path(tmpdir) / ".marketplace"
+        marketplace_dir.mkdir()
+
+        # Create installed skill
+        skill_dir = marketplace_dir / "java-dev"
+        skill_dir.mkdir()
+        (skill_dir / "SKILL.md").write_text("---\nname: java-dev\n---\n")
+
+        from scripts.marketplace.cli import uninstall_command
+
+        with patch('builtins.input', return_value='y'):  # Auto-confirm
+            result = uninstall_command("java-dev", marketplace_dir)
+
+        # Verify removed
+        assert not skill_dir.exists()
+        assert result == 0
+
+
+def test_cli_uninstall_warns_about_dependents():
+    """CLI uninstall should warn if other skills depend on it"""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        marketplace_dir = Path(tmpdir) / ".marketplace"
+        marketplace_dir.mkdir()
+
+        # Create java-dev
+        java_dev = marketplace_dir / "java-dev"
+        java_dev.mkdir()
+        (java_dev / "SKILL.md").write_text("---\nname: java-dev\n---\n")
+        (java_dev / "skill.json").write_text(json.dumps({
+            "name": "java-dev",
+            "version": "1.0.0",
+            "dependencies": []
+        }))
+
+        # Create quarkus-flow-dev that depends on java-dev
+        quarkus = marketplace_dir / "quarkus-flow-dev"
+        quarkus.mkdir()
+        (quarkus / "SKILL.md").write_text("---\nname: quarkus-flow-dev\n---\n")
+        (quarkus / "skill.json").write_text(json.dumps({
+            "name": "quarkus-flow-dev",
+            "version": "1.2.0",
+            "dependencies": [{"name": "java-dev"}]
+        }))
+
+        from scripts.marketplace.cli import uninstall_command
+
+        # Cancel uninstall
+        with patch('builtins.input', return_value='n'):
+            result = uninstall_command("java-dev", marketplace_dir)
+
+        # Verify not removed
+        assert java_dev.exists()
+        assert result == 1  # Cancelled
