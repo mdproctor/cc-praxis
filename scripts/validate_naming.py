@@ -59,7 +59,7 @@ NAMING_RULES = {
 # Universal skills that work in ALL project types (should NOT have prefix)
 UNIVERSAL_INDICATORS = [
     'all project types',
-    'ALL (skills/java/custom/generic)',
+    'ALL (skills/java/blog/custom/generic)',
     'universal',
     'works in any project',
 ]

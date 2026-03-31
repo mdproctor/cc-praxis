@@ -1,112 +1,65 @@
-# Claude Code Skills for Java & Quarkus Development
+# Claude Code Skills
 
-A curated collection of specialized skills for Claude Code that streamline Java development, focusing on Quarkus applications, quarkus-flow workflows, and professional software engineering practices.
+A curated collection of specialized skills for Claude Code covering professional software development — with deep Java/Quarkus support and universal principles that apply to any project.
 
 ## Installation
 
-**Quick Start (Recommended):**
+### Quick Start — Claude Code Marketplace
 
 ```bash
-# Add marketplace
+# Add this marketplace to Claude Code
 /plugin marketplace add github.com/mdproctor/claude-skills
 
-# Run one-time bootstrap (installs skills + configures hooks)
+# Run the one-time bootstrap wizard
 /plugin install install-skills
 /install-skills
 ```
 
-The `install-skills` wizard will:
-- ✅ Configure session-start hook for automatic CLAUDE.md detection
-- ✅ Let you choose which skills to install (all, Java/Quarkus bundle, foundation, or custom)
-- ✅ Automatically resolve and install all dependencies
-- ✅ Verify everything works
+The `/install-skills` wizard:
+- Configures a session-start hook for automatic CLAUDE.md detection
+- Lets you choose what to install (all skills, Java/Quarkus bundle, foundation principles, or individual)
+- Automatically resolves and installs dependencies
+- Verifies the setup
 
-After setup completes, close that conversation - skills will be available in all future sessions.
+After the wizard completes, **close that conversation** — skills are then available in all future sessions.
+
+> **Dependency resolution note:** The official Claude Code marketplace doesn't yet support automatic dependency resolution ([Issue #9444](https://github.com/anthropics/claude-code/issues/9444)). The `/install-skills` wizard handles this for you. If you prefer installing manually, use the `scripts/claude-skill` installer below.
 
 **To uninstall:**
-
 ```bash
-# Remove skills with guided wizard
 /uninstall-skills
 ```
 
-The `uninstall-skills` wizard will:
-- ✅ Let you choose what to remove (all, Java/Quarkus bundle, foundation, or individual skills)
-- ✅ Check for reverse dependencies (warns if other skills depend on what you're removing)
-- ✅ Optionally remove session-start hook
-- ✅ Require explicit confirmation before removal
+The wizard checks for reverse dependencies and confirms before removing anything.
 
 ---
 
-### Method 1: Official Claude Code (Manual Installation)
+### Manual Installer — `scripts/claude-skill`
+
+Clone the repository and use the bundled installer directly. This gives you automatic dependency resolution without the wizard, plus the full local development workflow described in [Contributing & Local Development](#contributing--local-development).
 
 ```bash
-# Add marketplace to Claude Code
-/plugin marketplace add github.com/mdproctor/claude-skills
-
-# Install individual skills (dependencies must be installed manually)
-/plugin install java-dev
-/plugin install quarkus-flow-dev  # You'll need to install java-dev first
-```
-
-**Limitation:** Official Claude Code doesn't support automatic dependency resolution yet ([Issue #9444](https://github.com/anthropics/claude-code/issues/9444), [Issue #27113](https://github.com/anthropics/claude-code/issues/27113)). You must manually install all dependencies.
-
-**Tip:** Use the Quick Start method above for automatic dependency handling via `/install-skills`.
-
-### Method 2: Custom Installer (Automatic Dependencies, Recommended)
-
-```bash
-# Clone the marketplace repository
 git clone https://github.com/mdproctor/claude-skills.git ~/claude-skills
 cd ~/claude-skills
 ```
 
-**Available commands:**
-
 ```bash
-# Install individual skills (with automatic dependency resolution)
+# Install individual skills (auto-resolves dependencies)
 scripts/claude-skill install java-dev
-scripts/claude-skill install quarkus-flow-testing  # Auto-installs java-dev + quarkus-flow-dev
+scripts/claude-skill install quarkus-flow-testing   # installs java-dev + quarkus-flow-dev automatically
 
-# Install ALL marketplace skills at once
-scripts/claude-skill install-all           # With confirmation
-scripts/claude-skill install-all -y        # Skip confirmation
+# Install all skills
+scripts/claude-skill install-all -y
 
-# List installed skills
+# List what's installed
 scripts/claude-skill list
 
-# Uninstall individual skills
+# Uninstall
 scripts/claude-skill uninstall java-dev
-
-# Uninstall ALL installed skills
-scripts/claude-skill uninstall-all         # With confirmation
-scripts/claude-skill uninstall-all -y      # Skip confirmation
-
-# Install snapshots (latest development, not stable tagged release)
-scripts/claude-skill install quarkus-flow-dev --snapshot
+scripts/claude-skill uninstall-all -y
 ```
 
-**Features:**
-- ✅ **Automatic dependency resolution** - Install `quarkus-flow-testing` and it auto-installs `java-dev` + `quarkus-flow-dev`
-- ✅ **Circular dependency detection** - Prevents infinite loops with DFS-based cycle detection
-- ✅ **Version conflict detection** - Warns when dependencies require incompatible versions
-- ✅ **Atomic installation** - Safe failure handling, rollback on errors
-- ✅ **Batch operations** - Install/uninstall all skills with one command
-
-**Bonus: Skill Authoring Support**
-
-When you clone this repository, you also get `CLAUDE.md` which provides Claude Code with expert guidance on:
-- Skill architecture and frontmatter requirements
-- Claude Search Optimization (CSO) best practices
-- Naming conventions and skill chaining patterns
-- Quality assurance workflows and validation
-- Pre-commit checklists and documentation sync
-
-This makes the cloned repository a complete skill development environment - perfect for contributing new skills or customizing existing ones.
-
 **Installed skills location:** `~/.claude/skills/.marketplace/`
-
-**Publishing your own skills:** See [Registry Documentation](docs/marketplace/REGISTRY.md)
 
 ---
 
@@ -131,12 +84,13 @@ These skills transform Claude Code into an expert Java/Quarkus development assis
 
 **IMPORTANT:** Skills route differently based on project type. First-time commit in any repository will guide you through setup interactively, or you can set it up manually.
 
-### The 4 Project Types
+### Project Types
 
 | Type | When to Use | Documentation | Commit Skill |
 |------|-------------|---------------|--------------|
 | **skills** | Claude Code skill repositories (has `*/SKILL.md` files) | README.md + CLAUDE.md (auto-synced) | `git-commit` |
 | **java** | Java/Maven/Gradle projects | DESIGN.md (required) + CLAUDE.md (optional, auto-synced) | `java-git-commit` |
+| **blog** | GitHub Pages / Jekyll blogs (date-prefixed posts) | CLAUDE.md optional (auto-synced) | `git-commit` |
 | **custom** | Working groups, research, docs, advocacy | User-configured primary document (auto-synced) | `custom-git-commit` |
 | **generic** | Everything else | CLAUDE.md optional (auto-synced) | `git-commit` |
 
@@ -487,7 +441,7 @@ Invoked automatically by `custom-git-commit` when Sync Rules configured in CLAUD
 
 **Automated validators:** `scripts/validate_all.py` orchestrates 14 validators across 3 tiers (commit/push/ci). See CLAUDE.md § Quality Assurance Framework for complete validation architecture.
 
-**Why modular, not a skill:** Skills-specific validation only applies to THIS repository (type: skills). Loading as a portable skill would waste ~800 lines of tokens in all other projects (java, custom, generic). See CLAUDE.md § Skills-Repository-Specific Documentation.
+**Why modular, not a skill:** Skills-specific validation only applies to THIS repository (type: skills). Loading as a portable skill would waste ~800 lines of tokens in all other projects (java, custom, generic). See CLAUDE.md § Skills-Repository-Specific Documentation. <!-- nocheck:project-types -->
 
 ---
 
@@ -1093,21 +1047,118 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-## Contributing
+## Contributing & Local Development
 
-These skills are tailored for specific project conventions. When adapting for your own use:
+### Skill Authoring Environment
 
-1. Review safety and concurrency rules in `java-dev`
+When you clone this repository, `CLAUDE.md` is loaded automatically by Claude Code, giving you expert in-context guidance on:
+- Skill architecture and frontmatter requirements
+- Claude Search Optimization (CSO) — how descriptions determine when skills trigger
+- Naming conventions (`java-*`, `*-principles`, framework prefixes)
+- Skill chaining patterns and bidirectional cross-references
+- Quality assurance workflows and pre-commit checklists
+- Document sync and validation
+
+This makes the cloned repository a **complete skill development environment**. See [CLAUDE.md § Skill Architecture](CLAUDE.md#skill-architecture) for the full authoring guide and [QUALITY.md](QUALITY.md) for the validation framework.
+
+---
+
+### Local Development Workflow
+
+The recommended workflow uses symlinks so edits to source files are immediately reflected in Claude Code — no sync step required.
+
+**One-time setup:**
+```bash
+git clone https://github.com/mdproctor/claude-skills.git ~/claude-skills
+cd ~/claude-skills
+
+# Install all skills as symlinks (edits instantly live)
+scripts/claude-skill sync-local --all --link -y
+```
+
+**Daily workflow:**
+```bash
+# Edit any skill — the change is live immediately in Claude Code
+vim java-dev/SKILL.md
+
+# No sync needed — the symlink means Claude Code sees the change instantly
+```
+
+**Updating after a `git pull`:**
+```bash
+# Symlinks already point to the source, so nothing to do.
+# If you switched from copies to symlinks, run once:
+scripts/claude-skill sync-local --link -y
+```
+
+### `sync-local` Reference
+
+```bash
+# Update all currently-installed skills from local source
+scripts/claude-skill sync-local
+
+# Also install skills not yet installed
+scripts/claude-skill sync-local --all
+
+# Use symlinks instead of copies (recommended for development)
+scripts/claude-skill sync-local --link
+
+# All-in-one: install everything as symlinks, no prompt
+scripts/claude-skill sync-local --all --link -y
+```
+
+`sync-local` only touches `.marketplace/` — it never modifies the source files or git history.
+
+---
+
+### Running Tests
+
+```bash
+# Run all tests
+python3 -m pytest tests/ -v
+
+# Run just the installer tests
+python3 -m pytest tests/test_claude_skill.py -v
+```
+
+Tests use temporary directories throughout and never touch your real install location.
+
+---
+
+### Running Validators
+
+```bash
+# Full validation suite (commit tier — fast, <2s)
+python3 scripts/validate_all.py
+
+# Specific validators
+python3 scripts/validation/validate_frontmatter.py   # YAML structure
+python3 scripts/validation/validate_cso.py           # Skill descriptions
+python3 scripts/validation/validate_project_types.py # Project type list consistency
+
+# Validate a specific document
+python3 scripts/validate_document.py README.md
+```
+
+See [QUALITY.md § Validation Script Roadmap](QUALITY.md#validation-script-roadmap) for the full list of validators and their tier assignments.
+
+---
+
+### Adapting Skills for Your Own Use
+
+These skills encode conventions from specific projects. When customising:
+
+1. Review safety and concurrency rules in `java-dev` — inspired by Sanne Grinovero's Java guidelines
 2. Adjust conventional commit types in `java-git-commit`
-3. Customize BOM versions in `maven-dependency-update`
+3. Customise BOM versions in `maven-dependency-update`
 4. Update observability endpoints in `quarkus-observability`
-5. Extend generic principles skills for other languages/frameworks (e.g., `go-code-review`, `gradle-dependency-update`)
+5. Extend the generic principles skills for other languages/frameworks (e.g., `go-code-review`, `gradle-dependency-update`) — see [CLAUDE.md § Extending to New Languages](CLAUDE.md#extending-to-new-languages-pattern-examples)
 
 ## Quality & Validation Framework
 
 📖 **[Full Documentation: QUALITY.md](QUALITY.md)** — Comprehensive guide to validation tiers, division of labor between scripts and Claude, and implementation details.
 
-**Every project using these skills gets comprehensive quality protection.** This multi-layered framework ensures reliability, consistency, and correctness across all 4 project types — not just for the skills repository itself, but for **your Java projects, custom documentation, and generic repositories**.
+**Every project using these skills gets comprehensive quality protection.** This multi-layered framework ensures reliability, consistency, and correctness across all project types — not just for the skills repository itself, but for **your Java projects, blogs, custom documentation, and generic repositories**.
 
 ### Quick Reference: Running Validation
 
@@ -1168,62 +1219,85 @@ See [QUALITY.md § Why Quality Matters](QUALITY.md#why-quality-matters) for comp
 .
 ├── LICENSE                              # Apache License 2.0
 ├── README.md                            # This file
-├── CLAUDE.md                            # Guidance for Claude Code
-├── scripts/                             # Validation and automation
-│   ├── validate_all.py                 # Master orchestrator (3-tier validation)
-│   ├── validate_document.py            # Universal .md corruption detector
-│   ├── testing/                        # Test infrastructure
-│   │   ├── run_skill_tests.py         # Functional test runner (git worktrees)
-│   │   ├── run_regression_tests.py    # Regression test runner
-│   │   └── test_coverage.py           # Coverage reporting (95% skills)
-│   └── validation/                     # SKILL.md validators (14 total)
-│       ├── validate_frontmatter.py    # YAML structure, required fields [COMMIT]
-│       ├── validate_cso.py            # Description CSO compliance [COMMIT]
-│       ├── validate_flowcharts.py     # Mermaid syntax validation [PUSH]
-│       ├── validate_references.py     # Cross-reference integrity [COMMIT]
-│       ├── validate_naming.py         # Naming conventions [COMMIT]
-│       ├── validate_sections.py       # Required sections by type [COMMIT]
-│       ├── validate_structure.py      # File organization [COMMIT]
-│       ├── validate_cross_document.py # Cross-document consistency [PUSH]
-│       ├── validate_temporal.py       # Stale references [PUSH]
-│       ├── validate_usability.py      # Readability, UX [PUSH]
-│       ├── validate_edge_cases.py     # Edge case coverage [PUSH]
-│       ├── validate_behavior.py       # Behavioral consistency [PUSH]
-│       ├── validate_readme_sync.py    # README/CLAUDE sync [PUSH]
-│       └── validate_python_quality.py # mypy, flake8, bandit [CI]
+├── CLAUDE.md                            # Claude Code guidance + skill authoring environment
+├── QUALITY.md                           # Validation framework documentation
+├── PHILOSOPHY.md                        # Design principles
+├── .claude-plugin/
+│   └── marketplace.json                 # Marketplace catalog (all 20 skills)
+├── scripts/                             # Automation and validation
+│   ├── claude-skill                     # Skill installer/manager CLI (install, sync-local, etc.)
+│   ├── validate_all.py                  # Master orchestrator (3-tier validation)
+│   ├── validate_document.py             # Universal .md corruption detector
+│   ├── generate_skill_metadata.py       # Regenerates skill.json for all skills
+│   ├── testing/                         # Test infrastructure
+│   │   ├── run_skill_tests.py          # Functional test runner (git worktrees)
+│   │   ├── run_regression_tests.py     # Regression test runner
+│   │   └── test_coverage.py            # Coverage reporting
+│   └── validation/                      # SKILL.md validators (14 total, 3 tiers)
+│       ├── validate_frontmatter.py     # YAML structure, required fields [COMMIT]
+│       ├── validate_cso.py             # Description CSO compliance [COMMIT]
+│       ├── validate_references.py      # Cross-reference integrity [COMMIT]
+│       ├── validate_naming.py          # Naming conventions [COMMIT]
+│       ├── validate_sections.py        # Required sections by type [COMMIT]
+│       ├── validate_structure.py       # File organization [COMMIT]
+│       ├── validate_project_types.py   # Project type list consistency [COMMIT]
+│       ├── validate_flowcharts.py      # Mermaid syntax validation [PUSH]
+│       ├── validate_cross_document.py  # Cross-document consistency [PUSH]
+│       ├── validate_temporal.py        # Stale references [PUSH]
+│       ├── validate_usability.py       # Readability, UX [PUSH]
+│       ├── validate_edge_cases.py      # Edge case coverage [PUSH]
+│       ├── validate_behavior.py        # Behavioral consistency [PUSH]
+│       ├── validate_readme_sync.py     # README/CLAUDE sync [PUSH]
+│       └── validate_python_quality.py  # mypy, flake8, bandit [CI]
+├── tests/                               # Test suite
+│   ├── test_claude_skill.py            # Tests for scripts/claude-skill (sync-local, install, etc.)
+│   ├── test_document_discovery.py      # Tests for document discovery
+│   ├── test_document_cache.py          # Tests for document caching
+│   └── test_modular_validator.py       # Tests for modular validator
+├── docs/                                # Extended documentation
+│   ├── PROJECT-TYPES.md                # Complete project type taxonomy and routing
+│   └── adr/                            # Architecture Decision Records
 ├── skill-validation.md                  # Skills-specific SKILL.md validation workflow
 ├── readme-sync.md                       # Skills-specific README.md sync workflow
-├── code-review-principles/              # Generic code review principles
+├── install-skills/                      # Marketplace bootstrap wizard
 │   └── SKILL.md
-├── security-audit-principles/           # Generic security audit principles
+├── uninstall-skills/                    # Guided uninstall wizard
 │   └── SKILL.md
-├── dependency-management-principles/    # Generic dependency management principles
+├── git-commit/                          # Generic conventional commits + project type routing
 │   └── SKILL.md
-├── observability-principles/            # Generic observability principles
+├── java-git-commit/                     # Java-specific smart commits with DESIGN.md sync
 │   └── SKILL.md
-├── java-dev/                            # Core Java/Quarkus development
+├── custom-git-commit/                   # User-configured commits with primary doc sync
 │   └── SKILL.md
-├── quarkus-flow-dev/                    # Serverless Workflow patterns
-│   ├── SKILL.md
-│   └── funcDSL-reference.md            # Complete FuncDSL API reference
-├── quarkus-flow-testing/                # Workflow testing patterns
+├── update-claude-md/                    # CLAUDE.md workflow documentation sync
+│   └── SKILL.md
+├── java-update-design/                  # DESIGN.md architecture sync (Java projects)
+│   └── SKILL.md
+├── update-primary-doc/                  # Generic primary document sync (custom projects)
+│   └── SKILL.md
+├── code-review-principles/              # Universal code review principles
+│   └── SKILL.md
+├── security-audit-principles/           # Universal OWASP Top 10 principles
+│   └── SKILL.md
+├── dependency-management-principles/    # Universal BOM/dependency principles
+│   └── SKILL.md
+├── observability-principles/            # Universal logging/tracing/metrics principles
+│   └── SKILL.md
+├── java-dev/                            # Core Java/Quarkus development rules
 │   └── SKILL.md
 ├── java-code-review/                    # Java-specific code review
 │   └── SKILL.md
-├── java-security-audit/                 # Java-specific security audit
+├── java-security-audit/                 # Java/Quarkus OWASP security audit
 │   └── SKILL.md
-├── git-commit/                          # Generic conventional commits
+├── maven-dependency-update/             # Maven BOM dependency management
 │   └── SKILL.md
-├── java-git-commit/                     # Java-specific smart commits
+├── quarkus-flow-dev/                    # Quarkus Serverless Workflow patterns
+│   ├── SKILL.md
+│   └── funcDSL-reference.md            # Complete FuncDSL API reference
+├── quarkus-flow-testing/                # Quarkus workflow testing patterns
 │   └── SKILL.md
-├── java-update-design/                       # DESIGN.md maintenance
+├── quarkus-observability/               # Quarkus observability configuration
 │   └── SKILL.md
-├── update-claude-md/                    # CLAUDE.md maintenance
-│   └── SKILL.md
-├── adr/                                 # Architecture Decision Records
-│   └── SKILL.md
-├── maven-dependency-update/             # Maven dependency management
-│   └── SKILL.md
-└── quarkus-observability/               # Quarkus observability setup
+└── adr/                                 # Architecture Decision Records skill
     └── SKILL.md
 ```

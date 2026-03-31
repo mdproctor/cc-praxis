@@ -36,13 +36,17 @@ cat CLAUDE.md 2>/dev/null | grep -A 2 "## Project Type"
 
 **If CLAUDE.md exists and has Project Type declaration:**
 
-Extract the type (skills | java | custom | generic).
+Extract the type (skills | java | blog | custom | generic).
 
 **Route based on type:**
 - **type: skills** → Continue with Step 1 (this skill handles skills repos)
 - **type: java** → STOP and tell user:
   > This is a type: java project. Please use `java-git-commit` instead:
   > `/java-git-commit` or say "java commit"
+
+- **type: blog** → Continue with Step 1 (this skill handles blog repos;
+  a dedicated `blog-git-commit` skill with post validation and index sync
+  will be added when the primary document is defined)
 
 - **type: custom** → STOP and tell user:
   > This is a type: custom project. Please use `custom-git-commit` instead:
@@ -61,10 +65,11 @@ Interactively set up project type:
 >
 > 1. **Skills repository** - Claude Code skills (has */SKILL.md files)
 > 2. **Java project** - Maven/Gradle (has pom.xml or build.gradle)
-> 3. **Custom project** - Working groups, research, docs, etc.
-> 4. **Generic project** - No special handling needed
+> 3. **Blog** - GitHub Pages blog (Jekyll, date-prefixed posts)
+> 4. **Custom project** - Working groups, research, docs, etc.
+> 5. **Generic project** - No special handling needed
 >
-> Reply with the number (1-4) or type the name.
+> Reply with the number (1-5) or type the name.
 
 Wait for user response.
 
@@ -123,7 +128,29 @@ Stage CLAUDE.md, then tell user:
 Wait for response. If 2, stop and tell user to invoke java-git-commit.
 If 1, continue to Step 1 (but warn about missing DESIGN.md sync).
 
-**If 3 (custom):**
+**If 3 (blog):**
+Create or update CLAUDE.md:
+```markdown
+## Project Type
+
+**Type:** blog
+```
+
+Stage CLAUDE.md, then tell user:
+> ✅ Created CLAUDE.md with type: blog
+>
+> This enables GitHub Pages blog conventions:
+> - Post filename validation (`YYYY-MM-DD-title.md`)
+> - Jekyll-aware commits
+>
+> Note: A primary sync document (e.g. an index or archive page) can be
+> configured later when you know what it will be.
+>
+> Proceeding with your commit...
+
+Continue to Step 1.
+
+**If 4 (custom):**
 Prompt for configuration:
 > Great! Custom projects need a bit more configuration.
 >
@@ -183,7 +210,7 @@ Stage CLAUDE.md, then tell user:
 
 If 1, continue to Step 1. If 2, stop and let user edit.
 
-**If 4 (generic):**
+**If 5 (generic):**
 Create or update CLAUDE.md:
 ```markdown
 ## Project Type
@@ -256,7 +283,7 @@ python scripts/validate_document.py <file>
 - **Exit code 0 (no issues):**
   - Continue to Step 2
 
-**This step runs for ALL project types** (skills, java, custom, generic).
+**This step runs for ALL project types** (skills, java, blog, custom, generic).
 
 **If no .md files found:**
 - Continue to Step 2

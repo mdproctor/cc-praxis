@@ -43,13 +43,24 @@ Wait for user response.
 
 ```bash
 #!/bin/bash
-# Check if CLAUDE.md exists in current repository
+# Check CLAUDE.md exists and declares a project type in current repository.
+# Output is read by Claude at session start — messages are directives to act on.
+
+# Only run inside a git repository
+if ! git rev-parse --is-inside-work-tree &>/dev/null; then
+  exit 0
+fi
 
 if [ ! -f "CLAUDE.md" ]; then
   echo "📋 CLAUDE.md not found in this repository."
-  echo "This helps Claude Code understand your project type (skills/java/custom/generic)."
+  echo "This helps Claude Code understand your project type (skills/java/blog/custom/generic)."
   echo ""
   echo "Set it up now? Run: /git-commit (it will guide you through setup)"
+elif ! grep -q "## Project Type" CLAUDE.md; then
+  echo "⚠️  ACTION REQUIRED: CLAUDE.md exists but declares no Project Type."
+  echo "Prompt the user to choose a project type and insert it into CLAUDE.md."
+  echo "Choices: skills | java | blog | custom | generic"
+  echo "(See CLAUDE.md § Project Type for what each type means)"
 fi
 ```
 

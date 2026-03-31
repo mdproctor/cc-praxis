@@ -7,7 +7,7 @@ Discovers modular documentation structure via:
 - Explicit configuration (CLAUDE.md)
 - Hybrid approach (auto-detect first, propose config if ambiguous)
 
-Universal across all project types (skills, java, custom, generic).
+Universal across all project types (skills, java, blog, custom, generic).
 """
 
 import re

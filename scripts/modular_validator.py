@@ -8,7 +8,7 @@ Cross-module validation for document groups:
 - Duplication detection (same content in multiple modules)
 - Contradiction detection (semantic conflicts - requires Claude analysis)
 
-Universal across all project types (skills, java, custom, generic).
+Universal across all project types (skills, java, blog, custom, generic).
 """
 
 import re

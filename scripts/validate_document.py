@@ -2,7 +2,7 @@
 """
 Universal Markdown Document Validation
 
-Detects corruption in .md files across all project types (skills, java, custom, generic).
+Detects corruption in .md files across all project types (skills, java, blog, custom, generic).
 Used by sync workflows to prevent document corruption before committing.
 
 Usage:

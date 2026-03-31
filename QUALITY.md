@@ -86,7 +86,7 @@ This framework ensures reliability, consistency, and correctness across all docu
 
 ### Universal Protection (All Project Types)
 
-**Applies to:** skills, java, custom, generic
+**Applies to:** skills, java, blog, custom, generic
 
 | Protection | What It Prevents | When It Runs |
 |------------|------------------|--------------|

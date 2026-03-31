@@ -27,7 +27,7 @@ changes.
 
 - CLAUDE.md lives at repository root
 - **Never apply changes without explicit user confirmation** (a plain "YES" or equivalent)
-- **Never modify the Project Type section** — this is user-configured and defines repository behavior (type: skills, type: java, type: custom, type: generic)
+- **Never modify the Project Type section** — this is user-configured and defines repository behavior (type: skills, type: java, type: blog, type: custom, type: generic)
 - Focus on **workflow and convention changes**: new tools, build commands, testing
   patterns, naming conventions, repository structure changes
 - Keep prose concise and professional. Prefer bullet points and tables
@@ -142,7 +142,7 @@ Map changes to CLAUDE.md sections:
 
 **If you detect framework changes, include them in proposals even if no direct workflow/convention changes.**
 
-**This check applies to ALL project types** (skills/java/custom/generic).
+**This check applies to ALL project types** (skills/java/blog/custom/generic).
 
 ### Step 5: Propose updates
 
@@ -356,7 +356,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Type
 
-**Type:** [java | custom | generic]
+**Type:** [skills | java | blog | custom | generic]
 
 ## Repository Purpose
 

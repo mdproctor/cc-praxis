@@ -16,14 +16,15 @@ This is a skill collection for Claude Code, providing specialized guidance for J
 
 This repository follows the **type: skills** project model. All repositories using these skills declare their type in CLAUDE.md to enable appropriate commit workflows, documentation sync, and validation.
 
-### The Four Project Types
+### Project Types
 
-Claude Code supports 4 project types, each with tailored behaviors:
+Claude Code supports project types, each with tailored behaviors:
 
 | Type | Description | Sync Behavior | When to Use |
 |------|-------------|---------------|-------------|
 | **`skills`** | Skills repository | Built-in (we know how skills work) | This repository |
 | **`java`** | Java/Maven/Gradle | Built-in (we know Java architecture patterns) | Java projects |
+| **`blog`** | GitHub Pages blog | Built-in (Jekyll conventions, date-prefixed posts) | GitHub Pages blogs |
 | **`custom`** | User-configured | User defines sync strategy | Everything else with special needs |
 | **`generic`** | No special handling | Basic conventional commits | Simple projects, no sync needed |
 
@@ -36,11 +37,12 @@ Claude Code supports 4 project types, each with tailored behaviors:
 ### Complete Project Type Reference
 
 **For comprehensive documentation on all project types, including:**
-- Why these four types exist (architectural insight)
+- Why these types exist (architectural insight)
 - Type 1: Skills Repository (Built-in) — this repository's detailed behavior
 - Type 2: Java/Maven/Gradle (Built-in) — DESIGN.md sync, BOM patterns
 - Type 3: Custom (User-Configured) — working groups, research, docs
-- Type 4: Generic (Fallback) — simple projects
+- Type 4: Blog / GitHub Pages (Built-in) — Jekyll conventions, date-prefixed posts
+- Type 5: Generic (Fallback) — simple projects
 - Decision matrix: When to create a new built-in type
 - Routing logic and interactive setup
 - Adding support for new domains (Python, Go, etc.)
@@ -387,6 +389,20 @@ Run these checks **before every commit** to this repository:
 - Running tests before committing code
 - Validating syntax before pushing
 - Code review before merging
+
+### When Adding a New Project Type
+
+**Adding a new project type (e.g. `python`, `go`) requires updating ALL of these:**
+
+- [ ] **`CLAUDE.md` § Project Types table** — add the new type row (this is the canonical source of truth)
+- [ ] **`docs/PROJECT-TYPES.md`** — full type documentation and routing logic
+- [ ] **`git-commit/SKILL.md`** — routing logic in Step 0 (adds new type branch)
+- [ ] **`install-skills/SKILL.md`** — hook script it creates (`Choices:` line)
+- [ ] **`~/.claude/hooks/check_project_setup.sh`** — live hook (`Choices:` line)
+- [ ] **Run `python scripts/validation/validate_project_types.py --verbose`** — confirms no hardcoded lists were missed
+
+**The validator (`validate_project_types.py`) catches hardcoded lists automatically at commit time,
+but this checklist ensures the new type is fully wired into all workflows.**
 
 ### Known Regressions (Learn From These)
 

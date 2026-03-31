@@ -265,7 +265,57 @@ custom-git-commit (for type: custom)
 
 ---
 
-### Type 4: Generic (Fallback)
+### Type 4: Blog / GitHub Pages (Built-in)
+
+**Why this type exists:**
+- GitHub Pages blogs have well-known conventions (Jekyll, `_posts/`, date-prefixed filenames)
+- Post filenames must follow `YYYY-MM-DD-title.md` format — easy to validate automatically
+- Blog commits have a natural scope: `post`, `layout`, `config`, `asset`
+- Primary sync document is TBD — to be configured when the blog structure is established
+
+**Declaration:**
+```markdown
+## Project Type
+
+**Type:** blog
+```
+
+**What we know about GitHub Pages blogs:**
+- Posts live in `_posts/` with `YYYY-MM-DD-title.md` naming
+- `_config.yml` holds site-wide configuration
+- Layouts in `_layouts/`, partials in `_includes/`, assets in `assets/`
+- Front matter (YAML) required on every post
+- Date prefix in filename determines publish date
+
+**Current Behavior:**
+```
+git-commit (for type: blog)
+  ├─ update-claude-md (if CLAUDE.md exists)
+  └─ Conventional commit with blog-aware scopes
+```
+
+**Planned Behavior (once primary document is defined):**
+```
+blog-git-commit (for type: blog) — not yet implemented
+  ├─ Validate post filename format (YYYY-MM-DD-title.md)
+  ├─ Validate front matter (title, date, layout fields)
+  ├─ blog-update-index (syncs index/archive page)
+  └─ Conventional commit
+```
+
+**Commit scopes for blog projects:**
+- `post` — new or edited blog post
+- `layout` — changes to `_layouts/` or `_includes/`
+- `config` — changes to `_config.yml`
+- `asset` — images, CSS, JS in `assets/`
+- `deps` — Gemfile / GitHub Actions updates
+
+**This type is ONLY for GitHub Pages / Jekyll blogs.** For other documentation
+sites, use `custom` with an appropriate primary document.
+
+---
+
+### Type 5: Generic (Fallback)
 
 **Why this type exists:**
 - Simple projects without special documentation requirements
@@ -373,7 +423,7 @@ Can we hardcode sync logic universally?
 
 ```
 Step 1: Read CLAUDE.md
-  └─ Extract: Type: [skills | java | custom | generic]
+  └─ Extract: Type: [skills | java | blog | custom | generic]
 
 Step 2: Route based on type
   ├─ skills → Continue with git-commit (skills mode)
@@ -575,12 +625,13 @@ Create CLAUDE.md with template sync rules.
 
 ### Summary for Future Claudes
 
-**The Four Types (Memorize This):**
+**The Project Types (Memorize This):**
 
 | Type | Hardcoded Logic? | User Config? | Use When |
 |------|------------------|--------------|----------|
 | `skills` | ✅ Yes | ❌ No | This skills repo |
 | `java` | ✅ Yes | ❌ No | Java/Maven/Gradle |
+| `blog` | ✅ Yes | ❌ No | GitHub Pages / Jekyll blogs |
 | `custom` | ❌ No | ✅ Yes | Everything else with special needs |
 | `generic` | ❌ No | ❌ No | Simple projects |
 
