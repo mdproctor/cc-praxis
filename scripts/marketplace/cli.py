@@ -13,6 +13,7 @@ Orchestrates installation workflow:
 import sys
 import shutil
 import json
+import argparse
 from pathlib import Path
 
 from scripts.marketplace.registry import fetch_registry, find_skill
@@ -244,3 +245,73 @@ def list_command(marketplace_dir: Path) -> int:
     except Exception as e:
         print(f"Error: {e}", file=sys.stderr)
         return 1
+
+
+def main():
+    """Main CLI entry point."""
+    parser = argparse.ArgumentParser(
+        prog="claude-skill",
+        description="Claude Code skill marketplace CLI"
+    )
+
+    subparsers = parser.add_subparsers(dest="command", help="Command to run")
+
+    # Install command
+    install_parser = subparsers.add_parser("install", help="Install a skill")
+    install_parser.add_argument("skill", help="Skill name to install")
+    install_parser.add_argument(
+        "--snapshot",
+        action="store_true",
+        help="Install snapshot version instead of stable"
+    )
+    install_parser.add_argument(
+        "--marketplace-dir",
+        type=Path,
+        default=Path.home() / ".claude" / "skills" / ".marketplace",
+        help="Marketplace directory (default: ~/.claude/skills/.marketplace)"
+    )
+
+    # Uninstall command
+    uninstall_parser = subparsers.add_parser("uninstall", help="Uninstall a skill")
+    uninstall_parser.add_argument("skill", help="Skill name to uninstall")
+    uninstall_parser.add_argument(
+        "--marketplace-dir",
+        type=Path,
+        default=Path.home() / ".claude" / "skills" / ".marketplace",
+        help="Marketplace directory"
+    )
+
+    # List command
+    list_parser = subparsers.add_parser("list", help="List installed skills")
+    list_parser.add_argument(
+        "--marketplace-dir",
+        type=Path,
+        default=Path.home() / ".claude" / "skills" / ".marketplace",
+        help="Marketplace directory"
+    )
+
+    args = parser.parse_args()
+
+    if not args.command:
+        parser.print_help()
+        return 1
+
+    # Ensure marketplace directory exists
+    marketplace_dir = args.marketplace_dir
+    if args.command in ["install", "list"]:
+        marketplace_dir.mkdir(parents=True, exist_ok=True)
+
+    # Route to command
+    if args.command == "install":
+        return install_command(args.skill, marketplace_dir, args.snapshot)
+    elif args.command == "uninstall":
+        return uninstall_command(args.skill, marketplace_dir)
+    elif args.command == "list":
+        return list_command(marketplace_dir)
+    else:
+        parser.print_help()
+        return 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())
