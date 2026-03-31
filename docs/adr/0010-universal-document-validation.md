@@ -4,7 +4,7 @@
 
 **Date:** 2026-03-30
 
-**Context:** Universal across all project types (skills, java, custom, generic)
+**Context:** Universal across all project types (skills, java, custom, generic) <!-- nocheck:project-types -->
 
 ---
 
@@ -285,7 +285,7 @@ python scripts/validate_document.py <file>
 - Exit code 0 → Continue
 ```
 
-**This runs for ALL project types** (skills, java, custom, generic).
+**This runs for ALL project types** (skills, java, custom, generic). <!-- nocheck:project-types -->
 
 ### 4. Portable Implementation
 

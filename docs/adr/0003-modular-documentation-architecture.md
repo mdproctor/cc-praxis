@@ -4,7 +4,7 @@
 
 **Date:** 2026-03-30
 
-**Context:** Universal across all project types (skills, java, custom, generic)
+**Context:** Universal across all project types (skills, java, custom, generic) <!-- nocheck:project-types -->
 
 ---
 

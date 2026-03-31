@@ -192,7 +192,7 @@ Orchestrate:
 
 **Step 0 — Project Type Detection:**
 ```markdown
-Read CLAUDE.md → Extract type: [skills | java | custom | generic]
+Read CLAUDE.md → Extract type: [skills | java | custom | generic] <!-- nocheck:project-types -->
 
 **Route based on type:**
 - type: skills → Continue (handle here)

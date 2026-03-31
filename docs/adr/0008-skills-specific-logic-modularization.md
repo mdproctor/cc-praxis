@@ -50,7 +50,7 @@ Skills for skills-repository management contained heavy reference material:
 - Edge case handling (~150 lines)
 **Total: ~600 lines**
 
-**Combined: ~1400 lines loaded in EVERY project (java, custom, generic)**
+**Combined: ~1400 lines loaded in EVERY project (java, custom, generic)** <!-- nocheck:project-types -->
 
 **The waste:**
 - Java project (no SKILL.md files): Loads 1400 lines of irrelevant skills-specific logic
@@ -78,7 +78,7 @@ Skills for skills-repository management contained heavy reference material:
 - Familiar pattern
 
 **Cons:**
-- ❌ Wastes ~70KB tokens in java/custom/generic projects
+- ❌ Wastes ~70KB tokens in java/custom/generic projects <!-- nocheck:project-types -->
 - ❌ Skills load even when never used
 - ❌ Mixes portable skills with repository-specific workflows
 - ❌ Doesn't scale (what about java-specific workflows?)
@@ -249,7 +249,7 @@ documentation files at the repository root:
 
 ### Positive
 
-✅ **Massive token savings** - ~70KB per conversation in java/custom/generic projects
+✅ **Massive token savings** - ~70KB per conversation in java/custom/generic projects <!-- nocheck:project-types -->
 ✅ **Clear separation** - Portable skills vs repository-specific workflows
 ✅ **Easier maintenance** - All skills-specific logic in dedicated files
 ✅ **Scalability** - Pattern extends to java-specific, custom-specific workflows

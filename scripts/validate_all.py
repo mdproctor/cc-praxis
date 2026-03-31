@@ -20,6 +20,7 @@ VALIDATORS = {
         {'script': 'validate_naming.py', 'name': 'Naming', 'target': None},
         {'script': 'validate_sections.py', 'name': 'Sections', 'target': None},
         {'script': 'validate_structure.py', 'name': 'Structure', 'target': None},
+        {'script': 'validate_project_types.py', 'name': 'Project Type Lists', 'target': None},
     ],
     'push': [
         # Pre-push tier: <30s budget, moderate validators + regression

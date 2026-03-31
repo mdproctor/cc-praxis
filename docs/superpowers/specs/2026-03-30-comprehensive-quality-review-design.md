@@ -193,7 +193,7 @@ Recommendations:
   - Skill changes (triggers skill-review)
   - README sync (triggers readme-sync)
   - CLAUDE.md sync (triggers update-claude-md)
-  - Project type routing (skills/java/custom/generic)
+  - Project type routing (skills/java/custom/generic) <!-- nocheck:project-types -->
   - Validation failure handling
   - User says NO scenario
 

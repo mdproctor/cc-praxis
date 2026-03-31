@@ -42,7 +42,7 @@ Add framework change detection to readme-sync.md only.
 - Minimal changes required
 
 **Cons:**
-- Same failure will occur in java/custom/generic projects
+- Same failure will occur in java/custom/generic projects <!-- nocheck:project-types -->
 - Doesn't address root cause (rationalization)
 - Leaves user vulnerable in other project types
 

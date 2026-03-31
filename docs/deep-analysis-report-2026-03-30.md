@@ -88,7 +88,7 @@ The skills repository demonstrates high quality with strong structural integrity
 - ✅ Prerequisites are in correct dependency order
 
 **Examples Verified:**
-- `git-commit` routing logic (skills/java/custom/generic types)
+- `git-commit` routing logic (skills/java/custom/generic types) <!-- nocheck:project-types -->
 - `java-git-commit` DESIGN.md check before sync
 - `skill-review` severity decision flow
 
