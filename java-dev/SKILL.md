@@ -1,4 +1,6 @@
 ---
+# Attribution: Derived from and inspired by Sanne Grinovero's Java development rules.
+# Refactoring section updated for dual MCP server strategy; MethodHandle guidance removed.
 name: java-dev
 description: >
   Use when writing new Java code, fixing bugs, refactoring, or adding tests in
@@ -266,6 +268,12 @@ build-time logic are generally not critical — use idiomatic Java there.
 Before writing new helpers or utilities, check for existing code that can be
 reused. Prefer extension or composition over duplication.
 
+## Universal Rule
+
+When I ask you to do something, always consider if there is a better way to do this
+
+
+
 ## Code clarity
 
 - Mark parameters and variables `final` in new code unless mutability is required
@@ -273,6 +281,23 @@ reused. Prefer extension or composition over duplication.
   field assignments)
 - Use simple class names with imports rather than fully qualified names, unless
   two classes share the same simple name in the same file
+- **Always use text blocks for multi-line strings.** Any string literal that spans
+  more than one line must use Java text block syntax (`"""`). Never use string
+  concatenation or `\n` escapes to build multi-line strings.
+
+```java
+// ❌ BAD: concatenation and escape sequences
+String query = "SELECT id, name\n" +
+               "FROM users\n" +
+               "WHERE active = true";
+
+// ✅ GOOD: text block
+String query = """
+        SELECT id, name
+        FROM users
+        WHERE active = true
+        """;
+```
 
 ## Testing
 
@@ -320,30 +345,45 @@ Keep modified lines to a minimum to reduce conflicts and ease review:
 
 ## Refactoring
 
-When refactoring, use the **IntelliJ MCP if available** — it gives a
-project-wide view of impact and is faster for large-scale changes.
+Use a **three-tier tool strategy**, prioritized in this order:
 
-If IntelliJ MCP is unavailable:
+**Tier 1 — intellij-index MCP (always prefer for semantic operations)**
+
+When available, always use the `intellij-index` MCP server first — it provides
+a rich semantic index with accurate cross-project references, type hierarchies,
+and safe refactoring tools that text-based tools cannot match:
+
+| Tool | Use For |
+|------|---------|
+| `ide_find_references` | Understand impact before any rename or move |
+| `ide_find_definition` | Navigate to symbol definitions |
+| `ide_refactor_rename` | Safe symbol rename across the entire project |
+| `ide_move_file` | Safe file/class relocation |
+| `ide_type_hierarchy` | Explore class/interface hierarchies |
+| `ide_find_implementations` | Find all implementations of an interface |
+
+**Before any rename or move:** always run `ide_find_references` first to
+understand the full scope of impact.
+
+**Tier 2 — Official JetBrains MCP (fallback)**
+
+Fall back to the official `jetbrains` MCP tools only when `intellij-index`
+doesn't provide the specific operation you need. It offers basic IDE integration
+but lacks the semantic depth of the index server.
+
+**Tier 3 — Native tools (routine operations)**
+
+Use native tools (Read, Edit, Grep, Glob) for all routine file operations —
+reading, searching, and targeted text edits. These are always appropriate for
+non-semantic operations regardless of MCP availability.
+
+If no MCP server is available when a semantic operation (rename, find
+references, move) is needed:
 1. Inform the user
-2. Ask: continue with Bash-based tools, or start IntelliJ MCP first?
-3. If continuing without it: use `git diff` to validate scope, make changes
+2. Ask: continue with text-based tools (with risk of missed references), or
+   start IntelliJ first?
+3. If continuing without MCP: use `git diff` to validate scope, make changes
    conservatively, and run the build/tests after each logical step
-
-  ## Refactoring
-
-  Use a **hybrid tool strategy**:
-
-  - **Native tools** (Read, Edit, Grep, Glob) for all routine file operations —
-    reading, searching, and text edits — regardless of whether IntelliJ MCP is available.
-  - **IntelliJ MCP** (`mcp__intellij__rename_refactoring`) only when the operation
-    requires type-safe, semantic awareness — e.g. renaming a symbol and having all
-    references across the project updated correctly. Text search/replace is not safe
-    for these cases.
-
-  If IntelliJ MCP is needed but unavailable:
-    1. Inform the user
-    2. Ask: continue with text-based tools (with risk of missed references), or start IntelliJ first?
-    3. If continuing without it: use `git diff` to validate scope, make changes conservatively, and run the build/tests after each logical step
 
 ## Compilation and errors
 
