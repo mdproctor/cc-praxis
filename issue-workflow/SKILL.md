@@ -1,11 +1,10 @@
 ---
 name: issue-workflow
 description: >
-  Use when setting up GitHub issue tracking for a project, when a task
-  description seems to span multiple concerns and needs breaking down, or
-  when staged changes before a commit should be split across separate issues.
-  Invoked via /issue-workflow, chained from git-commit setup, or triggered
-  automatically when Work Tracking is enabled in CLAUDE.md.
+  Use when setting up GitHub issue tracking, when a user request spans
+  multiple concerns that should be separate issues, or when staged changes
+  span multiple issues and should be split. Also invoked by git-commit
+  during CLAUDE.md setup, and automatically when Work Tracking is enabled.
 ---
 
 # Issue Workflow

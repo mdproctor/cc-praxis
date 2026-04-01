@@ -165,7 +165,9 @@ Then create `docs/DESIGN.md` (java-git-commit will block without it).
 **type: blog** → `git-commit`:
 - Blog-aware commit scopes (`post`, `layout`, `config`, `asset`)
 - Auto-syncs CLAUDE.md if it exists
-- (Dedicated `blog-git-commit` skill with post validation planned)
+- Post filename validation (`YYYY-MM-DD-title.md` format enforced)
+- Commit type validation (`post`, `edit`, `draft`, `asset`, `config` only)
+- 72-char subject limit (not 50 — blog titles are longer than code commit subjects)
 
 **type: custom** → `custom-git-commit`:
 - Syncs user-configured primary document (VISION.md, THESIS.md, etc.)
@@ -346,7 +348,7 @@ Guided removal wizard:
 #### **git-commit**
 Generic conventional commit workflow for any repository:
 - Generates conventional commit messages (Conventional Commits 1.0.0)
-- **Routes to specialized skills** based on project type (java-git-commit for type: java, custom-git-commit for type: custom)
+- **Routes to specialized skills** based on project type (java-git-commit for type: java, blog-git-commit for type: blog, custom-git-commit for type: custom)
 - **Interactive setup** if CLAUDE.md missing (prompts for project type)
 - Works with any codebase or file types
 - Proposes commit message for user review before committing
@@ -374,6 +376,15 @@ Intelligent commit workflow that extends git-commit with:
 - Simplified workflow (references git-commit, adds DESIGN.md sync)
 
 **Triggers:** "commit" in repositories with `type: java` declared in CLAUDE.md, or explicitly via "smart commit", "update design and commit", `/java-git-commit`.
+
+#### **blog-git-commit**
+Conventional commit workflow for GitHub Pages / Jekyll blogs:
+- **Blog-specific content types** — `post` (new post), `edit` (update), `draft` (WIP), `asset` (images/CSS), `config` (site config)
+- **Post filename validation** — enforces `YYYY-MM-DD-title.md` format before committing
+- **72-char subject limit** — blog titles are longer than code commit subjects
+- **Commit message validation** via `scripts/validation/validate_blog_commit.py`
+
+**Triggers:** "commit" in repositories with `type: blog` declared in CLAUDE.md, or explicitly via `/blog-git-commit`.
 
 #### **custom-git-commit**
 Intelligent commit workflow for custom project types (working groups, research, documentation, advocacy):
@@ -665,6 +676,17 @@ Creates and manages Architecture Decision Records (ADRs) in MADR format:
 
 **Triggers:** "create an ADR", significant technical decisions, major version upgrades, new extension adoption.
 
+#### **issue-workflow**
+GitHub issue tracking with cross-cutting task detection and commit split suggestions:
+- **Setup mode** — configures `## Work Tracking` in CLAUDE.md, creates standard GitHub labels, optionally reconstructs issues from git history
+- **Task intake** — detects when a user request spans multiple concerns before work starts; suggests issue breakdown
+- **Pre-commit analysis** — detects when staged changes span multiple issues; guides through `git add -p` splitting
+- **Release management** — generates changelogs via `gh release create --generate-notes` (no manual CHANGELOG.md)
+
+Once configured in CLAUDE.md, Claude applies cross-cutting detection and issue linking automatically throughout every session.
+
+**Triggers:** `/issue-workflow`, or offered automatically during CLAUDE.md creation and at session start when project type is set but Work Tracking is not.
+
 ---
 
 ## How Skills Work Together
@@ -686,6 +708,14 @@ superpowers:writing-skills
   → git-commit
     → Validates SKILL.md (follows skill-validation.md workflow if staged)
     → update-claude-md + readme-sync.md (automatic)
+```
+
+### Blog Post → Commit (Blog repositories)
+```
+Write or edit a post
+  → git-commit (or /blog-git-commit)
+    → blog-git-commit (validates filename, type, message format)
+    → update-claude-md (if CLAUDE.md exists)
 ```
 
 ### Architecture Decision → Documentation
@@ -1033,7 +1063,12 @@ Claude: [Uses git-commit]
 | `git-commit` | readme-sync.md workflow | conditional | README.md exists + skill changes (type: skills) |
 | `git-commit` | `update-claude-md` | conditional | CLAUDE.md exists |
 | `git-commit` | `java-git-commit` | auto | type: java declared in CLAUDE.md |
+| `git-commit` | `blog-git-commit` | auto | type: blog declared in CLAUDE.md |
 | `git-commit` | `custom-git-commit` | auto | type: custom declared in CLAUDE.md |
+| `git-commit` | `issue-workflow` | conditional | New CLAUDE.md created (setup offer) |
+| `git-commit` | `issue-workflow` | conditional | Work Tracking enabled (pre-commit analysis) |
+| `blog-git-commit` | `update-claude-md` | conditional | CLAUDE.md exists |
+| `issue-workflow` | (terminal) | — | No outgoing chains |
 | `java-git-commit` | `java-update-design` | auto | Always |
 | `java-git-commit` | `update-claude-md` | conditional | CLAUDE.md exists |
 | `custom-git-commit` | `update-primary-doc` | conditional | Sync Rules configured in CLAUDE.md |

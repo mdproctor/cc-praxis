@@ -1,6 +1,6 @@
 {
   "name": "cc-praxis",
-  "description": "Professional development skills for Claude Code — deep Java/Quarkus support plus universal principles for any project",
+  "description": "Professional development skills for Claude Code \u2014 deep Java/Quarkus support plus universal principles for any project",
   "owner": {
     "name": "Mark Proctor",
     "url": "https://github.com/mdproctor"
@@ -11,10 +11,18 @@
       "displayName": "Java/Quarkus bundle",
       "description": "Backend development: java-dev, quarkus-flow-dev, code review, security audit, dependency management",
       "skills": [
-        "git-commit", "java-dev", "java-code-review", "java-security-audit",
-        "java-git-commit", "java-update-design", "maven-dependency-update",
-        "quarkus-flow-dev", "quarkus-flow-testing", "quarkus-observability",
-        "update-claude-md", "adr"
+        "git-commit",
+        "java-dev",
+        "java-code-review",
+        "java-security-audit",
+        "java-git-commit",
+        "java-update-design",
+        "maven-dependency-update",
+        "quarkus-flow-dev",
+        "quarkus-flow-testing",
+        "quarkus-observability",
+        "update-claude-md",
+        "adr"
       ]
     },
     {
@@ -22,8 +30,11 @@
       "displayName": "Generic foundation",
       "description": "Universal principles: code review, security audit, dependency management, observability",
       "skills": [
-        "git-commit", "code-review-principles", "security-audit-principles",
-        "dependency-management-principles", "observability-principles"
+        "git-commit",
+        "code-review-principles",
+        "security-audit-principles",
+        "dependency-management-principles",
+        "observability-principles"
       ]
     }
   ],
@@ -68,7 +79,7 @@
       "name": "issue-workflow",
       "source": "./issue-workflow",
       "description": "GitHub issue tracking with cross-cutting detection, commit split suggestions, and release-based changelog",
-      "version": "1.0.0-SNAPSHOT"
+      "version": "1.0.0"
     },
     {
       "name": "git-commit",
@@ -80,7 +91,7 @@
       "name": "blog-git-commit",
       "source": "./blog-git-commit",
       "description": "GitHub Pages / Jekyll blog commits with content-specific conventions and validation",
-      "version": "1.0.0-SNAPSHOT"
+      "version": "1.0.0"
     },
     {
       "name": "java-dev",

@@ -500,7 +500,7 @@ When you identify a problem and prepare a solution, STOP and consider:
 - `blog-git-commit` — blog commits with content-type conventions (post/edit/draft/asset/config) and filename validation. type: blog only
 - `custom-git-commit` — user-configured commits with primary doc sync. type: custom only
 - `java-code-review` — triggers `java-security-audit` for security-critical code
-- `issue-workflow` — GitHub issue tracking setup, cross-cutting task detection, pre-commit split suggestions, and release management via `gh release create --generate-notes`
+- `issue-workflow` — GitHub issue tracking: setup, cross-cutting task detection, pre-commit split suggestions, and release management via `gh release create --generate-notes`. Invoked by git-commit and by Claude automatically when Work Tracking is in CLAUDE.md
 - `skill-validation.md` workflow — blocks `git-commit` if CRITICAL findings exist (not a portable skill; lives at repo root)
 
 **Specialized skills** (domain-specific):

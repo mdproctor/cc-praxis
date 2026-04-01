@@ -294,13 +294,13 @@ git-commit (for type: blog)
   └─ Conventional commit with blog-aware scopes
 ```
 
-**Planned Behavior (once primary document is defined):**
+**Current Behavior — `blog-git-commit`:**
 ```
-blog-git-commit (for type: blog) — not yet implemented
+blog-git-commit (for type: blog)
   ├─ Validate post filename format (YYYY-MM-DD-title.md)
-  ├─ Validate front matter (title, date, layout fields)
-  ├─ blog-update-index (syncs index/archive page)
-  └─ Conventional commit
+  ├─ Validate commit message type (post/edit/draft/asset/config)
+  ├─ Validate message via scripts/validation/validate_blog_commit.py
+  └─ Conventional commit with blog-aware scopes
 ```
 
 **Commit scopes for blog projects:**
