@@ -1,0 +1,5 @@
+{
+  "name": "issue-workflow",
+  "description": "GitHub issue tracking with cross-cutting detection, commit split suggestions, and release-based changelog",
+  "version": "1.0.0-SNAPSHOT"
+}

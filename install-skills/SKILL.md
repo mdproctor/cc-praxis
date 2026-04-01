@@ -64,6 +64,10 @@ elif ! grep -q "## Project Type" CLAUDE.md; then
   echo "Prompt the user to choose a project type and insert it into CLAUDE.md."
   echo "Choices: skills | java | blog | custom | generic"
   echo "(See CLAUDE.md § Project Type for what each type means)"
+elif ! grep -q "## Work Tracking" CLAUDE.md; then
+  echo "ℹ️  OPTIONAL: No issue tracking configured for this project."
+  echo "Run /issue-workflow to set up GitHub issue tracking and release-based changelog."
+  echo "(Enables cross-cutting task detection and commit split suggestions)"
 fi
 ```
 

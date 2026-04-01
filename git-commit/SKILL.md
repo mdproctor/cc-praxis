@@ -257,6 +257,34 @@ Continue to Step 1.
 
 ---
 
+### Step 0b — Offer issue tracking (new projects only)
+
+This runs once after any new CLAUDE.md is created (not on existing projects
+that already have a `## Work Tracking` section).
+
+Check if CLAUDE.md already has Work Tracking configured:
+```bash
+grep -q "## Work Tracking" CLAUDE.md 2>/dev/null && echo "exists" || echo "absent"
+```
+
+If absent and this is a freshly created CLAUDE.md, ask:
+
+> **Would you also like to set up GitHub issue tracking?**
+>
+> This adds automatic behaviours to your workflow:
+> - I'll flag when a task you give me spans multiple concerns, and help break it into separate issues before starting
+> - Before committing, I'll check if your staged changes should be split across separate issues
+> - All commits will reference a GitHub issue, so release notes generate cleanly
+>
+> It's entirely optional — you can always run `/issue-workflow` later to set it up.
+>
+> Set up now? **(YES / NO)**
+
+If **YES** → invoke the `issue-workflow` skill in Setup mode before continuing.
+If **NO** → continue immediately. Do not ask again this session.
+
+---
+
 ### Step 1 — Inspect staged changes
 
 ```bash
@@ -314,7 +342,43 @@ python scripts/validate_document.py <file>
 **If no .md files found:**
 - Continue to Step 2
 
-### Step 2 — Generate commit message
+### Step 2 — Issue linking and commit split check (if Work Tracking enabled)
+
+Check if Work Tracking is configured:
+```bash
+grep -q "Issue tracking.*enabled" CLAUDE.md 2>/dev/null && echo "enabled" || echo "disabled"
+```
+
+**If enabled:**
+
+**2a — Check for commit split candidates**
+
+Invoke the `issue-workflow` skill's pre-commit analysis on the staged diff.
+If it detects changes spanning multiple concerns, surface the split suggestion
+and wait for the user's response before continuing.
+
+**2b — Link to an issue**
+
+```bash
+gh issue list --state open --limit 15
+```
+
+Check if any open issue title obviously matches the staged changes. If yes:
+> This looks like it relates to **#{N}: {title}** — correct?
+> (YES · NO — show full list)
+
+If no obvious match, show the list and ask the user to select or create one.
+Once an issue is confirmed, include it in the commit:
+- Work in progress: append `Refs #{N}` to the commit body
+- Completing the issue: append `Closes #{N}` to the commit body
+
+**If not enabled or user has no `gh` CLI:**
+
+Skip this step entirely — no issue linking required.
+
+---
+
+### Step 2b — Generate commit message
 
 Analyze the staged changes and draft one conventional commit message (see **Message Format** below).
 

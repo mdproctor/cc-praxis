@@ -65,6 +65,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "issue-workflow",
+      "source": "./issue-workflow",
+      "description": "GitHub issue tracking with cross-cutting detection, commit split suggestions, and release-based changelog",
+      "version": "1.0.0-SNAPSHOT"
+    },
+    {
       "name": "git-commit",
       "source": "./git-commit",
       "description": "Generic conventional commits with project type routing",
