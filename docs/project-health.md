@@ -32,18 +32,24 @@ Other skills can reference specific check categories when they need things verif
 # Run specific categories
 /project-health docs-sync cross-refs
 
-# Run all categories
+# Run all categories for this project type
 /project-health --all
 
 # Run categories configured as default in CLAUDE.md
 /project-health --defaults
+
+# Predefined groups (see Suggested Invocation Groups)
+/project-health --commit
+/project-health --prerelease
+/project-health --refine
+/project-health --setup
 ```
 
 ---
 
 ## CLAUDE.md Configuration
 
-Stored in `## Health Check Configuration` section:
+Stored in `## Health Check Configuration`:
 
 ```markdown
 ## Health Check Configuration
@@ -51,9 +57,10 @@ Stored in `## Health Check Configuration` section:
 **Default checks:** docs-sync, cross-refs, consistency, coverage, quality
 **Skip:** git, effectiveness
 **Performance budget:** 400 lines max per SKILL.md
+**Additional doc paths:** wiki/, design/
 ```
 
-If no section is present, a built-in default set is used.
+If no section is present, built-in defaults are used.
 
 ---
 
@@ -62,11 +69,11 @@ If no section is present, a built-in default set is used.
 When running any check that involves reading documentation, build the scan list in this order:
 
 ### 1. Universal baseline (always included)
-- All `.md` files (recursive) in any folder named **`doc/`, `docs/`, or `documentation/`** (case-insensitive)
-- Any root-level `.md` file matching these well-known names (case-insensitive):
 
-| Category | Files |
-|----------|-------|
+All `.md` files (recursive) in any folder named `doc/`, `docs/`, or `documentation/` (case-insensitive), plus any root-level `.md` file matching these well-known names (case-insensitive):
+
+| Group | Filenames |
+|-------|-----------|
 | Entry points | `readme`, `overview`, `summary`, `index` |
 | Process | `contributing`, `governance`, `code_of_conduct`, `support`, `maintainers` |
 | Change tracking | `changelog`, `history`, `release`, `release-notes`, `release_notes` |
@@ -74,35 +81,30 @@ When running any check that involves reading documentation, build the scan list 
 | Technical | `api`, `schema`, `glossary`, `security`, `deployment`, `install`, `installation`, `usage`, `troubleshooting` |
 | Project management | `roadmap`, `thesis`, `spec`, `specification`, `requirements` |
 
-Any root `.md` file not on this list is still scanned — this list simply guarantees they are never skipped.
+Any root `.md` file not on this list is still scanned — the list simply guarantees they are never skipped.
 
 ### 2. Inline documentation (always included)
-Some projects keep docs alongside their code rather than in a central folder. Always scan:
-- Any **`README.md`** anywhere in the directory tree (per-module, per-package docs)
-- For Java: **`package-info.java`** and Javadoc comments in source files (for logic and docs-sync checks)
-- Any **`CHANGELOG.md`**, `CONTRIBUTING.md`, `ARCHITECTURE.md`** found anywhere in the tree
+
+Some projects keep docs alongside their code. Always scan:
+- Any `README.md` anywhere in the directory tree (per-module, per-package docs)
+- Any `CHANGELOG.md`, `CONTRIBUTING.md`, `ARCHITECTURE.md` found anywhere in the tree
+- For Java: `package-info.java` and Javadoc comments in source files
 
 ### 3. Per project type (included automatically)
 
 | Type | Additional scan targets |
 |------|------------------------|
 | `skills` | All `SKILL.md` files in repo root subdirectories |
-| `java` | `pom.xml` / `build.gradle` (dependency and version checks); Javadoc in `src/` |
+| `java` | `pom.xml` / `build.gradle`; Javadoc in `src/` |
 | `blog` | `_config.yml`, `_posts/`, `_layouts/`, `_includes/` |
 | `custom` | The Primary Document path declared in CLAUDE.md |
 
 ### 4. User-configured locations (from CLAUDE.md)
-Projects can declare additional documentation locations in `## Health Check Configuration`:
 
-```markdown
-## Health Check Configuration
-
-**Additional doc paths:** src/main/resources/META-INF/, wiki/, design/
-```
-
-These are scanned in addition to the baseline — useful for projects where docs live in non-standard locations (generated resource files, wiki directories, architecture folders, etc.).
+Declared in `## Health Check Configuration` as `Additional doc paths:` — useful for wiki directories, generated resource files, non-standard architecture folders, etc.
 
 ### 5. Non-markdown files (scanned where relevant)
+
 - `.claude-plugin/marketplace.json` — skill registry and versions
 - `hooks/` — hook scripts
 - `scripts/` — what scripts actually do (for logic and docs-sync checks)
@@ -114,72 +116,94 @@ These are scanned in addition to the baseline — useful for projects where docs
 
 ## Category Overview
 
-**Type key:** Mechanical — scriptable, low ambiguity · Judgment — Claude must reason about intent or UX · Mixed — some of each
+Each category covers two dimensions:
+- **Quality** — is it correct, complete, and compliant? (pass/fail)
+- **Refinement** — could it be clearer, smaller, or better structured? (judgment)
+
+**Type key:** Mechanical — scriptable, low ambiguity · Judgment — Claude must reason about intent · Mixed — some of each
 
 ---
 
 ### Universal Checks
-*Apply to every project type. The specific items within a category may vary by type — see per-type notes below.*
 
-| Category | What it covers | Checks | Type | When to run |
-|----------|---------------|--------|------|-------------|
-| `docs-sync` | Code matches docs, no stale/planned language, correct counts, correct URLs | 7 | Mechanical | Every commit, pre-release |
-| `consistency` | Contradictions between docs, duplicated information, terminology drift | 6 | Judgment | Pre-release, deep review |
-| `logic` | Workflows executable, UX friction, redundant checks, error messages have recovery steps | 8 | Judgment | Pre-release, deep review |
-| `config` | CLAUDE.md exists, project type declared, required sections present for that type | 8 | Mechanical | On setup, pre-release |
-| `security` | No hardcoded secrets, safe shell patterns, correct permissions on scripts | 6 | Mechanical | Pre-release |
-| `release` | Versions consistent, release notes will be meaningful, RELEASE.md current | 7 | Mixed | Release only |
-| `user-journey` | Onboarding coherent, errors have recovery steps, no dead ends | 6 | Judgment | Pre-release, major changes |
-| `git` | Clean working tree, no stale worktrees, tags match versions | 5 | Mechanical | On demand |
-| `refine` | Improvement opportunities in docs, code, and tests — structure, readability, deduplication, bloat | varies | Judgment | On demand, periodic review |
+*Apply to every project type. Specific items within a category may vary by type — see per-type notes below.*
+
+| Category | Quality focus | Refinement focus | Type | When to run |
+|----------|--------------|-----------------|------|-------------|
+| `docs-sync` | Code matches docs, no stale language, correct counts and URLs | Over-explanation, mismatched detail level, mergeable sections | Mechanical | Every commit, pre-release |
+| `consistency` | No contradictions, no duplicate content, consistent terminology | Consolidation into single source of truth, terminology glossary | Judgment | Pre-release, deep review |
+| `logic` | Workflows executable, UX unblocked, exit codes correct | Simplify steps, reduce confirmations, plain-language errors | Judgment | Pre-release, deep review |
+| `config` | CLAUDE.md complete for project type, required sections present | CLAUDE.md overloaded, Sync Rules oversimplifiable | Mechanical | On setup, pre-release |
+| `security` | No secrets, safe shell patterns, correct permissions | Simpler scripts reduce attack surface; shell vs Python tradeoffs | Mechanical | Pre-release |
+| `release` | Versions consistent, labels set up, no SNAPSHOT for release | Release notes coherent, issue titles useful, versioning simplified | Mixed | Release only |
+| `user-journey` | Onboarding works, errors recoverable, no dead ends | Automate setup steps, shorten onboarding, better prompt timing | Judgment | Pre-release, major changes |
+| `git` | Clean state, no stale worktrees, tags match versions | Branching strategy, tag naming, dead branches | Mechanical | On demand |
+| `refine` | — (refinement is the purpose of this category) | Docs structure, code deduplication, test grouping, universal bloat | Judgment | On demand, periodic review |
 
 ---
 
 ### type: skills
-*Additional checks that only apply to skill collection repositories.*
 
-| Category | What it covers | Checks | Type | When to run |
-|----------|---------------|--------|------|-------------|
-| `cross-refs` | Bidirectional skill chaining, chaining table complete, all references resolve | 6 | Mechanical | Every commit |
-| `coverage` | New skills in marketplace + README + commands/ + chaining table | 6 | Mechanical | Every commit |
-| `quality` | CSO compliance, required skill sections, flowchart syntax, token budget | 8 | Mixed | Pre-release |
-| `naming` | Skill name consistent across directory, frontmatter, marketplace, README, commands/ | 5 | Mechanical | Every commit |
-| `infrastructure` | All validators wired into validate_all.py at correct tier, hook registered, gitignore | 6 | Mechanical | Pre-release |
-| `dependencies` | Skill prerequisites exist, no circular chains, plugin.json versions consistent | 5 | Mechanical | Pre-release |
-| `performance` | SKILL.md within token budget (~400 lines), heavy content extracted to reference files | 5 | Mixed | Pre-release |
-| `effectiveness` | No redundant skills, descriptions specific enough to trigger correctly | 5 | Judgment | Deep review only |
+*Additional checks for skill collection repositories.*
+
+| Category | Quality focus | Refinement focus | Type | When to run |
+|----------|--------------|-----------------|------|-------------|
+| `cross-refs` | Bidirectional chaining, all references resolve, table complete | Chain depth, table grouping, merge candidates | Mechanical | Every commit |
+| `coverage` | New skills in marketplace + README + commands/ + chaining | Manual steps that could be automated | Mechanical | Every commit |
+| `quality` | CSO compliance, required sections, flowchart syntax, token budget | Fewer steps, simpler flowcharts, redundant pitfall rows | Mixed | Pre-release |
+| `naming` | Skill name consistent across directory, frontmatter, marketplace, README, commands/ | Discoverability, intuitive vs accurate names | Mechanical | Every commit |
+| `infrastructure` | All validators wired at correct tier, hook registered, gitignore | Overlapping validators, tier misassignment, dead scripts | Mechanical | Pre-release |
+| `dependencies` | Prerequisites exist, no circular chains, versions consistent | Chain depth, skill absorption, optional complexity | Mechanical | Pre-release |
+| `performance` | SKILL.md within token budget (~400 lines) | Reference file extraction, duplicate content, lean sections | Mixed | Pre-release |
+| `effectiveness` | No redundant skills, descriptions trigger correctly | Skills that should be absorbed, wrappable workflows | Judgment | Deep review only |
 
 ---
 
 ### type: java
-*Additional items within universal categories that apply to Java/Maven/Gradle projects.*
 
-| Category | Extra items |
-|----------|------------|
-| `docs-sync` | DESIGN.md exists and reflects current architecture; no stale entity/service references |
-| `config` | `docs/DESIGN.md` present (java-git-commit blocks without it); BOM strategy documented |
-| `logic` | No blocking JDBC on Vert.x event loop in code examples; @Blocking annotations correct |
+*Additional items within universal categories for Java/Maven/Gradle projects.*
+
+| Category | Quality additions | Refinement additions |
+|----------|------------------|---------------------|
+| `docs-sync` | DESIGN.md exists and reflects current architecture; no stale entity/service references | Could DESIGN.md be split into focused modules? |
+| `config` | `docs/DESIGN.md` present; BOM strategy documented | Could BOM strategy be expressed more concisely? |
+| `logic` | No blocking JDBC on Vert.x event loop in examples; @Blocking annotations correct | Could concurrency guidance be simplified? |
 
 ---
 
 ### type: blog
-*Additional items within universal categories that apply to GitHub Pages / Jekyll blogs.*
 
-| Category | Extra items |
-|----------|------------|
-| `docs-sync` | Post filenames follow `YYYY-MM-DD-title.md` convention; no broken Jekyll front matter |
-| `config` | `_posts/` directory exists; `_config.yml` present; Jekyll conventions documented in CLAUDE.md |
-| `quality` | Blog commit messages use valid types (post/edit/draft/asset/config); 72-char subject limit |
+*Additional items within universal categories for GitHub Pages / Jekyll blogs.*
+
+| Category | Quality additions | Refinement additions |
+|----------|------------------|---------------------|
+| `docs-sync` | Post filenames follow `YYYY-MM-DD-title.md`; no broken Jekyll front matter | Could post metadata be standardised for better navigation? |
+| `config` | `_posts/` exists; `_config.yml` present; Jekyll conventions in CLAUDE.md | Is CLAUDE.md's blog section concise and up to date? |
+| `quality` | Blog commits use valid types (post/edit/draft/asset/config); 72-char limit | Could commit type guidance be expressed more briefly? |
 
 ---
 
 ### type: custom
-*Additional items within universal categories that apply to custom projects.*
 
-| Category | Extra items |
-|----------|------------|
-| `config` | Sync Rules table configured in CLAUDE.md; Primary Document path exists; milestone current |
-| `docs-sync` | Primary document reflects current project state; sync rules still match actual file structure |
+*Additional items within universal categories for custom projects.*
+
+| Category | Quality additions | Refinement additions |
+|----------|------------------|---------------------|
+| `config` | Sync Rules configured; Primary Document path exists; milestone current | Could Sync Rules be simplified without losing fidelity? |
+| `docs-sync` | Primary document reflects current project state; sync rules match file structure | Is the primary document the right size, or should it be modularised? |
+
+---
+
+### Refinement Domains (within `refine`)
+
+*The `refine` category is organised by domain rather than correctness — everything here is an improvement opportunity, not a failure.*
+
+| Domain | What it looks for | Bloat score applies? |
+|--------|------------------|---------------------|
+| `docs` | Structure re-evaluation, modularisation, consolidation, readability, dead content | Yes |
+| `code` | Repeated patterns, copy-paste with variation, missing abstractions, dead code | Yes |
+| `tests` | Scattered coverage, repeated setup, file bloat, grouping inconsistency | Yes |
+| `universal` | File budget overruns, deep nesting, over-engineering, excessive commentary | Yes — primary source of bloat score |
 
 ---
 
@@ -190,7 +214,7 @@ These are scanned in addition to the baseline — useful for projects where docs
 | `--commit` | `docs-sync`, `cross-refs`*, `coverage`*, `naming`* | Fast checks after every significant change |
 | `--prerelease` | All mechanical + mixed categories for the project type | Before tagging a release |
 | `--deep` | All categories for the project type | Periodic deep review, after major refactors |
-| `--refine` | `refine` only | Dedicated improvement session — structure, readability, deduplication, bloat |
+| `--refine` | `refine` only | Dedicated improvement session |
 | `--setup` | `config`, `infrastructure`*, `coverage`* | After initial project setup |
 
 *\* type: skills only — skipped automatically for other project types*
@@ -199,7 +223,7 @@ These are scanned in addition to the baseline — useful for projects where docs
 
 ## Check Categories
 
-Each category covers two dimensions: **Quality** (is it correct and complete?) and **Refinement** (could it be clearer, smaller, or better structured?). Both matter — a project can be correct but still hard to navigate, understand, or maintain.
+Each category below covers both **Quality** (is it correct?) and **Refinement** (could it be better?). Quality items are declarative pass/fail checks. Refinement items are judgment questions — there is no single right answer.
 
 ---
 
@@ -216,7 +240,7 @@ Each category covers two dimensions: **Quality** (is it correct and complete?) a
 
 **Refinement** — Could the documentation communicate the same information more effectively?
 - [ ] Are there over-explained sections where the code is self-evident?
-- [ ] Is the detail level appropriate for the audience (developer vs end user)?
+- [ ] Is the detail level appropriate for the intended audience?
 - [ ] Could any prose be replaced with a table or example that's easier to scan?
 - [ ] Are there sections whose purpose overlaps enough to merge?
 
@@ -228,14 +252,13 @@ Each category covers two dimensions: **Quality** (is it correct and complete?) a
 - [ ] Every skill mentioned in the chaining table exists
 - [ ] Chaining is bidirectional where required (A→B means B mentions A)
 - [ ] Skill Chaining Reference table covers all skills including new additions
-- [ ] Skill A says it chains to B, and B says it is invoked by A
 - [ ] Prerequisites sections reference skills that exist
 - [ ] All markdown links to other `.md` files resolve
 
 **Refinement** — Could the reference structure be simpler or more navigable?
-- [ ] Are any chaining chains unnecessarily long (A→B→C→D where A→C would suffice)?
+- [ ] Are any chains unnecessarily long (A→B→C→D where A→C would suffice)?
 - [ ] Could the chaining table be reorganised to group related skills more intuitively?
-- [ ] Are any bidirectional references so numerous they suggest two skills should merge?
+- [ ] Do the number of cross-references between two skills suggest they should merge?
 
 ---
 
@@ -249,9 +272,9 @@ Each category covers two dimensions: **Quality** (is it correct and complete?) a
 - [ ] Severity levels (CRITICAL/WARNING/NOTE) used consistently
 - [ ] Terminology is consistent (e.g. "invoke" not mixed with "call" or "use")
 
-**Refinement** — Could duplicated information be consolidated into a single source of truth?
+**Refinement** — Could duplicated or scattered information be consolidated?
 - [ ] Could scattered terminology be unified in a glossary or shared reference?
-- [ ] Are there sections that say almost the same thing in different words that should be merged?
+- [ ] Are there sections that say the same thing in different words that should be merged?
 - [ ] Could inconsistent formatting be standardised to reduce cognitive load?
 
 ---
@@ -269,7 +292,7 @@ Each category covers two dimensions: **Quality** (is it correct and complete?) a
 
 **Refinement** — Are there integration points that could be automated or simplified?
 - [ ] Are any manual integration steps (README update, chaining table entry) candidates for automation?
-- [ ] Are there integration points that are consistently forgotten, suggesting a better workflow?
+- [ ] Are there steps that are consistently forgotten, suggesting a better workflow?
 
 ---
 
@@ -287,7 +310,7 @@ Each category covers two dimensions: **Quality** (is it correct and complete?) a
 - [ ] Exit codes in validators match what calling skills expect
 
 **Refinement** — Could workflows be simpler or more intuitive?
-- [ ] Are there workflows with steps that could be combined without losing clarity?
+- [ ] Are there steps that could be combined without losing clarity?
 - [ ] Are any prompts or confirmations asked more times than necessary?
 - [ ] Could any multi-step flow be reduced by inferring the answer from context?
 - [ ] Are any error messages technical where plain language would serve the user better?
@@ -309,8 +332,8 @@ Each category covers two dimensions: **Quality** (is it correct and complete?) a
 **Refinement** — Could skills be made more concise or easier to follow?
 - [ ] Are there skills where the workflow could be expressed in fewer steps without losing precision?
 - [ ] Are any flowcharts earning their complexity, or would a numbered list be clearer?
-- [ ] Could any Common Pitfalls table rows be removed because they're obvious or never occur?
-- [ ] Are there skills that are short enough to be absorbed by their caller rather than existing independently?
+- [ ] Could any Common Pitfalls rows be removed because they're obvious or never occur?
+- [ ] Are there skills short enough to be absorbed into their caller?
 
 ---
 
@@ -324,9 +347,9 @@ Each category covers two dimensions: **Quality** (is it correct and complete?) a
 - [ ] No drift between any of the above
 - [ ] New language skills follow established naming patterns (`lang-dev`, `lang-code-review`)
 
-**Refinement** — Are names clear and discoverable even if they are consistent?
+**Refinement** — Are names clear and discoverable, not just consistent?
 - [ ] Would a new user guess the right skill name without reading the docs?
-- [ ] Are any names technically accurate but unintuitive (e.g. jargon, abbreviations)?
+- [ ] Are any names technically accurate but unintuitive?
 - [ ] Could any names better reflect what the skill does rather than its structural role?
 
 ---
@@ -337,12 +360,12 @@ Each category covers two dimensions: **Quality** (is it correct and complete?) a
 - [ ] All skills listed as Prerequisites exist
 - [ ] No circular dependency chains (A depends on B depends on A)
 - [ ] plugin.json dependency names match actual skill names
-- [ ] Skills that build on others explicitly reference them in Prerequisites section
+- [ ] Skills that build on others explicitly reference them in Prerequisites
 - [ ] Marketplace dependency resolution would succeed for all skills
 
 **Refinement** — Could dependency chains be simplified?
-- [ ] Are any dependency chains deeper than necessary (A→B→C where A→C suffices)?
-- [ ] Could any skill that has only one dependent be absorbed into that dependent?
+- [ ] Are any chains deeper than necessary (A→B→C where A→C suffices)?
+- [ ] Could any skill with only one dependent be absorbed into that dependent?
 - [ ] Are there optional dependencies that create complexity without commensurate value?
 
 ---
@@ -361,8 +384,8 @@ Each category covers two dimensions: **Quality** (is it correct and complete?) a
 
 **Refinement** — Is the configuration easy to understand and maintain?
 - [ ] Is CLAUDE.md overloaded with sections that could be removed or consolidated?
-- [ ] Are any configuration sections so rarely changed they could be documented once and removed?
-- [ ] Could the Sync Rules table (for type: custom) be simplified without losing fidelity?
+- [ ] Are any sections so rarely changed they could be documented once and simplified?
+- [ ] Could the Sync Rules table (for type: custom) be expressed more concisely?
 
 ---
 
@@ -378,8 +401,8 @@ Each category covers two dimensions: **Quality** (is it correct and complete?) a
 - [ ] Scripts validate inputs before acting on them
 
 **Refinement** — Could scripts be made safer by being simpler?
-- [ ] Are any scripts doing more than they need to (reducing attack surface means less code)?
-- [ ] Could any complex shell logic be replaced with a Python script that's easier to audit?
+- [ ] Are any scripts doing more than they need to (smaller attack surface = less code)?
+- [ ] Could complex shell logic be replaced with Python that's easier to audit?
 - [ ] Are permission checks and input validation in the most readable location?
 
 ---
@@ -396,8 +419,8 @@ Each category covers two dimensions: **Quality** (is it correct and complete?) a
 
 **Refinement** — Could the infrastructure be leaner or more maintainable?
 - [ ] Are any two validators doing overlapping checks that could be merged?
-- [ ] Are any validators in a higher tier than their speed justifies (PUSH when COMMIT would do)?
-- [ ] Could any infrastructure scripts be removed because the problem they solve no longer exists?
+- [ ] Are any validators in a higher tier than their speed justifies?
+- [ ] Could any scripts be removed because the problem they solve no longer exists?
 
 ---
 
@@ -413,7 +436,7 @@ Each category covers two dimensions: **Quality** (is it correct and complete?) a
 - [ ] All tests passing
 
 **Refinement** — Would the release be meaningful and well-presented?
-- [ ] Would the generated release notes tell a coherent story, or is it a list of "fix typo" commits?
+- [ ] Would the generated release notes tell a coherent story?
 - [ ] Are the GitHub issue titles good enough to serve as changelog entries?
 - [ ] Could the versioning strategy be simplified (e.g. fewer SNAPSHOT states)?
 
@@ -432,8 +455,8 @@ Each category covers two dimensions: **Quality** (is it correct and complete?) a
 
 **Refinement** — Could the experience be faster or less friction-heavy?
 - [ ] Could any required setup step be inferred or automated rather than prompted?
-- [ ] Is the onboarding sequence longer than it needs to be for a new user to be productive?
-- [ ] Are any optional prompts (like issue tracking setup) surfaced too early?
+- [ ] Is the onboarding sequence longer than it needs to be?
+- [ ] Are any optional prompts surfaced too early in the flow?
 
 ---
 
@@ -441,15 +464,15 @@ Each category covers two dimensions: **Quality** (is it correct and complete?) a
 
 **Quality** — Are skills correctly scoped and triggered?
 - [ ] No two skills overlap significantly in purpose
-- [ ] No skills with descriptions so generic they'll trigger on everything
-- [ ] No skills with descriptions so specific they'll never trigger
+- [ ] No skills with descriptions so generic they trigger on everything
+- [ ] No skills with descriptions so specific they never trigger
 - [ ] Obvious use cases for the project type are covered
-- [ ] Skills that are never invoked (would need telemetry — advisory check only)
+- [ ] Skills that are never invoked (advisory — would need telemetry)
 
 **Refinement** — Are skills as useful as they could be?
-- [ ] Are any skills doing so little that they'd be better absorbed into their caller?
-- [ ] Are there common workflows that require invoking 3+ skills that could be wrapped in one?
-- [ ] Could any skill description be sharpened to trigger more accurately without broadening?
+- [ ] Are any skills doing so little they'd be better absorbed into their caller?
+- [ ] Are there common workflows requiring 3+ skills that could be wrapped in one?
+- [ ] Could any skill description be sharpened to trigger more accurately?
 
 ---
 
@@ -478,22 +501,60 @@ Each category covers two dimensions: **Quality** (is it correct and complete?) a
 - [ ] No validator doing the same check as another (redundancy)
 
 **Refinement** — Could things be made leaner without losing value?
-- [ ] Is heavy reference material extracted to separate files, loaded only when needed?
+- [ ] Is heavy reference material extracted to separate files?
 - [ ] Is there duplicate content across skills inflating token cost on every load?
-- [ ] Are there validators whose findings could be folded into an existing validator?
+- [ ] Are there validators whose findings could fold into an existing validator?
 - [ ] Are there skill sections that add length without adding guidance?
+
+---
+
+### `refine` — Improvement Opportunities
+
+Unlike other categories, `refine` has no Quality dimension — everything here is a refinement opportunity in what already works. Findings are rated with a **bloat score** (see Output Format) to help prioritise.
+
+**Documentation** — Could docs be better structured, smaller, or easier to read?
+- [ ] Would a different grouping or ordering of sections improve navigation?
+- [ ] Are there docs over ~400 lines with multiple distinct topics that would be clearer as separate linked files?
+- [ ] Are there multiple small files covering closely related topics that would read better merged?
+- [ ] Are there readability issues — passive voice, unexplained jargon, walls of text, sentences over 25 words?
+- [ ] Are there sections that restate what was just said, or introductory paragraphs that add no information?
+- [ ] Are there sections describing plans, history, or context that are no longer relevant?
+
+**Code** — Could code be deduplicated, abstracted, or simplified?
+- [ ] Are there the same blocks of logic appearing 3+ times? (high risk: fix one, miss others)
+- [ ] Are there similar but not identical blocks that should be parameterised and shared?
+- [ ] Are there functions over ~30 lines combining multiple distinct concerns?
+- [ ] Are there literal values (strings, numbers, paths) repeated in multiple places?
+- [ ] Are there repeated sequences of calls that always appear together and belong in a helper?
+- [ ] Is there commented-out code? (remove it — git history preserves it)
+
+**Tests** — Could tests be better grouped, modularised, or deduplicated?
+- [ ] Are there tests for one feature spread across multiple files without clear ownership?
+- [ ] Is the same fixture or arrangement code copy-pasted across multiple test methods?
+- [ ] Are there test files over ~300 lines testing multiple unrelated concerns?
+- [ ] Do test names follow a consistent pattern, making it easy to see what's covered?
+- [ ] Would any tests benefit from being grouped into classes or modules?
+
+**Universal bloat** — What is oversized or over-engineered across docs, code, and tests?
+- [ ] Are there files >50% larger than the guideline for their type?
+- [ ] Are there logic or document sections nested >3 levels deep that could be flattened?
+- [ ] Are there functions with >4 parameters that could be grouped into a config object?
+- [ ] Are there complex solutions for problems that have a simpler answer?
+- [ ] Are there more comment lines than code lines explaining obvious things?
 
 ---
 
 ## Output Format
 
-Findings grouped by severity, then by category:
+### Quality and other categories
+
+Findings grouped by severity:
 
 ```
-## project-health report
+## project-health report — [categories run]
 
 ### CRITICAL (must fix)
-- [docs-sync] docs/PROJECT-TYPES.md says blog-git-commit is "not yet implemented" — it is
+- [docs-sync] docs/PROJECT-TYPES.md says blog-git-commit "not yet implemented" — it is
 - [coverage] issue-workflow missing from README § Skill Chaining Reference
 
 ### HIGH (should fix)
@@ -505,27 +566,53 @@ Findings grouped by severity, then by category:
 ### LOW (nice to fix)
 - [quality] issue-workflow SKILL.md is 287 lines — within budget but growing
 
-### PASS (no issues)
-✅ frontmatter, consistency, security, infrastructure, release
+### PASS
+✅ consistency, security, infrastructure, release
 ```
 
 ---
 
-## Commit-time Subset (to define later)
+### `refine` output — bloat score
 
-Some checks are fast enough and important enough to run on every commit. This subset is TBD — marked here as a placeholder.
+Refinement findings are presented as **opportunities** not failures, rated on two axes:
 
-**Candidates for commit-time subset:**
-- `coverage` — new skill added but not integrated
-- `cross-refs` — new chaining without bidirectional update
-- `naming` — skill name drift
+**Size reduction potential:** 🔴 HIGH (>30% reduction possible) · 🟡 MEDIUM (10–30%) · 🟢 LOW (<10%)
+**Impact of fixing:** A (navigation/readability/maintenance) · B (noticeable improvement) · C (cosmetic)
+
+```
+## refine — Opportunities Found
+
+### 🔴A — High impact, significant size reduction
+- scripts/validate_all.py (lines 45–89): run_validator() logic repeated
+  for each tier; extract to a shared helper. Est. -40 lines.
+
+### 🟡B — Medium impact
+- update-primary-doc/SKILL.md (312 lines): Steps 4–7 cover two unrelated
+  concerns; splitting would improve navigation. Est. -20 lines.
+
+### 🟢C — Low impact, cosmetic
+- java-dev/SKILL.md: "Code duplication" and "Code clarity" are adjacent
+  and both cover style; could merge. Est. -5 lines.
+```
+
+---
+
+## Commit-time Subset
+
+Some checks are fast and important enough to run after every significant commit. The full set is TBD — marked here as a placeholder.
+
+**Candidates:**
 - `docs-sync` — "planned" language, wrong counts
+- `cross-refs` — new chaining without bidirectional update
+- `coverage` — new skill added but not integrated
+- `naming` — skill name drift
 
 **Not suitable for every commit:**
-- `user-journey` — expensive, judgment-heavy
+- `refine` — judgment-heavy, designed for periodic sessions
+- `user-journey` — expensive
 - `effectiveness` — subjective
 - `git` — stateful
-- `release` — only relevant at milestone time
+- `release` — milestone only
 
 ---
 
@@ -547,103 +634,10 @@ Skills that should reference project-health:
 
 ---
 
-### `refine` — Improvement Opportunities
-
-> What could be made smaller, clearer, or better structured without changing what it does?
-
-Unlike `quality` (which checks structural compliance) and `logic` (which checks correctness), `refine` looks at things that already work but could be refined. Every finding includes a **bloat score** and an **impact tier** to help prioritise.
-
----
-
-#### Bloat Score
-
-Each finding is rated on two axes:
-
-**Size reduction potential:**
-- 🔴 **HIGH** — could eliminate or reduce by >30% of lines/tokens/complexity
-- 🟡 **MEDIUM** — 10–30% reduction possible
-- 🟢 **LOW** — minor, <10%, still worth noting
-
-**Impact of fixing:**
-- **A** — affects navigation, readability, or maintenance significantly
-- **B** — noticeable improvement
-- **C** — cosmetic or marginal
-
-Combined rating examples: `🔴A` (large gain, high impact), `🟢C` (tiny, cosmetic).
-
----
-
-#### Documentation — Structure & Organisation
-
-- [ ] **Structure re-evaluation** — would a different grouping or ordering of sections/files improve navigation? Are related topics scattered across multiple docs that should be consolidated?
-- [ ] **Modularisation opportunities** — docs over ~400 lines with multiple distinct topics that would be clearer as separate linked files
-- [ ] **Consolidation opportunities** — multiple small files covering closely related topics that would read better merged
-- [ ] **Readability** — passive voice, unexplained jargon, walls of text without examples or structure, sentences over 25 words, paragraphs that could be tables or bullet lists
-- [ ] **Redundant preamble** — sections that restate what was just said, or introductory paragraphs that add no information
-- [ ] **Dead documentation** — sections describing plans, history, or context that are no longer relevant and add noise
-
----
-
-#### Code — Deduplication & Abstraction
-
-- [ ] **Repeated patterns** — the same block of logic appearing 3+ times; high risk because fixes applied to one copy are often missed in others
-- [ ] **Copy-paste with variation** — similar but not identical blocks; should be parameterised and shared
-- [ ] **Methods/functions doing too much** — single functions over ~30 lines that combine multiple distinct concerns and would be clearer split
-- [ ] **Hardcoded values repeated** — the same literal value (string, number, path) appearing in multiple places; should be a named constant
-- [ ] **Missing abstractions** — repeated sequences of calls that always appear together and belong in a helper
-- [ ] **Commented-out code** — dead code left in place; remove it (git history preserves it)
-
----
-
-#### Tests — Grouping & Modularisation
-
-- [ ] **Scattered tests for the same concern** — tests for one feature spread across multiple files without clear ownership
-- [ ] **Repeated test setup** — the same fixture or arrangement code copy-pasted across multiple test methods; should be a shared helper or `setUp`
-- [ ] **Test file bloat** — test files over ~300 lines that test multiple unrelated concerns and would be clearer split by concern
-- [ ] **Naming inconsistency** — test names that don't follow a consistent pattern, making it hard to find what's covered
-- [ ] **Missing grouping** — tests that would benefit from being grouped into test classes or modules to reflect the structure of what they're testing
-
----
-
-#### Universal Bloat Check
-
-Applies across docs, code, and tests:
-
-- [ ] **Files significantly over budget** — any file >50% larger than the guideline for its type (SKILL.md: ~400 lines, test files: ~300 lines, source files: project-specific)
-- [ ] **Deeply nested structures** — logic or document sections nested >3 levels deep that could be flattened
-- [ ] **Long parameter lists** — functions with >4 parameters that could be grouped into a config object or simplified
-- [ ] **Over-engineered solutions** — complex machinery for a problem that has a simpler solution (e.g. a validation framework for 3 rules)
-- [ ] **Excessive commentary** — more comment lines than code lines explaining obvious things; good code with good names needs fewer comments
-
----
-
-#### Output format for `refine`
-
-Unlike other categories, `refine` presents findings as **opportunities** not failures:
-
-```
-## refine — Opportunities Found
-
-### 🔴A — High impact, significant size reduction
-- scripts/validate_all.py (lines 45–89): run_validator() logic repeated
-  for each tier; extract to a shared helper. Est. -40 lines.
-
-### 🟡B — Medium impact
-- update-primary-doc/SKILL.md (312 lines): Steps 4–7 cover two unrelated
-  concerns (discovery and validation); consider splitting into two sections
-  with a shared intro. Est. -20 lines, clearer navigation.
-
-### 🟢C — Low impact, cosmetic
-- java-dev/SKILL.md: "Code duplication" and "Code clarity" sections could
-  merge; they are adjacent and both cover style conventions.
-```
-
----
-
 ## Open Questions
 
 - [ ] Should checks be purely Claude-driven, or should more have Python validator scripts?
 - [ ] Should `project-health` offer to auto-fix mechanical issues (counts, versions)?
 - [ ] What is the commit-time subset? (TBD — see above)
 - [ ] Should there be a `project-health --quick` that only runs the fastest checks?
-- [ ] Should findings persist anywhere (a `.health-report.md` file) or always ephemeral?
+- [ ] Should findings persist anywhere (a `.health-report.md`) or always ephemeral?
