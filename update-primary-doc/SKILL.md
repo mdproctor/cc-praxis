@@ -463,6 +463,8 @@ From Sync Rules table, column 1:
 
 ## Document Structure Check
 
+*This check is part of the `performance` and `docs-sync` categories in `project-health`. For a full analysis: `/project-health performance docs-sync`. See [docs/project-health.md](../docs/project-health.md).*
+
 After applying updates, run:
 
 ```bash

@@ -306,7 +306,7 @@ All major skills include "Common Pitfalls" tables documenting real mistakes:
 - `frontend-design:*` (third-party frontend skills)
 - Any skill not in version control for this repository
 
-**Quality check:** During deep analysis, verify no third-party skills are documented anywhere.
+**Quality check:** During deep analysis, verify no third-party skills are documented anywhere. *This is part of the `consistency` category in `project-health`.*
 
 ## Developer Workflow
 
@@ -371,18 +371,18 @@ Failing to execute these checks before committing is a failure, not a decision. 
 
 ### Mandatory Checks
 
-Run these checks **before every commit** to this repository:
+Run these checks **before every commit** to this repository. *These map to `project-health` categories — see [docs/project-health.md](docs/project-health.md). For a full pre-release health check: `/project-health --all`.*
 
 - [ ] **Commit message** → No `Co-Authored-By`, `Generated-by`, or AI attribution of any kind. Commit messages describe WHAT and WHY only.
-- [ ] **New skill added?** → Run `python scripts/generate_commands.py` to create its slash command file
-- [ ] **SKILL.md files modified?** → Follow readme-sync.md workflow (NEVER skip, let it decide if README needs updates)
-- [ ] **CLAUDE.md modified?** → Follow relevant update workflow if applicable
-- [ ] **New validation/testing added?** → Update README.md § Skill Quality & Validation AND QUALITY.md § Implementation Status
-- [ ] **New scripts/ files added?** → Update README.md § Repository Structure
-- [ ] **New chaining relationships?** → Update README.md § Skill Chaining Reference
-- [ ] **New features added to skills?** → Update README.md § Key Features
-- [ ] **Framework changes** (same pattern across multiple skills)? → Document in README.md AND QUALITY.md if validation-related
-- [ ] **Infrastructure changes** (validators, test infrastructure, orchestrators)? → Update README.md § Repository Structure, QUALITY.md § Implementation Status, and this file § Validation Script Roadmap
+- [ ] **New skill added?** → Run `python scripts/generate_commands.py` to create its slash command file `[coverage]`
+- [ ] **SKILL.md files modified?** → Follow readme-sync.md workflow (NEVER skip, let it decide if README needs updates) `[docs-sync]`
+- [ ] **CLAUDE.md modified?** → Follow relevant update workflow if applicable `[docs-sync]`
+- [ ] **New validation/testing added?** → Update README.md § Skill Quality & Validation AND QUALITY.md § Implementation Status `[infrastructure]`
+- [ ] **New scripts/ files added?** → Update README.md § Repository Structure `[coverage]`
+- [ ] **New chaining relationships?** → Update README.md § Skill Chaining Reference `[cross-refs]`
+- [ ] **New features added to skills?** → Update README.md § Key Features `[docs-sync]`
+- [ ] **Framework changes** (same pattern across multiple skills)? → Document in README.md AND QUALITY.md if validation-related `[consistency]`
+- [ ] **Infrastructure changes** (validators, test infrastructure, orchestrators)? → Update README.md § Repository Structure, QUALITY.md § Implementation Status, and this file § Validation Script Roadmap `[infrastructure]`
 
 ### When Work Tracking Is Configured
 
@@ -540,6 +540,8 @@ For complete validator specifications, tier assignments, and implementation deta
 ### Deep Analysis Procedures
 
 When user requests deep analysis of skills ("/skill-review", "do a deep analysis", "comprehensive review"):
+
+*These checks map to the `project-health` skill (design: [docs/project-health.md](docs/project-health.md)). Once built, invoke as `/project-health --all` or with specific categories.*
 
 📖 **[QUALITY.md § Deep Analysis Validation](QUALITY.md#deep-analysis-validation-level-2)**
 
