@@ -144,16 +144,14 @@ Any root `.md` file not on this list is still scanned — the list simply guaran
 Some projects keep docs alongside their code. Always scan:
 - Any `README.md` anywhere in the directory tree (per-module, per-package docs)
 - Any `CHANGELOG.md`, `CONTRIBUTING.md`, `ARCHITECTURE.md` found anywhere in the tree
-- For Java: `package-info.java` and Javadoc comments in source files
 
-### 3. Per project type (included automatically)
+### 3. Type-specific scan targets
 
-| Type | Additional scan targets |
-|------|------------------------|
-| `skills` | All `SKILL.md` files in repo root subdirectories |
-| `java` | `pom.xml` / `build.gradle`; Javadoc in `src/` |
-| `blog` | `_config.yml`, `_posts/`, `_layouts/`, `_includes/` |
-| `custom` | The Primary Document path declared in CLAUDE.md |
+Each type-specific health skill defines its own additional scan targets — source files, config files, and project-specific directories relevant to that type. See each skill's document for details:
+- [`java-project-health`](java-project-health.md) — `pom.xml`, `build.gradle`, Javadoc in `src/`
+- [`blog-project-health`](blog-project-health.md) — `_config.yml`, `_posts/`, `_layouts/`, `_includes/`
+- [`skills-project-health`](skills-project-health.md) — all `SKILL.md` files in repo root subdirectories
+- [`custom-project-health`](custom-project-health.md) — the Primary Document path declared in CLAUDE.md
 
 ### 4. User-configured locations (from CLAUDE.md)
 
