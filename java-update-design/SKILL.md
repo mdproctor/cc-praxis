@@ -337,6 +337,43 @@ Avoid these mistakes when updating DESIGN.md:
 | Not reading existing DESIGN.md first | Proposals conflict with structure | Always read full file before proposing |
 | Mentioning AI/tools in DESIGN.md | Breaks professional documentation standards | Never mention Claude, AI, or tooling in the doc itself |
 
+## Document Structure Check
+
+After applying updates, run:
+
+```bash
+python scripts/validation/validate_doc_structure.py docs/DESIGN.md
+```
+
+**If exit code 1 (nudge recommended):**
+
+> 📄 DESIGN.md is {N} lines — as it grows, collaborators will increasingly step on each other's changes.
+>
+> Would you like me to analyse the document and suggest how to split it into modules? (YES / NO / ADJUST)
+>
+> - **YES** — I'll analyse the sections and propose a modular structure
+> - **NO** — skip for now
+> - **ADJUST** — this prompt came up too early or too late; tell me your preference
+
+If user says **ADJUST**, ask:
+> Should I nudge you sooner (lower threshold) or later (higher)? Current: {N} lines.
+> Enter a number, or say "sooner" / "later" (I'll adjust by 100 lines).
+
+Then update CLAUDE.md:
+```markdown
+## Document Structure
+
+**Modular doc nudge:** enabled
+**Threshold:** {new_value} lines
+```
+
+**If exit code 2 (already modular, review suggested):**
+
+> 🔍 DESIGN.md is already modular but has {N} sections — some may benefit from reorganisation.
+> Would you like me to review the current structure and suggest improvements? (YES / NO)
+
+**If exit code 0:** no action needed.
+
 ## Success Criteria
 
 DESIGN.md update is complete when:

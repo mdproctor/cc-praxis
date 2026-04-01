@@ -461,6 +461,16 @@ From Sync Rules table, column 1:
 
 ---
 
+## Document Structure Check
+
+After applying updates, run:
+
+```bash
+python scripts/validation/validate_doc_structure.py {primary_doc_path}
+```
+
+If exit code 1 or 2, follow the nudge workflow described in `java-update-design` § Document Structure Check — same conversation, same threshold adjustment, same CLAUDE.md persistence pattern. The `{primary_doc_path}` is whatever is declared in CLAUDE.md § Primary Document.
+
 ## Success Criteria
 
 Primary document sync proposal is complete when:

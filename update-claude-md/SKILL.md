@@ -284,6 +284,16 @@ Avoid these mistakes when updating CLAUDE.md:
 | Not updating CLAUDE.md when adding tools | Claude doesn't know about new tools | Update when workflow changes |
 | Copying command help text verbatim | Duplicate of `--help` output | Summarize common use cases |
 
+## Document Structure Check
+
+After applying updates, run:
+
+```bash
+python scripts/validation/validate_doc_structure.py CLAUDE.md
+```
+
+If exit code 1 or 2, follow the nudge workflow described in `java-update-design` § Document Structure Check — same conversation, same threshold adjustment, same CLAUDE.md persistence pattern.
+
 ## Success Criteria
 
 CLAUDE.md update is complete when:
