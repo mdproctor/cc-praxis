@@ -138,6 +138,10 @@ Each category covers two dimensions:
 | `release` | Versions consistent, labels set up, no SNAPSHOT for release | Release notes coherent, issue titles useful, versioning simplified | Mixed | Release only |
 | `user-journey` | Onboarding works, errors recoverable, no dead ends | Automate setup steps, shorten onboarding, better prompt timing | Judgment | Pre-release, major changes |
 | `git` | Clean state, no stale worktrees, tags match versions | Branching strategy, tag naming, dead branches | Mechanical | On demand |
+| `primary-doc` | Project's designated primary document is accurate and current | Could it be better structured or modularised? | Mixed | Pre-release, deep review |
+| `artifacts` | All required primary artifacts for this project type exist | Are any required artifacts over-complicated? | Mechanical | On setup, pre-release |
+| `conventions` | Project conventions are documented in CLAUDE.md and followed | Could conventions be expressed more concisely? | Mixed | Pre-release |
+| `framework` | Documented patterns and examples are correct for the project's framework | Could framework guidance be simplified? | Judgment | Pre-release, deep review |
 | `refine` | — (refinement is the purpose of this category) | Docs structure, code deduplication, test grouping, universal bloat | Judgment | On demand, periodic review |
 
 ---
@@ -161,36 +165,40 @@ Each category covers two dimensions:
 
 ### type: java
 
-*Additional items within universal categories for Java/Maven/Gradle projects.*
+*Augmentations to universal checks for Java/Maven/Gradle projects.*
 
-| Category | Quality additions | Refinement additions |
-|----------|------------------|---------------------|
-| `docs-sync` | DESIGN.md exists and reflects current architecture; no stale entity/service references | Could DESIGN.md be split into focused modules? |
-| `config` | `docs/DESIGN.md` present; BOM strategy documented | Could BOM strategy be expressed more concisely? |
-| `logic` | No blocking JDBC on Vert.x event loop in examples; @Blocking annotations correct | Could concurrency guidance be simplified? |
+| Universal check | Java-specific Quality | Java-specific Refinement |
+|----------------|-----------------------|--------------------------|
+| `primary-doc` | DESIGN.md reflects current architecture; no stale entity/service references | Could DESIGN.md be split into focused modules? |
+| `artifacts` | `docs/DESIGN.md` exists | Is DESIGN.md appropriately sized for the project? |
+| `conventions` | BOM strategy documented; commit scopes consistent (rest/service/repository/bom) | Could BOM strategy be expressed more concisely? |
+| `framework` | No blocking JDBC on Vert.x event loop; @Blocking annotations correct; CDI injection patterns correct | Could concurrency guidance be simplified or better grouped? |
 
 ---
 
 ### type: blog
 
-*Additional items within universal categories for GitHub Pages / Jekyll blogs.*
+*Augmentations to universal checks for GitHub Pages / Jekyll blogs.*
 
-| Category | Quality additions | Refinement additions |
-|----------|------------------|---------------------|
-| `docs-sync` | Post filenames follow `YYYY-MM-DD-title.md`; no broken Jekyll front matter | Could post metadata be standardised for better navigation? |
-| `config` | `_posts/` exists; `_config.yml` present; Jekyll conventions in CLAUDE.md | Is CLAUDE.md's blog section concise and up to date? |
-| `quality` | Blog commits use valid types (post/edit/draft/asset/config); 72-char limit | Could commit type guidance be expressed more briefly? |
+| Universal check | Blog-specific Quality | Blog-specific Refinement |
+|----------------|-----------------------|--------------------------|
+| `primary-doc` | Post filenames follow `YYYY-MM-DD-title.md`; Jekyll front matter valid on all posts | Could post metadata be standardised for better navigation? |
+| `artifacts` | `_posts/` directory exists; `_config.yml` present | Is the Jekyll config leaner than it needs to be? |
+| `conventions` | Jekyll conventions documented in CLAUDE.md; commit types valid (post/edit/draft/asset/config); 72-char subject limit | Could commit type and Jekyll convention guidance be more concise? |
+| `framework` | Jekyll Liquid syntax correct in layouts; no deprecated Jekyll patterns; front matter schema matches `_config.yml` | Could layout templates be simplified? |
 
 ---
 
 ### type: custom
 
-*Additional items within universal categories for custom projects.*
+*Augmentations to universal checks for custom projects.*
 
-| Category | Quality additions | Refinement additions |
-|----------|------------------|---------------------|
-| `config` | Sync Rules configured; Primary Document path exists; milestone current | Could Sync Rules be simplified without losing fidelity? |
-| `docs-sync` | Primary document reflects current project state; sync rules match file structure | Is the primary document the right size, or should it be modularised? |
+| Universal check | Custom-specific Quality | Custom-specific Refinement |
+|----------------|------------------------|----------------------------|
+| `primary-doc` | Primary document reflects current project state; sync rules match actual file structure | Is the primary document the right size, or should it be modularised? |
+| `artifacts` | Primary Document path declared in CLAUDE.md exists; milestone is current | Could the milestone tracking be simplified? |
+| `conventions` | Sync Rules configured in CLAUDE.md; rules match the actual workflow | Could Sync Rules be expressed more concisely without losing fidelity? |
+| `framework` | Sync patterns match the declared sync strategy; no rules that reference non-existent file patterns | Could any Sync Rules be merged or simplified? |
 
 ---
 
@@ -505,6 +513,87 @@ Each category below covers both **Quality** (is it correct?) and **Refinement** 
 - [ ] Is there duplicate content across skills inflating token cost on every load?
 - [ ] Are there validators whose findings could fold into an existing validator?
 - [ ] Are there skill sections that add length without adding guidance?
+
+---
+
+### `primary-doc` — Primary Document Accuracy
+
+Every project type has a designated primary document. This check verifies it is accurate and current regardless of what that document is.
+
+**Quality** — Does the primary document accurately reflect the current state of the project?
+- [ ] The primary document exists (type-specific — see augmentation table)
+- [ ] Content accurately describes what the project currently does, not what was planned
+- [ ] No sections describe features, architecture, or workflows that no longer exist
+- [ ] Referenced files, paths, and modules within the document still exist
+- [ ] Terminology matches what is actually used in the codebase
+
+**Refinement** — Could the primary document be better structured or more useful?
+- [ ] Is the document an appropriate size, or should it be split into focused modules?
+- [ ] Are there sections so rarely updated they've become stale noise?
+- [ ] Could the structure be reorganised to match how readers actually navigate it?
+- [ ] Are there sections that duplicate information found in other documents?
+
+*Type-specific augmentations: see per-type tables above.*
+
+---
+
+### `artifacts` — Required Artifacts Exist
+
+Every project type has required primary artifacts. This check verifies they are all present without knowing in advance what they are — the project type determines the list.
+
+**Quality** — Do all required primary artifacts for this project type exist?
+- [ ] All required files and directories exist (type-specific — see augmentation table)
+- [ ] Required configuration files are present and parseable
+- [ ] Any artifact referenced in CLAUDE.md actually exists at the declared path
+- [ ] No required artifact is empty, stubbed, or contains only placeholder content
+
+**Refinement** — Are the required artifacts appropriate in scope?
+- [ ] Is any required artifact significantly larger than it needs to be?
+- [ ] Are there required artifacts that have become redundant and could be retired?
+- [ ] Could any required artifacts be combined without losing their purpose?
+
+*Type-specific augmentations: see per-type tables above.*
+
+---
+
+### `conventions` — Conventions Declared and Followed
+
+Every project type has conventions — commit formats, file naming rules, coding standards. This check verifies they are documented and the project adheres to them.
+
+**Quality** — Are project conventions documented and followed?
+- [ ] Project-specific conventions are documented in CLAUDE.md (or a referenced doc)
+- [ ] Commit messages follow the declared conventions for this project type
+- [ ] File naming follows the declared conventions (type-specific — see augmentation table)
+- [ ] No convention is documented but never followed, or followed but never documented
+- [ ] Conventions referenced in skill/workflow documentation match what's actually enforced
+
+**Refinement** — Could conventions be expressed more clearly or concisely?
+- [ ] Are any conventions so obvious they don't need documentation?
+- [ ] Are any conventions so complex they suggest the underlying approach should simplify?
+- [ ] Could related conventions be grouped for easier reference?
+- [ ] Are there conventions that conflict with each other subtly?
+
+*Type-specific augmentations: see per-type tables above.*
+
+---
+
+### `framework` — Framework-Specific Pattern Correctness
+
+Every project uses a framework with specific patterns. This check verifies that documented examples, code patterns, and workflow guidance are correct for the declared framework — not just generically correct.
+
+**Quality** — Are documented patterns correct for this project's framework?
+- [ ] Code examples in docs use patterns that are correct for the declared framework
+- [ ] Documented workflows account for framework-specific constraints
+- [ ] No guidance recommends an approach the framework explicitly discourages
+- [ ] Framework-specific annotations, decorators, or conventions are used correctly in examples
+- [ ] Patterns are current for the version of the framework in use
+
+**Refinement** — Could framework guidance be more focused or easier to apply?
+- [ ] Is framework-specific guidance scattered or consolidated where it's easy to find?
+- [ ] Are there framework patterns documented that are never actually used in the project?
+- [ ] Could framework guidance link to authoritative external docs rather than re-explaining concepts?
+
+*Type-specific augmentations: see per-type tables above.*
 
 ---
 
