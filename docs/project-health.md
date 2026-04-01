@@ -62,8 +62,19 @@ If no section is present, a built-in default set is used.
 When running any check that involves reading documentation, build the scan list in this order:
 
 ### 1. Universal baseline (always included)
-- All `.md` files in the **project root**
-- All `.md` files (recursive) in any folder named **`doc/`, `docs/`, or `documentation/`**
+- All `.md` files (recursive) in any folder named **`doc/`, `docs/`, or `documentation/`** (case-insensitive)
+- Any root-level `.md` file matching these well-known names (case-insensitive):
+
+| Category | Files |
+|----------|-------|
+| Entry points | `readme`, `overview`, `summary`, `index` |
+| Process | `contributing`, `governance`, `code_of_conduct`, `support`, `maintainers` |
+| Change tracking | `changelog`, `history`, `release`, `release-notes`, `release_notes` |
+| Architecture & design | `architecture`, `design`, `decisions`, `vision`, `philosophy`, `principles` |
+| Technical | `api`, `schema`, `glossary`, `security`, `deployment`, `install`, `installation`, `usage`, `troubleshooting` |
+| Project management | `roadmap`, `thesis`, `spec`, `specification`, `requirements` |
+
+Any root `.md` file not on this list is still scanned — this list simply guarantees they are never skipped.
 
 ### 2. Inline documentation (always included)
 Some projects keep docs alongside their code rather than in a central folder. Always scan:
