@@ -66,7 +66,22 @@ These categories only exist for Java projects and are not present in `project-he
 **Refinement** — Could the dependency structure be leaner?
 - [ ] Are there dependencies used in only one place that could be removed?
 - [ ] Are there large dependencies used for one small feature?
-- [ ] Could test utilities be consolidated to reduce test dependency sprawl?
+- [ ] Are there test-scoped dependencies that overlap with production utilities already on the classpath?
+
+### `java-code-quality` — Code Duplication & Extraction Opportunities
+
+**Quality** — Is there code that should be shared but isn't?
+- [ ] The same logic block appears 3+ times across the codebase — high risk because a fix in one copy is silently missed in others
+- [ ] Similar but not identical methods that should be parameterised and unified
+- [ ] Hardcoded values (strings, numbers, paths) repeated across multiple classes — should be named constants or config
+- [ ] Repeated sequences of calls that always appear together and belong in a helper method or utility class
+
+**Refinement** — Could small refactorings make code more shareable and reduce duplication going forward?
+- [ ] Are there methods just over the threshold for extraction — a small refactor would make them reusable?
+- [ ] Are there classes that have grown to mix concerns, where splitting would naturally isolate reusable logic?
+- [ ] Are there utility-style methods sitting inside domain classes that could be extracted to a shared utility?
+- [ ] Are there parallel implementations across different modules that evolved independently but now do the same thing?
+- [ ] Are there abstract base classes or interfaces that would capture shared behaviour if added now?
 
 ---
 
