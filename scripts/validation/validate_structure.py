@@ -24,7 +24,7 @@ from utils.common import (
 )
 
 
-EXPECTED_SUBDIRS = ['scripts', 'references', 'assets', 'tests', 'agents']
+EXPECTED_SUBDIRS = ['scripts', 'references', 'assets', 'tests', 'agents', 'commands']
 
 
 def find_referenced_files(content: str) -> set[str]:
@@ -65,6 +65,21 @@ def validate_skill_structure(skill_path: Path) -> list[ValidationIssue]:
     """Validate file organization for a single skill."""
     issues = []
     skill_dir = skill_path.parent
+    skill_name = skill_dir.name
+
+    # Every skill must have a commands/<skill-name>.md file to enable slash commands
+    command_file = skill_dir / 'commands' / f'{skill_name}.md'
+    if not command_file.exists():
+        issues.append(ValidationIssue(
+            severity=Severity.CRITICAL,
+            file_path=str(skill_path),
+            line_number=None,
+            message=f"Missing slash command: commands/{skill_name}.md not found",
+            fix_suggestion=(
+                f"Run: python scripts/generate_commands.py  "
+                f"(or create commands/{skill_name}.md manually)"
+            )
+        ))
 
     # Read SKILL.md content
     with open(skill_path, 'r', encoding='utf-8') as f:
