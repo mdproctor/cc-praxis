@@ -1,0 +1,55 @@
+<svg width="280" height="280" viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="plate" x1="0" y1="0" x2="280" y2="280" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1e1e23"/>
+      <stop offset="100%" stop-color="#141418"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Plate -->
+  <polygon points="84,14 196,14 266,84 266,196 196,266 84,266 14,196 14,84"
+           fill="url(#plate)"/>
+  <!-- Outer border -->
+  <polygon points="84,14 196,14 266,84 266,196 196,266 84,266 14,196 14,84"
+           fill="none" stroke="#e8a020" stroke-width="2.2" opacity="0.6"/>
+  <!-- Inner border ring -->
+  <polygon points="91,24 189,24 256,91 256,189 189,256 91,256 24,189 24,91"
+           fill="none" stroke="#e8a020" stroke-width="0.7" opacity="0.2"/>
+
+  <!-- cc -->
+  <text x="140" y="64"
+        font-family="'Courier New', Courier, monospace"
+        font-size="66"
+        font-weight="bold"
+        fill="#e8a020"
+        letter-spacing="0"
+        text-anchor="middle"
+        dominant-baseline="middle"
+        opacity="0.7">cc</text>
+
+  <!-- praxis -->
+  <text x="140" y="129"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="82"
+        font-weight="bold"
+        fill="#f5c842"
+        textLength="222"
+        lengthAdjust="spacingAndGlyphs"
+        text-anchor="middle"
+        dominant-baseline="middle"
+        filter="url(#glow)">praxis</text>
+
+  <!-- SKILLS -->
+  <text x="140" y="197"
+        font-family="'Courier New', Courier, monospace"
+        font-size="27"
+        font-weight="normal"
+        fill="#aaaaaa"
+        letter-spacing="12"
+        text-anchor="middle"
+        dominant-baseline="middle">SKILLS</text>
+</svg>

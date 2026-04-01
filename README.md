@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="logo.svg" width="140" alt="cc-praxis logo"/>
+</p>
+
 # cc-praxis
 
 A curated collection of Claude Code skills for professional software development — with deep Java/Quarkus support and universal principles that apply to any project.
