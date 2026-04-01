@@ -59,38 +59,84 @@ If no section is present, a built-in default set is used.
 
 ## Category Overview
 
+**Type key:** Mechanical — scriptable, low ambiguity · Judgment — Claude must reason about intent or UX · Mixed — some of each
+
+---
+
+### Universal Checks
+*Apply to every project type. The specific items within a category may vary by type — see per-type notes below.*
+
 | Category | What it covers | Checks | Type | When to run |
 |----------|---------------|--------|------|-------------|
-| `docs-sync` | Code matches docs, no stale/planned language, correct counts | 7 | Mechanical | Every commit, pre-release |
-| `cross-refs` | Bidirectional skill chaining, all references resolve | 6 | Mechanical | Every commit |
-| `consistency` | Contradictions, duplications, terminology, section naming | 6 | Judgment | Pre-release, deep review |
-| `coverage` | New skills wired into marketplace, README, commands/, chaining | 6 | Mechanical | Every commit |
-| `logic` | Workflows executable, UX friction, redundant checks, no dead ends | 8 | Judgment | Pre-release, deep review |
-| `quality` | CSO compliance, required skill sections, flowcharts, token budget | 8 | Mixed | Pre-release |
-| `naming` | Skill name consistent across all references | 5 | Mechanical | Every commit |
-| `dependencies` | Prerequisites exist, no circular chains, versions consistent | 5 | Mechanical | Pre-release |
-| `config` | CLAUDE.md complete for project type, required sections present | 8 | Mechanical | On setup, pre-release |
-| `security` | No secrets, safe shell patterns, correct permissions | 6 | Mechanical | Pre-release |
-| `infrastructure` | All validators wired correctly, hook registered, gitignore | 6 | Mechanical | Pre-release |
-| `release` | No SNAPSHOT versions, labels set up, release notes meaningful | 7 | Mixed | Release only |
-| `user-journey` | Onboarding coherent, errors recoverable, no dead ends | 6 | Judgment | Pre-release, major changes |
-| `effectiveness` | No redundant skills, descriptions trigger correctly | 5 | Judgment | Deep review only |
-| `git` | Clean state, tags match versions, no stale worktrees | 5 | Mechanical | On demand |
-| `performance` | Skills within token budget, validators in correct tier | 5 | Mixed | Pre-release |
+| `docs-sync` | Code matches docs, no stale/planned language, correct counts, correct URLs | 7 | Mechanical | Every commit, pre-release |
+| `consistency` | Contradictions between docs, duplicated information, terminology drift | 6 | Judgment | Pre-release, deep review |
+| `logic` | Workflows executable, UX friction, redundant checks, error messages have recovery steps | 8 | Judgment | Pre-release, deep review |
+| `config` | CLAUDE.md exists, project type declared, required sections present for that type | 8 | Mechanical | On setup, pre-release |
+| `security` | No hardcoded secrets, safe shell patterns, correct permissions on scripts | 6 | Mechanical | Pre-release |
+| `release` | Versions consistent, release notes will be meaningful, RELEASE.md current | 7 | Mixed | Release only |
+| `user-journey` | Onboarding coherent, errors have recovery steps, no dead ends | 6 | Judgment | Pre-release, major changes |
+| `git` | Clean working tree, no stale worktrees, tags match versions | 5 | Mechanical | On demand |
 
-**Type key:**
-- **Mechanical** — can be verified by script or systematic check; low ambiguity
-- **Judgment** — requires Claude to reason about intent, UX, or appropriateness
-- **Mixed** — some items mechanical, some need judgment
+---
 
-**Suggested groupings for invocation:**
+### type: skills
+*Additional checks that only apply to skill collection repositories.*
+
+| Category | What it covers | Checks | Type | When to run |
+|----------|---------------|--------|------|-------------|
+| `cross-refs` | Bidirectional skill chaining, chaining table complete, all references resolve | 6 | Mechanical | Every commit |
+| `coverage` | New skills in marketplace + README + commands/ + chaining table | 6 | Mechanical | Every commit |
+| `quality` | CSO compliance, required skill sections, flowchart syntax, token budget | 8 | Mixed | Pre-release |
+| `naming` | Skill name consistent across directory, frontmatter, marketplace, README, commands/ | 5 | Mechanical | Every commit |
+| `infrastructure` | All validators wired into validate_all.py at correct tier, hook registered, gitignore | 6 | Mechanical | Pre-release |
+| `dependencies` | Skill prerequisites exist, no circular chains, plugin.json versions consistent | 5 | Mechanical | Pre-release |
+| `performance` | SKILL.md within token budget (~400 lines), heavy content extracted to reference files | 5 | Mixed | Pre-release |
+| `effectiveness` | No redundant skills, descriptions specific enough to trigger correctly | 5 | Judgment | Deep review only |
+
+---
+
+### type: java
+*Additional items within universal categories that apply to Java/Maven/Gradle projects.*
+
+| Category | Extra items |
+|----------|------------|
+| `docs-sync` | DESIGN.md exists and reflects current architecture; no stale entity/service references |
+| `config` | `docs/DESIGN.md` present (java-git-commit blocks without it); BOM strategy documented |
+| `logic` | No blocking JDBC on Vert.x event loop in code examples; @Blocking annotations correct |
+
+---
+
+### type: blog
+*Additional items within universal categories that apply to GitHub Pages / Jekyll blogs.*
+
+| Category | Extra items |
+|----------|------------|
+| `docs-sync` | Post filenames follow `YYYY-MM-DD-title.md` convention; no broken Jekyll front matter |
+| `config` | `_posts/` directory exists; `_config.yml` present; Jekyll conventions documented in CLAUDE.md |
+| `quality` | Blog commit messages use valid types (post/edit/draft/asset/config); 72-char subject limit |
+
+---
+
+### type: custom
+*Additional items within universal categories that apply to custom projects.*
+
+| Category | Extra items |
+|----------|------------|
+| `config` | Sync Rules table configured in CLAUDE.md; Primary Document path exists; milestone current |
+| `docs-sync` | Primary document reflects current project state; sync rules still match actual file structure |
+
+---
+
+### Suggested Invocation Groups
 
 | Group | Categories | Use when |
 |-------|-----------|----------|
-| `--commit` | `docs-sync`, `cross-refs`, `coverage`, `naming` | Fast checks after every significant change |
-| `--prerelease` | All mechanical + mixed categories | Before tagging a release |
-| `--deep` | All 17 categories | Periodic deep review, after major refactors |
-| `--setup` | `config`, `infrastructure`, `coverage` | After initial project setup |
+| `--commit` | `docs-sync`, `cross-refs`*, `coverage`*, `naming`* | Fast checks after every significant change |
+| `--prerelease` | All mechanical + mixed categories for the project type | Before tagging a release |
+| `--deep` | All categories for the project type | Periodic deep review, after major refactors |
+| `--setup` | `config`, `infrastructure`*, `coverage`* | After initial project setup |
+
+*\* type: skills only — skipped automatically for other project types*
 
 ---
 
