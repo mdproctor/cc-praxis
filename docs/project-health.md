@@ -4,6 +4,7 @@
 **Skill name (planned):** `project-health`
 **Slash command (planned):** `/project-health`
 **Companion skill:** [`project-refine`](project-refine.md) — dedicated improvement and bloat reduction
+**Type-specific skills:** [`java-project-health`](java-project-health.md) · [`blog-project-health`](blog-project-health.md) · [`custom-project-health`](custom-project-health.md) · [`skills-project-health`](skills-project-health.md)
 
 This document tracks the design and scope of the `project-health` skill. It is a working document — update it as the skill evolves.
 
@@ -13,7 +14,9 @@ This document tracks the design and scope of the `project-health` skill. It is a
 
 Answers the question: **is the project correct, complete, and consistent?**
 
-A systematic correctness and compliance check run at commit time, pre-release, or on demand. Every category checks whether things are right — and includes refinement questions specific to that category ("could this correct thing be better?"). It does not cover general improvement work across docs, code, and tests — that belongs to [`project-refine`](project-refine.md).
+`project-health` covers the **universal checks** that apply to every project type. It detects the project type from CLAUDE.md and routes to the appropriate type-specific skill for additional checks — exactly the same pattern as `git-commit` routing to `java-git-commit`, `blog-git-commit`, and `custom-git-commit`.
+
+This keeps each skill focused: `project-health` is truly universal, type-specific skills contain only what is specific to their type, and there is no mixing.
 
 It replaces:
 - "make sure docs and code are in sync"
@@ -22,6 +25,22 @@ It replaces:
 - pre-release system reviews
 
 Other skills can reference specific check categories when they need things verified.
+
+---
+
+## Routing
+
+After running universal checks, `project-health` routes to the type-specific skill based on `## Project Type` in CLAUDE.md:
+
+| Project type | Routes to |
+|---|---|
+| `java` | [`java-project-health`](java-project-health.md) |
+| `blog` | [`blog-project-health`](blog-project-health.md) |
+| `custom` | [`custom-project-health`](custom-project-health.md) |
+| `skills` | [`skills-project-health`](skills-project-health.md) |
+| `generic` | No routing — universal checks only |
+
+Type-specific skills run their own categories and augment the universal categories with type-specific checks. They are invocable directly (e.g. `/java-project-health`) or automatically via routing from `project-health`.
 
 ---
 
@@ -183,61 +202,7 @@ Each category covers two dimensions:
 
 ---
 
-### type: skills
-
-*Additional checks for skill collection repositories.*
-
-| Category | Quality focus | Refinement focus | Type | When to run |
-|----------|--------------|-----------------|------|-------------|
-| `cross-refs` | Bidirectional chaining, all references resolve, table complete | Chain depth, table grouping, merge candidates | Mechanical | Every commit |
-| `coverage` | New skills in marketplace + README + commands/ + chaining | Manual steps that could be automated | Mechanical | Every commit |
-| `quality` | CSO compliance, required sections, flowchart syntax, token budget | Fewer steps, simpler flowcharts, redundant pitfall rows | Mixed | Pre-release |
-| `naming` | Skill name consistent across directory, frontmatter, marketplace, README, commands/ | Discoverability, intuitive vs accurate names | Mechanical | Every commit |
-| `infrastructure` | All validators wired at correct tier, hook registered, gitignore | Overlapping validators, tier misassignment, dead scripts | Mechanical | Pre-release |
-| `dependencies` | Prerequisites exist, no circular chains, versions consistent | Chain depth, skill absorption, optional complexity | Mechanical | Pre-release |
-| `performance` | SKILL.md within token budget (~400 lines) | Reference file extraction, duplicate content, lean sections | Mixed | Pre-release |
-| `effectiveness` | No redundant skills, descriptions trigger correctly | Skills that should be absorbed, wrappable workflows | Judgment | Deep review only |
-
----
-
-### type: java
-
-*Augmentations to universal checks for Java/Maven/Gradle projects.*
-
-| Universal check | Java-specific Quality | Java-specific Refinement |
-|----------------|-----------------------|--------------------------|
-| `primary-doc` | DESIGN.md reflects current architecture; no stale entity/service references | Could DESIGN.md be split into focused modules? |
-| `artifacts` | `docs/DESIGN.md` exists | Is DESIGN.md appropriately sized for the project? |
-| `conventions` | BOM strategy documented; commit scopes consistent (rest/service/repository/bom) | Could BOM strategy be expressed more concisely? |
-| `framework` | No blocking JDBC on Vert.x event loop; @Blocking annotations correct; CDI injection patterns correct | Could concurrency guidance be simplified or better grouped? |
-
----
-
-### type: blog
-
-*Augmentations to universal checks for GitHub Pages / Jekyll blogs.*
-
-| Universal check | Blog-specific Quality | Blog-specific Refinement |
-|----------------|-----------------------|--------------------------|
-| `primary-doc` | Post filenames follow `YYYY-MM-DD-title.md`; Jekyll front matter valid on all posts | Could post metadata be standardised for better navigation? |
-| `artifacts` | `_posts/` directory exists; `_config.yml` present | Is the Jekyll config leaner than it needs to be? |
-| `conventions` | Jekyll conventions documented in CLAUDE.md; commit types valid (post/edit/draft/asset/config); 72-char subject limit | Could commit type and Jekyll convention guidance be more concise? |
-| `framework` | Jekyll Liquid syntax correct in layouts; no deprecated Jekyll patterns; front matter schema matches `_config.yml` | Could layout templates be simplified? |
-
----
-
-### type: custom
-
-*Augmentations to universal checks for custom projects.*
-
-| Universal check | Custom-specific Quality | Custom-specific Refinement |
-|----------------|------------------------|----------------------------|
-| `primary-doc` | Primary document reflects current project state; sync rules match actual file structure | Is the primary document the right size, or should it be modularised? |
-| `artifacts` | Primary Document path declared in CLAUDE.md exists; milestone is current | Could the milestone tracking be simplified? |
-| `conventions` | Sync Rules configured in CLAUDE.md; rules match the actual workflow | Could Sync Rules be expressed more concisely without losing fidelity? |
-| `framework` | Sync patterns match the declared sync strategy; no rules that reference non-existent file patterns | Could any Sync Rules be merged or simplified? |
-
----
+*Type-specific checks (java, blog, custom, skills) are documented in their respective skills — see [Routing](#routing) above.*
 
 ### Refinement Domains (within `refine`)
 
