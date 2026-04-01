@@ -84,7 +84,7 @@ The refinement questions within each `project-health` category (e.g. "could `doc
 /project-health
 
 # Run specific categories
-/project-health docs-sync cross-refs
+/project-health docs-sync consistency
 
 # Run all categories for this project type
 /project-health --all
@@ -110,9 +110,8 @@ Stored in `## Health Check Configuration`:
 ```markdown
 ## Health Check Configuration
 
-**Default checks:** docs-sync, cross-refs, consistency, coverage, quality
-**Skip:** git, effectiveness
-**Performance budget:** 400 lines max per SKILL.md
+**Default checks:** docs-sync, consistency, logic, config, primary-doc
+**Skip:** git, user-journey
 **Additional doc paths:** wiki/, design/
 ```
 
@@ -180,7 +179,7 @@ Each category covers two dimensions:
 
 ### Universal Checks
 
-*Apply to every project type. Specific items within a category may vary by type — see per-type notes below.*
+*Apply to every project type. Type-specific augmentations are handled by the routed type-specific skill.*
 
 | Category | Quality focus | Refinement focus | Type | When to run |
 |----------|--------------|-----------------|------|-------------|
@@ -201,19 +200,6 @@ Each category covers two dimensions:
 ---
 
 *Type-specific checks (java, blog, custom, skills) are documented in their respective skills — see [Routing](#routing) above.*
-
-### Refinement Domains (within `refine`)
-
-*The `refine` category is organised by domain rather than correctness — everything here is an improvement opportunity, not a failure.*
-
-| Domain | What it looks for | Bloat score applies? |
-|--------|------------------|---------------------|
-| `docs` | Structure re-evaluation, modularisation, consolidation, readability, dead content | Yes |
-| `code` | Repeated patterns, copy-paste with variation, missing abstractions, dead code | Yes |
-| `tests` | Scattered coverage, repeated setup, file bloat, grouping inconsistency | Yes |
-| `universal` | File budget overruns, deep nesting, over-engineering, excessive commentary | Yes — primary source of bloat score |
-
----
 
 ### Suggested Invocation Groups
 
@@ -241,9 +227,9 @@ Each category below covers both **Quality** (is it correct?) and **Refinement** 
 **Quality** — Does documentation accurately reflect the current state of the code?
 - [ ] Code behaviour matches what docs describe
 - [ ] No "planned" / "not yet implemented" language for things that exist
-- [ ] Skill counts and validator counts are correct everywhere
-- [ ] Version numbers consistent (marketplace.json, plugin.json, docs)
-- [ ] URLs and GitHub repo references are correct
+- [ ] Component and artifact counts are correct everywhere they are stated
+- [ ] Version numbers consistent across all places they appear
+- [ ] URLs and external references are correct and reachable
 - [ ] No stale "TODO" or "coming soon" references
 - [ ] Release status language matches actual state
 
@@ -260,8 +246,8 @@ Each category below covers both **Quality** (is it correct?) and **Refinement** 
 **Quality** — Does everything agree with itself?
 - [ ] No contradictions between any two documents on the same topic
 - [ ] No duplicate information that could drift (same content in 2+ places)
-- [ ] Section naming conventions followed (Skill Chaining, not Skill chaining)
-- [ ] Common Pitfalls tables use consistent column format
+- [ ] Section naming conventions are followed consistently throughout
+- [ ] Recurring structural elements (tables, lists, headings) use consistent formatting
 - [ ] Severity levels (CRITICAL/WARNING/NOTE) used consistently
 - [ ] Terminology is consistent (e.g. "invoke" not mixed with "call" or "use")
 
@@ -279,11 +265,11 @@ Each category below covers both **Quality** (is it correct?) and **Refinement** 
 - [ ] No workflow step requires an external tool (`gh`, `mvn`, etc.) without checking it's available
 - [ ] Hook outputs are directive (ACTION REQUIRED) not just informational
 - [ ] Hook doesn't fire on non-git directories
-- [ ] No skill blocks progress without giving the user a way forward
+- [ ] No workflow blocks progress without giving the user a way forward
 - [ ] Error messages include recovery steps
 - [ ] No redundant checks (same thing checked twice in the same flow)
-- [ ] Skill chaining doesn't create infinite loops
-- [ ] Exit codes in validators match what calling skills expect
+- [ ] Chained workflows don't create infinite loops
+- [ ] Exit codes are consistent and documented
 
 **Refinement** — Could workflows be simpler or more intuitive?
 - [ ] Are there steps that could be combined without losing clarity?
@@ -335,8 +321,8 @@ Each category below covers both **Quality** (is it correct?) and **Refinement** 
 - [ ] All component versions consistent and intentional
 - [ ] GitHub labels set up for release note generation
 - [ ] `gh release create --generate-notes` would produce meaningful output
-- [ ] RELEASE.md reflects current versioning strategy
-- [ ] No obviously incomplete skills (stubs, empty sections)
+- [ ] Release strategy documentation reflects current approach
+- [ ] No obviously incomplete components (stubs, empty sections, placeholder content)
 - [ ] All tests passing
 
 **Refinement** — Would the release be meaningful and well-presented?
@@ -349,13 +335,12 @@ Each category below covers both **Quality** (is it correct?) and **Refinement** 
 ### `user-journey` — End User Experience
 
 **Quality** — Would a first-time user have a coherent experience?
-- [ ] Installation path is documented and works (`/plugin marketplace add` → `/install-skills`)
-- [ ] First commit flow is guided (CLAUDE.md created, project type set)
-- [ ] Session-start hook provides helpful prompt on first open
-- [ ] `/issue-workflow` offer is clear and skippable
+- [ ] Getting started path is documented and works end-to-end
+- [ ] First meaningful action (first commit, first build, etc.) is guided
+- [ ] Setup prompts are clear and skippable where optional
 - [ ] Error messages explain what went wrong and how to recover
 - [ ] No dead ends (every failure state has a next step)
-- [ ] Slash commands autocomplete correctly (`/java-git-commit`, etc.)
+- [ ] Entry points (commands, slash commands, scripts) work as documented
 
 **Refinement** — Could the experience be faster or less friction-heavy?
 - [ ] Could any required setup step be inferred or automated rather than prompted?
@@ -397,7 +382,7 @@ Every project type has a designated primary document. This check verifies it is 
 - [ ] Could the structure be reorganised to match how readers actually navigate it?
 - [ ] Are there sections that duplicate information found in other documents?
 
-*Type-specific augmentations: see per-type tables above.*
+\*Type-specific augmentations: handled by the routed type-specific skill.\*
 
 ---
 
@@ -416,7 +401,7 @@ Every project type has required primary artifacts. This check verifies they are 
 - [ ] Are there required artifacts that have become redundant and could be retired?
 - [ ] Could any required artifacts be combined without losing their purpose?
 
-*Type-specific augmentations: see per-type tables above.*
+\*Type-specific augmentations: handled by the routed type-specific skill.\*
 
 ---
 
@@ -437,7 +422,7 @@ Every project type has conventions — commit formats, file naming rules, coding
 - [ ] Could related conventions be grouped for easier reference?
 - [ ] Are there conventions that conflict with each other subtly?
 
-*Type-specific augmentations: see per-type tables above.*
+\*Type-specific augmentations: handled by the routed type-specific skill.\*
 
 ---
 
@@ -457,7 +442,7 @@ Every project uses a framework with specific patterns. This check verifies that 
 - [ ] Are there framework patterns documented that are never actually used in the project?
 - [ ] Could framework guidance link to authoritative external docs rather than re-explaining concepts?
 
-*Type-specific augmentations: see per-type tables above.*
+\*Type-specific augmentations: handled by the routed type-specific skill.\*
 
 ---
 
@@ -469,20 +454,20 @@ Findings grouped by severity:
 ## project-health report — [categories run]
 
 ### CRITICAL (must fix)
-- [docs-sync] docs/PROJECT-TYPES.md says blog-git-commit "not yet implemented" — it is
-- [coverage] issue-workflow missing from README § Skill Chaining Reference
+- [docs-sync] docs/architecture.md describes a caching layer that was removed 6 months ago
+- [artifacts] Primary Document path declared in CLAUDE.md does not exist
 
 ### HIGH (should fix)
-- [cross-refs] git-commit description omits blog-git-commit routing
+- [conventions] Commit messages use 'feat:' but project declared 'post:' as the convention
 
 ### MEDIUM (worth fixing)
-- [naming] issue-workflow not in Workflow integrators section of CLAUDE.md
+- [config] CLAUDE.md missing ## Commit Messages section (no-AI-attribution rule)
 
 ### LOW (nice to fix)
-- [quality] issue-workflow SKILL.md is 287 lines — within budget but growing
+- [docs-sync] README version number (v1.2) doesn't match RELEASE.md (v1.3)
 
 ### PASS
-✅ consistency, security, infrastructure, release
+✅ consistency, security, git, user-journey, release
 ```
 
 For improvement opportunities and bloat scoring, see [`project-refine`](project-refine.md) — its output format uses 🔴🟡🟢 bloat scores rather than severity ratings.
@@ -493,15 +478,18 @@ For improvement opportunities and bloat scoring, see [`project-refine`](project-
 
 Some checks are fast and important enough to run after every significant commit. The full set is TBD — marked here as a placeholder.
 
-**Candidates:**
-- `docs-sync` — "planned" language, wrong counts
-- `cross-refs` — new chaining without bidirectional update
-- `coverage` — new skill added but not integrated
-- `naming` — skill name drift
+**Candidates for universal commit subset:**
+- `docs-sync` — "planned" language, wrong counts, stale references
+- `config` — CLAUDE.md missing required sections
+- `artifacts` — required artifact deleted or moved
+- `conventions` — undocumented convention in use
+
+**Candidates for type-specific commit subset:**
+- Defined by each type-specific skill (e.g. `cross-refs`, `coverage`, `naming` in `skills-project-health`)
 
 **Not suitable for every commit:**
-- `user-journey` — expensive
-- `effectiveness` — subjective
+- `user-journey` — expensive, judgment-heavy
+- `framework` — expensive, requires code analysis
 - `git` — stateful
 - `release` — milestone only
 
@@ -512,16 +500,17 @@ Some checks are fast and important enough to run after every significant commit.
 When a skill needs a specific check, it references this skill rather than duplicating the check list:
 
 ```
-After staging a new skill, run:
-  python scripts/validate_all.py --tier commit
+# After significant changes, run a full pre-release check
+/project-health --prerelease
 
-Or for a full integration check:
-  /project-health coverage cross-refs naming
+# Or target specific categories
+/project-health docs-sync conventions
 ```
 
-Skills that should reference project-health:
-- `git-commit` — suggest `coverage` check when new SKILL.md staged
-- Pre-commit checklist in CLAUDE.md — reference `project-health --defaults` before releases
+Skills and workflows that should reference project-health:
+- Any commit skill (`git-commit`, `java-git-commit`, etc.) — can suggest `/project-health --commit` subset after commits that affect documentation
+- Pre-commit checklist in CLAUDE.md — reference `project-health --prerelease` before releases
+- Type-specific health skills — invoke `project-health` as their prerequisite
 
 ---
 
