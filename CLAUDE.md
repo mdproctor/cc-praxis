@@ -391,6 +391,23 @@ Run these checks **before every commit** to this repository:
 - Validating syntax before pushing
 - Code review before merging
 
+### When Adding a Skill to a Bundle (or Changing Bundles)
+
+Bundle membership is defined in **`.claude-plugin/marketplace.json` § `bundles`** — the single source of truth. The install/uninstall wizard skills read this at runtime, so the menus and counts update automatically.
+
+**To add a skill to an existing bundle:**
+1. Edit `.claude-plugin/marketplace.json` — add the skill name to the relevant `bundles[].skills` array
+2. Commit and push — the wizard picks it up immediately
+
+**To create a new bundle:**
+1. Edit `.claude-plugin/marketplace.json` — add a new entry to the `bundles` array with `name`, `displayName`, `description`, and `skills`
+2. No changes needed to `install-skills/SKILL.md` or `uninstall-skills/SKILL.md` — they render bundles dynamically
+
+**To remove a skill from a bundle:**
+1. Edit `.claude-plugin/marketplace.json` — remove the skill name from the bundle's `skills` array
+
+**Never** add bundle membership or skill counts directly to `install-skills/SKILL.md` or `uninstall-skills/SKILL.md` — they will drift.
+
 ### When Adding a New Project Type
 
 **Adding a new project type (e.g. `python`, `go`) requires updating ALL of these:**
