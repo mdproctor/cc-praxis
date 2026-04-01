@@ -59,27 +59,45 @@ If no section is present, a built-in default set is used.
 
 ## Document Scanning Scope
 
-When running any check that involves reading documentation, **always scan**:
+When running any check that involves reading documentation, build the scan list in this order:
 
-1. **All `.md` files in the project root**
-2. **All `.md` files in any folder named `doc/`, `docs/`, or `documentation/`** (recursive)
+### 1. Universal baseline (always included)
+- All `.md` files in the **project root**
+- All `.md` files (recursive) in any folder named **`doc/`, `docs/`, or `documentation/`**
 
-Additionally, scan these non-markdown files where relevant:
+### 2. Inline documentation (always included)
+Some projects keep docs alongside their code rather than in a central folder. Always scan:
+- Any **`README.md`** anywhere in the directory tree (per-module, per-package docs)
+- For Java: **`package-info.java`** and Javadoc comments in source files (for logic and docs-sync checks)
+- Any **`CHANGELOG.md`**, `CONTRIBUTING.md`, `ARCHITECTURE.md`** found anywhere in the tree
+
+### 3. Per project type (included automatically)
+
+| Type | Additional scan targets |
+|------|------------------------|
+| `skills` | All `SKILL.md` files in repo root subdirectories |
+| `java` | `pom.xml` / `build.gradle` (dependency and version checks); Javadoc in `src/` |
+| `blog` | `_config.yml`, `_posts/`, `_layouts/`, `_includes/` |
+| `custom` | The Primary Document path declared in CLAUDE.md |
+
+### 4. User-configured locations (from CLAUDE.md)
+Projects can declare additional documentation locations in `## Health Check Configuration`:
+
+```markdown
+## Health Check Configuration
+
+**Additional doc paths:** src/main/resources/META-INF/, wiki/, design/
+```
+
+These are scanned in addition to the baseline — useful for projects where docs live in non-standard locations (generated resource files, wiki directories, architecture folders, etc.).
+
+### 5. Non-markdown files (scanned where relevant)
 - `.claude-plugin/marketplace.json` — skill registry and versions
 - `hooks/` — hook scripts
 - `scripts/` — what scripts actually do (for logic and docs-sync checks)
 - `tests/` — what is tested (for coverage and code checks)
 
-**Per project type, also scan:**
-
-| Type | Additional scan targets |
-|------|------------------------|
-| `skills` | All `SKILL.md` files in the repo root subdirectories |
-| `java` | `pom.xml` or `build.gradle` (for dependency and version checks) |
-| `blog` | `_config.yml`, `_posts/`, `_layouts/`, `_includes/` |
-| `custom` | The Primary Document path declared in CLAUDE.md |
-
-This scope is intentionally broad — it is better to scan a file that turns out to be irrelevant than to miss a stale reference buried in a subfolder.
+**Principle:** scan broadly rather than miss a stale reference. If a file is irrelevant, the check simply finds nothing of interest there.
 
 ---
 
