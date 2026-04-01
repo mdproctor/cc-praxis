@@ -282,22 +282,28 @@ When I ask you to do something, always consider if there is a better way to do t
   field assignments)
 - Use simple class names with imports rather than fully qualified names, unless
   two classes share the same simple name in the same file
-- **Always use `.class` references instead of String literals for class names.**
-  If the class exists on the classpath, use `MyClass.class` or
-  `MyClass.class.getName()` — never a String. Strings for class names are only
-  acceptable when the class does not exist on the classpath (dynamic loading,
-  external plugins, or framework config where the API only accepts `String`).
+- **Never use String literals for class names or package names.** If the class
+  or any class from the package exists on the classpath, derive the name from
+  a `.class` reference — never hardcode it as a String. Strings are only
+  acceptable when the target does not exist on the classpath (dynamic loading,
+  external plugins, or framework APIs that only accept `String` with no
+  class-based alternative).
 
 ```java
-// ❌ BAD: string literal — breaks silently on rename/move, not type-safe
+// ❌ BAD: string literals — silently break on rename/move/repackage
 Logger log = Logger.getLogger("com.example.OrderService");
 objectMapper.addMixIn(Order.class, "com.example.OrderMixin");
 Class<?> clazz = Class.forName("com.example.OrderService");
+reflections = new Reflections("com.example.service");
 
-// ✅ GOOD: .class reference — rename-safe, compile-time verified
+// ✅ GOOD: derived from .class — rename-safe, compile-time verified
 Logger log = Logger.getLogger(OrderService.class.getName());
 objectMapper.addMixIn(Order.class, OrderMixin.class);
 Class<?> clazz = OrderService.class;
+reflections = new Reflections(OrderService.class.getPackageName());
+
+// ✅ GOOD: frameworks with class-based alternatives
+@ComponentScan(basePackageClasses = OrderService.class)  // not basePackages = "com.example"
 
 // ✅ ACCEPTABLE: class does not exist on the classpath (optional plugin)
 Class<?> clazz = Class.forName("com.thirdparty.OptionalExtension");
@@ -431,7 +437,7 @@ If you catch yourself thinking any of these, **STOP** and apply the correct appr
 | "I'll use HashMap, order doesn't matter" | Non-deterministic ordering | Build flakiness | Use LinkedHashMap/TreeMap |
 | "Mockito is faster than a real test database" | Mocked database | Mock/prod drift, broken prod (tests pass, prod burns) | Use @QuarkusTest + real DB |
 | "Let me refactor this code I haven't read yet" | Refactoring unknown code | Breaking working functionality | Read and understand first |
-| "I'll just use the class name as a String" | String class reference | Silently breaks on rename/move; not type-safe | Use `MyClass.class` or `.getName()` |
+| "I'll just use the class/package name as a String" | String class or package reference | Silently breaks on rename/move/repackage; not type-safe | Use `MyClass.class`, `.getName()`, or `.getPackageName()` |
 
 ## Skill Chaining
 
