@@ -27,7 +27,7 @@ Show uninstall options:
 
 What would you like to uninstall?
 
-1. Uninstall ALL skills (19 total)
+1. Uninstall ALL skills (20 total)
    - Complete removal of all marketplace skills
 
 2. Uninstall Java/Quarkus bundle (11 skills)
@@ -91,7 +91,7 @@ def check_reverse_dependencies(skill_to_remove, all_installed_skills, marketplac
 **For each bundle:**
 
 **Bundle 1 (All skills):**
-All 19 skills will be removed. No dependency check needed (removing everything).
+All 20 skills will be removed. No dependency check needed (removing everything).
 
 **Bundle 2 (Java/Quarkus):**
 ```python

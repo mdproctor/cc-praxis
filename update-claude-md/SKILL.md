@@ -136,10 +136,10 @@ Map changes to CLAUDE.md sections:
 | **New quality gates or pre-commit hooks** | Document in Git Workflow or Development Tools |
 | **New dependency management patterns** | Document in Dependencies section |
 
-**Recent example (ADR-0001):**
-- **What happened:** Validation added to 4 sync workflows (update-claude-md, update-design, sync-primary-doc, readme-sync.md)
-- **Framework change:** All sync workflows now validate documents before staging
-- **CLAUDE.md impact:** Should have updated Development Tools or Quality Assurance section
+**Example:**
+- **What happened:** A new linter or validator added to the CI pipeline
+- **Framework change:** All commits now require passing lint checks before merge
+- **CLAUDE.md impact:** Should document the new quality gate under Development Tools or Workflow
 
 **If you detect framework changes, include them in proposals even if no direct workflow/convention changes.**
 

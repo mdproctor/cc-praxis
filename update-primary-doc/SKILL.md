@@ -190,10 +190,10 @@ git diff --staged {file_path}
 | **New milestones or phases introduced** | Update milestone tracking |
 | **New collaboration patterns** | Document in Governance or Team sections |
 
-**Recent example (ADR-0001):**
-- **What happened:** Validation added to sync workflows
-- **Framework change:** Universal document validation before commits
-- **Custom project impact:** If VISION.md/THESIS.md exists, should document new quality gates
+**Example:**
+- **What happened:** A new automated linter added to the development workflow
+- **Framework change:** All contributors now run lint checks before committing
+- **Custom project impact:** If VISION.md/THESIS.md documents the workflow, update the relevant section
 
 **If you detect framework changes, include them in proposals even if Sync Rules don't explicitly match.**
 

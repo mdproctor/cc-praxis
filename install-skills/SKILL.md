@@ -107,7 +107,7 @@ Parse JSON and show options:
 
 What would you like to install?
 
-1. Install ALL skills (18 total)
+1. Install ALL skills (20 total)
    - Complete collection: Java, Quarkus, generic principles, documentation sync
 
 2. Install Java/Quarkus bundle (11 skills)
