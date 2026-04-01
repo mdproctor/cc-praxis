@@ -5,6 +5,28 @@
     "name": "Mark Proctor",
     "url": "https://github.com/mdproctor"
   },
+  "bundles": [
+    {
+      "name": "java-quarkus",
+      "displayName": "Java/Quarkus bundle",
+      "description": "Backend development: java-dev, quarkus-flow-dev, code review, security audit, dependency management",
+      "skills": [
+        "git-commit", "java-dev", "java-code-review", "java-security-audit",
+        "java-git-commit", "java-update-design", "maven-dependency-update",
+        "quarkus-flow-dev", "quarkus-flow-testing", "quarkus-observability",
+        "update-claude-md", "adr"
+      ]
+    },
+    {
+      "name": "foundation",
+      "displayName": "Generic foundation",
+      "description": "Universal principles: code review, security audit, dependency management, observability",
+      "skills": [
+        "git-commit", "code-review-principles", "security-audit-principles",
+        "dependency-management-principles", "observability-principles"
+      ]
+    }
+  ],
   "plugins": [
     {
       "name": "install-skills",

@@ -100,28 +100,34 @@ Fetch marketplace catalog:
 curl -fsSL https://raw.githubusercontent.com/mdproctor/claude-skills/main/.claude-plugin/marketplace.json
 ```
 
-Parse JSON and show options:
+From the fetched JSON, derive options dynamically:
+
+```python
+all_skills = [p["name"] for p in marketplace["plugins"]]
+total = len(all_skills)
+bundles = marketplace.get("bundles", [])
+```
+
+Present options — counts and bundle contents come from the fetched data, never hardcoded:
 
 ```
 📦 Claude Code Skills Marketplace
 
 What would you like to install?
 
-1. Install ALL skills (20 total)
-   - Complete collection: Java, Quarkus, generic principles, documentation sync
+1. Install ALL skills ({total} total)
+   - Complete collection
 
-2. Install Java/Quarkus bundle (11 skills)
-   - Backend development: java-dev, quarkus-flow-dev, code-review, security-audit, etc.
+{for i, bundle in enumerate(bundles, 2):}
+{i}. Install {bundle["displayName"]} ({len(bundle["skills"])} skills)
+   - {bundle["description"]}
 
-3. Install generic foundation (4 skills)
-   - Universal principles: code-review, security-audit, dependency-management, observability
-
-4. Pick individual skills
+{len(bundles)+2}. Pick individual skills
    - Custom selection
 
-5. Skip installation (just hook setup)
+{len(bundles)+3}. Skip installation (just hook setup)
 
-Enter choice (1-5):
+Enter choice:
 ```
 
 Wait for user input.
@@ -134,81 +140,44 @@ Based on user selection, resolve dependencies using this algorithm:
 
 ```python
 def resolve_dependencies(skill_name, marketplace, resolved, visiting):
-    """
-    Resolve dependencies recursively with cycle detection.
-    
-    Args:
-        skill_name: Skill to install
-        marketplace: Marketplace catalog (JSON)
-        resolved: List of skills in install order (output)
-        visiting: Set of skills in current recursion path (cycle detection)
-    """
     if skill_name in resolved:
-        return  # Already resolved
-    
+        return
     if skill_name in visiting:
         print(f"❌ Circular dependency detected: {skill_name}")
-        return  # Skip circular deps
-    
-    # Find skill in marketplace
+        return
     skill = find_skill_in_marketplace(marketplace, skill_name)
     if not skill:
         print(f"⚠️  Skill '{skill_name}' not found in marketplace")
         return
-    
     visiting.add(skill_name)
-    
-    # Fetch skill's plugin.json from GitHub to get dependencies
     plugin_json_url = f"https://raw.githubusercontent.com/{extract_repo(skill['source'])}/main/{skill['path']}/.claude-plugin/plugin.json"
-    
     try:
         plugin_metadata = fetch_json(plugin_json_url)
         for dep in plugin_metadata.get("dependencies", []):
             dep_name = dep["name"] if isinstance(dep, dict) else dep
             resolve_dependencies(dep_name, marketplace, resolved, visiting)
     except:
-        # No dependencies or plugin.json missing
         pass
-    
     visiting.remove(skill_name)
     resolved.append(skill_name)
 ```
 
-**For each bundle:**
+**Selecting skills to install** — read from fetched marketplace, never hardcode:
 
-**Bundle 1 (All skills):**
 ```python
-all_skills = [plugin["name"] for plugin in marketplace["plugins"]]
+if choice == "all":
+    skills_to_install = all_skills                    # all plugins from marketplace
+elif 1 <= bundle_index < len(bundles):
+    skills_to_install = bundles[bundle_index]["skills"]  # from marketplace bundles
+elif choice == "individual":
+    skills_to_install = user_selected_skills          # user picks from all_skills list
+else:
+    return  # skip
+
 resolved = []
-for skill in all_skills:
+for skill in skills_to_install:
     resolve_dependencies(skill, marketplace, resolved, set())
 ```
-
-**Bundle 2 (Java/Quarkus):**
-```python
-java_quarkus = [
-    "java-dev", "java-code-review", "java-security-audit", "java-git-commit",
-    "java-update-design", "maven-dependency-update", "quarkus-flow-dev",
-    "quarkus-flow-testing", "quarkus-observability", "update-claude-md", "adr"
-]
-resolved = []
-for skill in java_quarkus:
-    resolve_dependencies(skill, marketplace, resolved, set())
-```
-
-**Bundle 3 (Generic foundation):**
-```python
-foundation = [
-    "code-review-principles", "security-audit-principles",
-    "dependency-management-principles", "observability-principles"
-]
-resolved = []
-for skill in foundation:
-    resolve_dependencies(skill, marketplace, resolved, set())
-```
-
-**Bundle 4 (Individual):**
-Show checklist of all skills, let user select, then resolve dependencies for selected skills.
 
 ### Step 4: Show Installation Plan
 

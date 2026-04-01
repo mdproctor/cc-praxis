@@ -20,112 +20,84 @@ description: >
 
 ### Step 1: Skill Selection
 
-Show uninstall options:
+Fetch marketplace catalog to get current skill list and bundles:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/mdproctor/claude-skills/main/.claude-plugin/marketplace.json
+```
+
+```python
+all_skills = [p["name"] for p in marketplace["plugins"]]
+total = len(all_skills)
+bundles = marketplace.get("bundles", [])
+```
+
+Present options — counts and bundle contents come from the fetched data, never hardcoded:
 
 ```
 🗑️  Claude Code Skills Marketplace - Uninstall
 
 What would you like to uninstall?
 
-1. Uninstall ALL skills (20 total)
+1. Uninstall ALL skills ({total} total)
    - Complete removal of all marketplace skills
 
-2. Uninstall Java/Quarkus bundle (11 skills)
-   - Backend development skills only
+{for i, bundle in enumerate(bundles, 2):}
+{i}. Uninstall {bundle["displayName"]} ({len(bundle["skills"])} skills)
+   - {bundle["description"]}
 
-3. Uninstall generic foundation (4 skills)
-   - Universal principles only
-
-4. Pick individual skills
+{len(bundles)+2}. Pick individual skills
    - Custom selection
 
-5. Remove session-start hook only
+{len(bundles)+3}. Remove session-start hook only
    - Keep skills, remove automatic CLAUDE.md check
 
-6. Cancel
-   - Don't uninstall anything
+{len(bundles)+4}. Cancel
 
-Enter choice (1-6):
+Enter choice:
 ```
 
 Wait for user input.
 
 ### Step 2: Reverse Dependency Check
 
-For each skill being uninstalled, check if other installed skills depend on it.
+Determine which skills to remove — read from fetched marketplace, never hardcode:
 
-**Algorithm:**
+```python
+if choice == "all":
+    skills_to_remove = all_skills                       # no dep check needed
+elif 1 <= bundle_index < len(bundles):
+    skills_to_remove = bundles[bundle_index]["skills"]  # from marketplace bundles
+elif choice == "individual":
+    skills_to_remove = user_selected_skills
+```
+
+For each skill being uninstalled, check if other installed skills depend on it:
 
 ```python
 def check_reverse_dependencies(skill_to_remove, all_installed_skills, marketplace):
-    """
-    Check if any installed skills depend on the skill being removed.
-    
-    Args:
-        skill_to_remove: Skill to uninstall
-        all_installed_skills: List of currently installed skills
-        marketplace: Marketplace catalog
-    
-    Returns:
-        List of skills that depend on skill_to_remove
-    """
     dependents = []
-    
     for installed_skill in all_installed_skills:
         if installed_skill == skill_to_remove:
             continue
-            
-        # Fetch plugin.json for installed skill
         plugin_metadata = fetch_plugin_json(installed_skill)
-        
-        # Check if it depends on skill_to_remove
         for dep in plugin_metadata.get("dependencies", []):
             dep_name = dep["name"] if isinstance(dep, dict) else dep
             if dep_name == skill_to_remove:
                 dependents.append(installed_skill)
                 break
-    
     return dependents
 ```
 
-**For each bundle:**
+When removing a bundle, only warn about dependents **outside** the bundle being removed:
 
-**Bundle 1 (All skills):**
-All 20 skills will be removed. No dependency check needed (removing everything).
-
-**Bundle 2 (Java/Quarkus):**
 ```python
-java_quarkus = [
-    "java-dev", "java-code-review", "java-security-audit", "java-git-commit",
-    "java-update-design", "maven-dependency-update", "quarkus-flow-dev",
-    "quarkus-flow-testing", "quarkus-observability", "update-claude-md", "adr"
-]
-
-# Check each skill for dependents OUTSIDE this bundle
-for skill in java_quarkus:
+for skill in skills_to_remove:
     dependents = check_reverse_dependencies(skill, all_installed, marketplace)
-    # Filter to only dependents NOT in java_quarkus bundle
-    external_dependents = [d for d in dependents if d not in java_quarkus]
-    if external_dependents:
-        warn_about_dependents(skill, external_dependents)
+    external = [d for d in dependents if d not in skills_to_remove]
+    if external:
+        warn_about_dependents(skill, external)
 ```
-
-**Bundle 3 (Generic foundation):**
-```python
-foundation = [
-    "code-review-principles", "security-audit-principles",
-    "dependency-management-principles", "observability-principles"
-]
-
-# These are often dependencies of other skills
-for skill in foundation:
-    dependents = check_reverse_dependencies(skill, all_installed, marketplace)
-    if dependents:
-        warn_about_dependents(skill, dependents)
-```
-
-**Bundle 4 (Individual):**
-Check dependencies for each selected skill individually.
 
 ### Step 3: Show Removal Plan with Warnings
 
