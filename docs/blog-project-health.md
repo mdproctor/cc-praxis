@@ -19,7 +19,7 @@ Follows the same pattern as `blog-git-commit` extending `git-commit`.
 
 ## Prerequisite
 
-**This skill builds on [`project-health`](project-health.md).** When invoked directly (e.g. `/java-project-health`), it runs all universal checks first then its own additions — identical output to `project-health` auto-chaining to this skill. Either entry point produces the same result.
+**This skill builds on [`project-health`](project-health.md).** When invoked directly (e.g. `/blog-project-health`), it runs all universal checks first then its own additions — identical output to `project-health` auto-chaining to this skill. Either entry point produces the same result.
 
 ---
 

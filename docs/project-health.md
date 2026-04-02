@@ -105,12 +105,12 @@ Every invocation has a depth level. Pass `--tier N` or omit it to be prompted:
 
 | Tier | What runs | Named alias |
 |------|-----------|-------------|
-| 1 | `validate_all.py --tier commit` only | `--commit` |
-| 2 | Universal quality checks, mechanical only | — |
-| 3 | Full universal quality + type-specific quality | `--prerelease` |
-| 4 | All of tier 3 + refinement questions within each category + deep type-specific | `--deep` |
+| 1 | `validate_all.py --tier commit` only — fastest, fully scripted | `--commit` |
+| 2 | Universal quality checks only — no type-specific categories yet | `--standard` |
+| 3 | Universal + type-specific quality checks — the full check for your project type | `--prerelease` |
+| 4 | All of tier 3 + refinement questions within each category | `--deep` |
 
-Named aliases (`--commit`, `--prerelease`, `--deep`) are shorthand for the equivalent tier. Type-specific health skills inherit the same tier system.
+Named aliases (`--commit`, `--standard`, `--prerelease`, `--deep`) are shorthand for the equivalent tier. Type-specific health skills inherit the same tier system.
 
 ---
 
@@ -128,9 +128,10 @@ Named aliases (`--commit`, `--prerelease`, `--deep`) are shorthand for the equiv
 /project-health docs-sync --tier 1
 
 # Named tier aliases
-/project-health --commit       # tier 1
-/project-health --prerelease   # tier 3
-/project-health --deep         # tier 4
+/project-health --commit       # tier 1 — validators only
+/project-health --standard     # tier 2 — universal checks only
+/project-health --prerelease   # tier 3 — universal + type-specific
+/project-health --deep         # tier 4 — everything + refinement
 
 # Save report (date-prefixed, gitignored)
 /project-health --tier 3 --save
@@ -501,7 +502,13 @@ Every project uses a framework with specific patterns. This check verifies that 
 
 ## Output Format
 
-Findings grouped by severity:
+Findings grouped by severity. Universal check findings appear without a prefix; type-specific findings are prefixed with `[type]` so you can tell them apart:
+
+```
+### CRITICAL (must fix)
+- [docs-sync] architecture.md describes a caching layer that was removed    ← universal
+- [java][java-architecture] PaymentController calls repository directly      ← java-specific
+```
 
 ```
 ## project-health report — [categories run]
@@ -527,24 +534,19 @@ For improvement opportunities and bloat scoring, see [`project-refine`](project-
 
 ---
 
-## Commit-time Subset
+## When to Run What
 
-Some checks are fast and important enough to run after every significant commit. The full set is TBD — marked here as a placeholder.
+| Situation | Command |
+|-----------|---------|
+| After any significant commit | `/project-health --commit` (tier 1) |
+| Working on a feature, want quick feedback | `/project-health --standard` (tier 2) |
+| Before opening a PR | `/project-health --prerelease` (tier 3) |
+| Before a release | `/project-health --deep` (tier 4) |
+| Periodic improvement session | `/project-refine --tier 2` |
+| Targeted improvement on specific code | `/project-refine --tier 4` (prompts for focus area) |
+| Working on a Java project and know it | `/java-project-health --tier 3` |
 
-**Candidates for universal commit subset:**
-- `docs-sync` — "planned" language, wrong counts, stale references
-- `config` — CLAUDE.md missing required sections
-- `artifacts` — required artifact deleted or moved
-- `conventions` — undocumented convention in use
-
-**Candidates for type-specific commit subset:**
-- Defined by each type-specific skill (e.g. `cross-refs`, `coverage`, `naming` in `skills-project-health`)
-
-**Not suitable for every commit:**
-- `user-journey` — expensive, judgment-heavy
-- `framework` — expensive, requires code analysis
-- `git` — stateful
-- `release` — milestone only
+**Commit-time subset:** `/project-health --commit` runs `validate_all.py --tier commit` which covers docs-sync, config, artifacts, conventions mechanically. This is the safe default to run after every meaningful commit.
 
 ---
 
