@@ -83,7 +83,7 @@ Both produce identical output. Neither redirects the user to run a second comman
 /project-refine
 ```
 
-The refinement questions within each `project-health` category (e.g. "could `docs-sync` be improved?") are domain-specific — they belong in `project-health` because they're refinement considerations *about a specific correctness domain*. General improvement work (docs restructuring, code deduplication, test grouping, bloat reduction) belongs in `project-refine` because it cuts across domains and requires a different mindset.
+The refinement questions within each `project-health` category (e.g. "could `docs-sync` be improved?") are domain-specific — they belong in `project-health` because they're refinement considerations *about a specific correctness domain*. General improvement work (docs restructuring, code and test deduplication, bloat reduction) belongs in `project-refine` because it cuts across domains and requires a different mindset.
 
 **Shared infrastructure:** both skills use the same document scanning scope, CLAUDE.md configuration section, and project type awareness. Running one does not duplicate work done by the other.
 
@@ -207,7 +207,7 @@ Each category covers two dimensions:
 | `artifacts` | All required primary artifacts for this project type exist | Are any required artifacts over-complicated? | Mechanical | On setup, pre-release |
 | `conventions` | Project conventions are documented in CLAUDE.md and followed | Could conventions be expressed more concisely? | Mixed | Pre-release |
 | `framework` | Documented patterns and examples are correct for the project's framework | Could framework guidance be simplified? | Judgment | Pre-release, deep review |
-| *(see project-refine)* | — | Docs structure, code deduplication, test grouping, universal bloat — handled by [`project-refine`](project-refine.md) | Judgment | On demand, periodic |
+| *(see project-refine)* | — | Docs structure, code deduplication (including tests), universal bloat — handled by [`project-refine`](project-refine.md) | Judgment | On demand, periodic |
 
 ---
 

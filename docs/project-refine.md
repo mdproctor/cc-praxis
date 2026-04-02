@@ -13,7 +13,7 @@ This document tracks the design and scope of the `project-refine` skill. It is a
 
 Answers the question: **could the project be smaller, clearer, or better structured?**
 
-A dedicated improvement session across documentation, code, and tests. It looks at things that already work and asks whether they could be better — restructured, deduplicated, consolidated, simplified. It never blocks work; findings are always opportunities, never failures.
+A dedicated improvement session across documentation and code (including tests). It looks at things that already work and asks whether they could be better — restructured, deduplicated, consolidated, simplified. It never blocks work; findings are always opportunities, never failures.
 
 It replaces:
 - "look for ways to improve our docs structure"
@@ -82,7 +82,7 @@ Shares the same `## Health Check Configuration` section as `project-health`:
 ```markdown
 ## Health Check Configuration
 
-**Default refine domains:** docs, code, tests, universal
+**Default refine domains:** docs, code, universal
 **Refine skip:** (none)
 **Performance budget:** 400 lines max per SKILL.md
 **Additional doc paths:** wiki/, design/
@@ -138,19 +138,28 @@ Findings are always presented as **opportunities**, never as failures. There is 
 
 ---
 
-### `code` — Deduplication & Abstraction
+### `code` — Deduplication, Abstraction & Organisation
 
-> Could code be deduplicated, abstracted, or simplified?
+> Could code (including tests) be deduplicated, abstracted, or better organised?
 
 **Duplication**
 - [ ] Are there the same blocks of logic appearing 3+ times? (high risk: fix one, miss others)
 - [ ] Are there similar but not identical blocks that should be parameterised and shared?
 - [ ] Are there literal values (strings, numbers, paths) repeated in multiple places? (should be named constants)
+- [ ] Is the same fixture or arrangement code copy-pasted across multiple test methods?
+- [ ] Are there test patterns repeated enough to extract into shared helpers or base classes?
 
 **Abstraction opportunities**
 - [ ] Are there repeated sequences of calls that always appear together and belong in a helper?
 - [ ] Are there functions over ~30 lines combining multiple distinct concerns that would be clearer split?
 - [ ] Are there missing abstractions that would make the code more expressive?
+
+**Organisation**
+- [ ] Are there tests for one feature spread across multiple files without clear ownership?
+- [ ] Would any tests benefit from being grouped to reflect the structure of what they're testing?
+- [ ] Do test names follow a consistent pattern, making it easy to see what's covered?
+- [ ] Are there files (source or test) over their size guideline that test multiple unrelated concerns?
+- [ ] Are shared test fixtures hiding critical preconditions (tests look identical but rely on different implicit setup)?
 
 **Dead code**
 - [ ] Is there commented-out code? (remove it — git history preserves it)
@@ -160,26 +169,6 @@ Findings are always presented as **opportunities**, never as failures. There is 
 **Scattered configuration**
 - [ ] Are configuration values or defaults (timeouts, retry counts, batch sizes) defined in multiple files — should they be consolidated?
 - [ ] Is error handling consistent across similar operations (all network calls handle timeouts the same way, all DB calls log errors identically)?
-
----
-
-### `tests` — Grouping & Modularisation
-
-> Could tests be better grouped, modularised, or deduplicated?
-
-**Organisation**
-- [ ] Are there tests for one feature spread across multiple files without clear ownership?
-- [ ] Would any tests benefit from being grouped into classes or modules to reflect what they're testing?
-- [ ] Do test names follow a consistent pattern, making it easy to see what's covered?
-
-**Duplication**
-- [ ] Is the same fixture or arrangement code copy-pasted across multiple test methods?
-- [ ] Are there test patterns repeated enough to extract into shared helpers or base classes?
-- [ ] Are shared fixtures hiding critical preconditions (tests look identical but rely on different implicit setup)?
-
-**Size & scope**
-- [ ] Are there test files over ~300 lines testing multiple unrelated concerns?
-- [ ] Are there tests so tightly coupled to implementation they'd break on any refactor?
 
 ---
 
@@ -216,7 +205,7 @@ Findings presented as opportunities, rated by bloat score:
   and both cover style; could merge. Est. -5 lines. [docs]
 
 ### Nothing found
-✅ tests, universal
+✅ universal
 ```
 
 ---
