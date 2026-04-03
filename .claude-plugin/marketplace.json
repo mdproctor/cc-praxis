@@ -30,18 +30,6 @@
       ]
     },
     {
-      "name": "typescript",
-      "displayName": "TypeScript",
-      "description": "TypeScript/Node.js development: ts-dev, code review, security audit, npm dependency management",
-      "skills": [
-        "ts-dev",
-        "ts-code-review",
-        "ts-security-audit",
-        "npm-dependency-update",
-        "ts-project-health"
-      ]
-    },
-    {
       "name": "java-quarkus",
       "displayName": "Java / Quarkus",
       "description": "Java/Quarkus backend development: java-dev, quarkus-flow, code review, security audit, dependency management",
@@ -56,6 +44,18 @@
         "quarkus-flow-testing",
         "quarkus-observability",
         "java-project-health"
+      ]
+    },
+    {
+      "name": "typescript",
+      "displayName": "TypeScript",
+      "description": "TypeScript/Node.js development: ts-dev, code review, security audit, npm dependency management",
+      "skills": [
+        "ts-dev",
+        "ts-code-review",
+        "ts-security-audit",
+        "npm-dependency-update",
+        "ts-project-health"
       ]
     }
   ],
