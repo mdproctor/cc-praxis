@@ -802,7 +802,8 @@
       <div class="bundle-name-col"><span class="bundle-name">Principles</span><span class="bundle-desc">Foundations extended by language-specific skills</span></div>
       <span class="bundle-count">0 of 4</span>
       <div class="bundle-actions" onclick="event.stopPropagation()">
-        <button class="btn-install" onclick="openModal('install-principles')">Install</button>
+        <button class="btn-install"   onclick="openModal('install-principles')">Install</button>
+        <button class="btn-uninstall" onclick="openModal('uninstall-principles')">Uninstall</button>
       </div>
     </div>
     <div class="skills-list install-only">
@@ -1314,6 +1315,7 @@
       <div class="bundle-name-col"><span class="bundle-name">TypeScript</span><span class="bundle-desc">TypeScript/Node.js development, review, security and dependencies</span></div>
       <span class="bundle-count">5 of 5</span>
       <div class="bundle-actions" onclick="event.stopPropagation()">
+        <button class="btn-install"   onclick="openModal('install-ts')">Install</button>
         <button class="btn-uninstall" onclick="openModal('uninstall-ts')">Uninstall</button>
       </div>
     </div>
@@ -1501,7 +1503,8 @@
       <div class="bundle-name-col"><span class="bundle-name">Python</span><span class="bundle-desc">Python development, review, security and pip dependencies</span></div>
       <span class="bundle-count">0 of 5</span>
       <div class="bundle-actions" onclick="event.stopPropagation()">
-        <button class="btn-install" onclick="openModal('install-python')">Install</button>
+        <button class="btn-install"   onclick="openModal('install-python')">Install</button>
+        <button class="btn-uninstall" onclick="openModal('uninstall-python')">Uninstall</button>
       </div>
     </div>
     <div class="skills-list install-only">
@@ -2473,11 +2476,14 @@
     'update-java':       { title:'Update Java / Quarkus Bundle', sub:'Java skills will be updated to their latest versions', cmd:'python3 scripts/claude-skill sync-local --all', kind:'update', label:'Update' },
     'install-core':      { title:'Install Remaining Core Skills', sub:'project-health and project-refine will be added', cmd:makeInstallCmd(['project-health','project-refine']), kind:'install', skills:['project-health','project-refine'], label:'Install 2 skills' },
     'uninstall-core':    { title:'Uninstall Installed Core Skills', sub:'git-commit, update-claude-md, and adr will be removed', cmd:makeUninstallCmd(['git-commit','update-claude-md','adr']), kind:'uninstall', skills:['git-commit','update-claude-md','adr'], label:'Uninstall 3 skills' },
-    'install-principles':{ title:'Install Principles', sub:'4 foundation skills will be added to ~/.claude/skills/', cmd:makeInstallCmd(['code-review-principles','security-audit-principles','dependency-management-principles','observability-principles']), kind:'install', skills:['code-review-principles','security-audit-principles','dependency-management-principles','observability-principles'], label:'Install 4 skills' },
-    'uninstall-ts':      { title:'Uninstall TypeScript', sub:'5 TypeScript skills will be removed from ~/.claude/skills/', cmd:makeUninstallCmd(['ts-dev','ts-code-review','ts-security-audit','npm-dependency-update','ts-project-health']), kind:'uninstall', skills:['ts-dev','ts-code-review','ts-security-audit','npm-dependency-update','ts-project-health'], label:'Uninstall 5 skills' },
+    'install-principles': { title:'Install Principles', sub:'4 foundation skills will be added to ~/.claude/skills/', cmd:makeInstallCmd(['code-review-principles','security-audit-principles','dependency-management-principles','observability-principles']), kind:'install', skills:['code-review-principles','security-audit-principles','dependency-management-principles','observability-principles'], label:'Install 4 skills' },
+    'uninstall-principles':{ title:'Uninstall Principles', sub:'4 foundation skills will be removed from ~/.claude/skills/', cmd:makeUninstallCmd(['code-review-principles','security-audit-principles','dependency-management-principles','observability-principles']), kind:'uninstall', skills:['code-review-principles','security-audit-principles','dependency-management-principles','observability-principles'], label:'Uninstall 4 skills' },
+    'install-ts':         { title:'Install TypeScript Bundle', sub:'5 TypeScript skills will be added to ~/.claude/skills/', cmd:makeInstallCmd(['ts-dev','ts-code-review','ts-security-audit','npm-dependency-update','ts-project-health']), kind:'install', skills:['ts-dev','ts-code-review','ts-security-audit','npm-dependency-update','ts-project-health'], label:'Install 5 skills' },
+    'uninstall-ts':       { title:'Uninstall TypeScript', sub:'5 TypeScript skills will be removed from ~/.claude/skills/', cmd:makeUninstallCmd(['ts-dev','ts-code-review','ts-security-audit','npm-dependency-update','ts-project-health']), kind:'uninstall', skills:['ts-dev','ts-code-review','ts-security-audit','npm-dependency-update','ts-project-health'], label:'Uninstall 5 skills' },
     'install-java':      { title:'Install Remaining Java / Quarkus Skills', sub:'Skills will be added to ~/.claude/skills/', cmd:makeInstallCmd(['java-update-design','quarkus-flow-dev','quarkus-flow-testing','quarkus-observability','java-project-health']), kind:'install', skills:['java-update-design','quarkus-flow-dev','quarkus-flow-testing','quarkus-observability','java-project-health'], label:'Install 5 skills' },
     'uninstall-java':    { title:'Uninstall Installed Java Skills', sub:'Installed Java skills will be removed from ~/.claude/skills/', cmd:makeUninstallCmd(['java-dev','java-code-review','java-security-audit','java-git-commit','maven-dependency-update']), kind:'uninstall', skills:['java-dev','java-code-review','java-security-audit','java-git-commit','maven-dependency-update'], label:'Uninstall 5 skills' },
     'install-python':    { title:'Install Python Bundle', sub:'5 Python skills will be added to ~/.claude/skills/', cmd:makeInstallCmd(['python-dev','python-code-review','python-security-audit','pip-dependency-update','python-project-health']), kind:'install', skills:['python-dev','python-code-review','python-security-audit','pip-dependency-update','python-project-health'], label:'Install 5 skills' },
+    'uninstall-python':  { title:'Uninstall Python Bundle', sub:'5 Python skills will be removed from ~/.claude/skills/', cmd:makeUninstallCmd(['python-dev','python-code-review','python-security-audit','pip-dependency-update','python-project-health']), kind:'uninstall', skills:['python-dev','python-code-review','python-security-audit','pip-dependency-update','python-project-health'], label:'Uninstall 5 skills' },
     'install-individual':{ title:'Install Individual Skills', sub:'Skills will be added to ~/.claude/skills/', cmd:makeInstallCmd(['skills-project-health','blog-project-health','custom-project-health','blog-git-commit','custom-git-commit','update-primary-doc','install-skills','uninstall-skills']), kind:'install', skills:['skills-project-health','blog-project-health','custom-project-health','blog-git-commit','custom-git-commit','update-primary-doc','install-skills','uninstall-skills'], label:'Install 8 skills' },
     'uninstall-individual':{ title:'Uninstall issue-workflow', sub:'issue-workflow will be removed from ~/.claude/skills/', cmd:'python3 scripts/claude-skill uninstall issue-workflow', kind:'uninstall', skills:['issue-workflow'], label:'Uninstall 1 skill' },
   };
