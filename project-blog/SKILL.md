@@ -16,12 +16,16 @@ hindsight. Each entry captures what the developer believed and intended at
 that point, including aspirations that later changed, approaches that were
 rejected, and pivots that happened mid-build.
 
-Entries are written informally and honestly as the work happens. They are
+Entries are written in the author's personal voice from the first draft,
+using a personal writing style guide loaded before each entry. They are
 intended to be published — individually or as a series — once a phase or
 project reaches a natural point. The raw honesty is the value: readers see
-how decisions actually get made, not a sanitised retrospective. The
-`write-blog-post` skill handles the polishing step when entries are ready
-to publish.
+how decisions actually get made, not a sanitised retrospective.
+
+The `write-blog-post` skill handles restructuring for publication when
+entries are ready — front matter, platform formatting, final polish. But the
+voice is consistent from diary to published article: personal, direct, and
+yours from the start.
 
 ---
 
@@ -36,10 +40,10 @@ to publish.
 - **Not a retrospective** — Never written after the fact. If a belief was
   wrong, a new entry corrects it — the old entry is never revised.
 - **Not a technical spec** — Diary voice only.
-- **Not a polished article** — That's `write-blog-post`, which takes these
-  entries and turns them into publication-ready content with style guide
-  applied. The project blog captures the raw material; write-blog-post
-  does the publishing step.
+- **Not a finished article** — `write-blog-post` restructures entries for
+  a specific publication platform (Jekyll front matter, section structure,
+  final polish). The voice and style are the same; the formatting and
+  structure differ.
 
 ---
 
@@ -192,6 +196,26 @@ retrospective dressed up as one:
 
 ## Workflow
 
+### Step 0 — Load personal writing style guide
+
+Entries are written in the author's personal voice from the first draft —
+not generic AI prose cleaned up later. Load the style guide before drafting.
+
+```bash
+echo "$PERSONAL_WRITING_STYLES_PATH"
+```
+
+If empty → try the default: `~/claude-workspace/writing-styles/`
+
+Select the guide for a development diary / blog post (typically
+`blog-technical.md` or equivalent). If none exists, proceed without it but
+note that entries will follow the voice rules below without a style
+constraint. The user can create a style guide at any time and it will be
+picked up on the next entry.
+
+Read the selected guide in full. Everything in it constrains the output —
+vocabulary, sentence patterns, what to avoid, how to open and close.
+
 ### Step 1 — Determine entry type and voice
 
 Ask the user (or infer from context):
@@ -228,7 +252,7 @@ Only ask for what's genuinely unclear:
 - What changed direction, if anything?
 - What's true now, knowing what we know?
 
-### Step 4 — Draft with correct voice and tone
+### Step 4 — Draft with correct voice, tone, and style
 
 Apply the voice rules: "I" for the developer's perspective, "we" for
 developer+Claude collaboration. Match tone to entry type.
@@ -237,6 +261,13 @@ developer+Claude collaboration. Match tone to entry type.
 developer is exploring ideas alone should be almost entirely "I." A phase
 update where Claude was materially involved should use "we" throughout the
 "What we tried" section.
+
+Apply the style guide loaded in Step 0. The guide constrains vocabulary,
+sentence patterns, and what to avoid — follow it as a hard constraint, not
+a suggestion. Check the draft against the "What to avoid" section before
+presenting. The diary voice (honest, uncertain, in-the-moment) and the
+personal style guide work together — one shapes *what* is said, the other
+shapes *how* it sounds.
 
 Present the full draft. **Do NOT write to disk until the user confirms.**
 
