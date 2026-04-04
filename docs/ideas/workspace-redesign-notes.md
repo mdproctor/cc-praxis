@@ -89,6 +89,12 @@ workspaces/
 
 ---
 
+## Implementation Tasks (for final implementation doc)
+
+- [ ] Rename `knowledge-garden` → `garden` everywhere: skill name, directory (`~/claude/knowledge-garden/` → new workspace path), all references in other skills, CLAUDE.md, README.md, docs/
+
+---
+
 ## Key Tensions to Resolve
 
 - Some content is inherently project-specific (design snapshot for a specific codebase)
