@@ -32,11 +32,10 @@ The `garden` already established the `~/claude/` precedent. Others don't follow 
 
 ## Open Questions (to resolve as we go)
 
-- Where exactly do the private and public workspaces live? (`~/claude/private/`? `~/workspace/`?)
-- What is the relationship between a workspace and a project? (workspace *contains* projects? workspace is *alongside* projects?)
-- Does content move between private → public, or are they separate from creation?
+- Where exactly do the workspace repos live locally? (`~/workspaces/`?)
+- Does `writing-style/` get its own repo as a subtree, or is it just a folder in private-workspace?
+- Which skills write where — mapping each skill to its workspace target folder
 - What happens to existing per-project `docs/` content — migrated or coexisting?
-- Which skills write to private, which to public, which to both?
 
 ---
 
