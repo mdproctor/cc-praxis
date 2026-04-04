@@ -43,23 +43,24 @@ The `garden` already established the `~/claude/` precedent. Others don't follow 
 ## Structure
 
 ```
-private-workspace/          ← private GitHub repo
-  cc-praxis-workspace/      ← content for cc-praxis project (if private)
-  my-other-project-workspace/
-  writing-style/            ← permanently private, not project-specific
-
-public-workspace/           ← public GitHub repo
-  cc-praxis-workspace/      ← content for cc-praxis project (if public)
-  my-other-project-workspace/
-  garden/                   ← global knowledge garden (NOT per-project)
+workspaces/
+  private-workspace/           ← git repo (GitHub: private)
+    writing-style/             ← permanently private, not a subtree
+    cc-praxis-workspace/       ← git subtree → own GitHub repo
+    <other-project>-workspace/ ← git subtree → own GitHub repo
+  public-workspace/            ← git repo (GitHub: public)
+    garden/                    ← git subtree → own GitHub repo (replaces ~/claude/knowledge-garden/)
+    cc-praxis-workspace/       ← git subtree → own GitHub repo (if public)
+    <other-project>-workspace/ ← git subtree → own GitHub repo (if public)
 ```
 
-**Garden is global, not per-project:**
-- Already differentiates project-specific vs generalised knowledge internally
-- Index (GARDEN.md) is designed to avoid loading full files — gives just enough
-  to know whether to drill in; detail files loaded surgically on demand
-- Lives at top level of a workspace (likely public), not inside any project folder
-- Cross-project by design — doesn't belong under any single `<project>-workspace/`
+**Subtree model:**
+- Each `<project>-workspace/` is its own GitHub repo AND a subtree of the workspace repo
+- Global view: open workspace repo to see all projects together
+- Isolated view: each companion repo is independently cloneable/pushable
+- Commit to workspace repo; use `git subtree push` to sync back to companion repo
+- A project workspace lives in either private OR public workspace, not both
+- Garden also becomes a subtree of public-workspace (replaces standalone `~/claude/knowledge-garden/`)
 
 ---
 
