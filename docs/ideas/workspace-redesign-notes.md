@@ -70,10 +70,11 @@ public-workspace/           ← public GitHub repo
   - Project repos stay clean of WIP methodology noise
   - Workspace is the working surface; project repo is the destination
 
-- **ADRs can be promoted to the project repo as part of a final PR**
-  - ADRs graduate from workspace → project repo at PR time, not during development
-  - This is the one explicit promotion path confirmed so far
-  - Implies a promotion/publish step in the `adr` skill workflow
+- **Promotion to project repo happens at natural completion points — not during development**
+  - Trigger: final PR merge, or end of an epic
+  - Guiding principle: keep target repos free of WIP noise
+  - What promotes: ADRs confirmed so far; potentially others at epic close
+  - What stays in workspace forever: handoffs, blog entries, snapshots (record of journey, not useful to other contributors)
 
 - **Both workspaces are git repos backed up to GitHub**
   - Private workspace → private GitHub repo
