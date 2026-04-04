@@ -33,7 +33,6 @@ The `garden` already established the `~/claude/` precedent. Others don't follow 
 ## Open Questions (to resolve as we go)
 
 - Where exactly do the workspace repos live locally? (`~/workspaces/`?)
-- Does `writing-style/` get its own repo as a subtree, or is it just a folder in private-workspace?
 - Which skills write where — mapping each skill to its workspace target folder
 - What happens to existing per-project `docs/` content — migrated or coexisting?
 
@@ -76,6 +75,12 @@ workspaces/
   - Guiding principle: keep target repos free of WIP noise
   - What promotes: ADRs confirmed so far; potentially others at epic close
   - What stays in workspace forever: handoffs, blog entries, snapshots (record of journey, not useful to other contributors)
+
+- **Own repo vs plain folder: determined by frequency of change**
+  - Own repo (as subtree): changes regularly, benefits from isolated commit history
+  - Plain folder: rarely changes, no need for isolated history
+  - `writing-style/` → plain folder directly in private-workspace (rarely changes)
+  - `garden/`, all `<project>-workspace/` → own repos as subtrees (actively changing)
 
 - **Both workspaces are git repos backed up to GitHub**
   - Private workspace → private GitHub repo
