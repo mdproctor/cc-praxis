@@ -71,7 +71,8 @@ public-workspace/           ← public GitHub repo
   - Workspace is the working surface; project repo is the destination
 
 - **Promotion to project repo happens at natural completion points — not during development**
-  - Trigger: final PR merge, or end of an epic
+  - Trigger: explicit user decision — at PR merge, epic close, or any other time
+  - No automatic or prompted promotion — user decides what moves and when
   - Guiding principle: keep target repos free of WIP noise
   - What promotes: ADRs confirmed so far; potentially others at epic close
   - What stays in workspace forever: handoffs, blog entries, snapshots (record of journey, not useful to other contributors)
