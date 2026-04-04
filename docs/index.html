@@ -2707,6 +2707,26 @@
     if (!cfg && type === 'uninstall-skill') cfg = { title:`Uninstall ${name}`, sub:`${name} will be removed from ~/.claude/skills/`, cmd:`python3 scripts/claude-skill uninstall ${name}`, kind:'uninstall', label:'Uninstall' };
     if (!cfg && type === 'update-skill')    cfg = { title:`Update ${name}`, sub:`${name} will be updated to its latest version`, cmd:`python3 scripts/claude-skill sync-local --skills ${name}`, kind:'update', label:'Update' };
 
+    // For bundle operations, filter skills to only those relevant to the action.
+    // Uninstall: only skills that ARE installed. Install: only skills NOT yet installed.
+    if (cfg && cfg.skills) {
+      if (cfg.kind === 'uninstall') {
+        const active = cfg.skills.filter(s => INSTALLED.has(s));
+        const n = active.length;
+        if (n === 0) return;  // nothing to uninstall
+        cfg = { ...cfg, skills: active, cmd: makeUninstallCmd(active),
+                label: `Uninstall ${n} skill${n === 1 ? '' : 's'}`,
+                sub: `${n} skill${n === 1 ? '' : 's'} will be removed from ~/.claude/skills/` };
+      } else if (cfg.kind === 'install') {
+        const active = cfg.skills.filter(s => !INSTALLED.has(s));
+        const n = active.length;
+        if (n === 0) return;  // all already installed
+        cfg = { ...cfg, skills: active, cmd: makeInstallCmd(active),
+                label: `Install ${n} skill${n === 1 ? '' : 's'}`,
+                sub: `${n} skill${n === 1 ? '' : 's'} will be added to ~/.claude/skills/` };
+      }
+    }
+
     document.getElementById('m-title').textContent = cfg.title;
     document.getElementById('m-sub').textContent   = cfg.sub;
     document.getElementById('m-cmd').textContent   = cfg.cmd;

@@ -341,7 +341,123 @@ class TestUninstallTransitions(UITestBase):
             self.assertEqual(b['count'].inner_text(), f'{expected} of 5')
 
 
-# ── 5. State transition cycle ─────────────────────────────────────────────────
+# ── 5. Bundle modal reflects actual installed count, not hardcoded total ───────
+
+class TestBundleModalAccuracy(UITestBase):
+    """
+    Bundle-level Install/Uninstall modals must reflect only the skills
+    that are actually relevant — not the full hardcoded list.
+
+    Bug: with 2 of 5 Python skills installed, clicking the bundle Uninstall
+    button showed "Uninstall 5 skills" and would attempt to uninstall all 5,
+    even though only 2 are present.
+
+    Desired behaviour:
+    - Bundle Uninstall modal: label and sub-text show only the installed count
+    - Bundle Install modal: label and sub-text show only the NOT-yet-installed count
+    """
+
+    def _open_bundle_modal(self, bundle_name, action):
+        """Click Install or Uninstall on a bundle and wait for modal to open."""
+        b = self._bundle(bundle_name)
+        btn = b['install_btn'] if action == 'install' else b['uninstall_btn']
+        btn.click()
+        self.page.wait_for_selector('#overlay.open', timeout=5000)
+
+    def _close_modal(self):
+        # Cancel button uses class .btn-cancel (no id), inside #overlay
+        self.page.locator('#overlay .btn-cancel').click()
+        # Overlay closes by removing .open class, making it display:none → wait for hidden
+        self.page.locator('#overlay').wait_for(state='hidden', timeout=3000)
+
+    # ── Uninstall modal ───────────────────────────────────────────────────────
+
+    def test_uninstall_modal_shows_installed_count_not_total(self):
+        """With 2 of 5 installed, Uninstall modal must say 2, not 5."""
+        self._install(PYTHON_BUNDLE[:2])
+        self._open_bundle_modal('python', 'uninstall')
+        sub = self.page.locator('#m-sub').inner_text()
+        label = self.page.locator('#m-confirm').inner_text()
+        self._close_modal()
+        self.assertIn('2', label, f'Label should say 2 skills, got: {label!r}')
+        self.assertNotIn('5', label, f'Label must not say 5 skills, got: {label!r}')
+        # Sub-text should also reflect the actual count
+        self.assertNotIn('5 Python', sub)
+
+    def test_uninstall_modal_cmd_shows_only_installed_skills(self):
+        """The displayed command must list only installed skills."""
+        installed = PYTHON_BUNDLE[:2]
+        not_installed = PYTHON_BUNDLE[2:]
+        self._install(installed)
+        self._open_bundle_modal('python', 'uninstall')
+        cmd = self.page.locator('#m-cmd').inner_text()
+        self._close_modal()
+        for skill in installed:
+            self.assertIn(skill, cmd, f'Installed skill {skill} missing from cmd')
+        for skill in not_installed:
+            self.assertNotIn(skill, cmd, f'Uninstalled skill {skill} should not be in cmd')
+
+    def test_uninstall_modal_single_remaining_skill(self):
+        """With 1 of 5 installed, label says 'Uninstall 1 skill'."""
+        self._install([PYTHON_BUNDLE[0]])
+        self._open_bundle_modal('python', 'uninstall')
+        label = self.page.locator('#m-confirm').inner_text()
+        self._close_modal()
+        self.assertIn('1', label)
+        self.assertNotIn('5', label)
+
+    def test_uninstall_all_installed_shows_full_count(self):
+        """With all 5 installed, Uninstall modal correctly says 5."""
+        self._install(PYTHON_BUNDLE)
+        self._open_bundle_modal('python', 'uninstall')
+        label = self.page.locator('#m-confirm').inner_text()
+        self._close_modal()
+        self.assertIn('5', label)
+
+    # ── Install modal ─────────────────────────────────────────────────────────
+
+    def test_install_modal_shows_missing_count_not_total(self):
+        """With 3 of 5 already installed, Install modal must say 2, not 5."""
+        self._install(PYTHON_BUNDLE[:3])
+        self._open_bundle_modal('python', 'install')
+        label = self.page.locator('#m-confirm').inner_text()
+        self._close_modal()
+        self.assertIn('2', label, f'Should say 2 remaining, got: {label!r}')
+        self.assertNotIn('5', label)
+
+    def test_install_modal_cmd_excludes_already_installed(self):
+        """The displayed install command must not include already-installed skills."""
+        already = PYTHON_BUNDLE[:3]
+        remaining = PYTHON_BUNDLE[3:]
+        self._install(already)
+        self._open_bundle_modal('python', 'install')
+        cmd = self.page.locator('#m-cmd').inner_text()
+        self._close_modal()
+        for skill in remaining:
+            self.assertIn(skill, cmd, f'Missing skill {skill} should be in cmd')
+        for skill in already:
+            self.assertNotIn(skill, cmd, f'Already-installed {skill} should not be in cmd')
+
+    def test_install_modal_single_remaining_skill(self):
+        """With 4 of 5 installed, Install modal says 'Install 1 skill'."""
+        self._install(PYTHON_BUNDLE[:4])
+        self._open_bundle_modal('python', 'install')
+        label = self.page.locator('#m-confirm').inner_text()
+        self._close_modal()
+        self.assertIn('1', label)
+        self.assertNotIn('5', label)
+
+    def test_principles_uninstall_modal_accuracy(self):
+        """Same bug applies to Principles bundle — verify fix is universal."""
+        self._install(PRINCIPLES[:2])
+        self._open_bundle_modal('principles', 'uninstall')
+        label = self.page.locator('#m-confirm').inner_text()
+        self._close_modal()
+        self.assertIn('2', label)
+        self.assertNotIn('4', label)
+
+
+# ── 6. State transition cycle ─────────────────────────────────────────────────
 
 class TestStateTransitionCycle(UITestBase):
     """Full cycle: empty → partial → full → partial → empty for all bundles."""
