@@ -5,6 +5,38 @@ Promote to an ADR when ready to decide; discard when no longer relevant.
 
 ---
 
+## 2026-04-04 — Semantically-ordered merge of workspace design docs into target DESIGN.md
+
+**Priority:** high
+**Status:** active
+
+When promoting a workspace design document into a target project's DESIGN.md,
+a clean git merge is not sufficient. Design documents are order-sensitive prose:
+a technically conflict-free merge can produce a document that is incoherent if
+sections arrive out of sequence (e.g. a conclusion merged before its premises,
+or an architectural evolution described before the baseline it evolved from).
+
+This is distinct from code merges where order-independence is more common.
+A solution needs to handle:
+- Multiple parallel workspace contributors merging into the same DESIGN.md
+- Sequential evolution within a single workspace (sections written at different
+  times that must land in narrative order, not commit order)
+- The fact that "no conflicts" is a false signal of correctness for prose docs
+
+No solution designed yet — this is a hard, important TODO before workspace
+promotion is considered complete. Possible directions: section-level ordering
+metadata, a merge coordinator skill that reviews and reorders before committing,
+or a structured DESIGN.md format that makes ordering explicit and checkable.
+
+**Context:** Raised during workspace redesign (2026-04-04) when discussing
+promotion of workspace artifacts to target project repos. The design-snapshot →
+DESIGN.md promotion path is the primary trigger, but applies to any prose
+document with narrative structure.
+
+**Promoted to:** *(leave blank)*
+
+---
+
 ## 2026-04-04 — Consistent index-first pattern across all workspace content
 
 **Priority:** high
