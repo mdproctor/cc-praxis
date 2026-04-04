@@ -50,6 +50,8 @@ KNOWN_NON_SKILLS = {
     'python-types', 'python-deps', 'python-quality', 'python-testing', 'python-build',
     # Superpowers skills — external, not in this repository
     'writing-plans', 'brainstorming', 'executing-plans',
+    # Personal skills — external, installed separately by the user
+    'write-blog-post',
     # Future planned extension skills — mentioned as examples in principles skills
     # but not yet implemented. Add here when referenced, remove when created.
     'python-observability',

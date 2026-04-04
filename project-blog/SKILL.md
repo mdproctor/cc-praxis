@@ -16,10 +16,12 @@ hindsight. Each entry captures what the developer believed and intended at
 that point, including aspirations that later changed, approaches that were
 rejected, and pivots that happened mid-build.
 
-This is not polished documentation. It is the honest, messy record of how
-decisions actually get made: what was considered, what was rejected, what
-constraints forced the change, and the "I don't know yet" moments that
-standard project docs sanitise away.
+Entries are written informally and honestly as the work happens. They are
+intended to be published — individually or as a series — once a phase or
+project reaches a natural point. The raw honesty is the value: readers see
+how decisions actually get made, not a sanitised retrospective. The
+`write-blog-post` skill handles the polishing step when entries are ready
+to publish.
 
 ---
 
@@ -34,6 +36,10 @@ standard project docs sanitise away.
 - **Not a retrospective** — Never written after the fact. If a belief was
   wrong, a new entry corrects it — the old entry is never revised.
 - **Not a technical spec** — Diary voice only.
+- **Not a polished article** — That's `write-blog-post`, which takes these
+  entries and turns them into publication-ready content with style guide
+  applied. The project blog captures the raw material; write-blog-post
+  does the publishing step.
 
 ---
 
@@ -359,6 +365,8 @@ For Correction entries additionally:
 **Invoked by:** User directly ("write a blog entry", "update the project blog", "document this pivot"); also appropriate after `adr` captures a major decision, or after `design-snapshot` marks a significant milestone — the blog entry provides the narrative context the formal records don't capture
 
 **Invokes:** [`adr`] — when a significant decision in the blog entry warrants a formal record; [`design-snapshot`] — when the entry marks a major milestone worth freezing as a formal state record; [`git-commit`] — to commit the entry (routes to `java-git-commit`, `custom-git-commit`, etc. per CLAUDE.md project type)
+
+**Feeds into:** `write-blog-post` (personal skill, not in cc-praxis) — when one or more entries are ready to be polished and published as a public article, `write-blog-post` takes these diary entries as source material and applies a personal style guide
 
 **Complements:** `adr` (formal decision record vs narrative story), `design-snapshot` (formal state freeze vs diary account of the journey), `idea-log` (undecided possibilities vs what actually happened and why)
 
