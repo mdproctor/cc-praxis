@@ -47,6 +47,11 @@ The `garden` already established the `~/claude/` precedent. Others don't follow 
   - Public workspace → public GitHub repo
   - Neither is ephemeral; both are durable, versioned, and remote-backed
 
+- **Private → public promotion is optional, not automatic**
+  - Some content can move from private to public when ready (ideas, ADRs, blog entries)
+  - Some content is permanently private by nature (e.g. writing style guide, personal preferences)
+  - The private workspace is not a staging area — it's a permanent home for some content
+
 ---
 
 ## Key Tensions to Resolve
