@@ -34,7 +34,8 @@ from pathlib import Path
 from threading import Timer
 
 SKILLS_ROOT = Path(__file__).parent.parent
-SKILLS_DIR = Path.home() / '.claude' / 'skills'
+import os as _os
+SKILLS_DIR = Path(_os.environ.get('CLAUDE_SKILLS_DIR', str(Path.home() / '.claude' / 'skills')))
 MARKETPLACE_PATH = SKILLS_ROOT / '.claude-plugin' / 'marketplace.json'
 HTML_PATH = SKILLS_ROOT / 'docs' / 'index.html'
 
@@ -105,8 +106,9 @@ def read_installed_state() -> tuple[list, dict, list]:
                 except (json.JSONDecodeError, OSError):
                     pass  # version unknown
 
-    # Compute outdated list against marketplace
+    # Compute outdated list and bundle state against marketplace
     outdated: list[str] = []
+    bundles: dict = {}
     try:
         marketplace = json.loads(MARKETPLACE_PATH.read_text(encoding='utf-8'))
         avail_versions = {p['name']: p.get('version', '') for p in marketplace.get('plugins', [])}
@@ -115,10 +117,26 @@ def read_installed_state() -> tuple[list, dict, list]:
             avail_ver = avail_versions.get(name)
             if inst_ver and avail_ver and is_outdated(inst_ver, avail_ver):
                 outdated.append(name)
+        # Per-bundle installed count and state
+        installed_set = set(installed)
+        for bundle in marketplace.get('bundles', []):
+            bname  = bundle['name']
+            skills = bundle.get('skills', [])
+            count  = sum(1 for s in skills if s in installed_set)
+            total  = len(skills)
+            if total == 0:
+                state = 'empty'
+            elif count == 0:
+                state = 'empty'
+            elif count == total:
+                state = 'full'
+            else:
+                state = 'partial'
+            bundles[bname] = {'installed': count, 'total': total, 'state': state, 'skills': skills}
     except (FileNotFoundError, json.JSONDecodeError, KeyError):
         pass  # best-effort
 
-    return installed, versions, outdated
+    return installed, versions, outdated, bundles
 
 
 # ── Subprocess execution ──────────────────────────────────────────────────────
@@ -126,6 +144,11 @@ def read_installed_state() -> tuple[list, dict, list]:
 def _run(*args: str) -> tuple[bool, str]:
     """Run the claude-skill script. Returns (success, combined_output)."""
     cmd = [sys.executable, str(SKILLS_ROOT / 'scripts' / 'claude-skill')] + list(args)
+    # Propagate CLAUDE_SKILLS_DIR so the subprocess targets the same directory
+    # we're using (critical for tests that redirect to a temp directory).
+    import os as _os
+    env = _os.environ.copy()
+    env['CLAUDE_SKILLS_DIR'] = str(SKILLS_DIR)
     try:
         result = subprocess.run(
             cmd,
@@ -133,6 +156,7 @@ def _run(*args: str) -> tuple[bool, str]:
             text=True,
             cwd=str(SKILLS_ROOT),
             timeout=120,
+            env=env,
         )
         output = (result.stdout + result.stderr).strip()
         return result.returncode == 0, output
@@ -227,11 +251,12 @@ class InstallerHandler(BaseHTTPRequestHandler):
     # ── route handlers ────────────────────────────────────────────────────────
 
     def _handle_state(self) -> None:
-        installed, versions, outdated = read_installed_state()
+        installed, versions, outdated, bundles = read_installed_state()
         self._send_json({
             'installed': installed,
             'versions': versions,
             'outdated': outdated,
+            'bundles': bundles,
         })
 
     def _handle_marketplace(self) -> None:

@@ -2498,6 +2498,13 @@
     }
   }
 
+  // Bundle id → HTML element id mapping
+  const BUNDLE_ID_MAP = {
+    'core': 'b-core', 'principles': 'b-principles',
+    'java-quarkus': 'b-java', 'typescript': 'b-ts',
+    'python': 'b-python', 'individual': 'b-individual',
+  };
+
   function applyState(data) {
     INSTALLED.clear();
     Object.keys(VERSIONS).forEach(k => delete VERSIONS[k]);
@@ -2505,6 +2512,43 @@
     Object.assign(VERSIONS, data.versions || {});
     updateAllBadges();
     updateInstallSummary();
+    if (data.bundles) updateBundleStates(data.bundles);
+  }
+
+  function updateBundleStates(bundles) {
+    for (const [bundleName, info] of Object.entries(bundles)) {
+      const elId = BUNDLE_ID_MAP[bundleName];
+      if (!elId) continue;
+      const el = document.getElementById(elId);
+      if (!el) continue;
+
+      const { installed: count, total, state, skills } = info;
+
+      // Update count span
+      const countEl = el.querySelector('.bundle-count');
+      if (countEl) countEl.textContent = `${count} of ${total}`;
+
+      // Update state class
+      el.classList.remove('state-full', 'state-partial', 'state-empty');
+      el.classList.add(`state-${state}`);
+
+      // Update bundle action buttons
+      const actions = el.querySelector('.bundle-actions');
+      if (!actions) continue;
+      const installBtn   = actions.querySelector('.btn-install');
+      const uninstallBtn = actions.querySelector('.btn-uninstall');
+      if (state === 'empty') {
+        if (installBtn)   installBtn.style.display   = '';
+        if (uninstallBtn) uninstallBtn.style.display = 'none';
+      } else if (state === 'full') {
+        if (installBtn)   installBtn.style.display   = 'none';
+        if (uninstallBtn) uninstallBtn.style.display = '';
+      } else {
+        // partial — show both
+        if (installBtn)   installBtn.style.display = '';
+        if (uninstallBtn) uninstallBtn.style.display = '';
+      }
+    }
   }
 
   function updateAllBadges() {

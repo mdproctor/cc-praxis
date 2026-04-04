@@ -10,6 +10,7 @@ Claude Code auto-discovers all skills in this directory — no registration need
 
 import argparse
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -17,7 +18,8 @@ from pathlib import Path
 from typing import Dict, List, Set
 
 MARKETPLACE_URL = "https://raw.githubusercontent.com/mdproctor/cc-praxis/main/.claude-plugin/marketplace.json"
-SKILLS_DIR = Path.home() / ".claude" / "skills"
+# CLAUDE_SKILLS_DIR env var lets tests redirect installs to a temp directory.
+SKILLS_DIR = Path(os.environ.get('CLAUDE_SKILLS_DIR', str(Path.home() / '.claude' / 'skills')))
 SETTINGS_PATH = Path.home() / ".claude" / "settings.json"
 
 HOOK_SOURCE = Path(__file__).parent.parent / "hooks" / "check_project_setup.sh"

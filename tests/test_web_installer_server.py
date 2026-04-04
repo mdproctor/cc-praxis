@@ -495,7 +495,7 @@ class TestVersionDetection(unittest.TestCase):
             orig_sd, orig_mp = wi.SKILLS_DIR, wi.MARKETPLACE_PATH
             wi.SKILLS_DIR, wi.MARKETPLACE_PATH = skills_dir, mkt_path
             try:
-                _, _, outdated = read_installed_state()
+                _,  _, outdated, _ = read_installed_state()
                 self.assertIn('git-commit', outdated)
             finally:
                 wi.SKILLS_DIR, wi.MARKETPLACE_PATH = orig_sd, orig_mp
@@ -511,7 +511,7 @@ class TestVersionDetection(unittest.TestCase):
             orig_sd, orig_mp = wi.SKILLS_DIR, wi.MARKETPLACE_PATH
             wi.SKILLS_DIR, wi.MARKETPLACE_PATH = skills_dir, mkt_path
             try:
-                _, _, outdated = read_installed_state()
+                _,  _, outdated, _ = read_installed_state()
                 self.assertNotIn('ts-dev', outdated)
             finally:
                 wi.SKILLS_DIR, wi.MARKETPLACE_PATH = orig_sd, orig_mp
@@ -527,7 +527,7 @@ class TestVersionDetection(unittest.TestCase):
             orig_sd, orig_mp = wi.SKILLS_DIR, wi.MARKETPLACE_PATH
             wi.SKILLS_DIR, wi.MARKETPLACE_PATH = skills_dir, mkt_path
             try:
-                installed, _, outdated = read_installed_state()
+                installed, _, outdated, _ = read_installed_state()
                 self.assertIn('local-only', installed)
                 self.assertNotIn('local-only', outdated)
             finally:
