@@ -57,7 +57,7 @@
     .nav-pill.active { color: #4f46e5; border-bottom-color: #4f46e5; }
     .nav-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
     .nav-dot.full    { background: #16a34a; }
-    .nav-dot.partial { background: #d97706; }
+    .nav-dot.partial { background: #3b82f6; }
     .nav-dot.empty   { background: #d1d5db; }
     .nav-divider { width: 1px; height: 20px; background: #e5e7eb; margin: 0 4px; flex-shrink: 0; }
 
@@ -88,7 +88,7 @@
 
     .status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
     .state-full   .bundle-header .status-dot { background: #16a34a; }
-    .state-partial .bundle-header .status-dot { background: #d97706; }
+    .state-partial .bundle-header .status-dot { background: #3b82f6; }
     .state-empty  .bundle-header .status-dot { background: #d1d5db; }
 
     /* ── Bundle name + description ── */
@@ -103,10 +103,8 @@
     .nudge-dismiss { background: none; border: none; color: #7c3aed; cursor: pointer; font-size: 16px; padding: 0; flex-shrink: 0; line-height: 1; }
     .nudge-dismiss:hover { color: #5b21b6; }
 
-    /* ── Search bar — inner width matches bundle boxes ── */
-    .search-bar { background: white; border-bottom: 1px solid #f0f0f0; padding: 10px 0; }
-    .search-inner { max-width: 1000px; margin: 0 auto; padding: 0 16px; }
-    .search-input { width: 100%; padding: 8px 12px 8px 34px; border: 1px solid #e5e7eb; border-radius: 7px; font-size: 13px; color: #111827; background: #f9fafb url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") no-repeat 10px center; outline: none; transition: border-color 0.15s; }
+    /* ── Search input — lives in nav bar ── */
+    .search-input { border: 1px solid #e5e7eb; border-radius: 6px; font-size: 12px; color: #111827; background: #f9fafb url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") no-repeat 8px center; outline: none; transition: border-color 0.15s; }
     .search-input:focus { border-color: #6366f1; background-color: white; }
     .search-input::placeholder { color: #9ca3af; }
 
@@ -128,6 +126,8 @@
     body.is-web #tab-install             { display: none !important; }
     body.is-web .install-only            { display: none !important; }
     body.is-web .install-controls        { display: none !important; }
+    body.is-web #about-nudge             { display: none !important; }
+    body.is-web .ov-quick-action         { display: none !important; }
 
     /* ── View switching — !important to beat .bundle.open specificity ── */
 
@@ -136,7 +136,6 @@
     body.view-about .install-only     { display: none !important; }
     body.view-about .install-controls { display: none !important; }
     body.view-about .nav-bar          { display: none !important; }
-    body.view-about .search-bar       { display: none !important; }
     body.view-about .bundle           { display: none !important; }
     body.view-about .section-label    { display: none !important; }
     body.view-about .sync-bar         { display: none !important; }
@@ -247,19 +246,19 @@
 
     .bundle-count { font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 12px; }
     .state-full   .bundle-count { color: #15803d; background: #dcfce7; }
-    .state-partial .bundle-count { color: #92400e; background: #fef3c7; }
+    .state-partial .bundle-count { color: #1d4ed8; background: #dbeafe; }
     .state-empty  .bundle-count { color: #6b7280; background: #f3f4f6; }
 
     .bundle-actions { display: flex; gap: 6px; flex-shrink: 0; }
 
     /* ── Buttons ── */
-    .btn-install, .btn-uninstall, .btn-update { padding: 5px 12px; border-radius: 5px; font-size: 12px; font-weight: 600; cursor: pointer; border: 1px solid; transition: all 0.15s; }
+    .btn-install, .btn-uninstall, .btn-update { padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; border: 1px solid; transition: all 0.15s; }
     .btn-install   { background: #f0fdf4; color: #16a34a; border-color: #bbf7d0; }
     .btn-install:hover   { background: #16a34a; color: white; border-color: #16a34a; }
     .btn-uninstall { background: #fef2f2; color: #dc2626; border-color: #fecaca; }
     .btn-uninstall:hover { background: #dc2626; color: white; border-color: #dc2626; }
     .skill-actions .btn-install,
-    .skill-actions .btn-uninstall { padding: 3px 10px; font-size: 11px; }
+    .skill-actions .btn-uninstall { padding: 5px 12px; font-size: 12px; }
 
     /* ── Update group (sync bar only) ── */
     /* Label is absolute so it never affects flex alignment of the buttons */
@@ -369,7 +368,9 @@
   <div class="view-tabs">
     <button class="view-tab active" id="tab-about" onclick="setView('about')">About</button>
     <button class="view-tab" id="tab-browse" onclick="setView('browse')">Browse</button>
-    <button class="view-tab" id="tab-install" onclick="setView('install')">Install</button>
+    <button class="view-tab" id="tab-install" onclick="setView('install')">
+      Install<span id="header-install-badge" style="display:none;background:rgba(255,255,255,0.2);color:white;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:6px;"></span>
+    </button>
   </div>
   <div class="header-right install-controls">
     <div class="mode-toggle">
@@ -405,20 +406,23 @@
     <a class="nav-pill" href="#b-individual" onclick="navTo(event,'b-individual')">
       <span class="nav-dot partial"></span> Extras
     </a>
+    <div style="flex:1;min-width:8px;"></div>
+    <input class="search-input" id="search-input" type="text" placeholder="Search skills…" oninput="filterSkills(this.value)" style="width:180px;flex-shrink:0;font-size:12px;padding:5px 10px 5px 28px;">
+    <div class="nav-divider"></div>
+    <button class="btn-toggle-all" id="btn-toggle-all" onclick="toggleAll()" style="flex-shrink:0;border:none;padding:8px 12px;">⊟ Collapse All</button>
   </div>
 </nav>
-
-<div class="search-bar">
-  <div class="search-inner" style="display:flex;align-items:center;gap:8px;">
-    <input class="search-input" id="search-input" type="text" placeholder="Search skills…" oninput="filterSkills(this.value)" style="flex:1;width:auto;">
-    <button class="btn-toggle-all" id="btn-toggle-all" onclick="toggleAll()">⊟ Collapse All</button>
-  </div>
-</div>
 
 <div class="container">
 
   <!-- Overview hero — only visible in Overview tab -->
   <!-- ══ ABOUT PAGE ══ -->
+
+  <div id="about-nudge" class="about-only" style="background:#f5f3ff;border:1px solid #ddd6fe;border-radius:8px;padding:10px 16px;font-size:12px;color:#5b21b6;margin-bottom:16px;display:flex;align-items:center;gap:10px;">
+    <span>💡</span>
+    <span style="flex:1;"><strong>New here?</strong> Install <strong>Core</strong> first, then your language bundle. Browse skills below or <button onclick="setView('install')" style="background:none;border:none;color:#6d28d9;font-weight:700;cursor:pointer;padding:0;font-size:12px;text-decoration:underline;">go to Install →</button></span>
+    <button onclick="document.getElementById('about-nudge').style.display='none'" style="background:none;border:none;color:#7c3aed;cursor:pointer;font-size:16px;padding:0;line-height:1;">×</button>
+  </div>
 
   <div class="overview-hero about-only" style="margin-bottom:20px;">
     <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:14px;flex-wrap:wrap;">
@@ -458,7 +462,7 @@
 
   <!-- Before / After -->
   <div class="about-only" style="margin-bottom:16px;display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-    <div style="background:white;border:1px solid #fecaca;border-radius:10px;padding:20px 22px;">
+    <div style="background:white;border:2px solid #fca5a5;border-radius:10px;padding:20px 22px;">
       <div style="font-size:11px;font-weight:700;color:#dc2626;letter-spacing:.05em;text-transform:uppercase;margin-bottom:12px;">Without cc-praxis</div>
       <ul style="list-style:none;display:flex;flex-direction:column;gap:9px;">
         <li style="display:flex;gap:10px;font-size:13px;color:#374151;"><span style="color:#dc2626;flex-shrink:0">✗</span><span><code style="background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:11px">git commit -m "fix stuff"</code> — meaningless history, archaeology by Tuesday</span></li>
@@ -468,7 +472,7 @@
         <li style="display:flex;gap:10px;font-size:13px;color:#374151;"><span style="color:#dc2626;flex-shrink:0">✗</span><span>Review depth depends on how much you prompted — inconsistent every time</span></li>
       </ul>
     </div>
-    <div style="background:white;border:1px solid #bbf7d0;border-radius:10px;padding:20px 22px;">
+    <div style="background:white;border:2px solid #86efac;border-radius:10px;padding:20px 22px;">
       <div style="font-size:11px;font-weight:700;color:#16a34a;letter-spacing:.05em;text-transform:uppercase;margin-bottom:12px;">With cc-praxis</div>
       <ul style="list-style:none;display:flex;flex-direction:column;gap:9px;">
         <li style="display:flex;gap:10px;font-size:13px;color:#374151;"><span style="color:#16a34a;flex-shrink:0">✓</span><span>Structured commits with conventional types and Java-specific scopes — searchable, releasable</span></li>
@@ -486,22 +490,22 @@
     <h3 style="font-size:17px;font-weight:700;margin-bottom:18px;">Skills are tiny. Workflows are automatic.</h3>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;">
       <div style="background:rgba(255,255,255,.07);border-radius:8px;padding:14px;">
-        <div style="font-size:20px;margin-bottom:8px;color:#a5b4fc;">1</div>
+        <div style="width:28px;height:28px;border-radius:50%;background:#6366f1;color:white;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:10px;">1</div>
         <div style="font-size:12px;font-weight:600;margin-bottom:4px;">Install once</div>
         <div style="font-size:11px;color:#a5b4fc;line-height:1.5;">Skills live in <code style="background:rgba(255,255,255,.1);padding:1px 4px;border-radius:3px">~/.claude/skills/</code> — one command sets up your whole environment.</div>
       </div>
       <div style="background:rgba(255,255,255,.07);border-radius:8px;padding:14px;">
-        <div style="font-size:20px;margin-bottom:8px;color:#a5b4fc;">2</div>
+        <div style="width:28px;height:28px;border-radius:50%;background:#6366f1;color:white;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:10px;">2</div>
         <div style="font-size:12px;font-weight:600;margin-bottom:4px;">Descriptions load</div>
         <div style="font-size:11px;color:#a5b4fc;line-height:1.5;">At session start Claude reads ~30 words per skill. 41 skills = ~1,200 words. Less than one prompt.</div>
       </div>
       <div style="background:rgba(255,255,255,.07);border-radius:8px;padding:14px;">
-        <div style="font-size:20px;margin-bottom:8px;color:#a5b4fc;">3</div>
+        <div style="width:28px;height:28px;border-radius:50%;background:#6366f1;color:white;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:10px;">3</div>
         <div style="font-size:12px;font-weight:600;margin-bottom:4px;">Trigger activates</div>
         <div style="font-size:11px;color:#a5b4fc;line-height:1.5;">You say "commit" — git-commit reads CLAUDE.md, routes to the right specialist, full skill loads.</div>
       </div>
       <div style="background:rgba(255,255,255,.07);border-radius:8px;padding:14px;">
-        <div style="font-size:20px;margin-bottom:8px;color:#a5b4fc;">4</div>
+        <div style="width:28px;height:28px;border-radius:50%;background:#6366f1;color:white;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:10px;">4</div>
         <div style="font-size:12px;font-weight:600;margin-bottom:4px;">Chain runs</div>
         <div style="font-size:11px;color:#a5b4fc;line-height:1.5;">Skills invoke each other automatically. You focus on the work — the workflow manages itself.</div>
       </div>
@@ -601,6 +605,12 @@
       Open a new Claude Code session and say <em>"commit"</em> to see it in action.
     </div>
     <button class="nudge-dismiss" onclick="document.getElementById('nudge').style.display='none'" title="Dismiss">×</button>
+  </div>
+
+  <div id="success-banner" class="install-only" style="display:none;background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:10px 14px;font-size:12px;color:#15803d;margin-bottom:16px;display:none;align-items:flex-start;gap:10px;">
+    <span style="font-size:15px;line-height:1;">✓</span>
+    <div style="flex:1;line-height:1.5;" id="success-banner-text">Skills installed — open a new Claude Code session to use them.</div>
+    <button onclick="document.getElementById('success-banner').style.display='none'" style="background:none;border:none;color:#16a34a;cursor:pointer;font-size:15px;padding:0;line-height:1;">×</button>
   </div>
 
   <div class="sync-bar install-only">
@@ -2269,6 +2279,8 @@
       const name = el.id.replace('ov-', '');
       const header = el.querySelector('.overview-skill-header');
       if (!header || document.getElementById('chain-btn-' + name)) return; // don't double-wire
+
+      // Chain graph button
       const btn = document.createElement('button');
       btn.id        = 'chain-btn-' + name;
       btn.className = 'chain-btn';
@@ -2276,6 +2288,8 @@
       btn.innerHTML = CHAIN_ICON_SVG + '<span style="font-size:10px;font-weight:600;margin-left:3px;line-height:1;vertical-align:middle;">Chain</span>';
       btn.addEventListener('click', (e) => { e.stopPropagation(); toggleChain(name, el); });
       header.appendChild(btn);
+
+      // Quick-action button is wired after INSTALLED is populated — see updateAllBadges()
     });
   }
   document.addEventListener('DOMContentLoaded', wireChainHovers);
@@ -2295,10 +2309,8 @@
     // Measure sticky offsets dynamically
     const header    = document.querySelector('.header');
     const navBar    = document.querySelector('.nav-bar');
-    const searchBar = document.querySelector('.search-bar');
     const offset = (header    ? header.offsetHeight    : 0)
                  + (navBar    ? navBar.offsetHeight    : 0)
-                 + (searchBar ? searchBar.offsetHeight : 0)
                  + 12;
     const top = target.getBoundingClientRect().top + window.scrollY - offset;
     window.scrollTo({ top, behavior: 'smooth' });
@@ -2342,6 +2354,15 @@
     t.textContent = msg;
     t.classList.add('show');
     setTimeout(() => t.classList.remove('show'), duration);
+  }
+
+  // ── Persistent success banner (install tab) ──
+  function showSuccessBanner(msg) {
+    const b = document.getElementById('success-banner');
+    const t = document.getElementById('success-banner-text');
+    if (!b) return;
+    if (t) t.textContent = msg;
+    b.style.display = 'flex';
   }
 
   // ── Context detection: local installer vs public web ──
@@ -2579,6 +2600,28 @@
         const verEl = card.querySelector('.skill-version');
         if (verEl) verEl.textContent = `v${VERSIONS[name]}`;
       }
+      // Quick-action Install/Uninstall button in Browse card header.
+      // Created on first call, updated on subsequent calls.
+      // body.is-web CSS hides it on GitHub Pages.
+      const header = card.querySelector('.overview-skill-header');
+      if (header) {
+        let qabEl = header.querySelector('.ov-quick-action');
+        if (!qabEl) {
+          qabEl = document.createElement('button');
+          qabEl.className = 'ov-quick-action';
+          qabEl.style.cssText = 'padding:2px 10px;font-size:11px;margin-left:auto;';
+          header.appendChild(qabEl);
+        }
+        if (inst) {
+          qabEl.textContent = 'Uninstall';
+          qabEl.className = 'ov-quick-action btn-uninstall';
+          qabEl.onclick = (e) => { e.stopPropagation(); openModal('uninstall-skill', name); };
+        } else {
+          qabEl.textContent = 'Install';
+          qabEl.className = 'ov-quick-action btn-install';
+          qabEl.onclick = (e) => { e.stopPropagation(); openModal('install-skill', name); };
+        }
+      }
     });
     // Install tab skill rows
     document.querySelectorAll('.skill-row').forEach(row => {
@@ -2607,6 +2650,12 @@
     const count = INSTALLED.size;
     const subEl = document.getElementById('sync-bar-sub') || document.querySelector('.sync-bar-sub');
     if (subEl) subEl.textContent = `${count} of ${total} installed`;
+    // Header Install tab badge
+    const badge = document.getElementById('header-install-badge');
+    if (badge) {
+      if (count > 0) { badge.textContent = count; badge.style.display = ''; }
+      else badge.style.display = 'none';
+    }
     // Outdated: installed version older than available
     const outdated = [...INSTALLED].filter(n => {
       const inst = VERSIONS[n], avail = AVAILABLE[n];
@@ -2769,6 +2818,7 @@
         if (result.ok) {
           const msg = cfg.kind === 'uninstall' ? '✓ Skills removed' : '✓ Skills installed — open a new Claude Code session to use them';
           showToast(msg);
+          if (cfg.kind === 'install') showSuccessBanner('Skills installed — open a new Claude Code session to use them.');
           await loadState();
         } else {
           showToast('❌ ' + (result.error || 'Unknown error'));
