@@ -38,6 +38,19 @@ The wizard checks for reverse dependencies and confirms before removing anything
 
 ---
 
+### Web UI — `scripts/web_installer.py`
+
+If you have the repository cloned locally, the web installer gives you a visual browser for managing skills:
+
+```bash
+python3 scripts/web_installer.py          # opens http://localhost:8765 automatically
+python3 scripts/web_installer.py --port 8766 --no-browser
+```
+
+Or after the plugin is installed: just run `cc-praxis` in your terminal.
+
+---
+
 ### Manual Installer — `scripts/claude-skill`
 
 Clone the repository and use the bundled installer directly. This gives you automatic dependency resolution without the wizard, plus the full local development workflow described in [Contributing & Local Development](#contributing--local-development).
@@ -290,7 +303,19 @@ This collection follows a **layered architecture** where foundation skills provi
 
 ## Skills
 
-### Setup Wizards
+### Setup & Management
+
+#### **cc-praxis-ui**
+Visual skill manager — a local web app for browsing, installing, updating, and uninstalling skills:
+- Browse all 40+ skills by bundle with descriptions and chaining relationships
+- Live install state: see what's installed, what's outdated, and what's available
+- Install or uninstall individual skills or whole bundles with accurate counts
+- Auto Execute mode runs commands directly; Manual mode shows commands to copy-paste
+- Context-aware: when served publicly (GitHub Pages) the Install tab is hidden
+
+**Launch:** `/cc-praxis-ui` inside Claude Code, or `cc-praxis` in a terminal (added to PATH on plugin install).
+
+**Server:** `python3 scripts/web_installer.py [--port PORT] [--no-browser]`
 
 #### **install-skills**
 One-time bootstrap wizard for new environments:
@@ -1430,18 +1455,18 @@ See [QUALITY.md § Why Quality Matters](QUALITY.md#why-quality-matters) for comp
 ├── RELEASE.md                           # Release workflow (trunk-based, git tags)
 ├── hooks/
 │   └── check_project_setup.sh          # Session-start hook (synced by scripts/claude-skill)
+├── bin/
+│   └── cc-praxis                        # Shell launcher (added to PATH on plugin install)
 ├── .claude-plugin/
-│   └── marketplace.json                 # Marketplace catalog (all 20 skills)
+│   └── marketplace.json                 # Marketplace catalog (all 41 skills)
 ├── scripts/                             # Automation and validation
 │   ├── claude-skill                     # Skill installer/manager CLI (install, sync-local, etc.)
+│   ├── web_installer.py                 # Web skill manager server (serves docs/index.html)
+│   ├── generate_web_app_data.py         # Regenerates CHAIN JS + bundle meta in docs/index.html
 │   ├── validate_all.py                  # Master orchestrator (3-tier validation)
 │   ├── validate_document.py             # Universal .md corruption detector
 │   ├── generate_skill_metadata.py       # Regenerates skill.json for all skills
-│   ├── testing/                         # Test infrastructure
-│   │   ├── run_skill_tests.py          # Functional test runner (git worktrees)
-│   │   ├── run_regression_tests.py     # Regression test runner
-│   │   └── test_coverage.py            # Coverage reporting
-│   └── validation/                      # SKILL.md validators (14 total, 3 tiers)
+│   └── validation/                      # SKILL.md validators (17 total, 3 tiers)
 │       ├── validate_frontmatter.py     # YAML structure, required fields [COMMIT]
 │       ├── validate_cso.py             # Description CSO compliance [COMMIT]
 │       ├── validate_references.py      # Cross-reference integrity [COMMIT]
@@ -1450,6 +1475,7 @@ See [QUALITY.md § Why Quality Matters](QUALITY.md#why-quality-matters) for comp
 │       ├── validate_structure.py       # File organization [COMMIT]
 │       ├── validate_project_types.py   # Project type list consistency [COMMIT]
 │       ├── validate_flowcharts.py      # Mermaid syntax validation [PUSH]
+│       ├── validate_web_app.py         # Web app sync with SKILL.md data [PUSH]
 │       ├── validate_cross_document.py  # Cross-document consistency [PUSH]
 │       ├── validate_temporal.py        # Stale references [PUSH]
 │       ├── validate_usability.py       # Readability, UX [PUSH]
@@ -1457,12 +1483,20 @@ See [QUALITY.md § Why Quality Matters](QUALITY.md#why-quality-matters) for comp
 │       ├── validate_behavior.py        # Behavioral consistency [PUSH]
 │       ├── validate_readme_sync.py     # README/CLAUDE sync [PUSH]
 │       └── validate_python_quality.py  # mypy, flake8, bandit [CI]
-├── tests/                               # Test suite
-│   ├── test_claude_skill.py            # Tests for scripts/claude-skill (sync-local, install, etc.)
+├── tests/                               # Test suite (295 tests)
+│   ├── test_claude_skill.py            # Tests for scripts/claude-skill
+│   ├── test_mockup_chaining.py         # Skill chaining ground truth (CHAINING_TRUTH)
+│   ├── test_chain_data_drift.py        # CHAIN JS in index.html vs CHAINING_TRUTH
+│   ├── test_web_installer_server.py    # Web installer API unit tests (55 tests)
+│   ├── test_web_installer_integration.py # Real install/uninstall permutation tests (40 tests)
+│   ├── test_web_installer_ui.py        # Playwright browser UI tests (38 tests)
 │   ├── test_document_discovery.py      # Tests for document discovery
 │   ├── test_document_cache.py          # Tests for document caching
 │   └── test_modular_validator.py       # Tests for modular validator
-├── docs/                                # Extended documentation
+├── docs/                                # Web skill manager + documentation
+│   ├── index.html                       # Web skill manager UI (About/Browse/Install tabs)
+│   ├── ideas/
+│   │   └── IDEAS.md                     # Project idea log (undecided possibilities)
 │   ├── PROJECT-TYPES.md                # Complete project type taxonomy and routing
 │   └── adr/                            # Architecture Decision Records
 ├── skill-validation.md                  # Skills-specific SKILL.md validation workflow

@@ -295,7 +295,14 @@ When working on this repository, use these commands:
 # Sync all skills to ~/.claude/skills/ (do this after any skill change)
 python3 scripts/claude-skill sync-local --all -y
 
-# Run all tests
+# Launch the web skill manager UI
+python3 scripts/web_installer.py          # opens http://localhost:8765
+# (or: cc-praxis, if bin/ is on PATH via plugin install)
+
+# Regenerate web app data after chaining changes
+python3 scripts/generate_web_app_data.py
+
+# Run all tests (295 tests; ~90s including Playwright UI tests)
 python3 -m pytest tests/ -v
 
 # Run commit-tier validators
@@ -312,13 +319,11 @@ python3 scripts/validation/validate_project_types.py --verbose
 
 # Check if a primary doc needs modularising
 python3 scripts/validation/validate_doc_structure.py CLAUDE.md
-
-# Validate a blog commit message
-python3 scripts/validation/validate_blog_commit.py <<< "post(java): add MCP guide"
 ```
 
 **After editing any skill:** run `sync-local` so `~/.claude/skills/` has the latest version.
 **After adding a new skill:** run `generate_commands.py` AND add to `marketplace.json` plugins list.
+**After chaining changes:** run `generate_web_app_data.py` to sync `docs/index.html` CHAIN data.
 
 ## How Claude Code Loads Skills
 
@@ -472,6 +477,9 @@ When you identify a problem and prepare a solution, STOP and consider:
 
 **Language/framework foundation skills** (others build on these):
 - `java-dev` — all Java development extends this
+
+**Skill manager:**
+- `cc-praxis-ui` — visual web UI for managing skills; launched via `/cc-praxis-ui` or `cc-praxis` in terminal; powered by `scripts/web_installer.py`
 
 **Workflow integrators** (chain multiple skills):
 - `git-commit` — entry point for all commits; routes by project type; offers issue-workflow setup on first use
