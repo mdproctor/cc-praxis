@@ -24,8 +24,6 @@
     .header h1 span { color: #a5b4fc; font-weight: 400; }
     .header-right { display: flex; align-items: center; gap: 12px; justify-content: flex-end; }
 
-    .refresh-indicator { display: flex; align-items: center; gap: 5px; font-size: 11px; color: rgba(255,255,255,0.45); }
-    .refresh-dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; animation: pulse 2.5s ease-in-out infinite; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.25} }
 
     .mode-toggle { display: flex; background: rgba(255,255,255,0.1); border-radius: 7px; padding: 3px; gap: 2px; }
@@ -240,9 +238,9 @@
     /* Chain graph button */
     .chain-btn {
       background: none; border: 1px solid #e5e7eb; border-radius: 5px;
-      padding: 3px 6px; cursor: pointer; color: #9ca3af;
-      transition: all 0.15s; flex-shrink: 0; line-height: 0;
-      margin-left: 4px;
+      padding: 3px 8px; cursor: pointer; color: #9ca3af;
+      transition: all 0.15s; flex-shrink: 0; line-height: 1;
+      margin-left: 4px; display: inline-flex; align-items: center; gap: 2px;
     }
     .chain-btn:hover { background: #eef2ff; border-color: #6366f1; color: #6366f1; }
     .chain-btn.active { background: #6366f1; border-color: #6366f1; color: white; }
@@ -374,12 +372,11 @@
     <button class="view-tab" id="tab-install" onclick="setView('install')">Install</button>
   </div>
   <div class="header-right install-controls">
-    <div class="refresh-indicator"><div class="refresh-dot"></div> Auto-refreshing</div>
     <div class="mode-toggle">
       <button class="active" id="btn-auto">⚡ Auto-execute</button>
       <button id="btn-manual">📋 Show command</button>
     </div>
-    <button class="btn-refresh">↻ Refresh</button>
+    <button class="btn-refresh" onclick="loadState().catch(()=>{})">↻ Refresh</button>
   </div>
 </header>
 
@@ -406,7 +403,7 @@
     </a>
     <div class="nav-divider"></div>
     <a class="nav-pill" href="#b-individual" onclick="navTo(event,'b-individual')">
-      <span class="nav-dot partial"></span> Individual
+      <span class="nav-dot partial"></span> Extras
     </a>
   </div>
 </nav>
@@ -446,15 +443,15 @@
       <div class="hero-point">
         <div class="hero-point-icon">⚡</div>
         <h3>Zero overhead when idle</h3>
-        <p>33 skills contribute ~1,000 words of descriptions to your context window — less than a single well-written prompt. Each full skill loads only when triggered. The rest costs nothing.</p>
+        <p>41 skills contribute ~1,200 words of descriptions to your context window — less than a single well-written prompt. Each full skill loads only when triggered. The rest costs nothing.</p>
       </div>
     </div>
     <div class="hero-stats">
-      <div class="hero-stat"><div class="hero-stat-num">33</div><div class="hero-stat-label">Skills</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">41</div><div class="hero-stat-label">Skills</div></div>
       <div class="hero-stat"><div class="hero-stat-num">5</div><div class="hero-stat-label">Bundles</div></div>
-      <div class="hero-stat"><div class="hero-stat-num">2</div><div class="hero-stat-label">Languages</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">3</div><div class="hero-stat-label">Languages</div></div>
       <div class="hero-stat"><div class="hero-stat-num">17</div><div class="hero-stat-label">Validators</div></div>
-      <div class="hero-stat"><div class="hero-stat-num">163</div><div class="hero-stat-label">Tests</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">295</div><div class="hero-stat-label">Tests</div></div>
     </div>
     <div style="text-align:right;margin-top:10px;font-size:11px;color:rgba(255,255,255,0.35);">Open source · Apache 2.0</div>
   </div>
@@ -496,7 +493,7 @@
       <div style="background:rgba(255,255,255,.07);border-radius:8px;padding:14px;">
         <div style="font-size:20px;margin-bottom:8px;color:#a5b4fc;">2</div>
         <div style="font-size:12px;font-weight:600;margin-bottom:4px;">Descriptions load</div>
-        <div style="font-size:11px;color:#a5b4fc;line-height:1.5;">At session start Claude reads ~30 words per skill. 33 skills = ~1,000 words. Less than one prompt.</div>
+        <div style="font-size:11px;color:#a5b4fc;line-height:1.5;">At session start Claude reads ~30 words per skill. 41 skills = ~1,200 words. Less than one prompt.</div>
       </div>
       <div style="background:rgba(255,255,255,.07);border-radius:8px;padding:14px;">
         <div style="font-size:20px;margin-bottom:8px;color:#a5b4fc;">3</div>
@@ -529,10 +526,10 @@
   <div class="about-only" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
     <div style="background:#1e1b4b;border-radius:12px;padding:22px 24px;color:white;">
       <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#818cf8;margin-bottom:6px;">Token efficiency</div>
-      <h3 style="font-size:15px;font-weight:700;margin-bottom:10px;">33 skills cost less than one prompt</h3>
+      <h3 style="font-size:15px;font-weight:700;margin-bottom:10px;">41 skills cost less than one prompt</h3>
       <p style="font-size:12px;color:#a5b4fc;line-height:1.6;margin-bottom:14px;">Each skill contributes ~30 words of trigger description. The full skill body loads only when that skill activates.</p>
       <div style="display:flex;flex-direction:column;gap:7px;">
-        <div style="display:flex;justify-content:space-between;background:rgba(255,255,255,.08);padding:7px 11px;border-radius:6px;"><span style="font-size:11px;color:#c7d2fe;">33 skills × ~30 words</span><span style="font-size:12px;font-weight:700;">~1,000 words</span></div>
+        <div style="display:flex;justify-content:space-between;background:rgba(255,255,255,.08);padding:7px 11px;border-radius:6px;"><span style="font-size:11px;color:#c7d2fe;">41 skills × ~30 words</span><span style="font-size:12px;font-weight:700;">~1,200 words</span></div>
         <div style="display:flex;justify-content:space-between;background:rgba(255,255,255,.08);padding:7px 11px;border-radius:6px;"><span style="font-size:11px;color:#c7d2fe;">Typical system prompt</span><span style="font-size:12px;font-weight:700;color:#fbbf24;">500–2,000 words</span></div>
         <div style="display:flex;justify-content:space-between;background:rgba(99,102,241,.3);border:1px solid rgba(99,102,241,.5);padding:7px 11px;border-radius:6px;"><span style="font-size:11px;color:#a5b4fc;">Entire skill collection</span><span style="font-size:12px;font-weight:700;color:#4ade80;">≤ 1 prompt</span></div>
       </div>
@@ -563,9 +560,9 @@
         <div style="display:flex;align-items:center;gap:9px;margin-bottom:9px;"><div style="width:34px;height:34px;background:#dbeafe;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:17px;">⟨/⟩</div><div><div style="font-weight:700;font-size:13px;">TypeScript / Node</div><div style="font-size:10px;color:#3b82f6;font-weight:600;">FULL SUITE</div></div></div>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:3px;"><li style="font-size:11px;color:#374151;">✓ Strict mode, async patterns</li><li style="font-size:11px;color:#374151;">✓ Type safety review</li><li style="font-size:11px;color:#374151;">✓ OWASP + prototype pollution</li><li style="font-size:11px;color:#374151;">✓ npm/yarn/pnpm management</li><li style="font-size:11px;color:#374151;">✓ Project health checks</li></ul>
       </div>
-      <div style="border:2px solid #e5e7eb;border-radius:10px;padding:16px 18px;background:#fafafa;">
-        <div style="display:flex;align-items:center;gap:9px;margin-bottom:9px;"><div style="width:34px;height:34px;background:#f3f4f6;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:17px;">🐍</div><div><div style="font-weight:700;font-size:13px;color:#6b7280;">Python / Go</div><div style="font-size:10px;color:#9ca3af;font-weight:600;">COMING SOON</div></div></div>
-        <ul style="list-style:none;display:flex;flex-direction:column;gap:3px;"><li style="font-size:11px;color:#9ca3af;">◦ Development skill</li><li style="font-size:11px;color:#9ca3af;">◦ Code review</li><li style="font-size:11px;color:#9ca3af;">◦ Security audit</li><li style="font-size:11px;color:#9ca3af;">◦ Dependency management</li><li style="font-size:11px;color:#9ca3af;">◦ Project health</li></ul>
+      <div style="border:2px solid #16a34a;border-radius:10px;padding:16px 18px;">
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:9px;"><div style="width:34px;height:34px;background:#dcfce7;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:17px;">🐍</div><div><div style="font-weight:700;font-size:13px;">Python</div><div style="font-size:10px;color:#16a34a;font-weight:600;">FULL SUITE</div></div></div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:3px;"><li style="font-size:11px;color:#374151;">✓ Development, review, security</li><li style="font-size:11px;color:#374151;">✓ Type hints, async patterns</li><li style="font-size:11px;color:#374151;">✓ OWASP + pickle/injection checks</li><li style="font-size:11px;color:#374151;">✓ pip/poetry/pipenv management</li><li style="font-size:11px;color:#374151;">✓ Project health checks</li></ul>
       </div>
     </div>
   </div>
@@ -577,8 +574,17 @@
     <code style="display:block;background:rgba(0,0,0,.3);border-radius:7px;padding:9px 16px;font-size:13px;color:#a5b4fc;margin-bottom:18px;max-width:460px;margin-left:auto;margin-right:auto;text-align:left;">/plugin marketplace add github.com/mdproctor/cc-praxis</code>
     <div style="display:flex;gap:10px;justify-content:center;">
       <button onclick="setView('browse')" style="background:white;color:#4338ca;border:none;padding:9px 22px;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;">Browse Skills →</button>
-      <button onclick="setView('install')" style="background:rgba(255,255,255,.15);color:white;border:1px solid rgba(255,255,255,.3);padding:9px 22px;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;">Install Now →</button>
+      <button id="cta-secondary" onclick="isLocal ? setView('install') : window.open('https://github.com/mdproctor/cc-praxis','_blank')" style="background:rgba(255,255,255,.15);color:white;border:1px solid rgba(255,255,255,.3);padding:9px 22px;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;">Install Now →</button>
     </div>
+    <script>
+      // Adjust CTA secondary button for web context (can't install from GitHub Pages)
+      document.addEventListener('DOMContentLoaded', () => {
+        const btn = document.getElementById('cta-secondary');
+        if (btn && !['localhost','127.0.0.1',''].includes(location.hostname)) {
+          btn.textContent = 'View on GitHub →';
+        }
+      });
+    </script>
   </div>
 
   <div class="token-note install-only">
@@ -600,7 +606,7 @@
   <div class="sync-bar install-only">
     <div>
       <div class="sync-bar-title">All Skills</div>
-      <div class="sync-bar-sub">15 of 33 installed</div>
+      <div class="sync-bar-sub" id="sync-bar-sub">Checking…</div>
     </div>
     <div class="sync-bar-right">
       <div class="update-group">
@@ -1684,13 +1690,13 @@
     </div>
   </div>
 
-  <div class="section-label">Individual Skills</div>
+  <div class="section-label">Extras</div>
 
   <div class="bundle state-partial" id="b-individual">
     <div class="bundle-header" onclick="toggleBundle('b-individual')">
       <span class="bundle-chevron">▶</span>
       <span class="status-dot"></span>
-      <div class="bundle-name-col"><span class="bundle-name">Individual Skills</span><span class="bundle-desc">Standalone tools not specific to a single language</span></div>
+      <div class="bundle-name-col"><span class="bundle-name">Extras</span><span class="bundle-desc">Workflow tools, documentation aids, and setup wizards</span></div>
       <span class="bundle-count">1 of 9</span>
       <div class="bundle-actions" onclick="event.stopPropagation()">
         <button class="btn-install"   onclick="openModal('install-individual')">Install</button>
@@ -2267,7 +2273,7 @@
       btn.id        = 'chain-btn-' + name;
       btn.className = 'chain-btn';
       btn.title     = 'Show skill chain';
-      btn.innerHTML = CHAIN_ICON_SVG;
+      btn.innerHTML = CHAIN_ICON_SVG + '<span style="font-size:10px;font-weight:600;margin-left:3px;line-height:1;vertical-align:middle;">Chain</span>';
       btn.addEventListener('click', (e) => { e.stopPropagation(); toggleChain(name, el); });
       header.appendChild(btn);
     });
@@ -2599,7 +2605,7 @@
   function updateInstallSummary() {
     const total = Object.keys(AVAILABLE).length || 40;
     const count = INSTALLED.size;
-    const subEl = document.querySelector('.sync-bar-sub');
+    const subEl = document.getElementById('sync-bar-sub') || document.querySelector('.sync-bar-sub');
     if (subEl) subEl.textContent = `${count} of ${total} installed`;
     // Outdated: installed version older than available
     const outdated = [...INSTALLED].filter(n => {
@@ -2747,14 +2753,14 @@
 
     const note = document.getElementById('m-note');
     if (autoExecute) { note.className = 'modal-note'; note.textContent = '⚡ This command will run automatically when you confirm.'; }
-    else { note.className = 'modal-note manual'; note.textContent = '📋 Copy and run this command in your terminal. The page will auto-refresh once complete — or hit Refresh.'; }
+    else { note.className = 'modal-note manual'; note.textContent = '📋 Copy the command and run it in your terminal, then click Done to refresh the install state.'; }
 
     const btn = document.getElementById('m-confirm');
-    btn.textContent = autoExecute ? cfg.label : 'Done';
+    btn.textContent = autoExecute ? cfg.label : 'Done — Refresh';
     btn.className   = `btn-confirm ${cfg.kind}`;
     btn.disabled    = false;
     btn.onclick = async () => {
-      if (!autoExecute) { closeModal(); return; }
+      if (!autoExecute) { closeModal(); await loadState().catch(()=>{}); return; }
       btn.disabled = true;
       btn.textContent = 'Running…';
       try {
