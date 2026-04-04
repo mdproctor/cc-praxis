@@ -36,10 +36,10 @@ class TestHeroStats(unittest.TestCase):
         self.html = load_html()
 
     def test_skills_count_is_current(self):
-        # Should show 41, not the old 33
+        # Should show 42, not the old 33
         m = re.search(r'hero-stat-num[^>]*>(\d+)</div><div class="hero-stat-label">Skills', self.html)
         self.assertIsNotNone(m, 'Could not find Skills stat')
-        self.assertEqual(m.group(1), '41', f'Skills stat shows {m.group(1)}, expected 41')
+        self.assertEqual(m.group(1), '42', f'Skills stat shows {m.group(1)}, expected 42')
 
     def test_languages_count_is_current(self):
         # Should show 3 (Java, TypeScript, Python), not 2
@@ -55,13 +55,13 @@ class TestHeroStats(unittest.TestCase):
         self.assertGreaterEqual(count, 295, f'Tests stat shows {count}, expected ≥295')
 
     def test_token_efficiency_references_current_skill_count(self):
-        # The "41 skills cost less than one prompt" section
-        self.assertIn('41 skills cost less than one prompt', self.html)
+        # The "42 skills cost less than one prompt" section
+        self.assertIn('42 skills cost less than one prompt', self.html)
         self.assertNotIn('33 skills cost less than one prompt', self.html)
 
     def test_token_word_count_matches_skills(self):
         # 41 skills × ~30 words = ~1,200 words
-        self.assertIn('41 skills', self.html)
+        self.assertIn('42 skills', self.html)
         self.assertIn('1,200 words', self.html)
         self.assertNotIn('1,000 words', self.html)
 

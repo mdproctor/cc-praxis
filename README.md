@@ -269,7 +269,7 @@ This collection follows a **layered architecture** where foundation skills provi
 | **idea-log** | Living log for undecided possibilities | (standalone) |
 | **project-blog** | Living project diary — decisions, pivots, and discoveries in the moment | (standalone) |
 
-### Layer 7: Health & Quality (7 skills)
+### Layer 7: Health & Quality (8 skills)
 
 | Skill | Purpose | Builds On |
 |-------|---------|-----------|

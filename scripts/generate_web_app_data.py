@@ -36,7 +36,7 @@ ALL_SKILLS = {
     'custom-project-health', 'install-skills', 'uninstall-skills',
     'python-dev', 'python-code-review', 'python-security-audit',
     'pip-dependency-update', 'python-project-health', 'design-snapshot',
-    'idea-log', 'project-blog',
+    'idea-log', 'project-blog', 'cc-praxis-ui',
 }
 
 # Skills that are universal entry points — chains TO them don't require
