@@ -397,7 +397,7 @@ For Correction entries additionally:
 
 **Invokes:** [`adr`] — when a significant decision in the blog entry warrants a formal record; [`design-snapshot`] — when the entry marks a major milestone worth freezing as a formal state record; [`git-commit`] — to commit the entry (routes to `java-git-commit`, `custom-git-commit`, etc. per CLAUDE.md project type)
 
-**Feeds into:** `write-blog-post` (personal skill, not in cc-praxis) — when one or more entries are ready to be polished and published as a public article, `write-blog-post` takes these diary entries as source material and applies a personal style guide
+**Feeds into:** `write-blog-post` (personal skill, not in cc-praxis) — handles the publishing mechanics when entries are ready to go out. `project-blog` is the writing step; `write-blog-post` is the delivery step (currently Jekyll, but the platform may change — only `write-blog-post` needs to change, not the entries)
 
 **Complements:** `adr` (formal decision record vs narrative story), `design-snapshot` (formal state freeze vs diary account of the journey), `idea-log` (undecided possibilities vs what actually happened and why)
 
