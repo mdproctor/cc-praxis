@@ -5,6 +5,27 @@ Promote to an ADR when ready to decide; discard when no longer relevant.
 
 ---
 
+## 2026-04-04 — Consistent index-first pattern across all workspace content
+
+**Priority:** high
+**Status:** active
+
+Every folder in a workspace (project or global) should have a lightweight index
+file that gives Claude enough orientation to decide what to load next — without
+loading the detail files themselves. Pattern already proven by `garden/GARDEN.md`
+(dual index by technology + symptom). Should apply consistently to
+`<project>-workspace/` folders too: handoffs, snapshots, ideas, blog entries
+all get an index so any session can orient cheaply.
+
+**Context:** Surfaced during workspace redesign discussion (2026-04-04).
+Garden's index-first design was noted as the right model for the whole workspace,
+not just the garden. If every folder follows this pattern, session-handoff and
+other skills can navigate the workspace without loading every file.
+
+**Promoted to:** *(leave blank)*
+
+---
+
 ## 2026-04-04 — Holistic project-memory architecture: indexed folders not flat files
 
 **Priority:** high
