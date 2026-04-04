@@ -35,7 +35,6 @@ The `garden` already established the `~/claude/` precedent. Others don't follow 
 - Where exactly do the private and public workspaces live? (`~/claude/private/`? `~/workspace/`?)
 - What is the relationship between a workspace and a project? (workspace *contains* projects? workspace is *alongside* projects?)
 - Does content move between private → public, or are they separate from creation?
-- Does the public workspace have its own git repo? Is it pushable to GitHub?
 - What happens to existing per-project `docs/` content — migrated or coexisting?
 - Which skills write to private, which to public, which to both?
 
@@ -43,7 +42,10 @@ The `garden` already established the `~/claude/` precedent. Others don't follow 
 
 ## Decisions Made
 
-*(none yet)*
+- **Both workspaces are git repos backed up to GitHub**
+  - Private workspace → private GitHub repo
+  - Public workspace → public GitHub repo
+  - Neither is ephemeral; both are durable, versioned, and remote-backed
 
 ---
 
