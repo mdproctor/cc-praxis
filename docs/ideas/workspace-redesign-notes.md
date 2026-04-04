@@ -65,6 +65,16 @@ public-workspace/           ← public GitHub repo
 
 ## Decisions Made
 
+- **All work stays in the workspace — nothing written to project repos during development**
+  - `idea-log`, `session-handoff`, `design-snapshot`, `project-blog`, `adr` — all go to workspace
+  - Project repos stay clean of WIP methodology noise
+  - Workspace is the working surface; project repo is the destination
+
+- **ADRs can be promoted to the project repo as part of a final PR**
+  - ADRs graduate from workspace → project repo at PR time, not during development
+  - This is the one explicit promotion path confirmed so far
+  - Implies a promotion/publish step in the `adr` skill workflow
+
 - **Both workspaces are git repos backed up to GitHub**
   - Private workspace → private GitHub repo
   - Public workspace → public GitHub repo
