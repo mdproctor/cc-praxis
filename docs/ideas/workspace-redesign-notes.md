@@ -51,12 +51,15 @@ private-workspace/          ← private GitHub repo
 public-workspace/           ← public GitHub repo
   cc-praxis-workspace/      ← content for cc-praxis project (if public)
   my-other-project-workspace/
+  garden/                   ← global knowledge garden (NOT per-project)
 ```
 
-- Each project gets a `<project>-workspace/` folder
-- A project's workspace lives in **either** private **or** public — not both (for now)
-- The choice of private vs public is made per project
-- Non-project content (e.g. writing style) lives directly in the private workspace
+**Garden is global, not per-project:**
+- Already differentiates project-specific vs generalised knowledge internally
+- Index (GARDEN.md) is designed to avoid loading full files — gives just enough
+  to know whether to drill in; detail files loaded surgically on demand
+- Lives at top level of a workspace (likely public), not inside any project folder
+- Cross-project by design — doesn't belong under any single `<project>-workspace/`
 
 ---
 
