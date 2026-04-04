@@ -11,13 +11,25 @@ description: >
 
 # Knowledge Garden
 
-A cross-project, machine-wide library of hard-won technical gotchas — bugs
-that silently fail, behaviours that contradict documentation, and workarounds
-that took hours to find. Stored at `~/claude/knowledge-garden/` so any Claude
-instance on this machine can read and contribute to it.
+A cross-project, machine-wide library of hard-won technical knowledge —
+two kinds of entries:
 
-**The bar:** Would a skilled developer, familiar with the technology, still
-have spent significant time on this? If yes, it belongs in the garden.
+- **Gotchas** — bugs that silently fail, behaviours that contradict
+  documentation, and workarounds that took hours to find
+- **Techniques** — genuinely novel tricks, approaches, and patterns that
+  work in non-obvious ways; things a skilled developer wouldn't naturally
+  reach for but would immediately value once shown
+
+Stored at `~/claude/knowledge-garden/` so any Claude instance on this
+machine can read and contribute to it.
+
+**The bar for gotchas:** Would a skilled developer, familiar with the
+technology, still have spent significant time on this problem? If yes —
+it belongs.
+
+**The bar for techniques:** Would a skilled developer be surprised this
+approach exists, or would they have reached for something more complex?
+If yes — it belongs.
 
 ---
 
@@ -25,11 +37,12 @@ have spent significant time on this? If yes, it belongs in the garden.
 
 - **Not an idea log** — ideas go in `idea-log`
 - **Not an ADR** — architecture decisions go in `adr`
-- **Not how-to content** — tutorials and explanations don't belong here
+- **Not how-to content** — step-by-step tutorials for standard documented APIs don't belong; the distinction is *non-obvious* knowledge vs *documented* knowledge
 - **Not project-specific** — if it says "in ProjectX, the foo() method..." skip it;
   if it says "JavaParser's getByName() only searches top-level types..." it does
 - **Not expected errors** — if it's in the docs with the fix, skip it
 - **Not transient issues** — network flakes, temporary rate limits
+- **Not general best practices** — "always validate input" isn't a technique; "you can use X to avoid Y in context Z in a way most people don't know about" is
 
 ---
 
@@ -87,10 +100,13 @@ to perform the duplicate check.
 ~/claude/knowledge-garden/submissions/YYYY-MM-DD-<project>-<slug>.md
 ```
 
+**Gotcha entry** (bug, silent failure, workaround):
+
 ```markdown
 # Garden Submission
 
 **Date:** YYYY-MM-DD
+**Type:** gotcha
 **Source project:** project-name (or "cross-project")
 **Session context:** One sentence on what was being worked on when this surfaced
 **Suggested target:** `<directory>/<file>.md` *(hint for merge Claude; not binding)*
@@ -118,6 +134,36 @@ Code block or config. Be complete. Include what NOT to do alongside what works.
 The insight. What makes this a gotcha? Why would a skilled developer be misled?
 ```
 
+**Technique entry** (novel approach, non-obvious pattern, clever trick):
+
+```markdown
+# Garden Submission
+
+**Date:** YYYY-MM-DD
+**Type:** technique
+**Source project:** project-name (or "cross-project")
+**Session context:** One sentence on what was being worked on when this surfaced
+**Suggested target:** `<directory>/<file>.md` *(hint for merge Claude; not binding)*
+
+---
+
+## [Short active title — what you can do, not that it's clever]
+
+**Stack:** Technology, Library, Version (be specific)
+**What it achieves:** One sentence — the outcome this technique produces.
+**Context:** When/where this applies. What problem it solves.
+
+### The technique
+Code block or concrete description. Complete and runnable.
+
+### Why this is non-obvious
+What would most developers do instead? Why wouldn't they reach for this?
+What's the insight that makes it work?
+
+### When to use it
+Conditions where this applies. Any limitations or caveats.
+```
+
 The **Suggested target** is a hint to the merge Claude — which garden file this
 likely belongs in. The merge Claude decides final placement after checking for
 duplicates and related entries.
@@ -128,11 +174,19 @@ duplicates and related entries.
 
 ### CAPTURE (write a submission — default operation)
 
-**Step 1 — Quality and project filter**
+**Step 1 — Quality, type, and project filter**
 
-Is this non-obvious enough? Is it cross-project? See the bar above.
+First, classify: is this a **gotcha** (something that went wrong in a
+non-obvious way) or a **technique** (a non-obvious approach that worked)?
+
+For gotchas: would a skilled developer have spent significant time on this?
+For techniques: would a skilled developer be surprised this approach exists,
+or would they have reached for something more complex or less elegant?
+
+Is it cross-project? (Not tied to one specific codebase's logic.)
+
 If uncertain, offer: "Worth adding to the garden? Would go under [category]
-as '[short title]'." — confirm before proceeding.
+as '[short title]' — it's a [gotcha / technique]." — confirm before proceeding.
 
 **Step 2 — Duplicate awareness check (context only, no reads)**
 
@@ -308,16 +362,25 @@ When importing from `BUGS-AND-ODDITIES.md` or similar:
 ## Proactive Trigger
 
 Fire **without being asked** when:
+
+**For gotchas:**
 - Multiple approaches were tried before the fix was found
 - The documented approach didn't work
 - Something works in one context but silently fails in another
 - The fix required knowledge no reasonable developer would find in the docs
 - The user says: "that took way too long", "I'd never have guessed that",
-  "weird behaviour", "this should be documented somewhere"
+  "weird behaviour"
 
-Offer, don't assume:
-> "This was non-obvious — want me to submit it to the garden? Would go under
-> [category] as '[short title]'."
+**For techniques:**
+- A non-obvious approach was used that solved a problem more elegantly than expected
+- Something was discovered that most developers would do the hard way
+- A combination of tools or APIs was used in a way the documentation doesn't describe
+- The user says: "that's a neat trick", "I didn't know you could do that",
+  "this should be documented somewhere", "that's clever"
+
+Offer, don't assume — and name the type:
+> "This was non-obvious — want me to submit it to the garden as a [gotcha /
+> technique]? Would go under [category] as '[short title]'."
 
 ---
 
@@ -367,9 +430,13 @@ flowchart TD
 | Reading garden files to check for duplicates during CAPTURE | Burns the submitting Claude's context budget; garden grows, cost grows | Write the submission; let MERGE handle deduplication |
 | Skipping the submission and writing directly to garden files | Reintroduces the read-for-dedup problem | Always use submissions/ for new entries |
 | Not including "Suggested target" in submission | Merge Claude has to infer from scratch | Include the likely destination as a hint |
-| Title describes the fix not the weird thing | Can't find it by symptom | Title = the surprising behaviour, not the solution |
-| Fix has no code | Useless in 6 months | Complete, runnable code or config required |
-| Root cause says WHAT not WHY | Doesn't prevent misdiagnosis | Explain the mechanism, not just the outcome |
+| Not including **Type: gotcha / technique** in submission | Merge Claude can't categorise correctly | Always declare the type |
+| Gotcha: title describes the fix not the weird thing | Can't find it by symptom | Title = the surprising behaviour, not the solution |
+| Gotcha: fix has no code | Useless in 6 months | Complete, runnable code or config required |
+| Gotcha: root cause says WHAT not WHY | Doesn't prevent misdiagnosis | Explain the mechanism, not just the outcome |
+| Technique: title says "clever trick to..." | Condescending and unsearchable | Title = what it achieves: "Use X to avoid Y in context Z" |
+| Technique: no "why non-obvious" section | Just becomes documentation | Must explain what developers would normally do instead |
+| Adding general best practices as techniques | Not garden-worthy — it's well-known advice | The bar is: skilled developer would be surprised this exists |
 | Forgetting to run MERGE periodically | Submissions accumulate, garden stays stale | MERGE after 3–5 submissions, or before a search-heavy session |
 | Deleting entries when a fix is released | Older versions still need it | Add "Resolved in: vX.Y" note; never delete |
 
