@@ -40,6 +40,26 @@ The `garden` already established the `~/claude/` precedent. Others don't follow 
 
 ---
 
+## Structure
+
+```
+private-workspace/          ← private GitHub repo
+  cc-praxis-workspace/      ← content for cc-praxis project (if private)
+  my-other-project-workspace/
+  writing-style/            ← permanently private, not project-specific
+
+public-workspace/           ← public GitHub repo
+  cc-praxis-workspace/      ← content for cc-praxis project (if public)
+  my-other-project-workspace/
+```
+
+- Each project gets a `<project>-workspace/` folder
+- A project's workspace lives in **either** private **or** public — not both (for now)
+- The choice of private vs public is made per project
+- Non-project content (e.g. writing style) lives directly in the private workspace
+
+---
+
 ## Decisions Made
 
 - **Both workspaces are git repos backed up to GitHub**
