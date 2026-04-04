@@ -224,7 +224,7 @@
     },
     {
       "name": "knowledge-garden",
-      "source": "./knowledge-garden",
+      "source": "./garden",
       "description": "Cross-project library of hard-won technical gotchas — bugs, silent failures, and workarounds stored in ~/claude/knowledge-garden/ for any future session to reuse",
       "version": "1.0.0-SNAPSHOT"
     },

@@ -31,7 +31,7 @@ ALL_SKILLS = {
     'custom-project-health', 'install-skills', 'uninstall-skills',
     'python-dev', 'python-code-review', 'python-security-audit',
     'pip-dependency-update', 'python-project-health', 'design-snapshot',
-    'idea-log', 'project-blog', 'cc-praxis-ui', 'knowledge-garden', 'session-handoff',
+    'idea-log', 'project-blog', 'cc-praxis-ui', 'garden', 'session-handoff',
 }
 
 # Ground truth extracted from all SKILL.md files.
@@ -46,7 +46,8 @@ CHAINING_TRUTH = {
     'custom-project-health': {'chains_to': [], 'invoked_by': ['project-health'], 'builds_on': ['project-health'], 'extended_by': []},
     'dependency-management-principles': {'chains_to': [], 'invoked_by': [], 'builds_on': [], 'extended_by': ['maven-dependency-update', 'npm-dependency-update', 'pip-dependency-update']},
     'design-snapshot': {'chains_to': ['adr', 'custom-git-commit', 'git-commit', 'idea-log', 'java-git-commit', 'project-blog'], 'invoked_by': ['project-blog'], 'builds_on': [], 'extended_by': []},
-    'git-commit': {'chains_to': ['blog-git-commit', 'issue-workflow', 'python-code-review', 'ts-code-review', 'update-claude-md'], 'invoked_by': ['adr', 'design-snapshot', 'idea-log', 'knowledge-garden', 'project-blog', 'python-code-review', 'session-handoff', 'ts-code-review'], 'builds_on': [], 'extended_by': ['custom-git-commit', 'java-git-commit']},
+    'garden': {'chains_to': ['git-commit'], 'invoked_by': [], 'builds_on': [], 'extended_by': []},
+    'git-commit': {'chains_to': ['blog-git-commit', 'issue-workflow', 'python-code-review', 'ts-code-review', 'update-claude-md'], 'invoked_by': ['adr', 'design-snapshot', 'garden', 'idea-log', 'project-blog', 'python-code-review', 'ts-code-review'], 'builds_on': [], 'extended_by': ['custom-git-commit', 'java-git-commit']},
     'idea-log': {'chains_to': ['adr', 'custom-git-commit', 'git-commit', 'issue-workflow', 'java-git-commit'], 'invoked_by': ['design-snapshot', 'java-code-review', 'python-code-review', 'ts-code-review'], 'builds_on': [], 'extended_by': []},
     'install-skills': {'chains_to': [], 'invoked_by': [], 'builds_on': [], 'extended_by': []},
     'issue-workflow': {'chains_to': [], 'invoked_by': ['git-commit', 'idea-log'], 'builds_on': [], 'extended_by': []},
@@ -56,7 +57,6 @@ CHAINING_TRUTH = {
     'java-project-health': {'chains_to': [], 'invoked_by': ['project-health'], 'builds_on': ['project-health'], 'extended_by': []},
     'java-security-audit': {'chains_to': [], 'invoked_by': ['java-code-review'], 'builds_on': ['java-dev', 'security-audit-principles'], 'extended_by': []},
     'java-update-design': {'chains_to': ['adr'], 'invoked_by': ['adr', 'java-git-commit', 'update-claude-md'], 'builds_on': ['update-primary-doc'], 'extended_by': []},
-    'knowledge-garden': {'chains_to': ['git-commit'], 'invoked_by': [], 'builds_on': [], 'extended_by': []},
     'maven-dependency-update': {'chains_to': ['adr', 'java-git-commit'], 'invoked_by': ['quarkus-observability'], 'builds_on': ['dependency-management-principles'], 'extended_by': []},
     'npm-dependency-update': {'chains_to': [], 'invoked_by': [], 'builds_on': ['dependency-management-principles'], 'extended_by': []},
     'observability-principles': {'chains_to': [], 'invoked_by': [], 'builds_on': [], 'extended_by': ['quarkus-observability']},
@@ -72,7 +72,7 @@ CHAINING_TRUTH = {
     'quarkus-flow-testing': {'chains_to': ['java-code-review', 'java-git-commit'], 'invoked_by': ['quarkus-flow-dev'], 'builds_on': ['java-dev', 'quarkus-flow-dev'], 'extended_by': []},
     'quarkus-observability': {'chains_to': ['java-git-commit', 'maven-dependency-update'], 'invoked_by': ['java-dev', 'quarkus-flow-dev'], 'builds_on': ['observability-principles'], 'extended_by': []},
     'security-audit-principles': {'chains_to': [], 'invoked_by': [], 'builds_on': [], 'extended_by': ['java-security-audit', 'python-security-audit', 'ts-security-audit']},
-    'session-handoff': {'chains_to': ['git-commit'], 'invoked_by': [], 'builds_on': [], 'extended_by': []},
+    'session-handoff': {'chains_to': [], 'invoked_by': [], 'builds_on': [], 'extended_by': []},
     'skills-project-health': {'chains_to': [], 'invoked_by': ['project-health'], 'builds_on': ['project-health'], 'extended_by': []},
     'ts-code-review': {'chains_to': ['git-commit', 'idea-log', 'ts-security-audit'], 'invoked_by': ['git-commit', 'ts-dev'], 'builds_on': ['code-review-principles', 'ts-dev'], 'extended_by': []},
     'ts-dev': {'chains_to': ['ts-code-review'], 'invoked_by': [], 'builds_on': [], 'extended_by': ['ts-code-review', 'ts-security-audit']},

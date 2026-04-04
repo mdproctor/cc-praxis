@@ -256,7 +256,7 @@ first; load only when a specific task demands the missing context.
 | What didn't change this session | HANDOVER.md — reference previous via git |
 | Why a design decision was made | project-blog or adr |
 | Current architecture | design-snapshot (reference from handover) |
-| Cross-project technical gotcha | knowledge-garden (reference from handover) |
+| Cross-project technical gotcha | garden (reference from handover) |
 | Undecided possibilities | idea-log (reference from handover) |
 | Permanent conventions | CLAUDE.md (auto-loaded, don't repeat) |
 
@@ -354,7 +354,7 @@ context marked as "unchanged"? If yes — done.
 **Complements:**
 - `design-snapshot` — archival design state the handover points to
 - `project-blog` — narrative context the handover points to
-- `knowledge-garden` — technical gotcha index the handover references
+- `garden` — technical gotcha index the handover references
 - `idea-log` — undecided possibilities the handover references
 
 **Does NOT replace:** CLAUDE.md (auto-loaded), `--resume`/`--continue` flags
