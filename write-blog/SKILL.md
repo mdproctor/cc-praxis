@@ -1,12 +1,13 @@
 ---
 name: write-blog
 description: >
-  Use when the user wants to capture a project's evolving story — says "write
-  a blog entry", "update the project blog", "log what we built today", "document
-  this pivot", "add a diary entry", or "blog all the work to date". The last
-  phrase triggers RETROSPECTIVE mode: git history is scanned, phases proposed
-  as a selection list, choices confirmed, entries produced in sequence. NOT
-  for individual formal decisions (use adr) or frozen design state (use
+  Use when the user wants to capture a project's evolving story. Invoked blank
+  (/write-blog) it runs a retrospective sweep: git history scanned, phases
+  proposed for selection, entries produced in sequence. Invoked with context
+  (/write-blog the web installer phase) it drafts a single entry from that
+  starting point. Also triggered by "write a blog entry", "log what we built
+  today", "document this pivot", or "blog all the work to date". NOT for
+  individual formal decisions (use adr) or frozen design state (use
   design-snapshot).
 ---
 
@@ -217,6 +218,18 @@ picked up on the next entry.
 
 Read the selected guide in full. Everything in it constrains the output —
 vocabulary, sentence patterns, what to avoid, how to open and close.
+
+### Step 0b — Determine mode from invocation
+
+**Invoked via `/write-blog` with no argument** → go to RETROSPECTIVE workflow. Skip Steps 1–7.
+
+**Invoked via `/write-blog <context>`** → the provided text is the starting point for a single entry. Use it to propose the entry type and focus before asking anything:
+
+> "Based on what you've described, I'd suggest a **Phase Update** entry covering [specific topic]. Shall I draft it with that framing, or would you prefer a different angle?"
+
+Confirm the framing, then continue with Step 1.
+
+**Invoked via direct conversation** → determine from context whether this is a single entry or a retrospective request ("blog all the work to date", "catch the blog up").
 
 ### Step 1 — Determine entry type and voice
 

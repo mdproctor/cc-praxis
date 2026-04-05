@@ -1,5 +1,14 @@
 ---
-description: Write a blog entry for the project — captures decisions, pivots, and discoveries in the moment. Say "blog all the work to date" to trigger RETROSPECTIVE mode, which scans git history, proposes phases for selection, and writes them in sequence.
+description: Write a project blog entry, or sweep all work to date as a series. With no argument, triggers a retrospective sweep of git history — proposes phases for selection, then writes confirmed entries in sequence. With an argument, uses that as context for a single entry — proposes what it thinks you want, refines with your input, then writes.
 ---
 
-Invoke the `write-blog` skill to add a new entry to the project diary, or to run a full retrospective covering all work to date.
+Invoke the `write-blog` skill.
+
+**No argument** — triggers RETROSPECTIVE mode: scans git history, proposes phases as a numbered selection list (all ticked by default), writes confirmed entries one at a time.
+
+**With context** — single entry mode: uses the provided text as the starting point, proposes the entry type and focus, refines with your input, then writes.
+
+Examples:
+- `/write-blog` → retrospective sweep of all work to date
+- `/write-blog the web installer phase` → draft an entry about the web installer work
+- `/write-blog we just fixed the bundle state bug` → capture today's pivot
