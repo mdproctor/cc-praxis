@@ -90,9 +90,9 @@ Different phases have different natural tones. Match the writing to the moment.
 |-------|-------------|-------------|
 | **Day Zero** | Exploratory, honest about assumptions, energetic | "I thought this would be..." |
 | **Phase Update** | Problem-solution oriented, showing iteration | "We tried X — it failed because..." |
-| **Architecture Deep-dive** | Introspective, constraint-focused, thinking out loud | Short punchy sentences, then longer explanations |
+| **Phase Update (architecture focus)** | Introspective, constraint-focused, thinking out loud | Short punchy sentences, then longer technical explanations |
 | **Pivot** | Honest about what was abandoned, clear about why | "We were wrong about X. Here's what actually happened." |
-| **Milestone** | Forward-looking, pragmatic, naming what was validated | "This phase proved that..." |
+| **Phase Update (milestone)** | Forward-looking, pragmatic, naming what was validated | "This phase proved that..." |
 
 **Signs the tone is wrong:**
 - Past tense throughout — sounds like a report, not a diary
@@ -120,7 +120,7 @@ Different phases have different natural tones. Match the writing to the moment.
 docs/blog/YYYY-MM-DD-phase-title.md
 ```
 
-One file per entry. Dated, kebab-case title, ≤30 chars, no articles.
+One file per entry. Dated, kebab-case title, ≤30 chars (no "the", "a", "an" — drop articles to keep slugs short and scannable).
 Previous entries are never edited — new entries reference them if needed.
 
 ---
@@ -233,11 +233,13 @@ Confirm the framing, then continue with Step 1.
 
 **Invoked via direct conversation** → determine from context whether this is a single entry or a retrospective request ("blog all the work to date", "catch the blog up").
 
-### Step 1 — Determine entry type and voice
+### Step 1 — Confirm entry type and voice
 
-Ask the user (or infer from context):
+If invoked via `/write-blog <context>`, the type was already proposed in Step 0b — confirm or adjust here, don't ask again from scratch.
+
+If type is still undetermined, infer from context:
 - First entry ever? → **Day Zero**
-- Phase milestone? → **Phase Update**
+- Phase milestone or significant work? → **Phase Update**
 - Direction changing? → **Pivot**
 - Earlier entry proved wrong? → **Correction**
 
@@ -445,7 +447,7 @@ flowchart TD
     UserConfirms -->|adjust| Refine
     Refine --> Draft
     Write --> OfferADR
-    OfferADR -->|yes| Commit
+    OfferADR -->|yes| OfferSnapshot
     OfferADR -->|no| OfferSnapshot
     OfferSnapshot -->|yes| Commit
     OfferSnapshot -->|no| Commit
@@ -465,7 +467,7 @@ flowchart TD
 | Smooth narrative with no failed attempts | The value is in the iteration, not the conclusion | Include what was tried first, specifically why it failed |
 | Vague errors: "X didn't work" | Tells future readers nothing useful | Include exact error messages, commands, file paths |
 | Editing an earlier entry when beliefs change | Destroys the historical record | Write a new Correction entry that references the original |
-| Skipping Day Zero | Loses the initial vision; no baseline | Always write the first entry before any work begins |
+| Skipping Day Zero | Loses the initial vision; no baseline for what was believed before anything was tried | Write Day Zero before work begins; if writing retrospectively, write it first using git history to reconstruct the initial state honestly |
 | Using a "Next:" footer | Creates a template slot at the end of every entry; sounds like scaffolding, not writing | Integrate the forward-looking note as a natural sentence in the closing, or end on the last real point |
 | Linking to ADRs that don't exist yet | Creates dead links | Create the ADR first, then reference it |
 | Replacing a thematic heading with a structural slot | Extracts character and leaves nothing — "The Pivots (There Were Several)" → "What we tried" is always a loss | Keep headings that already have personality; add structural labels only to bare slots |
@@ -499,9 +501,9 @@ Entry is complete when:
 - ✅ File exists at `docs/blog/YYYY-MM-DD-<title>.md`
 - ✅ Voice is correct: "I" for developer perspective, "we" for collaboration, no third-person protagonist
 - ✅ Headings: thematic headings were kept or enhanced — none were replaced with bare structural slots
-- ✅ All five sections filled — no TBDs (except "What Changed" which is optional if nothing changed)
+- ✅ All required sections filled — no TBDs; "What Changed" may be omitted only if nothing pivoted
+- ✅ No "Next:" footer — any forward-looking note integrated naturally or entry ends on the last real point
 - ✅ Specific details: error messages, file paths, failed attempts documented
-- ✅ "Next:" teaser is specific, not vague
 - ✅ User confirmed the draft before it was written
 - ✅ File committed to git
 
@@ -510,13 +512,18 @@ For Correction entries additionally:
 - ✅ New entry links to the entry being corrected
 - ✅ New entry explains what was wrong and what is now believed
 
+For Retrospective runs additionally:
+- ✅ All confirmed entries written and committed
+- ✅ Day Zero entry exists (written first if missing)
+- ✅ See RETROSPECTIVE Workflow Step R5 for final summary
+
 **Not complete until** all criteria met and entry appears in git log.
 
 ---
 
 ## Skill Chaining
 
-**Invoked by:** User directly — single entry ("write a blog entry", "update the project blog", "document this pivot") or full retrospective ("blog all the work to date", "catch the blog up", "write a retrospective series"); also appropriate after `adr` captures a major decision, or after `design-snapshot` marks a significant milestone
+**Invoked by:** User directly — single entry ("write a blog entry", "update the project blog", "document this pivot") or full retrospective ("blog all the work to date", "catch the blog up", "write a retrospective series"); also after `adr` captures a major decision, after `design-snapshot` marks a significant milestone, or automatically as part of the `session-handoff` wrap checklist
 
 **Invokes:** [`adr`] — when a significant decision in the blog entry warrants a formal record; [`design-snapshot`] — when the entry marks a major milestone worth freezing as a formal state record; [`git-commit`] — to commit the entry (routes to `java-git-commit`, `custom-git-commit`, etc. per CLAUDE.md project type)
 
