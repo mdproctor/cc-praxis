@@ -4,9 +4,10 @@ description: >
   Use when non-obvious technical knowledge surfaces — bugs whose symptoms
   mislead about root cause, tools that contradict their documentation, silent
   failures with no error, workarounds found only via multiple failed approaches,
-  or behaviour and features that exist but are simply not documented anywhere.
+  techniques a skilled developer wouldn't naturally reach for but would immediately
+  value, or behaviour and features that exist but are simply not documented anywhere.
   Also use for "sweep" or "garden sweep" to scan the current session across
-  all three categories. NOT for expected errors, how-to content, ideas (use
+  all three categories. NOT for expected errors, standard how-to content, ideas (use
   idea-log), or project-specific application logic.
 ---
 
@@ -63,6 +64,8 @@ it belongs.
 ├── submissions/                ← incoming entries from any Claude session
 │   ├── 2026-04-04-cccli-gcd-dispatch.md
 │   └── 2026-04-05-sparge-html-quirk.md
+├── approaches/                 ← techniques and novel patterns (cross-domain)
+│   └── <domain>.md
 ├── macos-native-appkit/
 │   └── appkit-panama-ffm.md
 ├── java-panama-ffm/
@@ -271,6 +274,7 @@ Based on the technology stack, suggest the likely destination:
 | GraalVM native image | `graalvm-native-image/<topic>.md` |
 | Quarkus | `quarkus/<topic>.md` |
 | Git, tmux, Docker, CLI tools | `tools/<tool>.md` |
+| Techniques / novel approaches (any domain) | `approaches/<domain>.md` |
 | Doesn't fit existing | `<new-descriptive-dir>/<topic>.md` |
 
 This is a hint only — the merge Claude decides final placement.
