@@ -3,22 +3,26 @@ name: garden
 description: >
   Use when non-obvious technical knowledge surfaces — bugs whose symptoms
   mislead about root cause, tools that contradict their documentation, silent
-  failures with no error, or workarounds found only via multiple failed
-  approaches. Also triggered proactively when debugging reveals something a
-  skilled developer would find genuinely surprising. NOT for expected errors,
-  how-to content, ideas (use idea-log), or project-specific application logic.
+  failures with no error, workarounds found only via multiple failed approaches,
+  or behaviour and features that exist but are simply not documented anywhere.
+  Also triggered proactively when debugging reveals something a skilled developer
+  would find genuinely surprising. NOT for expected errors, how-to content,
+  ideas (use idea-log), or project-specific application logic.
 ---
 
 # Knowledge Garden
 
 A cross-project, machine-wide library of hard-won technical knowledge —
-two kinds of entries:
+three kinds of entries:
 
 - **Gotchas** — bugs that silently fail, behaviours that contradict
   documentation, and workarounds that took hours to find
 - **Techniques** — genuinely novel tricks, approaches, and patterns that
   work in non-obvious ways; things a skilled developer wouldn't naturally
   reach for but would immediately value once shown
+- **Undocumented** — behaviours, options, or features that exist and work
+  but simply aren't written down anywhere; only discoverable via source
+  code, trial and error, or word of mouth
 
 Stored at `~/claude/knowledge-garden/` so any Claude instance on this
 machine can read and contribute to it.
@@ -30,6 +34,10 @@ it belongs.
 **The bar for techniques:** Would a skilled developer be surprised this
 approach exists, or would they have reached for something more complex?
 If yes — it belongs.
+
+**The bar for undocumented:** Does it exist, does it work, and would you
+have no reasonable way to discover it from the official docs? If yes —
+it belongs.
 
 ---
 
@@ -43,6 +51,7 @@ If yes — it belongs.
 - **Not expected errors** — if it's in the docs with the fix, skip it
 - **Not transient issues** — network flakes, temporary rate limits
 - **Not general best practices** — "always validate input" isn't a technique; "you can use X to avoid Y in context Z in a way most people don't know about" is
+- **Not documented behaviour presented as undocumented** — if it's in the official docs (even buried), it's not undocumented; the bar is genuinely absent from any documentation
 
 ---
 
@@ -164,6 +173,40 @@ What's the insight that makes it work?
 Conditions where this applies. Any limitations or caveats.
 ```
 
+**Undocumented entry** (behaviour/feature/option not in official docs):
+
+```markdown
+# Garden Submission
+
+**Date:** YYYY-MM-DD
+**Type:** undocumented
+**Source project:** project-name (or "cross-project")
+**Session context:** One sentence on what was being worked on when this surfaced
+**Suggested target:** `<directory>/<file>.md` *(hint for merge Claude; not binding)*
+
+---
+
+## [Short title — describes what exists, not that it's undocumented]
+
+**Stack:** Technology, Library, Version (be specific)
+**What it is:** One sentence — the feature, behaviour, or option that exists.
+**How discovered:** Source code reading / trial and error / someone told me / commit history
+
+### Description
+Full description of what this does. Treat it as documentation that doesn't
+exist yet. Be precise about conditions, defaults, edge cases.
+
+### How to use it / where it appears
+Code block or concrete example. Show it working.
+
+### Why it's not obvious
+Why would someone not know this exists? Is it in the source but not the docs?
+Only mentioned in a GitHub issue? Only in an old commit message?
+
+### Caveats
+Any limitations, version constraints, or risks from relying on undocumented behaviour.
+```
+
 The **Suggested target** is a hint to the merge Claude — which garden file this
 likely belongs in. The merge Claude decides final placement after checking for
 duplicates and related entries.
@@ -176,17 +219,21 @@ duplicates and related entries.
 
 **Step 1 — Quality, type, and project filter**
 
-First, classify: is this a **gotcha** (something that went wrong in a
-non-obvious way) or a **technique** (a non-obvious approach that worked)?
+First, classify the type:
+- **gotcha** — something that went wrong in a non-obvious way
+- **technique** — a non-obvious approach that worked
+- **undocumented** — something that exists and works but isn't in the docs
 
 For gotchas: would a skilled developer have spent significant time on this?
 For techniques: would a skilled developer be surprised this approach exists,
 or would they have reached for something more complex or less elegant?
+For undocumented: does it exist, work, and have no reasonable path to discovery
+through official documentation?
 
 Is it cross-project? (Not tied to one specific codebase's logic.)
 
 If uncertain, offer: "Worth adding to the garden? Would go under [category]
-as '[short title]' — it's a [gotcha / technique]." — confirm before proceeding.
+as '[short title]' — it's a [gotcha / technique / undocumented]." — confirm before proceeding.
 
 **Step 2 — Duplicate awareness check (context only, no reads)**
 
@@ -378,9 +425,16 @@ Fire **without being asked** when:
 - The user says: "that's a neat trick", "I didn't know you could do that",
   "this should be documented somewhere", "that's clever"
 
+**For undocumented:**
+- A flag, option, or behaviour was found by reading source code, not docs
+- Something works but there's no official explanation of why or how
+- A feature was discovered through trial and error or a GitHub issue comment
+- The user says: "this isn't in the docs", "I only found this in the source",
+  "there's no documentation for this", "I had to dig through commits to find it"
+
 Offer, don't assume — and name the type:
 > "This was non-obvious — want me to submit it to the garden as a [gotcha /
-> technique]? Would go under [category] as '[short title]'."
+> technique / undocumented]? Would go under [category] as '[short title]'."
 
 ---
 
@@ -430,7 +484,8 @@ flowchart TD
 | Reading garden files to check for duplicates during CAPTURE | Burns the submitting Claude's context budget; garden grows, cost grows | Write the submission; let MERGE handle deduplication |
 | Skipping the submission and writing directly to garden files | Reintroduces the read-for-dedup problem | Always use submissions/ for new entries |
 | Not including "Suggested target" in submission | Merge Claude has to infer from scratch | Include the likely destination as a hint |
-| Not including **Type: gotcha / technique** in submission | Merge Claude can't categorise correctly | Always declare the type |
+| Not including **Type: gotcha / technique / undocumented** in submission | Merge Claude can't categorise correctly | Always declare the type |
+| Undocumented: calling it undocumented when it's just buried in docs | Pollutes the undocumented category | Check the docs thoroughly first; the bar is genuinely absent from any documentation |
 | Gotcha: title describes the fix not the weird thing | Can't find it by symptom | Title = the surprising behaviour, not the solution |
 | Gotcha: fix has no code | Useless in 6 months | Complete, runnable code or config required |
 | Gotcha: root cause says WHAT not WHY | Doesn't prevent misdiagnosis | Explain the mechanism, not just the outcome |
