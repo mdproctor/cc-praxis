@@ -129,6 +129,39 @@ From the current session, recall:
 
 Do NOT read any project files to answer these. Work from conversation memory.
 
+### Step 2b — Garden sweep (while context is still full)
+
+This is the optimal moment to capture garden entries — the session is
+fully in context and hasn't been discarded yet. Sweep all three categories:
+
+**Gotchas** — anything that went wrong in a non-obvious way?
+- Bugs whose symptom misled about root cause
+- Silent failures with no error
+- Things that required multiple failed attempts before the fix
+- Workarounds for things that "should" work
+
+**Techniques** — any non-obvious approaches that worked well?
+- Solutions a skilled developer wouldn't naturally reach for
+- Combinations of tools or APIs used in undocumented ways
+- Patterns that solved a problem more elegantly than expected
+
+**Undocumented** — anything discovered that isn't in the official docs?
+- Flags, options, or behaviours only findable via source code
+- Features that work but have no documentation
+- Things only discoverable through trial and error or commit history
+
+For each category, ask: *"Is there anything from this session worth
+submitting to the garden?"* If yes — invoke the `garden` skill to write
+a submission before continuing. If nothing surfaces, proceed.
+
+> **Why here:** The context window is full. After the handover is written
+> and the session ends, this knowledge is lost. A 2-minute sweep now
+> preserves knowledge that would otherwise require rediscovery.
+
+The garden sweep is **always done** (even if it finds nothing) — the
+cost of checking is near-zero from context; the cost of missing an entry
+is rediscovery time in a future session.
+
 ### Step 3 — Gather cheap orientation
 
 ```bash
@@ -271,6 +304,9 @@ flowchart TD
     HasPrevious{Previous\nhandover exists?}
     GetDiff[git diff HEAD -- HANDOVER.md\nidentify unchanged sections]
     Recall[Recall from context:\nwhat changed, decisions,\nnext step — zero cost]
+    GardenSweep[Garden sweep:\ncheck gotchas / techniques /\nundocumented — all 3 categories]
+    GardenFound{Anything\nworth submitting?}
+    SubmitGarden[Invoke garden skill\nto write submission]
     GitStatus[git log --oneline -6\ngit status --short]
     BuildRefs[ls to locate file paths\ndo not open files]
     Draft[Write HANDOVER.md:\nchanged sections in full,\nunchanged sections as references]
@@ -288,7 +324,11 @@ flowchart TD
     HasPrevious -->|yes| GetDiff
     HasPrevious -->|no| Recall
     GetDiff --> Recall
-    Recall --> GitStatus
+    Recall --> GardenSweep
+    GardenSweep --> GardenFound
+    GardenFound -->|yes| SubmitGarden
+    GardenFound -->|no| GitStatus
+    SubmitGarden --> GitStatus
     GitStatus --> BuildRefs
     BuildRefs --> Draft
     Draft --> TokenCheck
@@ -323,6 +363,8 @@ flowchart TD
 
 Handover is complete when:
 
+- ✅ Garden sweep performed — all three categories checked (gotchas, techniques, undocumented)
+- ✅ Any garden-worthy entries submitted before writing the handover
 - ✅ HANDOVER.md exists at project root
 - ✅ Readable in under 500 tokens
 - ✅ Unchanged sections reference git history, not repeated content
@@ -343,7 +385,7 @@ context marked as "unchanged"? If yes — done.
 **Invoked by:** User directly at end of a session ("create a handover",
 "end of session", "write a handoff")
 
-**Invokes:** `git commit` directly — required, not delegated to git-commit skill
+**Invokes:** [`garden`] — during the garden sweep (Step 2b) to submit any gotchas, techniques, or undocumented items before context is lost; `git commit` directly for the handover itself
 
 **Reads from (surgical, not upfront):**
 - `git diff HEAD -- HANDOVER.md` — what changed from last handover
