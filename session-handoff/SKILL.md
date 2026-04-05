@@ -126,10 +126,10 @@ Type numbers to toggle (e.g. "2 4"), "all" to toggle all on/off, or Enter to pro
 - **Enter (no input):** proceed with current selections
 
 Run checked items **in this order** before continuing:
-1. Garden sweep — done while context is full (see Step 2b)
-2. write-blog — invoke the `write-blog` skill; use single-entry mode with this session as context
-3. design-snapshot — invoke the `design-snapshot` skill to freeze current state
-4. update-claude-md — invoke `update-claude-md` with the session's recent commits as context
+1. Garden sweep — done while context is full (findings may feed the blog and illuminate design changes)
+2. update-claude-md — sync new conventions first, so the snapshot reflects current CLAUDE.md
+3. design-snapshot — freeze state after CLAUDE.md is current; snapshot now accurately reflects design and conventions
+4. write-blog — written last so it can reference the fresh snapshot path, mention garden submissions, and synthesise the complete session narrative including any new conventions
 
 After all checked items complete, continue to Step 1.
 
@@ -370,11 +370,11 @@ flowchart TD
     UserToggles --> GardenSweep
     GardenSweep --> GardenFound
     GardenFound -->|yes| SubmitGarden
-    GardenFound -->|no| WriteBlog
-    SubmitGarden --> WriteBlog
-    WriteBlog --> DesignSnap
-    DesignSnap --> UpdateClaude
-    UpdateClaude --> CheckHistory
+    GardenFound -->|no| UpdateClaude
+    SubmitGarden --> UpdateClaude
+    UpdateClaude --> DesignSnap
+    DesignSnap --> WriteBlog
+    WriteBlog --> CheckHistory
     CheckHistory --> HasPrevious
     HasPrevious -->|yes| GetDiff
     HasPrevious -->|no| Recall
