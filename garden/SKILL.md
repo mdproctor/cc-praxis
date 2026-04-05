@@ -5,9 +5,9 @@ description: >
   mislead about root cause, tools that contradict their documentation, silent
   failures with no error, workarounds found only via multiple failed approaches,
   or behaviour and features that exist but are simply not documented anywhere.
-  Also triggered proactively when debugging reveals something a skilled developer
-  would find genuinely surprising. NOT for expected errors, how-to content,
-  ideas (use idea-log), or project-specific application logic.
+  Also use for "sweep" or "garden sweep" to scan the current session across
+  all three categories. NOT for expected errors, how-to content, ideas (use
+  idea-log), or project-specific application logic.
 ---
 
 # Knowledge Garden
@@ -304,6 +304,71 @@ garden in the next MERGE session.
 
 ---
 
+### SWEEP (scan the current session for all three entry types)
+
+Use when: "sweep", "garden sweep", "scan for garden entries", or at the
+end of a session to systematically check for knowledge worth capturing.
+
+Unlike CAPTURE (where you provide the specific knowledge), SWEEP reviews
+the session from conversation memory and proposes findings. It covers all
+three categories explicitly so none are missed.
+
+**Step 1 — Scan for Gotchas** (non-obvious things that went wrong)
+
+Review the session for:
+- Bugs whose symptom misled about the root cause
+- Silent failures with no error or warning
+- Things that required multiple failed approaches before the fix
+- Workarounds for things that "should" work but don't
+
+For each candidate: *"During this session we hit [X] — the symptom was
+[Y] but the actual cause was [Z]. Worth submitting as a gotcha?"*
+
+**Step 2 — Scan for Techniques** (non-obvious approaches that worked)
+
+Review the session for:
+- Solutions a skilled developer wouldn't naturally reach for
+- Tool or API combinations used in undocumented or unexpected ways
+- Patterns that solved a problem more elegantly than expected
+- Things where the obvious approach would have been worse
+
+For each candidate: *"We used [approach] to [achieve outcome] — most
+developers would have [done it the hard way]. Worth submitting as a
+technique?"*
+
+**Step 3 — Scan for Undocumented** (exists but isn't in any docs)
+
+Review the session for:
+- Flags, options, or behaviours only discoverable via source code
+- Features that work but have no official documentation
+- Things discovered through trial and error or commit history
+- Behaviours that only appear in GitHub issues or internal comments
+
+For each candidate: *"We discovered [X] — it exists and works but
+there's no documentation for it. Worth submitting as undocumented?"*
+
+**Step 4 — Submit confirmed entries**
+
+For each finding confirmed by the user: run the CAPTURE workflow with
+the specific content already known from context. Do NOT ask the user to
+re-describe things you already know — extract from session memory.
+
+**Step 5 — Report**
+
+Tell the user:
+- How many candidates were found in each category
+- How many were confirmed and submitted
+- If nothing was found: "Nothing garden-worthy surfaced in this session
+  across gotchas, techniques, or undocumented items."
+
+> **When to use SWEEP vs CAPTURE:**
+> - **SWEEP** — when you want systematic coverage, don't have a specific
+>   thing in mind, or are wrapping up a session
+> - **CAPTURE** — when you know exactly what to add ("capture the X bug
+>   we just fixed")
+
+---
+
 ### MERGE (integrate submissions into the garden)
 
 Run this as a dedicated operation — ideally a session whose primary purpose is
@@ -442,28 +507,44 @@ Offer, don't assume — and name the type:
 
 ```mermaid
 flowchart TD
-    Trigger((Knowledge surfaces))
+    UserIntent{User intent?}
+    SweepPath[SWEEP:\nscan session memory\nacross all 3 categories]
+    CapturePath[CAPTURE:\nspecific knowledge\nprovided by user]
+    ScanGotchas[Scan for gotchas]
+    ScanTechniques[Scan for techniques]
+    ScanUndocumented[Scan for undocumented]
+    ProposeFinding[Propose finding\nwith type + description]
+    UserApprovesSweep{Confirmed?}
     IsNonObvious{Skilled developer\nwould be surprised?}
     IsCrossProject{Cross-project?}
     Skip[Skip]
     ContextCheck{Already in context\nfrom this session?}
-    SkipDupe[Skip — obvious duplicate\nfrom existing context]
-    Extract[Extract 8 fields\nfrom session context]
+    SkipDupe[Skip — obvious duplicate]
+    Extract[Extract fields\nfrom session context]
     Draft[Draft submission,\nshow to user]
     UserApproves{Confirmed?}
     Refine[Refine]
     WriteSubmission[Write to\nsubmissions/YYYY-MM-DD-slug.md]
     Commit[git commit\nsubmit format]
-    Report[Report submission path,\nnote: merge when convenient]
+    Report[Report results]
     Done((Done))
 
-    Trigger --> IsNonObvious
+    UserIntent -->|sweep / garden sweep| SweepPath
+    UserIntent -->|specific capture| CapturePath
+    SweepPath --> ScanGotchas
+    ScanGotchas --> ScanTechniques
+    ScanTechniques --> ScanUndocumented
+    ScanUndocumented --> ProposeFinding
+    ProposeFinding --> UserApprovesSweep
+    UserApprovesSweep -->|yes| Extract
+    UserApprovesSweep -->|no| Report
+    CapturePath --> IsNonObvious
     IsNonObvious -->|no| Skip
     IsNonObvious -->|yes| IsCrossProject
     IsCrossProject -->|no| Skip
     IsCrossProject -->|yes| ContextCheck
-    ContextCheck -->|duplicate already known| SkipDupe
-    ContextCheck -->|not a duplicate| Extract
+    ContextCheck -->|duplicate| SkipDupe
+    ContextCheck -->|not duplicate| Extract
     SkipDupe --> Done
     Extract --> Draft
     Draft --> UserApproves
@@ -492,12 +573,21 @@ flowchart TD
 | Technique: title says "clever trick to..." | Condescending and unsearchable | Title = what it achieves: "Use X to avoid Y in context Z" |
 | Technique: no "why non-obvious" section | Just becomes documentation | Must explain what developers would normally do instead |
 | Adding general best practices as techniques | Not garden-worthy — it's well-known advice | The bar is: skilled developer would be surprised this exists |
+| Using CAPTURE when you meant SWEEP | Asks user what to capture instead of proposing findings | Say "sweep" for systematic session review; "capture" for a known specific thing |
+| SWEEP: asking the user what was discovered | Defeats the purpose — Claude has the context, user shouldn't have to re-explain | Scan session memory and propose specific candidates; don't ask open-ended questions |
+| SWEEP: only checking gotchas | Techniques and undocumented items are easy to miss | Always check all three categories explicitly |
 | Forgetting to run MERGE periodically | Submissions accumulate, garden stays stale | MERGE after 3–5 submissions, or before a search-heavy session |
 | Deleting entries when a fix is released | Older versions still need it | Add "Resolved in: vX.Y" note; never delete |
 
 ---
 
 ## Success Criteria
+
+SWEEP is complete when:
+- ✅ All three categories checked from session memory (gotchas, techniques, undocumented)
+- ✅ Each finding proposed explicitly with type and description
+- ✅ Confirmed entries submitted via CAPTURE
+- ✅ Report given: N found, M submitted per category
 
 CAPTURE is complete when:
 - ✅ Submission file written to `~/claude/knowledge-garden/submissions/`
