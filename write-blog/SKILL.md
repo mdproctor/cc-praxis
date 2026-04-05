@@ -1,12 +1,13 @@
 ---
 name: write-blog
 description: >
-  Use when the user wants to capture a project's evolving story in the moment —
-  says "write a blog entry", "update the project blog", "log what we built
-  today", "document this pivot", or "add a diary entry". Also triggered when a
-  significant architectural decision is made, a pivot happens, a phase is
-  validated, or something believed turns out to be wrong. NOT for polished
-  retrospectives (use design-snapshot) or individual formal decisions (use adr).
+  Use when the user wants to capture a project's evolving story — says "write
+  a blog entry", "update the project blog", "log what we built today", "document
+  this pivot", "add a diary entry", or "blog all the work to date". The last
+  phrase triggers RETROSPECTIVE mode: git history is scanned, phases proposed
+  as a selection list, choices confirmed, entries produced in sequence. NOT
+  for individual formal decisions (use adr) or frozen design state (use
+  design-snapshot).
 ---
 
 # Project Blog
@@ -108,6 +109,7 @@ Different phases have different natural tones. Match the writing to the moment.
 | **Phase Update** | At a natural milestone — phase completed, significant work done |
 | **Pivot** | When direction changes — what was considered, rejected, what forced the change |
 | **Correction** | When something believed in an earlier entry proves wrong — honest about it, never edits the original |
+| **Retrospective** | Covering all work to date in one pass — scans git history, proposes phases, confirms selection, writes in sequence |
 
 ---
 
@@ -304,6 +306,90 @@ After writing:
 
 ---
 
+## RETROSPECTIVE Workflow
+
+Use when the user says "blog all the work to date", "catch the blog up", "write a retrospective series", or "cover everything we've done". Scans git history, proposes a set of entries as a journey, lets the user confirm the selection, then writes them in sequence.
+
+### Step R1 — Scan git history for natural phases
+
+```bash
+git log --oneline --no-merges | head -60
+git log --format="%ad %s" --date=short | head -60
+```
+
+Look for natural breakpoints — clusters of related commits, date gaps, significant changes in theme (infrastructure → features → quality → UI), version tags, or explicit milestone commits. Group commits into candidate phases.
+
+### Step R2 — Check what's already been written
+
+```bash
+ls docs/blog/ 2>/dev/null | sort
+```
+
+Any phases already covered by existing entries are excluded from the proposed list.
+
+### Step R3 — Present the proposed entry list for selection
+
+Show each proposed phase as a numbered item with a `[x]` marker (all ticked by default), a date range, and a one-line description of what that phase covers:
+
+```
+Proposed blog entries — all selected by default.
+Type numbers to deselect (e.g. "2 4"), or press Enter to write all:
+
+[x] 1  2026-03-29        Day Zero: The First Nine Skills
+[x] 2  2026-03-31        Building the Infrastructure
+[x] 3  2026-04-02        Health, TypeScript, and Python
+[x] 4  2026-04-03        The Web Installer
+[x] 5  2026-04-04        The Methodology Family
+```
+
+Wait for the user's response before proceeding:
+- **Enter / "all"** → proceed with all ticked entries
+- **Numbers** → deselect those entries, show updated list, confirm again
+- **"none X"** → deselect entry X specifically
+
+Once confirmed, show the final selection and ask for a final go-ahead before writing anything.
+
+### Step R4 — Write entries in sequence
+
+For each confirmed entry, follow the full standard write-blog workflow (Steps 0–7):
+
+- Load the writing style guide (Step 0) — load once, apply to all entries
+- Determine the entry type — Day Zero for the first, Phase Update for subsequent, Pivot where direction changed
+- Gather the story from git history and commit messages for that phase
+- Draft with correct voice, style, and tone
+- Show the draft and confirm before writing to disk
+- Write to `docs/blog/YYYY-MM-DD-<slug>.md`
+- Offer to commit each entry, or batch-commit at the end
+
+After each entry is confirmed, move to the next. Do not draft the next entry until the current one is written and committed.
+
+### Step R5 — Final summary
+
+After all selected entries are written:
+
+```
+Blog series complete:
+  ✅ 2026-03-29-day-zero.md
+  ✅ 2026-03-31-building-the-infrastructure.md
+  ✅ 2026-04-02-health-typescript-python.md
+
+All committed. Ready to publish via publish-blog when you're ready.
+```
+
+### Phase identification heuristics
+
+When grouping commits into phases, look for:
+
+- **Date clustering** — commits bunched close together then a gap suggest a natural phase boundary
+- **Theme shifts** — commits about one feature area give way to another (infrastructure → UI → quality)
+- **Milestone markers** — version tags, "feat:" commits that name a significant capability, commits with "initial" or "first" in the message
+- **Volume changes** — a burst of commits on one topic followed by silence suggests a completed phase
+- **Existing ADRs or snapshots** — `git log -- docs/adr/ docs/design-snapshots/` shows when formal decisions were captured, which often coincides with phase boundaries
+
+When in doubt, propose more phases rather than fewer — the user can deselect. A phase should represent 2–5 days of work or a coherent body of work, not individual commits.
+
+---
+
 ## Decision Flow
 
 ```mermaid
@@ -393,7 +479,7 @@ For Correction entries additionally:
 
 ## Skill Chaining
 
-**Invoked by:** User directly ("write a blog entry", "update the project blog", "document this pivot"); also appropriate after `adr` captures a major decision, or after `design-snapshot` marks a significant milestone — the blog entry provides the narrative context the formal records don't capture
+**Invoked by:** User directly — single entry ("write a blog entry", "update the project blog", "document this pivot") or full retrospective ("blog all the work to date", "catch the blog up", "write a retrospective series"); also appropriate after `adr` captures a major decision, or after `design-snapshot` marks a significant milestone
 
 **Invokes:** [`adr`] — when a significant decision in the blog entry warrants a formal record; [`design-snapshot`] — when the entry marks a major milestone worth freezing as a formal state record; [`git-commit`] — to commit the entry (routes to `java-git-commit`, `custom-git-commit`, etc. per CLAUDE.md project type)
 
