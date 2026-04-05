@@ -104,6 +104,37 @@ session continuity.
 
 ## Workflow
 
+### Step 0 — Session wrap checklist
+
+Before writing the handover, offer to create the supporting artifacts.
+Present this exactly:
+
+```
+Session wrap — create before writing the handover?
+
+[x] 1  write-blog       capture this session's work as a diary entry
+[x] 2  design-snapshot  freeze the current design state
+[x] 3  update-claude-md sync any new workflow conventions
+[x] 4  garden sweep     check for gotchas, techniques, undocumented
+
+Type numbers to toggle (e.g. "2 4"), "all" to toggle all on/off, or Enter to proceed:
+```
+
+- **Default:** all four ticked
+- **"all":** if all are on → turn all off; if any are off → turn all on
+- **Numbers:** toggle individual items
+- **Enter (no input):** proceed with current selections
+
+Run checked items **in this order** before continuing:
+1. Garden sweep — done while context is full (see Step 2b)
+2. write-blog — invoke the `write-blog` skill; use single-entry mode with this session as context
+3. design-snapshot — invoke the `design-snapshot` skill to freeze current state
+4. update-claude-md — invoke `update-claude-md` with the session's recent commits as context
+
+After all checked items complete, continue to Step 1.
+
+---
+
 ### Step 1 — Check previous handover (cheap)
 
 ```bash
@@ -310,13 +341,18 @@ first; load only when a specific task demands the missing context.
 ```mermaid
 flowchart TD
     Trigger((Session ending))
+    WrapChecklist[Show wrap checklist:\nwrite-blog / design-snapshot /\nupdate-claude-md / garden sweep\nall on by default]
+    UserToggles[User toggles items\nor types 'all' / Enter]
+    GardenSweep[Garden sweep if checked:\ncheck gotchas / techniques /\nundocumented — all 3 categories]
+    GardenFound{Anything\nworth submitting?}
+    SubmitGarden[Invoke garden skill\nto write submission]
+    WriteBlog[Invoke write-blog\nsingle-entry for this session]
+    DesignSnap[Invoke design-snapshot\nfreeze current state]
+    UpdateClaude[Invoke update-claude-md\nsync new conventions]
     CheckHistory[git log --oneline -3\n-- HANDOVER.md]
     HasPrevious{Previous\nhandover exists?}
     GetDiff[git diff HEAD -- HANDOVER.md\nidentify unchanged sections]
     Recall[Recall from context:\nwhat changed, decisions,\nnext step — zero cost]
-    GardenSweep[Garden sweep:\ncheck gotchas / techniques /\nundocumented — all 3 categories]
-    GardenFound{Anything\nworth submitting?}
-    SubmitGarden[Invoke garden skill\nto write submission]
     GitStatus[git log --oneline -6\ngit status --short]
     BuildRefs[ls to locate file paths\ndo not open files]
     Draft[Write HANDOVER.md:\nchanged sections in full,\nunchanged sections as references]
@@ -329,16 +365,21 @@ flowchart TD
     Commit[git add HANDOVER.md\ngit commit — required]
     Done((Done))
 
-    Trigger --> CheckHistory
+    Trigger --> WrapChecklist
+    WrapChecklist --> UserToggles
+    UserToggles --> GardenSweep
+    GardenSweep --> GardenFound
+    GardenFound -->|yes| SubmitGarden
+    GardenFound -->|no| WriteBlog
+    SubmitGarden --> WriteBlog
+    WriteBlog --> DesignSnap
+    DesignSnap --> UpdateClaude
+    UpdateClaude --> CheckHistory
     CheckHistory --> HasPrevious
     HasPrevious -->|yes| GetDiff
     HasPrevious -->|no| Recall
     GetDiff --> Recall
-    Recall --> GardenSweep
-    GardenSweep --> GardenFound
-    GardenFound -->|yes| SubmitGarden
-    GardenFound -->|no| GitStatus
-    SubmitGarden --> GitStatus
+    Recall --> GitStatus
     GitStatus --> BuildRefs
     BuildRefs --> Draft
     Draft --> TokenCheck
@@ -373,8 +414,12 @@ flowchart TD
 
 Handover is complete when:
 
+- ✅ Wrap checklist shown and user selections confirmed
 - ✅ Garden sweep performed — all three categories checked (gotchas, techniques, undocumented)
 - ✅ Any garden-worthy entries submitted before writing the handover
+- ✅ write-blog invoked (if checked) — session diary entry written
+- ✅ design-snapshot invoked (if checked) — design state frozen
+- ✅ update-claude-md invoked (if checked) — CLAUDE.md synced
 - ✅ HANDOVER.md exists at project root
 - ✅ Readable in under 500 tokens
 - ✅ Unchanged sections reference git history, not repeated content
@@ -395,7 +440,7 @@ context marked as "unchanged"? If yes — done.
 **Invoked by:** User directly at end of a session ("create a handover",
 "end of session", "write a handoff")
 
-**Invokes:** [`garden`] — during the garden sweep (Step 2b) to submit any gotchas, techniques, or undocumented items before context is lost; `git commit` directly for the handover itself
+**Invokes:** [`garden`] — garden sweep (Step 2b) to submit any gotchas, techniques, or undocumented items before context is lost; [`write-blog`] — single-entry mode for this session's narrative (if checked); [`design-snapshot`] — to freeze current design state (if checked); [`update-claude-md`] — to sync any new conventions (if checked); `git commit` directly for the handover itself
 
 **Reads from (surgical, not upfront):**
 - `git diff HEAD -- HANDOVER.md` — what changed from last handover
