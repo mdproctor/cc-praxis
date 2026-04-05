@@ -5,60 +5,56 @@
 
 ---
 
-## What We Were Trying To Achieve
+Two parallel goals this phase: build a quality framework that would catch problems automatically, and expand the language coverage beyond Java.
 
-Two parallel goals this phase:
+## What we were trying to achieve: Don't let it rot
 
-1. **Quality assurance** — the skills existed but there was no systematic way to verify they were internally consistent, correctly cross-referenced, and structurally sound. I wanted validators that would catch problems automatically.
+The skills existed but there was no systematic way to verify they stayed internally consistent. Cross-references could drift. Section names could diverge. Bidirectional chaining could break silently.
 
-2. **Expanding the language coverage** — cc-praxis was Java-first, but I wanted it to be generally useful. TypeScript/Node.js was the obvious next language to support, followed by Python.
+For languages: TypeScript/Node.js was the obvious next addition, followed by Python. Java-first was never the intention — it was just the first complete implementation.
 
-## What We Believed Going In
+## What we believed going in: A few validators and mechanical translation
 
-I believed the quality problem was mostly about cross-references — ensuring that if skill A says it invokes skill B, then skill B says it's invoked by skill A. I expected to write a few simple validators.
+I expected to write a small number of validators targeting the most common problems — mainly cross-references.
 
-For TypeScript, I believed it would be a fairly mechanical exercise: create the same set of skills as Java (dev, code-review, security-audit, dependency-update, project-health) and adapt the rules for TypeScript-specific concerns (strict mode, async patterns, prototype pollution, npm/yarn/pnpm).
+For TypeScript, I thought it would be largely mechanical: create the same five skills as Java, adapt the rules for TypeScript-specific concerns. Strict mode, async patterns, prototype pollution. Done in a day or two.
 
-## What We Tried and What Happened
+## The validator framework
 
-**The quality framework grew much larger than planned.** What started as "a few validators" became 17 validators across three tiers:
+What started as "a few validators" became 17 across three tiers.
 
-- **COMMIT tier** (<2s): frontmatter, CSO compliance, references, naming, sections, structure, project-type list consistency, flowcharts, doc-structure, blog-commit format
-- **PUSH tier** (<30s): cross-document consistency, temporal references, usability, edge cases, behaviour, README sync, web app sync
-- **CI tier** (<5min): mypy, flake8, bandit for the Python tooling
+**COMMIT tier** (under 2s): frontmatter, CSO compliance, cross-references, naming, sections, structure, project-type consistency, flowchart syntax, document structure, blog-commit format.
 
-The validators caught real problems every time I ran them. The cross-reference validator (`validate_references.py`) initially produced 48 false positives — it was scanning too broadly and flagging non-skill terms. We scoped it to the Skill Chaining sections only and added an allowlist of known non-skill terms. That got it to zero false positives.
+**PUSH tier** (under 30s): cross-document consistency, temporal references, usability, edge cases, behaviour, README sync, web app sync.
 
-The `validate_web_app.py` was a PUSH-tier addition: it reads SKILL.md files directly and compares against the web installer's CHAIN data, so any drift between the two is caught before push.
+**CI tier** (under 5 minutes): mypy, flake8, bandit for the Python tooling.
 
-**project-health and project-refine** were the most design-intensive skills I'd written. Unlike the other skills that had fairly clear workflows, project-health needed to:
-- Work across all project types
-- Have a tier system (tier 1 = quick sanity check, tier 4 = deep analysis)
-- Auto-chain to type-specific health skills at higher tiers
-- Not overlap with project-refine (which is about improvement opportunities, not correctness)
+The cross-reference validator initially produced 48 false positives — scanning too broadly and flagging internal terms that aren't skill names. We scoped it to the Skill Chaining sections only and added an allowlist of known non-skill terms. That got it to zero false positives.
 
-I spent a lot of time on this design. There were five open questions in the design document at one point. We resolved them all by choosing Option B for routing (universal base, auto-chain to type-specific skills) and by drawing a clear line between "correctness" (project-health) and "improvement" (project-refine).
+Every validator caught real problems. That's how you know they're working.
 
-**TypeScript skills.** We created five: `ts-dev`, `ts-code-review`, `ts-security-audit`, `npm-dependency-update`, `ts-project-health`. The cross-referencing work we'd done for the Java skills had taught us what to do from the start — the TypeScript skills had correct bidirectional references from the first commit.
+## project-health: the hard design problem
 
-One unexpected problem: `ts-code-review` initially had `git-commit` in its `invoked_by` field via bidirectional inference. That created a false hierarchy — `git-commit` showing as a child of `ts-code-review` in the chain graph. We fixed it by making `git-commit` a BIDIRECTIONAL_EXEMPT skill; the chain doesn't force bidirectional inference through it.
+`project-health` and `project-refine` were the most design-intensive skills I'd written. Unlike the others with clear workflows, project-health needed to work across all project types, have a tier system, auto-chain to type-specific specialists at higher tiers, and stay cleanly separated from project-refine.
 
-**Python skills.** Five more: `python-dev`, `python-code-review`, `python-security-audit`, `pip-dependency-update`, `python-project-health`. Python's code review has specific concerns the Java and TypeScript ones don't: pickle deserialization, subprocess shell injection (which looks innocuous but isn't), the distinction between `subprocess.run(shell=True)` and using a list of arguments.
+There were five open questions in the design document at one point. We worked through all of them — choosing Option B for routing (universal base, auto-chain to type-specific skills), and drawing a firm line between "correctness" (project-health) and "improvement opportunities" (project-refine). Mixing them causes confusion about what action to take.
 
-**GitHub Actions CI.** We added CI that runs the validators and tests on every push. First attempt failed because Puppeteer (used by the Mermaid validator) had Chrome sandbox issues in the CI environment. We fixed this by only treating an explicit "Parse error" from Mermaid as a syntax failure — not any Puppeteer crash.
+## TypeScript
 
-## What Changed and Why
+Five skills: `ts-dev`, `ts-code-review`, `ts-security-audit`, `npm-dependency-update`, `ts-project-health`. The cross-referencing work on the Java skills had taught us what to do from the start — the TypeScript skills had correct bidirectional references from the first commit.
 
-The health skill design pivoted several times. I initially tried to put all the type-specific checks into one universal `project-health` skill. That became unwieldy. We split it: `project-health` for universal correctness checks, separate `java-project-health`, `ts-project-health`, etc. for language-specific depth. The universal skill auto-chains to the right specialist at tier 3+.
+One unexpected problem: bidirectional inference initially put `git-commit` in `ts-code-review`'s `invoked_by` field, making `git-commit` appear as a child of `ts-code-review` in the chain graph. Claude flagged this as wrong — and it was. We fixed it by marking `git-commit` as BIDIRECTIONAL_EXEMPT; the chain doesn't force inference through universal entry points.
 
-The quality framework scope expanded because each validator revealed new problems I hadn't anticipated. That's how you know validators are working — they find things.
+## Python
 
-## What I Now Believe
+Five more: `python-dev`, `python-code-review`, `python-security-audit`, `pip-dependency-update`, `python-project-health`. Python's code review has specific concerns the Java and TypeScript ones don't: pickle deserialization, subprocess shell injection (which looks innocuous — `shell=True` — but isn't), the important distinction between passing a string and a list to `subprocess.run`.
 
-Skills need a quality framework from the start, not as an afterthought. The validator infrastructure is what lets the collection grow without accumulating technical debt. Without it, every new skill I add could silently break cross-references or drift from the structural conventions.
+## CI and the Puppeteer problem
 
-The project-health / project-refine split is the right architecture. "Is this correct?" and "could this be better?" are genuinely different questions that deserve different answers. Mixing them causes confusion about what action to take.
+We added GitHub Actions CI to run the validators and tests on every push. First attempt failed — Puppeteer, which the Mermaid validator uses, hit Chrome sandbox issues in the CI environment. The fix: only treat an explicit "Parse error" from Mermaid as a syntax failure. A Puppeteer crash is an environment problem, not a diagram problem.
 
----
+## What changed and why: scope, then split
 
-**Next:** A different kind of tool. The skills were all text-based — you invoke them in a conversation. I wanted a visual interface for managing them. That idea became the web installer.
+The health skill design pivoted when a single universal skill became unwieldy. The split — `project-health` for universal correctness, separate `java-project-health`, `ts-project-health`, and so on for language depth — was the right architecture.
+
+Skills need a quality framework from the start, not as an afterthought. The validator infrastructure is what lets the collection grow without accumulating invisible drift. Every new skill I add now runs through 17 automated checks before it lands.
