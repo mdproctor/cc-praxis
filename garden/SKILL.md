@@ -18,9 +18,12 @@ three kinds of entries:
 
 - **Gotchas** — bugs that silently fail, behaviours that contradict
   documentation, and workarounds that took hours to find
-- **Techniques** — genuinely novel tricks, approaches, and patterns that
-  work in non-obvious ways; things a skilled developer wouldn't naturally
-  reach for but would immediately value once shown
+- **Techniques** — the umbrella for all non-obvious positive knowledge: specific
+  how-to methods ("use pipe-pane + FIFO for headless tmux"), strategic design
+  philosophy ("assert on side effects not LLM output"), and cross-cutting patterns.
+  A skilled developer wouldn't naturally reach for it, but would immediately value
+  it once shown. Labels distinguish sub-character (`#strategy`, `#testing`,
+  `#ci-cd`) without creating separate categories that overlap.
 - **Undocumented** — behaviours, options, or features that exist and work
   but simply aren't written down anywhere; only discoverable via source
   code, trial and error, or word of mouth
@@ -64,8 +67,8 @@ it belongs.
 ├── submissions/                ← incoming entries from any Claude session
 │   ├── 2026-04-04-cccli-gcd-dispatch.md
 │   └── 2026-04-05-sparge-html-quirk.md
-├── approaches/                 ← techniques and novel patterns (cross-domain)
-│   └── <domain>.md
+├── tools/                      ← cross-domain tools, techniques, and patterns
+│   └── <domain>.md             ← e.g. tmux.md, llm-testing.md, maven.md
 ├── macos-native-appkit/
 │   └── appkit-panama-ffm.md
 ├── java-panama-ffm/
@@ -75,6 +78,12 @@ it belongs.
 └── <tech-category>/
     └── <topic>.md
 ```
+
+**Two axes, one entry per fact:**
+- **Directory** — where the content lives (by technology or problem domain)
+- **Labels** — cross-cutting tags on each entry for navigation (`#strategy`, `#testing`, `#ci-cd`, etc.)
+
+Entries exist in exactly one file. GARDEN.md indexes them under both axes so they're findable by technology AND by label. No duplication.
 
 **`submissions/`** is how all Claude sessions contribute. Submissions are
 written without reading the main garden files. A separate MERGE operation
@@ -146,7 +155,7 @@ Code block or config. Be complete. Include what NOT to do alongside what works.
 The insight. What makes this a gotcha? Why would a skilled developer be misled?
 ```
 
-**Technique entry** (novel approach, non-obvious pattern, clever trick):
+**Technique entry** (specific how-to, strategic approach, design philosophy, or pattern — all non-obvious positive knowledge):
 
 ```markdown
 # Garden Submission
@@ -156,6 +165,7 @@ The insight. What makes this a gotcha? Why would a skilled developer be misled?
 **Source project:** project-name (or "cross-project")
 **Session context:** One sentence on what was being worked on when this surfaced
 **Suggested target:** `<directory>/<file>.md` *(hint for merge Claude; not binding)*
+**Labels:** `#label1` `#label2` *(cross-cutting tags; see Tag Index in GARDEN.md for existing ones)*
 
 ---
 
@@ -175,6 +185,8 @@ What's the insight that makes it work?
 ### When to use it
 Conditions where this applies. Any limitations or caveats.
 ```
+
+**Choosing labels:** Pick tags that describe the *cross-cutting character* of the technique — `#strategy` for broad design philosophy, `#testing` for test patterns, `#ci-cd` for pipeline concerns, `#performance`, `#debugging`, or technology tags like `#tmux`, `#llm-testing`. Check the Tag Index in GARDEN.md first; reuse existing tags before inventing new ones.
 
 **Undocumented entry** (behaviour/feature/option not in official docs):
 
@@ -273,8 +285,8 @@ Based on the technology stack, suggest the likely destination:
 | Panama FFM, jextract, upcalls | `java-panama-ffm/native-image-patterns.md` |
 | GraalVM native image | `graalvm-native-image/<topic>.md` |
 | Quarkus | `quarkus/<topic>.md` |
-| Git, tmux, Docker, CLI tools | `tools/<tool>.md` |
-| Techniques / novel approaches (any domain) | `approaches/<domain>.md` |
+| Git, tmux, Docker, CLI tools (any type) | `tools/<tool>.md` |
+| Techniques spanning multiple technologies | `tools/<problem-domain>.md` e.g. `tools/llm-testing.md` |
 | Doesn't fit existing | `<new-descriptive-dir>/<topic>.md` |
 
 This is a hint only — the merge Claude decides final placement.
