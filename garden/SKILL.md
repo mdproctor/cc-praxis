@@ -164,6 +164,22 @@ Code block or config. Be complete. Include what NOT to do alongside what works.
 
 ### Why this is non-obvious
 The insight. What makes this a gotcha? Why would a skilled developer be misled?
+
+---
+
+## Garden Score
+
+| Dimension | Score (1–3) | Notes |
+|-----------|-------------|-------|
+| Non-obviousness | — | |
+| Discoverability | — | |
+| Breadth | — | |
+| Pain / Impact | — | |
+| Longevity | — | |
+| **Total** | **—/15** | |
+
+**Case for inclusion:** [why this belongs]
+**Case against inclusion:** [reservations, or "None identified"]
 ```
 
 **Technique entry** (specific how-to, strategic approach, design philosophy, or pattern — all non-obvious positive knowledge):
@@ -195,6 +211,22 @@ What's the insight that makes it work?
 
 ### When to use it
 Conditions where this applies. Any limitations or caveats.
+
+---
+
+## Garden Score
+
+| Dimension | Score (1–3) | Notes |
+|-----------|-------------|-------|
+| Non-obviousness | — | |
+| Discoverability | — | |
+| Breadth | — | |
+| Pain / Impact | — | |
+| Longevity | — | |
+| **Total** | **—/15** | |
+
+**Case for inclusion:** [why this belongs]
+**Case against inclusion:** [reservations, or "None identified"]
 ```
 
 **Choosing labels:** Pick tags that describe the *cross-cutting character* of the technique — `#strategy` for broad design philosophy, `#testing` for test patterns, `#ci-cd` for pipeline concerns, `#performance`, `#debugging`, or technology tags like `#tmux`, `#llm-testing`. Check the Tag Index in GARDEN.md first; reuse existing tags before inventing new ones.
@@ -231,6 +263,22 @@ Only mentioned in a GitHub issue? Only in an old commit message?
 
 ### Caveats
 Any limitations, version constraints, or risks from relying on undocumented behaviour.
+
+---
+
+## Garden Score
+
+| Dimension | Score (1–3) | Notes |
+|-----------|-------------|-------|
+| Non-obviousness | — | |
+| Discoverability | — | |
+| Breadth | — | |
+| Pain / Impact | — | |
+| Longevity | — | |
+| **Total** | **—/15** | |
+
+**Case for inclusion:** [why this belongs]
+**Case against inclusion:** [reservations, or "None identified"]
 ```
 
 The **Suggested target** is a hint to the merge Claude — which garden file this
@@ -239,27 +287,99 @@ duplicates and related entries.
 
 ---
 
+## Garden Score
+
+Every submission includes a score. The score serves three purposes:
+1. **Submitting Claude** — structured way to decide whether to offer the entry at all
+2. **Merging Claude** — consistent basis for include/relate/discard decisions
+3. **Future pruning** — preserved in garden files so borderline inclusions are revisitable
+
+### Scoring dimensions
+
+Rate each dimension 1–3:
+
+| Dimension | 1 | 2 | 3 |
+|-----------|---|---|---|
+| **Non-obviousness** | Somewhat surprising; findable with effort | Would mislead most experienced devs | Would stump even experts; deeply counterintuitive |
+| **Discoverability** | Buried in docs but findable | Source code / GitHub issues only | Trial and error; effectively invisible |
+| **Breadth** | Narrow edge case or rare setup | Common pattern; many users will hit this | Affects almost anyone using this technology |
+| **Pain / Impact** | Annoying but quickly diagnosed | Significant time loss; misleading symptoms | Silent failure, production risk, or data loss |
+| **Longevity** | May be fixed or changed soon | Stable API; unlikely to change near-term | Fundamental behaviour; essentially permanent |
+
+### Thresholds
+
+| Score | Decision |
+|-------|----------|
+| 12–15 | **Strong include** — no question |
+| 8–11 | **Include** — "case for" should outweigh "case against" |
+| 5–7 | **Borderline** — needs a compelling "case for"; "case against" may disqualify |
+| <5 | **Don't submit** — doesn't meet the bar |
+
+### Score block (add to every submission)
+
+```markdown
+---
+
+## Garden Score
+
+| Dimension | Score (1–3) | Notes |
+|-----------|-------------|-------|
+| Non-obviousness | — | |
+| Discoverability | — | |
+| Breadth | — | |
+| Pain / Impact | — | |
+| Longevity | — | |
+| **Total** | **—/15** | |
+
+**Case for inclusion:** [1–2 sentences on why this belongs]
+**Case against inclusion:** [1–2 sentences on reservations — too narrow, version-specific, may be fixed soon, etc. Write "None identified" if genuinely no reservations.]
+```
+
+### Preservation in garden files
+
+After merging, append a compact metadata line at the end of each integrated entry:
+
+```
+*Score: 11/15 · Included because: [brief reason] · Reservation: [none / brief reason]*
+```
+
+This doesn't interrupt reading but survives in the file for future pruning decisions. Merging Claude fills it in from the submission's score block.
+
+---
+
 ## Workflows
 
 ### CAPTURE (write a submission — default operation)
 
-**Step 1 — Quality, type, and project filter**
+**Step 1 — Classify, score, and filter**
 
 First, classify the type:
 - **gotcha** — something that went wrong in a non-obvious way
 - **technique** — a non-obvious approach that worked
 - **undocumented** — something that exists and works but isn't in the docs
 
-For gotchas: would a skilled developer have spent significant time on this?
-For techniques: would a skilled developer be surprised this approach exists,
-or would they have reached for something more complex or less elegant?
-For undocumented: does it exist, work, and have no reasonable path to discovery
-through official documentation?
+Is it cross-project? (Not tied to one specific codebase's logic.) If no → skip.
 
-Is it cross-project? (Not tied to one specific codebase's logic.)
+Then compute the Garden Score from conversation context (see Garden Score section):
 
-If uncertain, offer: "Worth adding to the garden? Would go under [category]
-as '[short title]' — it's a [gotcha / technique / undocumented]." — confirm before proceeding.
+| Dimension | Score (1–3) |
+|-----------|-------------|
+| Non-obviousness | |
+| Discoverability | |
+| Breadth | |
+| Pain / Impact | |
+| Longevity | |
+| **Total** | **/15** |
+
+Use the score to decide how to proceed:
+- **12–15** → offer confidently: "Worth adding to the garden as a [type] — scored [N]/15."
+- **8–11** → offer with brief framing: "This is borderline ([N]/15) — here's the case for and against including it."
+- **5–7** → only offer if the case for is genuinely compelling; name the reservation
+- **<5** → don't submit; optionally note "I considered submitting X but it didn't meet the bar ([N]/15)"
+
+If uncertain about the score, offer: "Worth adding to the garden? Would go under [category]
+as '[short title]' — it's a [gotcha / technique / undocumented]. I'd score it [N]/15."
+Confirm before proceeding.
 
 **Step 2 — Duplicate awareness check (context only, no reads)**
 
@@ -447,9 +567,15 @@ Don't load entire garden files — read only the sections that might overlap.
 
 **Step 5 — Classify each submission**
 
-For each submission:
-- **New** — no matching entry exists; place in garden
-- **Duplicate** — identical to an existing entry; discard submission
+For each submission, check the Garden Score first:
+- **Score 12–15** → include unless it's a duplicate
+- **Score 8–11** → include if "case for" outweighs "case against"; relate if overlapping
+- **Score 5–7** → only include if "case for" is compelling and "case against" is minor
+- **Score <5** → discard; note in the report
+
+Then classify against existing garden content:
+- **New** — no matching entry exists; place in garden (subject to score threshold)
+- **Duplicate** — identical to an existing entry; discard submission regardless of score
 - **Related** — overlaps with an existing entry; enrich or note the variant
 
 **Step 6 — Integrate new and related entries**
@@ -469,6 +595,14 @@ For new entries: append to the appropriate garden file. Then update GARDEN.md:
 **Adding a technique:** Ensure the entry in the file has a `**Labels:**` field with at least one label from the Tag Index. Reuse existing tags before inventing new ones. If a new tag is needed, add it to the Tag Index.
 
 For related entries: add a note under the existing entry, or create a "Variant" sub-section.
+
+**Preserve the score:** At the end of each newly integrated entry, append the compact metadata line from the submission's score block:
+
+```
+*Score: 11/15 · Included because: [brief reason] · Reservation: [none / brief reason]*
+```
+
+This survives in the garden file for future pruning decisions.
 
 **Step 7 — Remove processed submissions**
 
