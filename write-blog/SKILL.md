@@ -136,42 +136,44 @@ Previous entries are never edited — new entries reference them if needed.
 
 ---
 
-## What I Was Trying To Achieve
-*(or "What We Were Trying To Achieve" for collaborative phases)*
+## What I was trying to achieve: <specific goal for this phase>
+*(or "What we were trying to achieve: ..." for collaborative phases)*
 
 <Context at this point. Where are we? What's the goal right now?
 Write for a reader who hasn't followed the project — 2–4 sentences.>
 
-## What I Believed Going In
-*(or "What We Believed Going In")*
+## What we believed going in: <the assumption that turned out to matter>
 
 <Assumptions, expectations, what I thought would happen. Include things that
 turned out to be wrong — that's the point. Write what you actually believed,
 not what you wish you'd believed.>
 
-## What We Tried and What Happened
+## <Thematic heading for the bulk of the work — name what actually happened>
+*(e.g. "Three install attempts and a taxonomy", "The --skills flag that didn't exist",
+"Six pivots, zero architecture changes". If this section has distinct sub-stories,
+use thematic H3s beneath it rather than one undifferentiated block.)*
 
 <The actual work done. For planning sessions: decisions made and why.
 For implementation: what was built, bugs found, unexpected constraints,
 real vs expected behaviour. Be specific — include exact error messages,
 command output, file paths. "No error" is important context.>
 
-## What Changed and Why
+## What changed and why: <the pivot or constraint that forced it>
 
 <If anything pivoted, was rejected, or turned out differently than expected —
 explain what changed and what caused it. Include what was tried before.
 Omit this section if nothing changed.>
 
-## What I Now Believe
-*(or "What We Now Believe")*
+## What it is now
+*(or another thematic close — "The discipline is the work", "Where this leaves us")*
 
-<Current thinking, knowing it may change again. Honest about remaining
-uncertainty. Don't pretend to certainty you don't have.>
-
----
-
-**Next:** <One specific sentence on what's coming — sets up the next entry.>
+<Current state and thinking, knowing it may change again. Honest about remaining
+uncertainty. Don't pretend to certainty you don't have. End naturally — no
+summary of what was just said, no "Thanks for reading". If there's a
+forward-looking note, integrate it as a sentence here, not as a footer.>
 ```
+
+**These headings are starting points, not rigid slots.** If a heading already has thematic character — `## The Pivots (There Were Several)`, `## Six Pivots, Zero Architecture Changes` — keep it. The structural label (`What we tried:`) is additive scaffolding, not a replacement. If a section heading is already specific and interesting, adding a structural prefix is optional. If it's a bare slot with no content, pair it with a thematic description. Never trade a heading that has personality for one that doesn't.
 
 ---
 
@@ -466,6 +468,27 @@ flowchart TD
 | Skipping Day Zero | Loses the initial vision; no baseline | Always write the first entry before any work begins |
 | Vague "Next:" section | Fails to set up the next entry | Be specific: "Next: we'll wire the web installer to the API and see if the state management holds up" |
 | Linking to ADRs that don't exist yet | Creates dead links | Create the ADR first, then reference it |
+| Replacing a thematic heading with a structural slot | Extracts character and leaves nothing — "The Pivots (There Were Several)" → "What we tried" is always a loss | Keep headings that already have personality; add structural labels only to bare slots |
+| Dropping a heading entirely when merging two sections | Buries the structure the reader was using; the content is still there but now unfindable | If you merge sections, check that the surviving heading still signals what the merged content is about |
+| Bare structural H2 as a container when H3s carry all the character | "What we tried" says nothing — the H3s do all the work, but H3s are invisible to a scanner | The H2 must carry meaning too; make it thematic or use a dual heading |
+
+---
+
+## Before you commit: heading smell check
+
+After writing or editing headings, run these five checks. Each one catches a specific failure mode.
+
+**1. The character drain check.** Read just the H2 headings in order, like a table of contents. Could any of them appear unchanged in a completely different blog post about a completely different project? If yes, they've lost their specificity. `## What we tried` could be in any post ever written. `## The Pivots (There Were Several)` belongs to this one.
+
+**2. The before/after check.** For every heading you changed, ask: did the new version gain something, lose something, or both? If the new version is shorter and more generic — stop. You replaced thematic content with structural scaffolding. Changes should add, never only subtract.
+
+**3. The dropped heading check.** For every heading that existed before your edit and doesn't exist after — where did its content go? If the answer is "I merged it into another section," check that the merged section still has a heading that signals what the content is. Merging two sections into headingless prose quietly buries the structure the reader was using.
+
+**4. The H2 container check.** If you have an H2 with H3 subsections beneath it, read the H2 alone. Does it say anything interesting? `## What we tried` says nothing — the H3s do all the work. But H3s are invisible to a scanner. The H2 needs to carry meaning too.
+
+**5. The substitution test.** For any heading you replaced, ask: if the original author saw this new heading, would they recognise it as an improvement or feel like something was lost? A thematic heading that someone wrote with care — `## Six Pivots, Zero Architecture Changes`, `## The GCD Block That Never Ran` — signals intent. Replacing it with a structural slot signals you didn't read it carefully.
+
+**The underlying principle:** thematic headings are primary, structural labels are additive. Before changing any heading, ask: am I adding value or extracting it?
 
 ---
 
@@ -475,6 +498,7 @@ Entry is complete when:
 
 - ✅ File exists at `docs/blog/YYYY-MM-DD-<title>.md`
 - ✅ Voice is correct: "I" for developer perspective, "we" for collaboration, no third-person protagonist
+- ✅ Headings: thematic headings were kept or enhanced — none were replaced with bare structural slots
 - ✅ All five sections filled — no TBDs (except "What Changed" which is optional if nothing changed)
 - ✅ Specific details: error messages, file paths, failed attempts documented
 - ✅ "Next:" teaser is specific, not vague
