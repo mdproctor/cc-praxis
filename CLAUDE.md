@@ -257,6 +257,28 @@ All major skills include "Common Pitfalls" tables documenting real mistakes:
 | [Anti-pattern] | [Consequence] | [Correct approach] |
 ```
 
+### Developer-Only Skills
+
+Some skills in this repository are **developer-only** — they require a cloned repository and are not available to marketplace plugin users.
+
+**Rules:**
+- ✅ **In `skills/` directory** — auto-discovered and synced for developers
+- ❌ **Not in `marketplace.json`** — invisible to the web installer and not installable via plugin
+- ❌ **Not in README.md** — not documented as a user-facing skill
+- ✅ **SKILL.md includes a prominent DEV-ONLY note** — so Claude knows not to recommend it to marketplace users
+
+**Current developer-only skills:**
+- `sync-local` — syncs installed skills from the cloned repo; requires `scripts/claude-skill`
+
+**When adding a new developer-only skill:**
+1. Create it in `skills/<name>/` as normal
+2. Do NOT add it to `.claude-plugin/marketplace.json`
+3. Do NOT add it to README.md
+4. Add "DEV-ONLY" prominently in the SKILL.md and CSO description
+5. Add it to the "Current developer-only skills" list above
+
+---
+
 ### Third-Party Skill Exclusion
 
 **CRITICAL: Only document skills authored by the repository owner.**
