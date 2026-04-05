@@ -393,6 +393,53 @@ Blog series complete:
 All committed. Ready to publish via publish-blog when you're ready.
 ```
 
+### RETROSPECTIVE Decision Flow
+
+```mermaid
+flowchart TD
+    Trigger((Retrospective triggered))
+    ScanGit[git log --oneline --no-merges\nidentify natural phase boundaries]
+    CheckExisting[ls docs/blog/\nexclude already-covered phases]
+    ProposeList[Present numbered selection list\nall ticked by default]
+    UserToggles{User toggles\nor confirms?}
+    FinalConfirm[Show final selection\nask for go-ahead]
+    LoadStyle[Load writing style guide\nonce — applies to all entries]
+    NextEntry[Take next confirmed entry]
+    GatherStory[Gather story from git commits\nfor that phase's date range]
+    DetermineType[Day Zero if first entry;\nPhase Update or Pivot for rest]
+    Draft[Draft with correct voice,\ntone, and style]
+    UserConfirms{User confirms?}
+    Refine[Refine based\non feedback]
+    Write[Write to docs/blog/]
+    CommitOffer[Offer to commit\nor batch at end]
+    MoreEntries{More confirmed\nentries remaining?}
+    Summary[Print final summary\nof all entries written]
+    Done((Done))
+
+    Trigger --> ScanGit
+    ScanGit --> CheckExisting
+    CheckExisting --> ProposeList
+    ProposeList --> UserToggles
+    UserToggles -->|toggles items| ProposeList
+    UserToggles -->|confirms| FinalConfirm
+    FinalConfirm --> LoadStyle
+    LoadStyle --> NextEntry
+    NextEntry --> GatherStory
+    GatherStory --> DetermineType
+    DetermineType --> Draft
+    Draft --> UserConfirms
+    UserConfirms -->|YES| Write
+    UserConfirms -->|adjust| Refine
+    Refine --> Draft
+    Write --> CommitOffer
+    CommitOffer --> MoreEntries
+    MoreEntries -->|yes| NextEntry
+    MoreEntries -->|no| Summary
+    Summary --> Done
+```
+
+---
+
 ### Phase identification heuristics
 
 When grouping commits into phases, look for:
