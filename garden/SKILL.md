@@ -79,11 +79,17 @@ it belongs.
     └── <topic>.md
 ```
 
-**Two axes, one entry per fact:**
+**Three axes, one entry per fact:**
 - **Directory** — where the content lives (by technology or problem domain)
-- **Labels** — cross-cutting tags on each entry for navigation (`#strategy`, `#testing`, `#ci-cd`, etc.)
+- **Labels** — cross-cutting tags on technique entries (`#strategy`, `#testing`, `#ci-cd`, etc.)
+- **GARDEN.md** — indexes every entry under all applicable axes; no content duplication
 
-Entries exist in exactly one file. GARDEN.md indexes them under both axes so they're findable by technology AND by label. No duplication.
+GARDEN.md has three index sections:
+- `## By Technology` — all entries grouped by tech/tool (gotchas, techniques, and undocumented)
+- `## By Symptom / Type` — gotchas grouped by failure pattern (silent failure, symptom misleads, etc.)
+- `## By Label` — techniques grouped by cross-cutting character (`#strategy`, `#testing`, `#pattern`, etc.)
+
+Each entry appears in exactly one file. The index cross-references it in multiple sections.
 
 **`submissions/`** is how all Claude sessions contribute. Submissions are
 written without reading the main garden files. A separate MERGE operation
@@ -291,6 +297,16 @@ Based on the technology stack, suggest the likely destination:
 
 This is a hint only — the merge Claude decides final placement.
 
+**File headers:** If the submission targets a file that doesn't exist yet, note the required header in the Suggested target field:
+- Gotcha-only file: `# <Technology> Gotchas`
+- Technique-only file: `# <Technology> Techniques`
+- Mixed file: `# <Technology> Gotchas and Techniques`
+
+Technology headings use tool/library names, not problem-domain names:
+- ✅ `# tmux Gotchas and Techniques`
+- ✅ `# LLM / Claude CLI — Gotchas and Techniques`
+- ❌ `# Headless Terminal Testing Techniques` (problem domain, not a technology)
+
 **Step 5 — Draft and confirm**
 
 Draft the submission. Show it to the user:
@@ -411,8 +427,7 @@ Read all submission files. They're compact by design.
 cat ~/claude/knowledge-garden/GARDEN.md
 ```
 
-Scan both sections (By Technology, By Symptom Type) for entries similar to
-each submission.
+Scan all three sections (By Technology, By Symptom / Type, By Label) for entries similar to each submission.
 
 **Step 4 — For likely duplicates: surgical read of relevant section**
 
@@ -434,11 +449,21 @@ For each submission:
 
 **Step 6 — Integrate new and related entries**
 
-For new entries: append to the appropriate garden file, update GARDEN.md in
-both index sections (By Technology + By Symptom Type).
+For new entries: append to the appropriate garden file. Then update GARDEN.md:
 
-For related entries: add a note under the existing entry, or create a
-"Variant" sub-section.
+| Entry type | By Technology | By Symptom / Type | By Label |
+|---|---|---|---|
+| Gotcha | ✅ add | ✅ add under matching symptom category | — |
+| Technique | ✅ add | — | ✅ add under each matching label |
+| Undocumented | ✅ add | ✅ add (or new "Undocumented" category) | — |
+
+**Creating a new garden file:** Add the correct header on line 1:
+- `# <Technology> Gotchas` / `# <Technology> Techniques` / `# <Technology> Gotchas and Techniques`
+- Use tool/library name, not problem-domain name (✅ `tmux` ❌ `Terminal Emulation`)
+
+**Adding a technique:** Ensure the entry in the file has a `**Labels:**` field with at least one label from the Tag Index. Reuse existing tags before inventing new ones. If a new tag is needed, add it to the Tag Index.
+
+For related entries: add a note under the existing entry, or create a "Variant" sub-section.
 
 **Step 7 — Remove processed submissions**
 
@@ -462,7 +487,7 @@ how many were related entries, and which garden files were updated.
 
 ### SEARCH (retrieving entries)
 
-1. Read `GARDEN.md` — check both By Technology and By Symptom Type sections
+1. Read `GARDEN.md` — check all three sections: By Technology, By Symptom / Type, and By Label
 2. Follow the file link for full detail
 3. If not in the index:
    ```bash
@@ -594,6 +619,12 @@ flowchart TD
 | SWEEP: only checking gotchas | Techniques and undocumented items are easy to miss | Always check all three categories explicitly |
 | Forgetting to run MERGE periodically | Submissions accumulate, garden stays stale | MERGE after 3–5 submissions, or before a search-heavy session |
 | Deleting entries when a fix is released | Older versions still need it | Add "Resolved in: vX.Y" note; never delete |
+| Technique submitted without Labels field | Merge Claude can't update By Label index correctly | Labels are mandatory on technique submissions |
+| Labels invented without checking Tag Index | Proliferates near-duplicate tags | Always check Tag Index first; `#testing` not `#test`, `#llm-testing` not `#llm-test` |
+| New garden file created without a header | File looks broken; inconsistent garden | First line must be `# <Technology> Gotchas` / `Techniques` / `Gotchas and Techniques` |
+| Technology heading named after problem domain | Inconsistent; hard to find by tool name | Use tool/library name: `LLM / Claude CLI` not `AI Testing Patterns` |
+| MERGE: By Label section not updated for new technique | Technique unfindable by cross-cutting concern | For every technique, add to By Label under each of its labels |
+| MERGE: By Symptom / Type updated for a technique (not a gotcha) | Wrong section for techniques | By Symptom / Type is for gotchas; techniques go in By Label |
 
 ---
 
@@ -613,8 +644,10 @@ CAPTURE is complete when:
 
 MERGE is complete when:
 - ✅ All submissions classified (new / duplicate / related)
-- ✅ New entries appended to appropriate garden files
-- ✅ GARDEN.md updated in both index sections
+- ✅ New entries appended to appropriate garden files (with correct file header if new file)
+- ✅ Technique entries have `**Labels:**` field in the content file
+- ✅ GARDEN.md updated: By Technology always; By Symptom/Type for gotchas; By Label for techniques
+- ✅ New labels added to Tag Index if used
 - ✅ Processed submissions removed
 - ✅ Committed with `merge:` format
 
