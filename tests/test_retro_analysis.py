@@ -72,10 +72,11 @@ ALL_REPOS: list[str] = (
 # ---------------------------------------------------------------------------
 
 TRIVIAL_RE = re.compile(
-    r"\b(typo|whitespace|indent|trailing|format(?:ting|ted|s)?|spelling|merge branch)\b",
+    r"\b(typo|whitespace|indent|trailing|format(?:ting|ted)?\b|spelling|merge branch)\b",
     re.IGNORECASE,
 )
-BUMP_RE = re.compile(r"\b(bump|upgrade|update .+ to)\b", re.IGNORECASE)
+# Bump = version/dependency updates only. "update description to X" is NOT a bump.
+BUMP_RE = re.compile(r"\b(bump|upgrade)\b", re.IGNORECASE)
 
 
 def classify(subject: str) -> str:
@@ -85,6 +86,12 @@ def classify(subject: str) -> str:
     if BUMP_RE.search(subject):
         return "bump"
     return "functional"
+
+
+def extract_scope(subject: str) -> str | None:
+    """Extract conventional commit scope: 'feat(garden): ...' → 'garden'. None if absent."""
+    m = re.match(r"^[a-z]+\(([^)]+)\):", subject)
+    return m.group(1) if m else None
 
 
 # ---------------------------------------------------------------------------
@@ -214,6 +221,102 @@ def git_repo(tmp_path: Path):
         capture_output=True,
     )
     return tmp_path, commit
+
+
+# ---------------------------------------------------------------------------
+# Classifier regression tests (bug fixes)
+# ---------------------------------------------------------------------------
+
+
+def test_formats_plural_is_not_trivial() -> None:
+    """Bug fix: 'formats' (plural noun) must NOT be classified trivial.
+    'adopt official formats' was a 92% code reduction — a major refactor."""
+    assert classify("refactor(marketplace): adopt official formats and reduce custom code by 92%") == "functional"
+
+
+def test_update_description_is_not_bump() -> None:
+    """Bug fix: 'update description to X' must NOT be classified bump.
+    Only explicit version/package bumps should match the bump pattern."""
+    assert classify("chore(marketplace): update description to reflect broader scope") == "functional"
+
+
+def test_bump_matches_explicit_version_bumps() -> None:
+    """'Bump' and 'upgrade' are the reliable bump signals."""
+    assert classify("Bump junit from 4.11 to 4.13.1") == "bump"
+    assert classify("chore: upgrade quarkus-bom to 3.8.1") == "bump"
+
+
+# ---------------------------------------------------------------------------
+# Scope extraction tests
+# ---------------------------------------------------------------------------
+
+
+def test_scope_extraction_with_scope() -> None:
+    """Conventional commits with scope return the scope string."""
+    assert extract_scope("feat(garden): add knowledge garden skill") == "garden"
+    assert extract_scope("fix(marketplace): fix plugin install") == "marketplace"
+    assert extract_scope("docs(readme): update skill list") == "readme"
+
+
+def test_scope_extraction_without_scope() -> None:
+    """Commits without scope return None."""
+    assert extract_scope("feat: add new skill") is None
+    assert extract_scope("docs: session handover 2026-04-06") is None
+    assert extract_scope("This is my first set of skills") is None
+
+
+def test_scope_extraction_with_nested_scope() -> None:
+    """Multi-word or hyphenated scopes are returned as-is."""
+    assert extract_scope("feat(java-dev): add Quarkus patterns") == "java-dev"
+    assert extract_scope("fix(write-blog): fix date prefix") == "write-blog"
+
+
+# ---------------------------------------------------------------------------
+# Scope-based clustering tests
+# ---------------------------------------------------------------------------
+
+
+def test_scope_clusters_same_scope_together() -> None:
+    """Commits sharing the same scope should form a single cluster."""
+    commits = [
+        CommitRecord("abc1234", "2024-01-05", "feat(garden): add garden skill"),
+        CommitRecord("def5678", "2024-01-06", "fix(garden): fix garden indexing"),
+        CommitRecord("cafe012", "2024-01-07", "docs(garden): add garden examples"),
+        CommitRecord("beef456", "2024-01-08", "feat(marketplace): add marketplace"),
+    ]
+    scopes = [extract_scope(c.subject) for c in commits]
+    assert scopes == ["garden", "garden", "garden", "marketplace"]
+
+    # Group by scope
+    from collections import defaultdict
+    groups: dict[str | None, list] = defaultdict(list)
+    for c in commits:
+        groups[extract_scope(c.subject)].append(c)
+
+    assert len(groups["garden"]) == 3
+    assert len(groups["marketplace"]) == 1
+
+
+def test_scope_clustering_preferred_over_directory() -> None:
+    """When scope is present, it is a better signal than top-level directory.
+    All feat(garden) commits belong together even if files differ."""
+    commits_with_scope = [
+        CommitRecord("abc1234", "2024-01-05", "feat(garden): add SKILL.md"),
+        CommitRecord("def5678", "2024-01-06", "fix(garden): fix validator"),
+        CommitRecord("cafe012", "2024-01-07", "docs(garden): add examples"),
+    ]
+    # All share scope 'garden' — should form one cluster regardless of files
+    scopes = {extract_scope(c.subject) for c in commits_with_scope}
+    assert scopes == {"garden"}  # all same scope → one cluster
+
+
+@pytest.mark.parametrize("repo_name", ALL_REPOS)
+def test_scope_extraction_runs_on_all_fixtures(repo_name: str) -> None:
+    """Scope extraction must not raise on any real commit subject."""
+    fixture = load_fixture(repo_name)
+    for c in fixture.commits:
+        result = extract_scope(c.subject)
+        assert result is None or isinstance(result, str)
 
 
 def test_trivial_classifier_excludes_typo(git_repo) -> None:

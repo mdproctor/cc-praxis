@@ -120,9 +120,11 @@ For each commit, classify before grouping:
 **Trivial (no ticket — excluded table only):**
 - Message matches: "typo", "whitespace", "indent", "trailing", "format", "formatting", "spelling"
 - Is a merge commit
+- Note: "formats" (plural noun) does NOT match — `format` and `formatting` are exact targets
 
 **Dependency bump (standalone ticket):**
-- Message matches: "bump", "upgrade X to Y.Z", "update X to"
+- Message contains: "bump" or "upgrade" (reliable signals)
+- Note: "update X to" is NOT a bump — general "update description to..." commits are functional
 
 **Functional (cluster into issues):**
 - Everything else
@@ -131,14 +133,40 @@ For each commit, classify before grouping:
 
 ## Step 5 — Cluster functional commits into issues
 
-Within each time window, group functional commits by the top-level directory
-of their changed files.
+Within each time window, group functional commits using this priority order:
 
-Merge a cluster into standalone if:
-- It has < 2 commits AND message is low-signal ("fix", "wip", "update", "misc")
+**Primary: conventional commit scope**
 
-Split a cluster into two issues if:
-- It touches 3+ clearly unrelated top-level directories
+Extract the scope from the commit subject using the pattern `type(scope): description`.
+Commits sharing the same scope form a cluster regardless of which files they touch.
+
+```
+feat(garden): add knowledge garden skill  → scope: garden
+fix(garden): fix garden indexing           → scope: garden
+docs(garden): add examples                 → scope: garden
+feat(marketplace): add plugin install      → scope: marketplace
+```
+
+This is a much stronger signal than file paths for repos using conventional commits —
+it reflects the author's own intent about what feature the commit belongs to.
+
+**Fallback: top-level directory**
+
+If no scope is present in a commit, group it by the top-level directory of its
+changed files. This applies to older commits or repos that don't use conventional
+commits.
+
+**Merge small clusters:**
+- A cluster with < 2 commits and a low-signal message ("fix", "wip", "update", "misc")
+  → promote to standalone, don't create a dedicated issue
+
+**Split large clusters:**
+- A single scope with commits clearly spanning two unrelated feature areas
+  → split into two issues if the work is independently releasable
+
+**Naming issues from clusters:**
+- Scope-based cluster: title reflects the scope feature area ("Add {scope} skill/feature")
+- Directory-based cluster: title reflects the directory's purpose
 
 ---
 
