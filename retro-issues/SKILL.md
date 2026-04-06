@@ -125,19 +125,25 @@ standalones only.
 
 ## Step 4 — Classify commits
 
-For each commit, classify before grouping:
+The default is **functional** — every commit gets a ticket unless it meets the
+narrow trivial definition below. The Excluded Commits table should be small.
+When in doubt, include the commit in a ticket.
 
 **Trivial (no ticket — excluded table only):**
-- Message matches: "typo", "whitespace", "indent", "trailing", "format", "formatting", "spelling"
-- Is a merge commit
-- Note: "formats" (plural noun) does NOT match — `format` and `formatting` are exact targets
+- Pure typo fix ("fix typo", "spelling")
+- Pure whitespace / formatting ("fix whitespace", "fix formatting", "convert to Mermaid format")
+- Merge commits
+- That's it. If the commit does anything else — adds code, changes logic, updates
+  docs with substance — it belongs in a ticket.
 
-**Dependency bump (standalone ticket):**
-- Message contains: "bump" or "upgrade" (reliable signals)
-- Note: "update X to" is NOT a bump — general "update description to..." commits are functional
+**Dependency bump (standalone ticket — always gets a ticket):**
+- Message contains: "bump" or "upgrade"
+- Gets its own standalone ticket even if it's a one-line change
 
-**Functional (cluster into issues):**
-- Everything else
+**Functional (cluster into issues — the vast majority):**
+- Everything that isn't trivial or a bump
+- Includes: refactors, renames, doc updates with content, config changes,
+  test additions, CI changes, chore commits with real work
 
 ---
 
@@ -237,13 +243,20 @@ collection-bucket epics.
 Write `docs/retro-issues.md` (create `docs/` if needed).
 
 Use `#TBD` as the issue number placeholder — replaced with real numbers
-after creation. Structure:
+after creation.
+
+Every non-trivial commit must appear under exactly one ticket. The Excluded
+Commits table should be short — if it's long, re-examine the trivial
+classification.
+
+Structure:
 
 ```
 # Retrospective Issue Mapping
 Generated: {date}
 Repo: {owner/repo}
 Scope: {earliest-date} → {latest-date} | {N} commits analysed
+Summary: {N} epics · {N} child issues · {N} standalones · {N} excluded
 
 ---
 
@@ -252,35 +265,50 @@ Scope: {earliest-date} → {latest-date} | {N} commits analysed
 ### Epic: "{title}" [enhancement]
 Period: {start-date} → {end-date}
 References: {ADR-NNNN / blog entry date / none}
+Scopes: {scope1}, {scope2}
 
 #### Issue #TBD: "{child title}" [enhancement]
+Scopes: {scope1}, {scope2}
 Commits:
 - `{short-hash}` {date} — {message}
 - `{short-hash}` {date} — {message}
-Primary area: `{directory/}`
+- `{short-hash}` {date} — {message}
 
-#### Issue #TBD: "{child title}" [{label}]
+#### Sub-epic: "{sub-epic title}" [enhancement]
+Scopes: {scope3}, {scope4}
+
+##### Issue #TBD: "{grandchild title}" [enhancement]
+Scopes: {scope3}
 Commits:
 - `{short-hash}` {date} — {message}
-Primary area: `{directory/}`
+- `{short-hash}` {date} — {message}
+
+##### Issue #TBD: "{grandchild title}" [enhancement]
+Scopes: {scope4}
+Commits:
+- `{short-hash}` {date} — {message}
 
 ---
 
 ## Standalone Issues
 
-### Issue #TBD: "{title}" [{label}]
+### Issue #TBD: "{title}" [enhancement]
+Scopes: {scope1}, {scope2}
 Commits:
 - `{short-hash}` {date} — {message}
-Primary area: `{directory/}`
+- `{short-hash}` {date} — {message}
+- `{short-hash}` {date} — {message}
 
 ---
 
-## Excluded Commits (no ticket created)
+## Excluded Commits (no ticket — trivial only)
+
+This table should be short. If it's long, reconsider the classification.
 
 | Hash | Date | Message | Reason |
 |------|------|---------|--------|
-| `{hash}` | {date} | {message} | Formatting/whitespace only |
-| `{hash}` | {date} | {message} | Typo fix |
+| `{hash}` | {date} | {message} | Pure typo fix |
+| `{hash}` | {date} | {message} | Whitespace/formatting only |
 | `{hash}` | {date} | {message} | Merge commit |
 ```
 
@@ -541,6 +569,8 @@ rm /tmp/retro-mapping.json
 
 | Mistake | Why It's Wrong | Fix |
 |---------|----------------|-----|
+| Large Excluded Commits table | Most commits should have a ticket; a big exclusion list means mis-classification | Re-examine anything beyond pure typos, whitespace, and merge commits |
+| Commits with no ticket anywhere | Every non-trivial commit must appear under exactly one ticket | If it doesn't fit an existing cluster, it becomes a standalone |
 | Creating issues before user approves proposal | Permanent GitHub records from wrong groupings | Always write retro-issues.md first; never create until YES |
 | Single-child epic | No value over a standalone issue | Enforce 2-child minimum; dissolve during Step 6 |
 | Treating trivial commits as issues | Noise in issue tracker | Classify first; trivials go to Excluded table only |
