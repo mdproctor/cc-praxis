@@ -693,15 +693,15 @@ Cross-project library of hard-won technical gotchas — stored in `~/claude/know
 **Triggers:** "add this to the knowledge garden", "log this bug", "future Claude should know this", "this took way too long", or proactively at end of non-obvious debugging sessions.
 
 #### **issue-workflow**
-GitHub issue tracking with cross-cutting task detection and commit split suggestions:
-- **Setup mode** — configures `## Work Tracking` in CLAUDE.md, creates standard GitHub labels, optionally reconstructs issues from git history
-- **Task intake** — detects when a user request spans multiple concerns before work starts; suggests issue breakdown
-- **Pre-commit analysis** — detects when staged changes span multiple issues; guides through `git add -p` splitting
-- **Release management** — generates changelogs via `gh release create --generate-notes` (no manual CHANGELOG.md)
+Full-lifecycle GitHub issue tracking across four phases:
+- **Phase 0: Setup** — configures `## Work Tracking` in CLAUDE.md, creates standard GitHub labels (including `epic`), optionally reconstructs issues from git history
+- **Phase 1: Pre-Implementation** — when a plan is ready, creates an epic with child issues (Context / What / Acceptance Criteria / Notes), establishes active epic and active issue for the session
+- **Phase 2: Task Intake** — before writing any code, checks for an active issue; if none, drafts and proposes one with epic placement assessed; detects cross-cutting concerns
+- **Phase 3: Pre-Commit** — fallback safety net; confirms issue linkage on staged changes; catches anything Phase 2 missed; guides commit splits
 
-Once configured in CLAUDE.md, Claude applies cross-cutting detection and issue linking automatically throughout every session.
+Ad-hoc issues discovered during implementation are always assessed for epic fit (active epic → other open epics → standalone) with Claude suggesting placement and the user confirming. Planned issues from Phase 1 go into the active epic automatically.
 
-**Triggers:** `/issue-workflow`, or offered automatically during CLAUDE.md creation and at session start when project type is set but Work Tracking is not.
+**Triggers:** `/issue-workflow`, or invoked automatically throughout the session when Work Tracking is enabled in CLAUDE.md.
 
 ---
 
