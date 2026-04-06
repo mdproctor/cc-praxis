@@ -273,20 +273,23 @@ Only ask for what's genuinely unclear:
 
 ### Step 4 — Draft with correct voice, tone, and style
 
-Apply the voice rules: "I" for the developer's perspective, "we" for
-developer+Claude collaboration. Match tone to entry type.
+**This step is a gate. Do not generate any prose until the pre-draft classification below is complete.**
 
-**Do not default to "we" for everything.** A day-zero entry where the
-developer is exploring ideas alone should be almost entirely "I." A phase
-update where Claude was materially involved should use "we" throughout the
-"What we tried" section.
+**Pre-draft classification — required before writing a single sentence:**
 
-Apply the style guide loaded in Step 0. The guide constrains vocabulary,
-sentence patterns, and what to avoid — follow it as a hard constraint, not
-a suggestion. Check the draft against the "What to avoid" section before
-presenting. The diary voice (honest, uncertain, in-the-moment) and the
-personal style guide work together — one shapes *what* is said, the other
-shapes *how* it sounds.
+1. **Is Claude a participant in this entry?** If yes, for each section identify in advance: is this "I" (developer's perspective alone), "we" (Mark and Claude collaborating), or "Claude [verb]" (Claude acting distinctly — catching something, reporting back, going off-script, getting it wrong)?
+2. **Which moments are Claude-naming moments?** List them before drafting. These are the moments where Claude's specific behaviour is the story — not just that the work got done.
+3. **Tone check:** Which entry type does this match (Day Zero / Phase Update / Pivot)? What does the Tone Calibration table say the natural tone should be?
+
+Only after completing this classification: draft.
+
+**Do not default to "we" for everything.** A day-zero entry where the developer is exploring ideas alone should be almost entirely "I." A phase update where Claude was materially involved should use "we" throughout the work sections.
+
+**After drafting — verify before showing:**
+
+Go through the style guide's "What to Avoid" section line by line. If the draft fails any item, fix it before presenting. Do not show a draft that fails the style guide — fix first, then show.
+
+The diary voice (honest, uncertain, in-the-moment) and the personal style guide work together — one shapes *what* is said, the other shapes *how* it sounds. Both are mandatory, not advisory.
 
 Present the full draft. **Do NOT write to disk until the user confirms.**
 

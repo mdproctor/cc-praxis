@@ -309,6 +309,19 @@ Some skills in this repository are **developer-only** — they require a cloned 
 
 **Quality check:** During deep analysis, verify no third-party skills are documented anywhere. *This is part of the `consistency` category in `project-health`.*
 
+## Writing Style Guide — Mandatory for Blog Content
+
+**The writing style guide at `~/claude-workspace/writing-styles/blog-technical.md` is mandatory for all blog and diary entries. It is not a soft suggestion.**
+
+When invoking `write-blog`:
+- Load the guide in full before drafting (Step 0 of the write-blog workflow)
+- Complete the pre-draft voice classification before generating any prose (Step 4)
+- Verify the draft against "What to Avoid" before showing it — do not show a draft that fails
+
+Do not produce a draft without completing these steps. The guide constrains vocabulary, register, heading style, and what to avoid. A Claude that reads the guide and then generates anyway without classification has not followed it.
+
+---
+
 ## Developer Workflow
 
 When working on this repository, use these commands:
