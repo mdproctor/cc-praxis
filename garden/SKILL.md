@@ -1174,6 +1174,7 @@ MERGE is complete when:
 - ✅ Discarded submissions recorded in DISCARDED.md with conflict GE-ID
 - ✅ DEDUPE offered if drift threshold exceeded
 - ✅ Processed submissions removed
+- ✅ Validator run: `python3 ~/claude/knowledge-garden/scripts/validate_garden.py` — exits 0 before commit
 - ✅ Committed with `merge:` format
 
 DEDUPE is complete when:
