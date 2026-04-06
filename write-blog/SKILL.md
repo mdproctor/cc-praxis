@@ -118,10 +118,12 @@ Different phases have different natural tones. Match the writing to the moment.
 ## File Location
 
 ```
-docs/blog/YYYY-MM-DD-phase-title.md
+docs/blog/YYYY-MM-DD-NN-phase-title.md
 ```
 
-One file per entry. Dated, kebab-case title, ≤30 chars (no "the", "a", "an" — drop articles to keep slugs short and scannable).
+One file per entry. `NN` is a two-digit sequence number starting at `01` — always present, even for the first entry of the day. Kebab-case title, ≤30 chars (no "the", "a", "an" — drop articles to keep slugs short and scannable).
+
+Always numbered so same-day entries sort correctly without renaming.
 Previous entries are never edited — new entries reference them if needed.
 
 ---
@@ -331,10 +333,15 @@ Wait for explicit YES or feedback. Iterate on feedback before writing.
 
 ```bash
 mkdir -p docs/blog
+# determine sequence number
+ls docs/blog/YYYY-MM-DD-*.md 2>/dev/null | wc -l  # count existing same-day entries
+# NN = count + 1, zero-padded to 2 digits (01, 02, ...)
 # write entry file
 ```
 
-File name: `YYYY-MM-DD-<kebab-case-title>.md` — today's date, topic slug ≤30 chars.
+File name: `YYYY-MM-DD-NN-<kebab-case-title>.md` — today's date, two-digit sequence number, topic slug ≤30 chars.
+
+The sequence number is always present. Count existing entries for today's date, add one, zero-pad to two digits: first entry is `01`, second is `02`, etc.
 
 ### Step 7 — Offer related actions
 
@@ -404,7 +411,7 @@ For each confirmed entry, follow the full standard write-blog workflow (Steps 0�
 - Gather the story from git history and commit messages for that phase
 - Draft with correct voice, style, and tone
 - Show the draft and confirm before writing to disk
-- Write to `docs/blog/YYYY-MM-DD-<slug>.md`
+- Write to `docs/blog/YYYY-MM-DD-NN-<slug>.md` — sequence number determined at write time by counting existing same-day entries
 - Offer to commit each entry, or batch-commit at the end
 
 After each entry is confirmed, move to the next. Do not draft the next entry until the current one is written and committed.
@@ -576,7 +583,7 @@ After writing or editing headings, run these five checks. Each one catches a spe
 
 Entry is complete when:
 
-- ✅ File exists at `docs/blog/YYYY-MM-DD-<title>.md`
+- ✅ File exists at `docs/blog/YYYY-MM-DD-NN-<title>.md` with correct two-digit sequence number
 - ✅ Voice is correct: "I" for developer perspective, "we" for collaboration, no third-person protagonist
 - ✅ Headings: thematic headings were kept or enhanced — none were replaced with bare structural slots
 - ✅ All required sections filled — no TBDs; "What Changed" may be omitted only if nothing pivoted
