@@ -1,0 +1,164 @@
+{"hash": "4fa64005b12a6fe1a86fffa44ce2a47084ce594c", "date": "2026-04-06", "subject": "docs: add Phase 6 named rules and params spec"}
+{"hash": "bb9c8dd1bed0a19283ef5cab55e190990545290d", "date": "2026-04-06", "subject": "docs(claude-md): document varargs type-capture pattern for nested generic DSL APIs"}
+{"hash": "3946b235168fcef87fcb2a2ec3269bac767daac5", "date": "2026-04-06", "subject": "test(drools): add chained not/exists scope tests and multi-rule independence test"}
+{"hash": "f48360995deb333094c89a772da08de89b50d5ef", "date": "2026-04-06", "subject": "feat(drools): add type() compile-time type narrowing with tests and example"}
+{"hash": "c6791ea227562a419ed8e10486b2a7f5e779ad45", "date": "2026-04-06", "subject": "feat(drools): add BaseTuple.as() tuple projection with TupleAsTest and example"}
+{"hash": "12cd8d39ab825f3bb3e85ae7cac0511d42e351dc", "date": "2026-04-06", "subject": "test(drools): add path4, run-reset, fn side-effects, and filter AND-composition tests"}
+{"hash": "6b3b8ac381fe24fa24341074f77798d63e0d39a7", "date": "2026-04-06", "subject": "feat(drools): add Variable.of() named bindings and from() function shorthand"}
+{"hash": "9194a0fca32294033168205da16aa5ca10490966", "date": "2026-04-06", "subject": "docs(drools): add extendsExample() to RuleBuilderExamples"}
+{"hash": "7d8a05cc87abb4c20b2b25d403dfbb315aae1e1b", "date": "2026-04-06", "subject": "test(drools): add extend-of-extend, not/exists scope inheritance tests"}
+{"hash": "d7ce8241dac7862323acf877697eb8e6bb67badb", "date": "2026-04-06", "subject": "test(drools): add ExtensionPointTest \u2014 basic extends (filter, join, two-base-joins, fan-out)"}
+{"hash": "d613da0b548fc930b8f03ea38bf3ae635d36a2dd", "date": "2026-04-06", "subject": "feat(drools): add extensionPoint() to JoinSecond template and extendsRule() to RuleBuilder"}
+{"hash": "a577978e1b9ffe1df54bffe58c9ddc576b51901b", "date": "2026-04-06", "subject": "feat(drools): add RuleExtendsPoint classes and RuleDefinition.copyInto()"}
+{"hash": "9af89a20ded6b62ae64bf6edab4103e68cc3fd03", "date": "2026-04-06", "subject": "docs: add Phase 5 extensionPoint/extendsRule implementation plan"}
+{"hash": "16317b8d9be0c33be70ddba37b59eaef5c14aa6a", "date": "2026-04-06", "subject": "docs: extend phase5 spec \u2014 add not/exists + chaining tests"}
+{"hash": "1ed8caf4ecc9aba77810f0d2b7514f2db2e585c8", "date": "2026-04-06", "subject": "docs: add Phase 5 extensionPoint/extendsRule spec"}
+{"hash": "55fdc12f44a18b6c49906d2f9fbabd4ddd687123", "date": "2026-04-06", "subject": "docs(claude-md): always read all vol2 tests before DSL work; note post-extends review"}
+{"hash": "42fc28d6d82b33f4b45898cb0eb6842f7bb4a8da", "date": "2026-04-06", "subject": "docs(drools): add RuleBuilderExamples showing compact vs named variable binding"}
+{"hash": "37566b30500da50e46c82a0c431d10f17b85f042", "date": "2026-04-06", "subject": "feat(drools): add 3-variable filter() to JoinFirst; all Variable<T> tests passing"}
+{"hash": "43e938c0862aa24c8ed220d22a9579de6bfa4d08", "date": "2026-04-06", "subject": "test(drools): verify Variable index captured at bind time, skipping intermediate facts"}
+{"hash": "1875c1db3866770e5ca5143267becad18e1df346", "date": "2026-04-06", "subject": "feat(drools): add var() and 2-variable filter() to JoinFirst via Permuplate template"}
+{"hash": "93948b1ba175fce4cb08cd759ff6b612f9a722a3", "date": "2026-04-06", "subject": "feat(drools): add Variable<T> and RuleDefinition variable filter infrastructure"}
+{"hash": "7929068e254c660f24782d3d84ff299fb70d163c", "date": "2026-04-06", "subject": "docs: add Variable<T> binding implementation plan"}
+{"hash": "4929dd83a6e7b592fe4184705629b9debc478b1d", "date": "2026-04-06", "subject": "docs: add blog entry 011 and Variable<T> binding spec"}
+{"hash": "70b1851cacd0cfc439ead442fbc4e56bacd5ef19", "date": "2026-04-06", "subject": "refactor(blog): rename all entries to YYYY-MM-DD-NN-title.md convention"}
+{"hash": "59333331e1623a759b8da573e2c923abde301947", "date": "2026-04-06", "subject": "docs(blog): add entry 008; add code snippets to 001 and 003"}
+{"hash": "c95d56617bfd4c7b30ee1cefa7f63c890389cc25", "date": "2026-04-06", "subject": "docs: session handover 2026-04-06"}
+{"hash": "66aff4eb17b00a6b0c83f729d7fb24866f263b16", "date": "2026-04-06", "subject": "docs: add design snapshot 2026-04-06-drools-dsl-sandbox"}
+{"hash": "f4c15f090c5f9d7b12c7ff7e37cfd08f5e664b0f", "date": "2026-04-06", "subject": "docs(blog): apply updated style guide \u2014 Claude intro before 'we', vary consecutive uses"}
+{"hash": "447c8f0087d9ab8f92d4aecce4b7dc4a97dc510a", "date": "2026-04-06", "subject": "docs(blog): full style guide revision pass \u2014 headings, closings, density"}
+{"hash": "da9582cb692d7b3782b07f6f78f0788cfa5ec5ff", "date": "2026-04-06", "subject": "docs: add Writing Style Guide section to CLAUDE.md"}
+{"hash": "5aa916990a332527fc91ed6095c7d35e7c069c2c", "date": "2026-04-05", "subject": "docs(blog): apply I/we/Claude voice register to all entries"}
+{"hash": "5181fbdbe8140292cd04128970abc9d95170ffbf", "date": "2026-04-05", "subject": "docs: add ADRs 0001-0004 for key Drools DSL sandbox decisions"}
+{"hash": "72eceb79dd2f4ebb5798f9aadbff56af2c3a4789", "date": "2026-04-05", "subject": "docs: session handover 2026-04-05"}
+{"hash": "5e21a31180f83bf4fc06e8d4757149d5a98ea7c2", "date": "2026-04-05", "subject": "docs: add design snapshot 2026-04-05-drools-dsl-sandbox"}
+{"hash": "b2c6bd2bfb4939ec84a9f0e6ac4b06fade811464", "date": "2026-04-05", "subject": "test(drools-example): add 5 OOPath traversal tests + library data in setUp()"}
+{"hash": "74f452206e5b42c3657e727a03e6757952d112d4", "date": "2026-04-05", "subject": "feat(drools-example): add path2()..path6() to Join0Second template"}
+{"hash": "aa345bf836561feae79ff104ff4725fd2be7a20d", "date": "2026-04-05", "subject": "feat(drools-example): add OOPath pipeline and correlated execution to RuleDefinition"}
+{"hash": "79590a28e5d04eb01b2cf1130b6b4a789b1b782f", "date": "2026-04-05", "subject": "feat(drools-example): add RuleOOPathBuilder with Path2..Path6 builders"}
+{"hash": "b25d7fd2f89ee0a238154c66a389bedfb7a637f4", "date": "2026-04-05", "subject": "feat(drools-example): add Library/Room/Book domain records and libraries to Ctx"}
+{"hash": "3710fcbabe0f08ae819eaba6be8d955457c200a9", "date": "2026-04-05", "subject": "feat(drools-example): add OOPath support types \u2014 BaseTuple, PathContext, Function2, OOPathStep"}
+{"hash": "d93c8f944c2ea2ff2d456a1e8b20f9aa9951de12", "date": "2026-04-05", "subject": "docs: implementation plan for Phase 3b OOPath traversal"}
+{"hash": "ddbc33c967461104ceff2e17f63f7291865c12f4", "date": "2026-04-05", "subject": "docs: spec for Phase 3b \u2014 OOPath / pathN() traversal"}
+{"hash": "fd2094a7ddfc439a0be5187ad2cb1d5162f4e9b9", "date": "2026-04-05", "subject": "refactor(drools-example): typed join() in NegationScope and ExistenceScope"}
+{"hash": "7dff2d62037d92b2a81c4e4138c2234e2950a24e", "date": "2026-04-05", "subject": "fix(drools-example): move fn() to Join0Second so not()/exists() chains work"}
+{"hash": "d8a5ec92a93716a39efeecd91db7cdf49d47024e", "date": "2026-04-05", "subject": "test(drools-example): add 3 not()/exists() scope tests"}
+{"hash": "603341024fe284f8a696a248125a18a6de6732a2", "date": "2026-04-05", "subject": "feat(drools-example): add not() and exists() to Join0Second template"}
+{"hash": "ecf4787dc585ef111b2381a19c36f387d13e2999", "date": "2026-04-05", "subject": "feat(drools-example): add negation/existence constraints to RuleDefinition"}
+{"hash": "94105f488eeed8972969d83be6e2b087952ec2c3", "date": "2026-04-05", "subject": "feat(drools-example): add NegationScope and ExistenceScope builders"}
+{"hash": "c2ca110201abfd10a87b2440a9b7cbdaeed8bba6", "date": "2026-04-05", "subject": "docs: implementation plan for Phase 3a not()/exists() scopes"}
+{"hash": "a653fb01b9055f6c81bd522af30f19700c661464", "date": "2026-04-05", "subject": "docs: spec for Phase 3a \u2014 not() and exists() scopes"}
+{"hash": "d484ba72726b9cf0a4660168beda01246e338efa", "date": "2026-04-05", "subject": "style: fix Javadoc formatting in RuleBuilder"}
+{"hash": "ebd3b7aa31ee525480b2a782b777672f91d68bac", "date": "2026-04-05", "subject": "docs(drools-example): Phase 2 \u2014 END type, bi-linear joins, updated comparison"}
+{"hash": "57479dc99a932499327c6a21ca28501ecb84bf24", "date": "2026-04-05", "subject": "test(drools-example): add 4 bi-linear join tests"}
+{"hash": "5ff6326434fc6b904ddce5cbd7f435b1d4676ee3", "date": "2026-04-05", "subject": "feat(drools-example): rewrite JoinBuilder with First/Second split and END phantom type"}
+{"hash": "8163c4e12e12fdebd5c494b8544ade853b11e8fd", "date": "2026-04-05", "subject": "feat(drools-example): RuleBuilder.from() returns Join1First<Void,DS,A>"}
+{"hash": "3d969b3f3150c5f5ce5894247766e9e25bbeb64f", "date": "2026-04-05", "subject": "feat(drools-example): TupleSource abstraction and bi-linear execution in RuleDefinition"}
+{"hash": "239bb89e4dc226779850809493c242bcc7ee14f6", "date": "2026-04-05", "subject": "feat(drools-example): add BaseRuleBuilder<END> and JoinSecond<DS>"}
+{"hash": "6c077730bfacdc18196c323c5c76ed660ee25496", "date": "2026-04-05", "subject": "fix(maven-plugin): chain multiple inline templates from same parent file"}
+{"hash": "d5edf3356071c610f9440d2c38862aae6b1cd343", "date": "2026-04-05", "subject": "docs: implementation plan for Phase 2 bi-linear joins"}
+{"hash": "985d4942453deb3e198409c9eb8acc4883418626", "date": "2026-04-05", "subject": "docs: spec for Phase 2 \u2014 First/Second split, END phantom type, bi-linear joins"}
+{"hash": "ddb599ab0d03a0f555ac17dfdf233910aca281da", "date": "2026-04-04", "subject": "docs: typed join, dual filter, propagation, and Drools comparison"}
+{"hash": "52bd06e884274b0c9c9dc0142ce7b576b7d0548b", "date": "2026-04-04", "subject": "feat(drools-example): typed join(), dual filter(), and registration-based predicate dispatch"}
+{"hash": "e73dc1502088939c2a70e020cadbac32ed3a890b", "date": "2026-04-04", "subject": "test(core): verify @PermuteMethod ternary from expression suppresses at arity 1"}
+{"hash": "e75584c6bbe9cd943fb051cd902c6dcaf759734e", "date": "2026-04-04", "subject": "feat(core): standalone method @PermuteTypeParam with parameter-type propagation"}
+{"hash": "2e291a2431e158c8a64a2567752dd331377c29bd", "date": "2026-04-04", "subject": "docs: implementation plan for typed join() and dual filter()"}
+{"hash": "8ceade226368af50de1ccf783b590dbb1a437450", "date": "2026-04-04", "subject": "docs: update spec with dual filter overloads and Drools comparison"}
+{"hash": "9c7596e88cf742f70c2a26dfa6d8e50987569edf", "date": "2026-04-04", "subject": "docs: spec for method-level @PermuteTypeParam standalone support with propagation"}
+{"hash": "04f9519c10b38e04edbbd2cb549ecc7e2d54aba7", "date": "2026-04-04", "subject": "docs: add 7-part development blog \u2014 full journey from initial concept to Drools Phase 1"}
+{"hash": "1913fd7dd11b13073e2d0d022a1b29e5cc2fd268", "date": "2026-04-04", "subject": "docs: add session handoff, gotchas, and test plan (2026-04-04)"}
+{"hash": "bcea45deb1eeb4efecb162664208b0e0925adde5", "date": "2026-04-04", "subject": "docs(g3): update CLAUDE.md \u2014 same-N formula, alpha naming, two detection branches"}
+{"hash": "7d2c1cf1e80e537f12373eab636916054f7b9dd4", "date": "2026-04-04", "subject": "fix(g3): same-N extends formula + postG1TypeParams param (was currentEmbeddedNum+1)"}
+{"hash": "7131f827aa2c6774ebd3080644bb077d7bcc16fb", "date": "2026-04-04", "subject": "docs: G3 alpha-naming extends expansion implementation plan"}
+{"hash": "59be2693882522fcc780bcc444a3998e86b6eb02", "date": "2026-04-04", "subject": "docs: G3 alpha-naming extends expansion design spec"}
+{"hash": "695584eca091e4018540c1cee129f56976689a9d", "date": "2026-04-04", "subject": "test(drools): add testArity2MultipleFilters + testArity3ThreeFacts (spec gap)"}
+{"hash": "66d6c5d5ffe0da33e7ad3c565c020084f0f12206", "date": "2026-04-04", "subject": "docs(drools): document join() reflective pattern and arity-2+ type safety limitation"}
+{"hash": "892e651e5cc8742c3b1d4774096f8ba022494140", "date": "2026-04-04", "subject": "test(drools): add RuleBuilderTest covering arities 1-6, structural + behavioural assertions"}
+{"hash": "ba73d10b5f46024febfb71428c7af83b16b61faa", "date": "2026-04-04", "subject": "fix(drools): type join() parameter + update DROOLS-DSL.md to reflect Phase 1 implementation"}
+{"hash": "635c101427eba70e101e11de813065a1786bdaa8", "date": "2026-04-04", "subject": "feat(drools): add JoinBuilder template + RuleBuilder \u2014 full DSL chain"}
+{"hash": "e584a436060834de62d1fc505b8f1ec18ff827f0", "date": "2026-04-04", "subject": "feat(drools): add Consumer1+Predicate1 templates; fix PermuteTypeParam in top-level Maven plugin path"}
+{"hash": "6098cd10b282753cf51393311b9c162002724770", "date": "2026-04-04", "subject": "feat(drools): add RuleDefinition \u2014 cross-product evaluator + reflection wrapper + test API"}
+{"hash": "43839fa78c614d15512eccb7cf33f12e377f503d", "date": "2026-04-04", "subject": "feat(drools): module setup \u2014 domain types, DataSource, Ctx, test dependencies"}
+{"hash": "0c113fdd1841f693dd02a54f0eefbd54b92348fc", "date": "2026-04-04", "subject": "docs: Drools RuleBuilder example implementation plan (5 tasks)"}
+{"hash": "5cbca4d3e0f277a9623d04a719d2d1d4e68e71f1", "date": "2026-04-04", "subject": "docs: Drools RuleBuilder example design spec (Phase 1)"}
+{"hash": "43f5eb0289dbc96c7132179075fe08ae09ac12f7", "date": "2026-04-04", "subject": "docs(drools): note open question on ctx position in lambda signatures"}
+{"hash": "fc75e7e989be75fb9cd25085b415be6b58b7059e", "date": "2026-04-04", "subject": "docs(drools): note future idea for T${j} variant alongside alpha example"}
+{"hash": "79cc6a745e931b4d7dbe5df2c425b771275e8810", "date": "2026-04-04", "subject": "docs(drools): switch to alpha naming (A,B,C,D) to match Drools conventions"}
+{"hash": "c9b287694ce32c782a72e04b7aab6d15129fe272", "date": "2026-04-04", "subject": "docs(drools): comprehensive DSL design document for the Drools RuleBuilder example"}
+{"hash": "d26bdaf86b380adfd1038accab367dfbeb504494", "date": "2026-04-03", "subject": "test: add alpha(j) naming coverage for @PermuteTypeParam and @PermuteReturn"}
+{"hash": "fef11e12ed30216fc7209c8e6748ac1829ce061f", "date": "2026-04-03", "subject": "docs: add TODO-4 \u2014 move example tests to example module (test-jar reuse approach)"}
+{"hash": "2832a473630bd9178f62e2d368a354bbb1839acf", "date": "2026-04-02", "subject": "docs: comprehensive session handoff \u2014 full implementation status, all features, open question"}
+{"hash": "279fd8d3ec66bb572fadc0065735850aa3b5ddb8", "date": "2026-04-02", "subject": "docs: update gap analysis to Resolved; SESSION-HANDOFF marks implementation complete"}
+{"hash": "e7f1ac02b5d855bb556a0e803fa8e82618681059", "date": "2026-04-02", "subject": "docs: comprehensive documentation update \u2014 G1/G2/G3/G4/N4 features"}
+{"hash": "0b9bd2abdba74e8269e6b17fd8b818170f4d01ee", "date": "2026-04-02", "subject": "test(s1,s2,n1): inline=true on interfaces + two templates in same parent"}
+{"hash": "3e00768e8847e9bfa265239956dea1925371fcee", "date": "2026-04-02", "subject": "fix(s5,s4,n3): resolve @Ignore test; add @PermuteParam degenerate + interface tests"}
+{"hash": "b3b89bccbd451146bc3e82cb803a00812d259563", "date": "2026-04-02", "subject": "feat(g4): wire transformMethod() \u2014 method-level @PermuteTypeParam now works in both pipelines"}
+{"hash": "059d9c9c466c48c1af5522cbbc7043afcc799333", "date": "2026-04-02", "subject": "test(g4): add failing tests for method-level @PermuteTypeParam (TDD)"}
+{"hash": "9bfefd6220c03ce4f2c3fdd9eff41b5f41838799", "date": "2026-04-02", "subject": "feat(g4): add transformMethod() for method-level @PermuteTypeParam expansion"}
+{"hash": "ba66b482f124e9df31020b779406972b0cbbfc37", "date": "2026-04-02", "subject": "feat(g3): extends expansion in InlineGenerator; @PermuteMethod APT processing"}
+{"hash": "9d16dadd3b240a23d7001b00675ebe264afc1225", "date": "2026-04-02", "subject": "feat(g3): implement applyPermuteMethod() in InlineGenerator \u2014 inner j loop with inference"}
+{"hash": "648a2010a28ee6ed19221b98641969bef44a8f96", "date": "2026-04-02", "subject": "test(g3): add failing PermuteMethodTest (TDD)"}
+{"hash": "0ba7dbad02045e6415307547d2344095c6282e9f", "date": "2026-04-02", "subject": "feat(g3): PermuteMethodConfig in AnnotationReader; public processMethodParamDeclr helper"}
+{"hash": "089d7f52f538684ac49daccf42e07630e7f7e3f2", "date": "2026-04-02", "subject": "feat(g3): add @PermuteMethod and @PermuteExtends annotations"}
+{"hash": "eb62c75cdb045f76bbf53cc8d561edda29b2f849", "date": "2026-04-02", "subject": "feat(g2b): implicit return type + parameter type inference in InlineGenerator"}
+{"hash": "8e87d9d3ad84e6ab43f9742e0542b602e9c71cbe", "date": "2026-04-02", "subject": "feat(g2b): InlineGenerator explicit @PermuteReturn + boundary omission"}
+{"hash": "b38831119664b22e00937fa450760cd1f4179533", "date": "2026-04-02", "subject": "feat(g2b): APT @PermuteReturn processing \u2014 boundary omission, V2/V3/V6 validation"}
+{"hash": "f08e3d87185e58e84119fb36a10cda9bb9b96cd0", "date": "2026-04-02", "subject": "test(g2b): add failing PermuteReturnTest (TDD)"}
+{"hash": "5f172a129f27bda8208f96f22b28d0c28c302c13", "date": "2026-04-02", "subject": "feat(g2b): add @PermuteReturn annotation"}
+{"hash": "9b1653de0b01dae9d8c03ee7569ecb18b29de06f", "date": "2026-04-02", "subject": "feat(g2a): add transformMethodParams() to PermuteDeclrTransformer"}
+{"hash": "8c3c11e131bbf6eb03e7ff0b1b9797379289014e", "date": "2026-04-02", "subject": "test(g2a): add failing tests for @PermuteDeclr on method parameters (TDD)"}
+{"hash": "affe111086689cf42cd376c386e583c139c6e09e", "date": "2026-04-02", "subject": "feat(g2a): make @PermuteDeclr name optional (default \"\") for method parameters"}
+{"hash": "9273559e4433aebb934e6e200dc7e968f9c211d2", "date": "2026-04-02", "subject": "docs(g1): clarify @PermuteTypeParam cleanup \u2014 disappears by construction in transformer"}
+{"hash": "5b03e8dfda7d30d0ee9036f7702a740a90b3c120", "date": "2026-04-02", "subject": "feat(g1): integrate PermuteTypeParamTransformer into APT and Maven plugin pipelines"}
+{"hash": "2554b2c03dce152eef44d00351f9dfe18cb4667f", "date": "2026-04-02", "subject": "feat(g1): implement PermuteTypeParamTransformer (explicit + implicit expansion + R1/R3/R4)"}
+{"hash": "1dad5de1446a7c6dec74c49b05c28f9bdf41c50f", "date": "2026-04-02", "subject": "test(g1): add failing PermuteTypeParamTest (TDD)"}
+{"hash": "0df126c1ebf3d48b0589f13a9daf071af7c90ddb", "date": "2026-04-02", "subject": "feat(g1): add @PermuteTypeParam annotation"}
+{"hash": "95f7dca91a4a37883383772e7c8aeb08a6e8a12b", "date": "2026-04-02", "subject": "docs: update G1/G2/G3/G4/N4 design specs and gap analysis"}
+{"hash": "12d091a94411191342d87014985987ce40eb86e9", "date": "2026-04-02", "subject": "docs(n4): document built-in expression functions in README and CLAUDE.md"}
+{"hash": "bae193c1169f56ef556404e7cb68f41c3c842d3b", "date": "2026-04-02", "subject": "feat(n4): implement alpha(), lower(), typeArgList() built-in JEXL functions (N4)"}
+{"hash": "5691ed9bd1a907808cedda957aabb35e3eb1f074", "date": "2026-04-02", "subject": "test(n4): add failing ExpressionFunctionsTest (TDD)"}
+{"hash": "dcecec1890ae7cf4226aa00c37dc0e748069d2c9", "date": "2026-04-02", "subject": "fix(mojo): use AnnotationStringAlgorithm.matches() for className prefix check (S3)"}
+{"hash": "b6f14faf8dfd33aefcc85fb197cdbe42ecd91c7b", "date": "2026-04-02", "subject": "chore: add .worktrees/ to gitignore"}
+{"hash": "0f083ca576508736beacba5820a25db47eea5b2c", "date": "2026-04-02", "subject": "docs: add G3 multi-join spec; update gap analysis and G2 spec"}
+{"hash": "fc8d44f3808a1a1308019adf0df8655437989dc4", "date": "2026-04-02", "subject": "docs: add N4 expression functions spec; update G2 and gap analysis"}
+{"hash": "eaf7c267606990fb231d59d0b67b71282e2ac97a", "date": "2026-04-02", "subject": "docs: add G2 return type narrowing by arity design spec"}
+{"hash": "cae7ed90f615c9885169c9e18c43fa8b87f46f31", "date": "2026-04-01", "subject": "docs: add G1 generic type parameter arity design spec"}
+{"hash": "b306c595d8379774aa2b08ccbe54b9f22525f4f3", "date": "2026-04-01", "subject": "docs: remove G3 from gap analysis \u2014 Java resolves lambda overloads by parameter count"}
+{"hash": "4cc9d303b15c0635c865ade061e7db50137c5316", "date": "2026-04-01", "subject": "docs: add RuleInterfaces example proposal and gap analysis from Drools DSL review"}
+{"hash": "4df55419d736a4cad6cb568933827e2ea3b57fb6", "date": "2026-04-01", "subject": "fix: project-health remaining items \u2014 refine and medium fixes"}
+{"hash": "a496f80a42af33be1000e78b494df4e2aa18674f", "date": "2026-04-01", "subject": "fix: project-health pass \u2014 docs-sync, consistency, config corrections"}
+{"hash": "4a181f96bae95ebdda86ceff323d67b99a5b06f5", "date": "2026-04-01", "subject": "docs: document permuplate-ide-support, validation rules R1-R4, and algorithm design"}
+{"hash": "391a2e0675552cf17454cdc26abcfbbc13adf011", "date": "2026-04-01", "subject": "feat: replace leading-literal className check with full substring algorithm (R2)"}
+{"hash": "ceb8addfa61edbd3cf5596dc980f50e7c963a0da", "date": "2026-04-01", "subject": "feat: wire validate() into transformers \u2014 R2 substring, R3 orphan, R4 no-anchor"}
+{"hash": "112f0ffcd8b336c36bffbe3b5620bf0f5920c654", "date": "2026-04-01", "subject": "feat: R1 (className no variable) and R1b (extraVars absent from className) compile errors"}
+{"hash": "7c194a6bfaa508708ce1a25e10e7871be1581e05", "date": "2026-04-01", "subject": "fix: remove unused constants parameter from validate()"}
+{"hash": "b1cfee176a5ed8f43c4b0b501476d59223c557cc", "date": "2026-04-01", "subject": "feat: implement validate() with R2/R3/R4 rules and R2 short-circuit"}
+{"hash": "47b8a7b1133996271e9f22bd4550adc122136915", "date": "2026-04-01", "subject": "feat: implement computeRename() with NeedsDisambiguation for prefix/suffix changes"}
+{"hash": "da75996da6ea2c0dadf1c64c8feeafa500800e5d", "date": "2026-04-01", "subject": "feat: implement matches() \u2014 all literals as ordered anchors"}
+{"hash": "0ebe302b272e8f7c951a3319840a1582e838939d", "date": "2026-04-01", "subject": "feat: implement parse() and expandStringConstants() with tests"}
+{"hash": "3ed8a1f83f42bbb954b499794f21e6cb3fdaaf1e", "date": "2026-04-01", "subject": "feat: add core types for permuplate-ide-support"}
+{"hash": "f81ed514532b3b9ec721bb598d94388920ba9b67", "date": "2026-04-01", "subject": "feat: create permuplate-ide-support module skeleton"}
+{"hash": "c2249e723edb3be6f346fc7cf6f8df6f33f78cd9", "date": "2026-04-01", "subject": "docs: add Phase 1 implementation plan for IDE plugin foundation (ide-support + processor rules)"}
+{"hash": "5729f5cbc6db8293b6911cdae8520a057ede42ae", "date": "2026-04-01", "subject": "test: document adjacent-variable collective behaviour with @Ignore forward tests"}
+{"hash": "1f5c8cbd6948acff0f738cfadc8ef721d8effaeb", "date": "2026-04-01", "subject": "docs: adjacent variables are a collective unit \u2014 not a V1 edge case"}
+{"hash": "1142f92f199b2032d7a44845c1c45b264367d5c6", "date": "2026-04-01", "subject": "docs: rename NoMatch \u2192 disambiguation dialog; IDE uses both old+new names during refactor"}
+{"hash": "35df67817a43ed09e987a80a748da956e32b85ab", "date": "2026-04-01", "subject": "docs: update IDE plugin spec \u2014 all literals as ordered anchors, 6 algorithm issues resolved"}
+{"hash": "420b4349229c58ad976297f2ee4e61445f46e750", "date": "2026-04-01", "subject": "test: full coverage matrix for PrefixValidationTest \u2014 all placements \u00d7 error + valid"}
+{"hash": "a19c1656f813dd2665b93b4cdf9b26f6c1fc4538", "date": "2026-04-01", "subject": "docs: revise IDE plugin spec \u2014 substring matching, multi-variable support, Rule 4 (no variables)"}
+{"hash": "279c99da668201b29533c62545b77ca39b0146e1", "date": "2026-04-01", "subject": "docs: add IDE plugins design spec and mockup screenshots"}
+{"hash": "8dce6277212ca4e84c0206b9a66e3aab4dfd197b", "date": "2026-04-01", "subject": "refactor: split DegenerateInputTest into three focused test classes"}
+{"hash": "dd7ca49fe5c5e5306f281972d22c9a026bc48970", "date": "2026-04-01", "subject": "docs: APT vs Maven Plugin section; inline/keepTemplate documented throughout"}
+{"hash": "4dcbdfec9b59fd3fdda8cffca517569528651d00", "date": "2026-04-01", "subject": "test: add InlineGenerationTest for InlineGenerator and AnnotationReader"}
+{"hash": "2bb529221caafe0dbccbcbfab63847c82a5e19b4", "date": "2026-04-01", "subject": "feat: rename to permuplate-apt-examples; add permuplate-mvn-examples with Handlers inline example"}
+{"hash": "5349d60f5d6533d6c97e761052d7e77563eb901f", "date": "2026-04-01", "subject": "fix: templateDirectory default must be project-relative (use ${project.basedir})"}
+{"hash": "52c215cb14b9042a4853abc3ce3acc5354733110", "date": "2026-04-01", "subject": "feat: implement permuplate-maven-plugin with non-inline and inline generation"}
+{"hash": "292e960f58dc93ebbc27253193abeb8008034313", "date": "2026-04-01", "subject": "refactor: delete processor-local copies of transformer classes"}
+{"hash": "c426458f02582253ab72440b19a499ac4a19da24", "date": "2026-04-01", "subject": "refactor: processor now depends on permuplate-core; removed duplicate transformer copies"}
+{"hash": "a888b09ecf6d9c8bbd884f7cfc3f1a0d6090d069", "date": "2026-04-01", "subject": "feat: create permuplate-core module with shared transformers and PermuteConfig"}
+{"hash": "38021682139a5b6eea91fb1f6646e130ea938d2b", "date": "2026-04-01", "subject": "feat: APT validates and rejects inline=true; warns on keepTemplate without inline"}
+{"hash": "0d11070e9b1c557fe11e02ca9dd3d51b308090c7", "date": "2026-04-01", "subject": "feat: add inline and keepTemplate attributes to @Permute"}
+{"hash": "aa44dee613a1b2440e3542a1fa5d9a43f9533065", "date": "2026-04-01", "subject": "docs: add implementation plan for inline generation and Maven plugin"}
+{"hash": "4f4e4417ab70adfa64045c2d72de434d40a10245", "date": "2026-04-01", "subject": "docs: add design spec for inline generation and Maven plugin"}
+{"hash": "12c05228860f4be0d24cb003e78e17f3b98dcb33", "date": "2026-04-01", "subject": "feat: initial commit \u2014 Permuplate annotation processor"}
+{"hash": "9e1aab36f96f56076c19931784c03093e94dfa17", "date": "2026-04-01", "subject": "docs: add implementation plan for multiple permutation variables"}
+{"hash": "c0e55c8c70b954fb63d17d6c74238876b64e13c9", "date": "2026-04-01", "subject": "docs: add design spec for multiple permutation variables"}

@@ -1,0 +1,42 @@
+{"hash": "1925c81bbb7c71d8b305ebcdae45fdc63d63b4ee", "date": "2026-04-06", "subject": "docs: session handover 2026-04-06"}
+{"hash": "3e07252ec1a21ea452a4bc2eaa956c80a3f916ba", "date": "2026-04-06", "subject": "docs: add blog entry 2026-04-06-04 \u2014 Scelight extraction, replay datasets, commit discipline"}
+{"hash": "7b569173b91c7dd5598b3676299fd4593f829d33", "date": "2026-04-06", "subject": "docs: design snapshot 2026-04-06 \u2014 Phase 0+1 complete, replay infrastructure in place; update CLAUDE.md with style guide, replay index, mock start"}
+{"hash": "e6b1fea6619893b55735d96fa1ab1cdea7e327fc", "date": "2026-04-06", "subject": "feat: add AI Arena bot replay dataset (22 parseable PvT/PvZ/PvP games) to replay index"}
+{"hash": "3abe4551a50017f01bc278f6da8119df652eeb09", "date": "2026-04-06", "subject": "feat: add SC2 replay index \u2014 IEM10 Taipei dataset (30 replays, 21 Protoss games) from SC2EGSet"}
+{"hash": "cc6ffba3bbc0e4ddf2e21f82736d5f39a3da573c", "date": "2026-04-06", "subject": "feat: add scelight-mpq and scelight-s2protocol dependencies for SC2 replay parsing"}
+{"hash": "2b3c859eda8ee520e2f8ef25ead4cadd1cc1bc13", "date": "2026-04-06", "subject": "docs: add Scelight standalone modules plan \u2014 scelight-mpq and scelight-s2protocol extraction"}
+{"hash": "a1e8930837d808faba1e1e84c14a528e4f793df6", "date": "2026-04-06", "subject": "fix: auto-start SC2 on startup in %sc2 profile; add POST /sc2/start and /sc2/stop QA endpoints"}
+{"hash": "c8e6b93f694af196729eb4c8a50f300bfde80fd1", "date": "2026-04-06", "subject": "fix: QA endpoints inject GameObserver instead of SimulatedGame \u2014 works in both %mock and %sc2 profiles"}
+{"hash": "cf09b720c5a409c27a7908bdc5ffe409cffd005e", "date": "2026-04-06", "subject": "fix: add build/generate-code goals to quarkus-maven-plugin to enable quarkus:dev"}
+{"hash": "f1cd9352436730156da1012fb9edb79d4f366e5e", "date": "2026-04-06", "subject": "docs: enrich Phase 1 blog with Stalker image and ocraft code snippets; update image index"}
+{"hash": "e87faa5a832e4db0b8cff0434e80c149a8130ab6", "date": "2026-04-06", "subject": "docs: add Phase 1 blog entry \u2014 wiring real SC2, two-loop architecture, ocraft API discoveries"}
+{"hash": "da57b6be79b5303d5bc2df2c8a3b772c05f66b06", "date": "2026-04-06", "subject": "docs: add package-info to sc2.real documenting two-loop architecture and %sc2 profile requirement"}
+{"hash": "b531179f5bd425e5da662bab92f2428f6d109014", "date": "2026-04-06", "subject": "feat: SC2DebugScenarioRunner \u2014 same 4 scenario names triggered via SC2 debug API"}
+{"hash": "a7cd08da5ce9584699b26735b889c1e5739aa49e", "date": "2026-04-06", "subject": "feat: RealSC2Client \u2014 wraps S2Coordinator, auto-launches SC2, starts game loop in background, @Retry/@CircuitBreaker on connect"}
+{"hash": "1b90a722a6c383c371c5c25c1174bf6a6b613492", "date": "2026-04-06", "subject": "feat: RealGameObserver (reads SC2BotAgent) and RealCommandDispatcher (no-op) for %sc2 profile"}
+{"hash": "8d11190815c316cbc6a8e2c1b3e7bd15e8547709", "date": "2026-04-06", "subject": "feat: SC2BotAgent \u2014 ocraft S2Agent storing observations atomically and draining IntentQueue each frame"}
+{"hash": "bf0a60a808f289443542e385266849e6de62d11c", "date": "2026-04-06", "subject": "feat: ObservationTranslator \u2014 ocraft Observation to GameState with Protoss unit/building type mapping"}
+{"hash": "1df8622602581e3c7a693c4a20fd5b69174300e4", "date": "2026-04-06", "subject": "feat: use Instance<SimulatedGame> in AgentOrchestrator for sc2/mock dual-profile compatibility"}
+{"hash": "7a6382754cf54fdb4c91470cf2b73caba204632e", "date": "2026-04-06", "subject": "feat: add ocraft + fault-tolerance deps; profile-guard mock beans with @UnlessBuildProfile(sc2)"}
+{"hash": "2d72b901ac38922a49a6309b8d0becce5a06f77d", "date": "2026-04-06", "subject": "docs: add Phase 1 SC2 bootstrap implementation plan"}
+{"hash": "ae1dcef47325cbc778d4526e29cc8f631ba81274", "date": "2026-04-06", "subject": "docs: add TODO section to SC2 image index with phase-triggered expansion notes"}
+{"hash": "66a8c7aa7d1d4f5854af5d1ee8686f7e9ff97db0", "date": "2026-04-06", "subject": "docs: add Blog Resources section to CLAUDE.md pointing to SC2 image index"}
+{"hash": "f5e0fb980265ae46e5ad59d8f78faee04eacfaab", "date": "2026-04-06", "subject": "docs: add SC2 image index with Liquipedia unit URLs, wallpaper sources, and usage notes"}
+{"hash": "686443e36656c8bd7bd7e41b075a44e763b13c83", "date": "2026-04-06", "subject": "docs: enrich blog entries with architecture diagram, SC2 artwork, and code snippets"}
+{"hash": "6c53b46faa72aa96f273d63052dcde5a7eec5cf3", "date": "2026-04-06", "subject": "docs: add project blog entries \u2014 day zero and phase 0"}
+{"hash": "9093a4e330b7840829287951bc80264cfecd8e6b", "date": "2026-04-06", "subject": "feat: full mock pipeline integration test \u2014 CaseEngine cycles, all scenarios, 4 dummy plugins verified"}
+{"hash": "38ec4adc9983486d6e954796f6afc026f8857836", "date": "2026-04-06", "subject": "fix: guard QA endpoints with @UnlessBuildProfile(prod), add @Consumes to POST scenario endpoint"}
+{"hash": "8f034a3702fa1c70b45b1b6674c0693b4091ccfa", "date": "2026-04-06", "subject": "feat: QA REST endpoints \u2014 /sc2/casefile, /sc2/frame, /sc2/intents, /sc2/debug/scenario"}
+{"hash": "6de2fd995f279458cfc7207d2fb53ab72cf3a9f5", "date": "2026-04-06", "subject": "feat: plugin seam interfaces (StrategyTask, EconomicsTask, TacticsTask, ScoutingTask) + pass-through dummy implementations"}
+{"hash": "210ed65f13a87878ad5e1f76f0caaf0128da27ba", "date": "2026-04-06", "subject": "fix: skip concurrent game tick executions to prevent overlapping SC2 frame processing"}
+{"hash": "56adbd44d258a1d7c246b65b5e162cb7b84bdacb", "date": "2026-04-06", "subject": "feat: CaseHub integration \u2014 StarCraftCaseFile keys, GameStateTranslator, AgentOrchestrator game loop"}
+{"hash": "f185fdd5e7c426af17145dccf2736afb5b00488c", "date": "2026-04-06", "subject": "feat: ScenarioLibrary with 4 initial Protoss scenarios + MockScenarioRunner"}
+{"hash": "9a68f6327375ec0a4dd7f0f32e3c300cb20d3169", "date": "2026-04-06", "subject": "feat: mock SC2 adapter \u2014 MockSC2Client, MockGameObserver, MockCommandDispatcher"}
+{"hash": "5349c95e9401db6b8ae52ace4a8973b1adc4c5c7", "date": "2026-04-06", "subject": "fix: synchronize reset(), snapshot(), and spawnEnemyUnit() for thread safety"}
+{"hash": "ee8f87118208b5a93be2687923012f8d5e2e13f1", "date": "2026-04-06", "subject": "feat: SimulatedGame \u2014 stateful Protoss mock with tick, intent application, enemy spawning"}
+{"hash": "f6c62f116fa87351df9345b9e64a794a2a0c8d9e", "date": "2026-04-06", "subject": "test: add recentlyDispatched and ring buffer cap tests to IntentQueueTest"}
+{"hash": "ae63701e444b947eeeed1f3d4cb596a4400c5650", "date": "2026-04-06", "subject": "feat: SC2 interfaces (SC2Client, GameObserver, CommandDispatcher, ScenarioRunner) and intent system"}
+{"hash": "1f39f248f0f541a73634c4b3ddb364033eee505f", "date": "2026-04-06", "subject": "fix: defensive list copying in GameState/GameMap compact constructors, remove duplicate resource fields from PlayerInfo"}
+{"hash": "4527949048873ea3745b879f8b2bafd4fa5beaca", "date": "2026-04-06", "subject": "feat: domain model \u2014 GameState, Unit, Building, UnitType, BuildingType, Point2d"}
+{"hash": "07715ef6baf4b2b5b8229018753e91e22af9f7b4", "date": "2026-04-06", "subject": "fix: remove non-standard packaging element, update NATIVE.md versions, check assertj BOM management"}
+{"hash": "7dd776ba848d5be90668a06928256796839850f3", "date": "2026-04-06", "subject": "feat: project scaffold \u2014 Quarkus 3.34.2 + CaseHub, package structure, NATIVE.md, MODULES.md"}

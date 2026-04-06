@@ -1,0 +1,358 @@
+{
+  "ae65a6ef4071b0f5fb041412c000d88b11dc9845": [
+    "HANDOVER.md"
+  ],
+  "670952774dbdffe09ae06f7eac61bc8b3b01cb9e": [
+    "CLAUDE.md",
+    "docs/blog/2026-04-06-01-closing-the-gaps.md",
+    "docs/design-snapshots/2026-04-06-post-auth-hardening.md",
+    "docs/design-snapshots/2026-04-06-post-blog-catchup.md"
+  ],
+  "b33bdc309f25cb8d44b7e6066075ae460c079acf": [
+    "CLAUDE.md",
+    "src/main/java/dev/remotecc/server/auth/AuthRateLimiter.java",
+    "src/test/java/dev/remotecc/frontend/AppAuthProtectionTest.java",
+    "src/test/java/dev/remotecc/server/auth/AuthRateLimiterTest.java",
+    "src/test/java/dev/remotecc/server/auth/CredentialStoreTest.java"
+  ],
+  "26ac367c8fbfc026b236fd5ff90bbb8d7dffeb2b": [
+    "CLAUDE.md",
+    "src/main/java/dev/remotecc/server/auth/AuthRateLimiter.java",
+    "src/test/java/dev/remotecc/server/auth/ApiKeyAuthTest.java",
+    "src/test/java/dev/remotecc/server/auth/AuthRateLimiterHttpTest.java"
+  ],
+  "06c403194204d11ff8cd5283618776eb6b5a8009": [
+    "CLAUDE.md",
+    "docs/DESIGN.md",
+    "src/main/java/dev/remotecc/server/auth/ApiKeyAuthMechanism.java",
+    "src/main/java/dev/remotecc/server/auth/AuthRateLimiter.java",
+    "src/main/resources/application.properties",
+    "src/test/java/dev/remotecc/frontend/StaticFilesTest.java",
+    "src/test/java/dev/remotecc/server/auth/AuthRateLimiterTest.java"
+  ],
+  "6613c19c9d4cc2bf8f3d675e330a8319062a5c22": [
+    "CLAUDE.md",
+    "HANDOVER.md"
+  ],
+  "8037c273a355421c1ee57bab0d3753101ef70ef1": [
+    "docs/design-snapshots/2026-04-06-full-system-state.md",
+    "docs/design-snapshots/2026-04-06-post-blog-catchup.md"
+  ],
+  "ad73a90e6f722f55ebafcb21043291134873919f": [
+    "docs/blog/2026-04-05-02-locking-the-door.md"
+  ],
+  "eebf0b935c4b5a8a07a604afa99735898a3758d4": [
+    "HANDOVER.md"
+  ],
+  "642d611f45d19a93a9eaf395c266e2460c4b0208": [
+    "docs/design-snapshots/2026-04-06-full-system-state.md"
+  ],
+  "ddd9435bed022a02ae7c17d007f954cd82f844bd": [
+    "docs/blog/2026-04-05-01-testing-what-wasnt-tested.md"
+  ],
+  "0c6b1940b77822042e1902433955b4e19cb98a32": [
+    "CLAUDE.md"
+  ],
+  "8837690b2f1c33686d22199805f4850ead51f1e0": [
+    "docs/blog/2026-04-03-from-ssh-to-pwa.md",
+    "docs/blog/2026-04-03-server-core-and-native.md",
+    "docs/blog/2026-04-03-the-ipad-itch.md",
+    "docs/blog/2026-04-04-terminal-rendering-saga.md",
+    "docs/blog/2026-04-04-wiring-the-control-plane.md",
+    "docs/project-blog/2026-04-03-from-ssh-to-pwa.md",
+    "docs/project-blog/2026-04-03-server-core-and-native.md",
+    "docs/project-blog/2026-04-03-the-ipad-itch.md",
+    "docs/project-blog/2026-04-04-terminal-rendering-saga.md",
+    "docs/project-blog/2026-04-04-wiring-the-control-plane.md"
+  ],
+  "e25ef6734faeb3c1cec48f4ebd096dc7ad8da7b5": [
+    "src/main/java/dev/remotecc/server/TerminalWebSocket.java",
+    "src/main/resources/META-INF/resources/app/terminal.js",
+    "src/test/java/dev/remotecc/server/TerminalWebSocketTest.java"
+  ],
+  "f873c89f7f93459a3c7ef6306a6ff679aa6cca0f": [
+    "CLAUDE.md"
+  ],
+  "79131677b870656cc36185f81d8126cedd1c359d": [
+    "src/main/java/dev/remotecc/config/RemoteCCConfig.java",
+    "src/main/java/dev/remotecc/server/ServerStartup.java",
+    "src/main/resources/META-INF/resources/app/index.html"
+  ],
+  "2a5be5449acf2ce2700efcaf3574153a1cbf303d": [
+    "src/main/java/dev/remotecc/server/SessionResource.java",
+    "src/main/resources/META-INF/resources/app/dashboard.js",
+    "src/main/resources/META-INF/resources/app/index.html",
+    "src/test/java/dev/remotecc/server/SessionResourceTest.java"
+  ],
+  "3ff9c7aa4ab459b828cf09c85b9f7c3e06d3a2f5": [
+    "src/main/java/dev/remotecc/config/RemoteCCConfig.java",
+    "src/main/java/dev/remotecc/server/SessionResource.java",
+    "src/main/resources/META-INF/resources/app/index.html"
+  ],
+  "ad8933b245724121f6a221a445dce5da6e1174f3": [
+    "src/main/java/dev/remotecc/server/auth/ApiKeyAuthMechanism.java",
+    "src/main/java/dev/remotecc/server/auth/AuthResource.java",
+    "src/main/resources/META-INF/resources/app/dashboard.js",
+    "src/main/resources/application.properties"
+  ],
+  "de2a82f6ae7e6b9b56e744f247378bf073ba8dfd": [
+    "src/main/resources/META-INF/resources/app/dashboard.js"
+  ],
+  "5e97a5b7ca0a176175170a204076d5a3d71e33ab": [
+    "src/main/java/dev/remotecc/server/auth/ApiKeyAuthMechanism.java",
+    "src/main/java/dev/remotecc/server/auth/AuthResource.java",
+    "src/main/java/dev/remotecc/server/auth/CredentialStore.java",
+    "src/test/java/dev/remotecc/server/auth/AuthResourceTest.java",
+    "src/test/java/dev/remotecc/server/auth/CredentialStoreTest.java"
+  ],
+  "abeed7b8165138cbe7f8001e833e50dedd2bec5d": [
+    "src/main/resources/META-INF/resources/auth/login.html",
+    "src/main/resources/META-INF/resources/auth/register.html"
+  ],
+  "f1dcfdd7ec7a1264047c90ed040b9222d823d436": [
+    "src/main/java/dev/remotecc/agent/ApiKeyClientFilter.java",
+    "src/main/java/dev/remotecc/agent/ServerClient.java"
+  ],
+  "dcdcfd20dc4ab32fc05efa7018e4fcd38d99ae64": [
+    "src/main/java/dev/remotecc/server/auth/AuthResource.java",
+    "src/main/resources/META-INF/resources/auth/register.html",
+    "src/test/java/dev/remotecc/server/auth/AuthResourceTest.java"
+  ],
+  "1493d20d9273824ea717e022f8b086c8886bc9de": [
+    "src/main/java/dev/remotecc/server/SessionResource.java",
+    "src/main/java/dev/remotecc/server/auth/ApiKeyAuthMechanism.java",
+    "src/test/java/dev/remotecc/agent/McpServerIntegrationTest.java",
+    "src/test/java/dev/remotecc/frontend/ResizeEndpointTest.java",
+    "src/test/java/dev/remotecc/server/SessionInputOutputTest.java",
+    "src/test/java/dev/remotecc/server/SessionResourceTest.java",
+    "src/test/java/dev/remotecc/server/TerminalWebSocketTest.java",
+    "src/test/java/dev/remotecc/server/auth/ApiKeyAuthTest.java"
+  ],
+  "b9bd68479965d7a2c42b701575dcaa192a09f0f3": [
+    "src/main/java/dev/remotecc/server/auth/CredentialStore.java",
+    "src/test/java/dev/remotecc/server/auth/CredentialStoreTest.java"
+  ],
+  "4e2faca512a12c756786587cb409d8d86d72f7e9": [
+    "src/main/java/dev/remotecc/server/auth/InviteService.java",
+    "src/test/java/dev/remotecc/server/auth/InviteServiceTest.java"
+  ],
+  "ac80d56b59402026bb6bf89004eee0260eccc93d": [
+    "pom.xml",
+    "src/main/java/dev/remotecc/config/RemoteCCConfig.java",
+    "src/main/resources/application.properties"
+  ],
+  "88696208f54cec7bd491f2588154b63473648ba8": [
+    "docs/superpowers/plans/2026-04-05-auth.md"
+  ],
+  "1131cfb5837b8e8cc8c5306391d9c129ed1b5c4c": [
+    "docs/superpowers/specs/2026-04-05-auth-design.md"
+  ],
+  "50b76366b2f3c1b3c2f970e00d56310f40f2ebfa": [
+    "HANDOVER.md"
+  ],
+  "5d959a8be5173c943e3e49cbb23985c45c54ae01": [
+    "CLAUDE.md"
+  ],
+  "ad7dcd7cbadf176a59d215a6b333659b0c2dc3fc": [
+    "src/test/java/dev/remotecc/e2e/ClaudeE2ETest.java"
+  ],
+  "df621245a3e610719fa0b5261bf1ed21f7545a19": [
+    "src/test/java/dev/remotecc/e2e/ClaudeE2ETest.java"
+  ],
+  "97d343cdc53d79a911d1d194ce93debd409bec30": [
+    "pom.xml"
+  ],
+  "76b8bc6b4eb34a2e8a9f950a82272a40145bfebd": [
+    "src/main/java/dev/remotecc/server/ServerStartup.java",
+    "src/test/java/dev/remotecc/server/ServerStartupTest.java"
+  ],
+  "0d1535dd08d981efe7da5190c91c0e110c999a38": [
+    "src/test/java/dev/remotecc/server/TerminalWebSocketTest.java"
+  ],
+  "36439ca3e3c391cabd90db272a02178038d508d3": [
+    "src/test/java/dev/remotecc/agent/McpServerIntegrationTest.java"
+  ],
+  "e8fb8601245af1b73dc042cf18065bc6fc32e0d2": [
+    "src/test/java/dev/remotecc/agent/McpServerTest.java"
+  ],
+  "98bd3e0d5ca927e84f8c2ba6b7d49076ee2787e1": [
+    "src/test/java/dev/remotecc/server/SessionResourceTest.java"
+  ],
+  "3a300f9a351133ec8a60cb480caa7a0a9fde7a60": [
+    "src/test/java/dev/remotecc/server/SessionInputOutputTest.java"
+  ],
+  "15ed86874eb8e7f1eaa70746b07fbd3b7432f343": [
+    "src/main/java/dev/remotecc/server/TmuxService.java"
+  ],
+  "9d357f08a0d6e92242a4d0182652f89baaa6b88c": [
+    "src/main/java/dev/remotecc/server/TmuxService.java",
+    "src/test/java/dev/remotecc/server/TmuxServiceTest.java"
+  ],
+  "ba36934c42f389f3e23648ea0cfd73b6de7ec894": [
+    ".gitignore"
+  ],
+  "780f708c36cf4ea2e00dc7cf7680a433607b2f5b": [
+    ".gitignore"
+  ],
+  "455dbe85a84d94694b7d7b9b93840ff81129b94c": [
+    "docs/superpowers/plans/2026-04-05-e2e-testing-hardening.md"
+  ],
+  "cab84615c8e83b12e60a083bcb827eb8aea1ed46": [
+    "docs/superpowers/specs/2026-04-05-e2e-testing-design.md"
+  ],
+  "8e9e2bbfaf24f8024f0c1cfaee398a693896ade7": [
+    "CLAUDE.md",
+    "docs/SESSION-HANDOFF-2026-04-04.md"
+  ],
+  "280eca4e563076cdf9d09269c3a62da1950ebf17": [
+    "docs/project-blog/2026-04-03-from-ssh-to-pwa.md",
+    "docs/project-blog/2026-04-03-server-core-and-native.md",
+    "docs/project-blog/2026-04-03-the-ipad-itch.md",
+    "docs/project-blog/2026-04-04-terminal-rendering-saga.md",
+    "docs/project-blog/2026-04-04-wiring-the-control-plane.md"
+  ],
+  "97d064f92c3e7911e5594b731fbb1a4b26aea0bf": [
+    "docs/BUGS-AND-ODDITIES.md"
+  ],
+  "7f381745fe45ca6634341339cf3e2215b6f23370": [
+    "src/main/java/dev/remotecc/server/TerminalWebSocket.java"
+  ],
+  "23ffa4df4c2a03094a12be4eae48360fab2bc252": [
+    "src/main/java/dev/remotecc/server/TerminalWebSocket.java"
+  ],
+  "ed95a3a52623acb33741304020e79a1f9c6ebf84": [
+    "src/main/java/dev/remotecc/server/TerminalWebSocket.java"
+  ],
+  "c0275d4757209ef83d07f7173eee71f0d4c0637b": [
+    "src/main/java/dev/remotecc/server/TerminalWebSocket.java"
+  ],
+  "8466cfb66c9435ac8975dd81f772f917a14ef5f0": [
+    "src/main/java/dev/remotecc/server/TerminalWebSocket.java"
+  ],
+  "107af6c30d64e7305c663cf77bb3120b8ab765aa": [
+    "src/main/java/dev/remotecc/server/TerminalWebSocket.java"
+  ],
+  "39184b26bacda1874361e535f9cc3f5c952145ae": [
+    "src/main/java/dev/remotecc/server/TerminalWebSocket.java"
+  ],
+  "98f3bb95c085c70e552316a4b89b7b0792601fbc": [
+    "src/main/java/dev/remotecc/server/TerminalWebSocket.java"
+  ],
+  "68155d0fda029afccabb611ec45f672c30523b26": [
+    "src/main/java/dev/remotecc/server/TerminalWebSocket.java"
+  ],
+  "99093b586f1352ca8ba84572150ef33753a7f7e3": [
+    "src/main/java/dev/remotecc/server/TerminalWebSocket.java"
+  ],
+  "199dc8fe7765472d595f7942bf79913fc4183278": [
+    "src/main/java/dev/remotecc/server/TerminalWebSocket.java",
+    "src/test/java/dev/remotecc/server/TerminalWebSocketTest.java"
+  ],
+  "4174de26e4960a93a6252d5f554ee71725d9601d": [
+    "src/main/resources/META-INF/resources/app/index.html",
+    "src/main/resources/META-INF/resources/app/session.html",
+    "src/main/resources/META-INF/resources/icons/icon-192.svg",
+    "src/main/resources/META-INF/resources/icons/icon-512.svg",
+    "src/main/resources/META-INF/resources/manifest.json",
+    "src/test/java/dev/remotecc/frontend/StaticFilesTest.java"
+  ],
+  "d0e11f92cb3691c0e020a722b831c4c35e6fca84": [
+    "src/main/resources/META-INF/resources/app/dashboard.js",
+    "src/main/resources/META-INF/resources/app/index.html",
+    "src/main/resources/META-INF/resources/app/session.html",
+    "src/main/resources/META-INF/resources/app/style.css",
+    "src/main/resources/META-INF/resources/app/terminal.js",
+    "src/test/java/dev/remotecc/frontend/StaticFilesTest.java"
+  ],
+  "1ea74cf4072c9fb1c96b4298f992c52cd0b2d59c": [
+    "src/main/java/dev/remotecc/server/SessionResource.java",
+    "src/main/resources/META-INF/resources/app/index.html",
+    "src/main/resources/META-INF/resources/app/session.html",
+    "src/main/resources/META-INF/resources/manifest.json",
+    "src/main/resources/META-INF/resources/sw.js",
+    "src/test/java/dev/remotecc/frontend/ResizeEndpointTest.java",
+    "src/test/java/dev/remotecc/frontend/StaticFilesTest.java"
+  ],
+  "b2273b66e9624db79c31dc5fdfa4b1e5d0e17d86": [
+    "pom.xml",
+    "src/test/java/dev/remotecc/agent/McpServerIntegrationTest.java",
+    "src/test/resources/application.properties"
+  ],
+  "6ebcac9c26ea976a06e2f42bd92a7b98d818c062": [
+    "src/main/java/dev/remotecc/agent/AgentStartup.java",
+    "src/test/java/dev/remotecc/agent/AgentStartupTest.java"
+  ],
+  "1184204e8d9c02302b1418ee5d527dbd46d41b1d": [
+    "src/main/java/dev/remotecc/agent/McpServer.java",
+    "src/test/java/dev/remotecc/agent/McpServerTest.java"
+  ],
+  "b4d6e9b6a4be436c44d3e1f65f6506605ae38cea": [
+    "src/main/java/dev/remotecc/agent/ClipboardChecker.java",
+    "src/test/java/dev/remotecc/agent/ClipboardCheckerTest.java"
+  ],
+  "5aafd28b14a13abdee8be7b06f3967738a0f7b19": [
+    "src/main/java/dev/remotecc/agent/terminal/ITerm2Adapter.java",
+    "src/main/java/dev/remotecc/agent/terminal/TerminalAdapter.java",
+    "src/main/java/dev/remotecc/agent/terminal/TerminalAdapterFactory.java",
+    "src/test/java/dev/remotecc/agent/terminal/ITerm2AdapterTest.java",
+    "src/test/java/dev/remotecc/agent/terminal/TerminalAdapterFactoryTest.java"
+  ],
+  "c08ff08248120a099b0867edd85d5529e5ba5619": [
+    "pom.xml",
+    "src/main/java/dev/remotecc/agent/ServerClient.java",
+    "src/main/resources/application.properties",
+    "src/test/java/dev/remotecc/agent/ServerClientTest.java"
+  ],
+  "e6943b8ff31dd3649fd5f26c9f5ba5e36e3691f1": [
+    "src/main/java/dev/remotecc/server/SessionResource.java",
+    "src/main/java/dev/remotecc/server/model/SendInputRequest.java",
+    "src/test/java/dev/remotecc/server/SessionInputOutputTest.java"
+  ],
+  "35b8dde1748a7499dff352588830e7f0bb3fbde2": [
+    "docs/ideas/IDEAS.md"
+  ],
+  "435b094f5e1c30fe99479832b19ef8ddc6c3aca9": [
+    "src/main/resources/META-INF/native-image/reflect-config.json"
+  ],
+  "5176cdd27e1133ae18d8d392eef7be0991ea6369": [
+    "src/main/java/dev/remotecc/server/TerminalWebSocket.java"
+  ],
+  "bf5eecc0ff74a4033ee519feb84dd43c97aae3f5": [
+    "pom.xml",
+    "src/main/java/dev/remotecc/server/TerminalWebSocket.java",
+    "src/test/java/dev/remotecc/server/TerminalWebSocketTest.java"
+  ],
+  "4c4581927687fa34b64f3aaa41a5c72b8364106b": [
+    "src/main/java/dev/remotecc/server/SessionResource.java",
+    "src/main/java/dev/remotecc/server/model/CreateSessionRequest.java",
+    "src/main/java/dev/remotecc/server/model/SessionResponse.java",
+    "src/test/java/dev/remotecc/server/SessionResourceTest.java"
+  ],
+  "cd2966bd5bd416f462832981908a006047d7dc21": [
+    "src/main/java/dev/remotecc/server/ServerStartup.java",
+    "src/test/java/dev/remotecc/server/ServerStartupTest.java"
+  ],
+  "bf0655ba4367d58eb9f36740429aebe3154e763e": [
+    "src/main/java/dev/remotecc/server/SessionRegistry.java",
+    "src/test/java/dev/remotecc/server/SessionRegistryTest.java"
+  ],
+  "4fa7ffde9258a99599c15f8c0b5445689f52c742": [
+    "src/main/java/dev/remotecc/server/TmuxService.java"
+  ],
+  "6a55c358ebe7c2943241b41a0b2b76e909e42f62": [
+    "src/main/java/dev/remotecc/server/TmuxService.java",
+    "src/test/java/dev/remotecc/server/TmuxServiceTest.java"
+  ],
+  "bd6c7b2d370e37ac1f40ff0faf6ae80e0bb4ef4c": [
+    "src/main/java/dev/remotecc/server/model/Session.java",
+    "src/main/java/dev/remotecc/server/model/SessionStatus.java",
+    "src/test/java/dev/remotecc/server/model/SessionTest.java"
+  ],
+  "e57cf4645b8cc449ad06594ff5d53936003492d0": [
+    "pom.xml"
+  ],
+  "d3c43b3a6717f65fb88599e655a6fd7861d96450": [
+    "pom.xml"
+  ],
+  "dca6ff334e2fe2808dca31614adee8318f38a533": []
+}

@@ -1,0 +1,136 @@
+{"hash": "8d36ec47864c892785fa508729dab6996838f12d", "date": "2026-04-06", "subject": "fix: include .dat protocol files in scelight-s2protocol JAR via src/main/java resource inclusion"}
+{"hash": "da56c025560fb2802aa155762271549ab747007b", "date": "2026-04-06", "subject": "build: add scripts/publish-replay-libs.sh quick-build script"}
+{"hash": "d69aea4e56aaf8196062fb69b2fbdf821621d7d8", "date": "2026-04-06", "subject": "build: register scelight-mpq and scelight-s2protocol modules in root pom.xml"}
+{"hash": "54337fb5501e63e0d61f11bbe098d6cb8e07fa79", "date": "2026-04-06", "subject": "fix: remove icon, BalanceData, and color dependencies from model and enum classes"}
+{"hash": "4cae3db7e5ea070cea0a1fd9bd50f5808e700121", "date": "2026-04-06", "subject": "fix: remove Env, VersionBean, and getRepProc() from RepParserEngine"}
+{"hash": "f626158685436ddc4b9b2cd6efb113d181922a92", "date": "2026-04-06", "subject": "fix: replace Env, Utils, Settings with stdlib equivalents in Protocol.java and Event.java"}
+{"hash": "f1172764cf61120bfb18fed5f732cb64d0b9b0f6", "date": "2026-04-06", "subject": "build: add stripped Scelight API interface stubs required by model classes (IReplay, IHeader, IEvent, etc.)"}
+{"hash": "7f760c2bacc3c328302b801ab435a33ba0076a12", "date": "2026-04-06", "subject": "build: add missing utility classes from src-app-libs (StructView, VersionView, ArrayMap, XString, BitArray)"}
+{"hash": "204f043278c96b93ae35d16b94992a808529d465", "date": "2026-04-06", "subject": "feat: add scelight-s2protocol standalone module \u2014 source copy, pre-dependency-removal"}
+{"hash": "8a960ede43ef5e40276959b84ef42784f80bf035", "date": "2026-04-06", "subject": "feat: add scelight-mpq standalone module \u2014 MPQ parser + BZip2 support"}
+{"hash": "7360c30765c9bc2f25b069da4377b37e47d4b426", "date": "2022-08-12", "subject": "Create FUNDING.yml"}
+{"hash": "433f34039c32baff4031f96fbaa82c481b558025", "date": "2022-08-08", "subject": "vuln-fix: Zip Slip Vulnerability"}
+{"hash": "bff84606d89cb8c92b8fff961a4282724d5a6056", "date": "2022-02-23", "subject": "Update Region.java"}
+{"hash": "f00ce0f3954e585bb742084c1543ae75798493d9", "date": "2020-10-13", "subject": "Bump junit from 4.11 to 4.13.1"}
+{"hash": "99672f74ac55b96dc7875bbe39bafba38f1bb099", "date": "2020-09-03", "subject": "Update news"}
+{"hash": "d9a020374a48e9c61dc29094a39499ff73fae67a", "date": "2020-09-03", "subject": "Add News item for updated balance data and textures"}
+{"hash": "b51e899cfb19d636764684104a384ab4d28bcc66", "date": "2020-09-03", "subject": "Add new textures, increment texture module version and create new release"}
+{"hash": "7b47911872285ce26da24834ecbb7f3c90698bee", "date": "2020-09-03", "subject": "Increment balance data module version and create new release"}
+{"hash": "d2fffcc65df56b34db6d0c0d132c31a531435949", "date": "2020-09-03", "subject": "Add balance data for 5.0 and create balance data release"}
+{"hash": "aff530c2166b0e1de1aa39471a88d2bcb70d9daa", "date": "2020-07-29", "subject": "Create release 6.5.4"}
+{"hash": "e1ffecfb9f3e553cadd79dfa83fa60de473413ba", "date": "2020-07-29", "subject": "Add protocols for 5.0 reps"}
+{"hash": "8da05993f49f1f2d7e8d378693b1b1c96999f589", "date": "2020-07-19", "subject": "Fix rep versions in news"}
+{"hash": "26d8438c5e6fa0dc8bb934312a1a9e456733bbf3", "date": "2020-07-19", "subject": "Create release 6.5.3"}
+{"hash": "c3a4667e553533a3e0c4c7f348be35ce669558a1", "date": "2020-07-19", "subject": "Add protocols for 4.11 and 4.13 replay versions"}
+{"hash": "62b0ea768d0a2a03fc7ae701b8340afddad3adf7", "date": "2019-12-04", "subject": "Build 6.5.2 app release"}
+{"hash": "ffc48ea9a204dd8bf57fd34a90df53ec613a2987", "date": "2019-12-04", "subject": "Add protocol for 4.10.4, news, increment verison"}
+{"hash": "499d9b0480ff0c57497c5e1347706a32a9a2c3e9", "date": "2019-12-04", "subject": "Create release 6.5.1"}
+{"hash": "63dd6f16efa29896e88022d68a1da299ea0de5f6", "date": "2019-12-04", "subject": "Add news, increment app version"}
+{"hash": "f25e36c7f58a4bfa588506ccf747a387f12313f9", "date": "2019-12-04", "subject": "Add new protocols (4.10.2-3 and 4.11 reps)"}
+{"hash": "2c8d7c83d0d969c2d833a67799a0acab83b8c487", "date": "2019-08-20", "subject": "Fix HTML div in All news page"}
+{"hash": "7cd15b37b0624c823e51dbe44f8efac693f8221e", "date": "2019-08-20", "subject": "Increment and build launcher to 'clear' inconsistency"}
+{"hash": "f9ad654ac85b493d35ab73d88a45abec2e222ffb", "date": "2019-08-20", "subject": "Increment app minor version, add news posts"}
+{"hash": "60b6f99236f65d3d55ebdee5a8309a6484945b3b", "date": "2019-08-20", "subject": "Add new icons, increment sc2 texture module version"}
+{"hash": "6fde22c604a5f432e35634570dd3671a831685bf", "date": "2019-08-20", "subject": "Increment minor instead of revision of balance data"}
+{"hash": "2b18214794c327a3d5f4f0e43fa273f3535f92a7", "date": "2019-08-20", "subject": "Increment balance data module version"}
+{"hash": "d8a0bc01de32da63a2b13684f84eb348ee6655e4", "date": "2019-08-20", "subject": "Add new balance data, build balance data module"}
+{"hash": "7cdb008769fcc6b5687dbc7fc5f09cadd13080f2", "date": "2019-08-20", "subject": "Build app module"}
+{"hash": "e61a79a2b7cf0e33e62e7ec6b9253253b130f027", "date": "2019-08-20", "subject": "Add protocol for 4.9.3 replays"}
+{"hash": "5c406a5a905a6fee1ea6b601504ae15e16d6f4ad", "date": "2019-08-20", "subject": "Add protocols for 4.10.0 and 4.10.1 replays"}
+{"hash": "87a511cac32ea534fb7c3450f69f7fe48277eb3c", "date": "2019-08-20", "subject": "Add protocols for missing replays up to 4.9.3"}
+{"hash": "4daec65cd76364b3edd650973786506d838d8450", "date": "2019-03-22", "subject": "Test-build launcher and app releases"}
+{"hash": "704e43bbfa1a090d1842e5b68bbc48512293daa5", "date": "2019-03-22", "subject": "Fix condition to decide if Nimbus LaF is to be set"}
+{"hash": "0687a7fefe16ad54e1d97c6f6a8a6af0ddbad63a", "date": "2019-03-22", "subject": "Improve log message"}
+{"hash": "67fa86beaecf9a491deb5e114f8cb7b497ed42b7", "date": "2019-03-22", "subject": "Only log a single line if Lutris Game folder does not exist"}
+{"hash": "096828444912db828860ed628e2b14b5186f07d9", "date": "2019-03-22", "subject": "Provide javadoc for checkLinuxSnap()"}
+{"hash": "e19b97abb424c17c1bdd55dbe4b223fbdff394d8", "date": "2018-12-11", "subject": "Specify JDK version 11, and force build of the Java CA certificates."}
+{"hash": "dacfc2f441af9e7c7fbb8fec3074bc0f50d09895", "date": "2018-12-11", "subject": "Add missing backslash to escape a newline in run-docker.sh."}
+{"hash": "8e889ad5d9d3e5ca61cedaa3cfd5c7b70d1ccae0", "date": "2018-12-11", "subject": "* Add icon to the Snapcraft image. * Add a .desktop file to the Linux snap so that it can be run from the dash as well as the command line. * Update the Linux snap confinement from devmode to strict. * Move the snap stuff to the snap/ directory. Gradle builds to the snap/build directory."}
+{"hash": "b2ffaf5bcdf35280a1de9cf5b53a27aeb0779447", "date": "2018-12-11", "subject": "Add scripts for creating and building a Docker image for building the Linux snap package."}
+{"hash": "e19600c117dc7deb068bd287eccaf5bac390af82", "date": "2018-12-11", "subject": "Remove test comments."}
+{"hash": "6a6383a6d01b410d5da17ca8df199120778f48a0", "date": "2018-12-11", "subject": "Change the workspace path on Linux into the standard user data path."}
+{"hash": "0c001c60de6a40f2aca3adfd23df7a7a1d4ff757", "date": "2018-12-11", "subject": "Fix spelling of \"Exception\" in a log statement."}
+{"hash": "68b75b0d012317458e5e2ee1f354e29009329789", "date": "2018-12-11", "subject": "Use xdg-open on Linux before trying individual web browsers."}
+{"hash": "fca5e1c587bf09fda0ef9a0b116711cff04d4918", "date": "2018-12-10", "subject": "Use the $SNAP_USER_DATA directory if that variable is defined."}
+{"hash": "ce02f4f7d831e729dae9655e7091b9289b749faa", "date": "2018-12-10", "subject": "Fix spelling of updatesAvailabeButton => updatesAvailableButton."}
+{"hash": "f2cc1a9bae43abd5742e0aae62bc653cd325d22f", "date": "2018-12-10", "subject": "Scelight uses tabs instead of spaces."}
+{"hash": "252990d727dcb0667bab57848cb436b86ecbdf9c", "date": "2018-12-10", "subject": "If scelight is automatically updated by Linux snap packaging then skip update checks."}
+{"hash": "e825dd2717433b8b58dcd2e6ac03c2e62a9cc64c", "date": "2018-12-10", "subject": "Don't enable minimize-to-tray by default if the system tray isn't supported."}
+{"hash": "5821f773a06c61a79178671db73219cf7abaec33", "date": "2018-12-10", "subject": "Add some IntelliJ files to git, and add the rest to .gitignore."}
+{"hash": "d9dd907700763c826789b54f6e599ef034eabf91", "date": "2018-12-09", "subject": "Make a gradle build script to be used by Snapcraft."}
+{"hash": "4db15d1e46d3cac025dc09eca2ef4d6df18002e0", "date": "2018-12-09", "subject": "Fix compilation error caused by invalid type coercion:"}
+{"hash": "96f00c324f5cc9feed05c72fb1f95518dd9b5807", "date": "2018-12-03", "subject": "Create snapcraft.yaml"}
+{"hash": "ab3601eb65e9743a3b629d6158bbe4dbf379274a", "date": "2018-11-20", "subject": "Release Scelight 6.4.3"}
+{"hash": "aa8c745c6dee83170e67af2459db48bfcfd0a5b1", "date": "2018-11-20", "subject": "Add news item about new release"}
+{"hash": "edc11ff7f1e93ec30a04010a234cd0f36a5ed101", "date": "2018-11-20", "subject": "Add new protocol files for 4.5, 4.6, 4.6.2 and 4.7 reps"}
+{"hash": "b951fa888aac0abd7ff52d2ca2d3cf41d21195c2", "date": "2018-07-18", "subject": "Release Scelight 6.4.2"}
+{"hash": "67d379738a9aa270ef289cfff31c2aea009ed4b3", "date": "2018-07-18", "subject": "Change SC2ReplayStatsUploader module's URL"}
+{"hash": "3539d347f519c992c74b24d05946732b233f5801", "date": "2018-07-18", "subject": "Add protocol for 4.4.1 reps"}
+{"hash": "c7c959ca5fc94d9dac57d61ff765c11face12c5a", "date": "2018-06-22", "subject": "Increment app version"}
+{"hash": "bc91f7a402cb773e15b837b0591722f596cd69cd", "date": "2018-06-22", "subject": "Release Scelight 6.4.1"}
+{"hash": "43ce0525c3ec568f33df0382897e28ad80f4a838", "date": "2018-06-22", "subject": "Add protocol for 4.4 replays"}
+{"hash": "90b062b67aacbfb92def95fd7805c5f602a17ac9", "date": "2018-06-16", "subject": "Extended balance data version range to cover the anonymized replays' version (3.16)"}
+{"hash": "0ff769b21223266c6a04333427d51dff1723d25a", "date": "2018-06-16", "subject": "Add issue link for anonymized replays"}
+{"hash": "2c97272f864b60cb6ee81c666989bf07626120d5", "date": "2018-06-16", "subject": "Release Scelight 6.4.0"}
+{"hash": "69d297a741d2efc811f8ae6da5070c2c29feb1ad", "date": "2018-06-16", "subject": "Handle missing replay parts when caching replay in case of anonymized replays"}
+{"hash": "1a8f0d9752d67fa9790fcf83440f21142dc227ad", "date": "2018-06-16", "subject": "Handle missing messages (chat) in case of anonymized replays"}
+{"hash": "9f677acc854a17b782fc414c299e7498fe90df86", "date": "2018-06-16", "subject": "Add support for anonymized replays"}
+{"hash": "0dae893a2aea6f289d7da698b45f4e182c83dd8d", "date": "2018-06-16", "subject": "Add support for 4.3.1 and 4.3.2 replays"}
+{"hash": "3208a6dff175d54efd6967c54f1866f6abf6ad72", "date": "2018-04-26", "subject": "Fix new supported replay version in News"}
+{"hash": "2b279d7fafff2b5b5bf924ebaf9b60b12057be51", "date": "2018-04-26", "subject": "Release Scelight 6.3.1"}
+{"hash": "f30ae842ae561a1125b124fca519cbe206e0f23a", "date": "2018-04-26", "subject": "Add new protocol files to support 4.2.3 and 4.2.4 replays"}
+{"hash": "81a2d8a4bc4746d8621a1f3da6d555b6bf2af565", "date": "2018-04-05", "subject": "Release Scelight 6.3.0"}
+{"hash": "64c8b0af3366d2cc63d2cffccbb7453166ac5387", "date": "2018-04-05", "subject": "Use the new 'Use latest S2Protocol' setting"}
+{"hash": "1f5f3def390d53e5c6ba7b211b0ab355cf045289", "date": "2018-04-05", "subject": "Add new setting 'Use latest S2Protocol'"}
+{"hash": "32ec325e8c7a42a7fab29850e7ef3330c6e4d617", "date": "2018-03-10", "subject": "Release Scelight 6.2.29"}
+{"hash": "dd66bad16ca9450c9e7dc36a24a8091d83eb2f96", "date": "2018-03-10", "subject": "Increase module versions of SC2 balance data and textures"}
+{"hash": "d8a8808473ed990f83fc575ccbb322fb15f37ab2", "date": "2018-03-10", "subject": "Perform new SC2 textures module build"}
+{"hash": "ada4968da32fc464a26b426ff25bd2ce45539ea9", "date": "2018-03-10", "subject": "Add new SC2 textures"}
+{"hash": "581716d26d772b4d6859ee9b33bccce245f86c1f", "date": "2018-03-10", "subject": "Add news, new app and balancedata build"}
+{"hash": "9e78de29be3d3acbe8ba1f0d3c2cda80fd2dfd94", "date": "2018-03-10", "subject": "Add new balance data (4.0+ replays)"}
+{"hash": "2493e8f3ed431c6dee7d126ecde8c0eb63ca7ea1", "date": "2018-03-10", "subject": "Remove old news from Latest News"}
+{"hash": "643a9865b2dc34f597d5c9eeb72dfc5da62fbd1f", "date": "2018-03-10", "subject": "Add new protocol for 4.2.1 replays"}
+{"hash": "87ff3a9087d8ebbf493e8114b220af4c0e89c1ef", "date": "2018-03-10", "subject": "Add new localized Russian race names"}
+{"hash": "a9b4820c62a41b69aface99f35ff90feafeaed61", "date": "2018-02-24", "subject": "Fix grammar in news"}
+{"hash": "adef3776ca525aa1349b9c58c3989cb3962ebe0b", "date": "2018-02-24", "subject": "Release Scelight 6.2.28"}
+{"hash": "b97a50caf2bd4a603c462cd81c6a58f9779301a6", "date": "2018-02-24", "subject": "Fix a bug where event contains 'invalid' user ID"}
+{"hash": "b37b1b76dc5f356c8918a53c1591e949a1f27ad2", "date": "2018-02-24", "subject": "Add support for 4.2 replays"}
+{"hash": "b58fe9663252d609e9336dfa190708eab27327f3", "date": "2017-12-09", "subject": "Add support for 4.1-4.1.1 replays. Release Scelight 6.2.27."}
+{"hash": "b4fc20b8caa97d57d3f026033934bef61916f8d4", "date": "2017-11-18", "subject": "Increment app version"}
+{"hash": "0b3f5ae10e6108f717f4c3522b5d08478f45ec68", "date": "2017-11-18", "subject": "Scelight release 6.2.26 (and 6.2.25)"}
+{"hash": "9c4472a961d412975db4840ce61d30ceaed85c73", "date": "2017-09-17", "subject": "Added support for 3.18 reps. Scelight release 6.2.24."}
+{"hash": "4b3a942832f1ffdce71f86bfc1598e036e6c8e71", "date": "2017-09-09", "subject": "Added support for 3.17.1 reps. Scelight release 6.23."}
+{"hash": "8e1e6c0c10ad153d6468d5a50a3f6b54134c76f2", "date": "2017-08-31", "subject": "Added support for 3.17 reps. Scelight release 6.2.22."}
+{"hash": "7837d4810230d6483d05a6741ca65bd2420b5f82", "date": "2017-08-05", "subject": "Added support for 3.16.1 reps. Scelight release 6.2.21."}
+{"hash": "4e1c57b9302f06cdd018aa5cc5e137070442c1ae", "date": "2017-08-02", "subject": "Saved and resumed games might contain player leave events with null player ID. Resolves #10."}
+{"hash": "a1db3622a53513e05b8c4744d47e9ca7dd381a99", "date": "2017-07-23", "subject": "Added support for 3.16 reps. Scelight release 6.2.20."}
+{"hash": "36a1bb8612a5e3bde20b5c5f6861c99982b7060c", "date": "2017-06-22", "subject": "Updated TL.net thread with release notes."}
+{"hash": "7bb7b59372ce6eb6b6e05b42320ed38d8df4f10c", "date": "2017-06-22", "subject": "Added new protocol files (for 3.15.0 and 3.15.1). Updated balance data (finally yay)! Updated SC2 textures. Fixed an issue in the map parser, position text may be empty string in Co-op replays. Fixed an issue in User.java, toon handle may also be empty in Co-op replays."}
+{"hash": "64b94b2f06ec4c094818f555e14dc98933649e44", "date": "2017-05-24", "subject": "Added protocol file for 3.14 reps. New release 6.2.18."}
+{"hash": "3bcaeb11b5c3acedd190a12b8feac8bad45cea6b", "date": "2017-05-07", "subject": "Added protocol file for 3.13 reps. New release 6.2.17."}
+{"hash": "59dc1a74e0843f48467c56048807c7542b9ad500", "date": "2017-04-01", "subject": "Added protocol file for 3.12 reps. New release 6.2.16."}
+{"hash": "5aeecc19c77a040120642e24e9bc1210c1f828ac", "date": "2017-03-15", "subject": "Config and announcement of the new release."}
+{"hash": "f6fc83255a8117c569eaef294ec1391c79f8aaa7", "date": "2017-03-15", "subject": "Added protocol files for 3.11 reps. New release 6.2.15."}
+{"hash": "717f4ce1dec55504f048b493a6b581d65972be2c", "date": "2017-01-29", "subject": "Added protocol files for 3.10 reps. New release 6.2.14."}
+{"hash": "6bbb1237d253001578c7233ee9cc077ac473b7f3", "date": "2016-12-16", "subject": "Added protocols for 3.9 reps. Updated textures. New release 6.2.13."}
+{"hash": "7dc33ad844d38a8e7d504968e1bec441468dc1b0", "date": "2016-12-03", "subject": "Fixed typo"}
+{"hash": "7b3fb5cc4a5fbcb11c4836bb507a107dd883b0d0", "date": "2016-11-26", "subject": "Added protocols for 3.8 reps. New release 6.2.12."}
+{"hash": "d19416ac0211ced3bbf943170700d756d6736748", "date": "2016-10-20", "subject": "Added protocols for 3.7 reps. New release (6.2.11). Balance data and textures have been updated for Patch 3.7. Other minor changes and improvements."}
+{"hash": "2e5961bd21a2c6dc94acd5c27642645e9ab15283", "date": "2016-09-18", "subject": "Added protocols for 3.6 reps. New release (6.2.10)."}
+{"hash": "665ceb553b2cbae041f4cc0217016cc660231523", "date": "2016-08-02", "subject": "Added protocols for 3.5 reps. New release (6.2.9)."}
+{"hash": "399e18bff54503fd060e1412c9cfc8711092d870", "date": "2016-07-14", "subject": "Reverted an accidental dds overwrite (original compression is not supported)."}
+{"hash": "43cf28d28f8858257cdf861fcea48c56ab09f966", "date": "2016-07-13", "subject": "Added protocols for 3.4 reps. New release (6.2.8). Updated balance data and textures."}
+{"hash": "e6fe2d5fadb99584ca1eaa663581ba306801a3cb", "date": "2016-06-15", "subject": "Added protocol for 3.3.2 reps. New release (6.2.7)."}
+{"hash": "8262b3afacd2159af3c62b3ffb842294e73c50d8", "date": "2016-05-18", "subject": "Added protocol for 3.3 and for some old beta reps. New release (6.2.6)."}
+{"hash": "b7efc652c6f9309445bc58175c49a690a870aad0", "date": "2016-04-23", "subject": "Added protocol for 3.2.2 (a copy of the previous one). New release (6.2.5)."}
+{"hash": "43d13df8a3ab718afb1bb9b0095f89d5d215bcaf", "date": "2016-03-30", "subject": "Updated tl.net thread (announcement)."}
+{"hash": "b0cdfc3bab23a932d0fdb38ac70fa09c86055769", "date": "2016-03-30", "subject": "Added protocol for 3.2. New release (6.2.4)."}
+{"hash": "989e7976b68edcdce69985c932ce6d106091a352", "date": "2016-02-06", "subject": "Added links to wiki pages."}
+{"hash": "076951b8cbfdc2b7620211d1f4affca9108e282b", "date": "2016-02-06", "subject": "Fixed build file name."}
+{"hash": "ad78860f0b90a87f41273aace64c04980992db52", "date": "2016-02-06", "subject": "Fixed some typos. Removed private use note from generated dev javadocs. Split build.xml into build-javadoc.xml and build-release.xml, latter which is not under version control due to not being able to build releases based on committed files (to avoid confusion)."}
+{"hash": "b8c976a9f8936c41e60c4e52ec6cbd560da82d2c", "date": "2016-02-06", "subject": "Committed release/deployment-dev/modules.xml which is required to start Scelight from Eclipse."}
+{"hash": "635aafd2166d630bd4b5f59889fdd558410159c8", "date": "2016-02-05", "subject": "Added license."}
+{"hash": "fa5b242d74f9c1400d22fba5151451ac0c804b61", "date": "2016-02-04", "subject": "Edited TL thread to announce source code repo. Removed a duplicate from .gitignore."}
+{"hash": "bd5e158db25fe19d7c022a6d6532773bd0604867", "date": "2016-02-04", "subject": "Rectified Project Status."}
+{"hash": "d08f19a6b65f265bfdb9a8b522b3011068f75219", "date": "2016-02-04", "subject": "Fixed some links in the Directory Structure."}
+{"hash": "9d5ce38da9dc098d43c83d4ad4916a8c551a4174", "date": "2016-02-04", "subject": "Initial share of Scelight (6.2.3) and all its modules."}

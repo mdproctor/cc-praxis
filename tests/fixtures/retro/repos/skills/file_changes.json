@@ -1,0 +1,1617 @@
+{
+  "9fe442d9a44e0be991347e4fcc7b8147afafb9e0": [
+    "docs/superpowers/plans/2026-04-06-retrospective-issue-mapping.md"
+  ],
+  "ea2fb91ab1eb2a90701829ff81e5cefe5f08c59d": [
+    "CLAUDE.md",
+    "README.md",
+    "issue-workflow/SKILL.md"
+  ],
+  "07d9269ff65b734b7195b72bfdf72f4a023ece51": [
+    "garden/SKILL.md",
+    "garden/scripts/validate_garden.py"
+  ],
+  "8cd9158b2a48f1c9a99918859d74aba02b629b10": [
+    "garden/SKILL.md"
+  ],
+  "9881f5c293232b88a7c1498601e1e84016840ff4": [
+    "HANDOVER.md"
+  ],
+  "b1c929ab1ae8b33d50e75179d7c7660894dbff03": [
+    "docs/blog/2026-04-06-03-garden-remembers-itself.md"
+  ],
+  "1db993daa50876416b6f3a2bbbc25d8bf48a73f2": [
+    "docs/design-snapshots/2026-04-06-writing-infrastructure-and-garden.md"
+  ],
+  "0631f68e8a1c88c7dde3f40cd9a66decb719ee91": [
+    "CLAUDE.md"
+  ],
+  "ad4897312a1dfb6c9e7ec2795564c8879998b3a5": [
+    "garden/SKILL.md"
+  ],
+  "5fafb7db10e3d1672741d865a158f1b0447818c9": [
+    "garden/SKILL.md"
+  ],
+  "1c0bc6185895e3532eec2a521aa2dd025c5fcdfb": [
+    "garden/SKILL.md"
+  ],
+  "918ae17b5bab4be5615297e3363aa2f6e9384f17": [
+    "write-blog/defaults/mandatory-rules.md"
+  ],
+  "33730686376d6992e74e0cb710628ed336c1a711": [
+    "docs/ideas/IDEAS.md"
+  ],
+  "155f86fdaf1753c245475dd844f9e5ea017c2da2": [
+    "docs/blog/2026-04-06-02-writing-rules-get-teeth.md"
+  ],
+  "23900192c4659b3d024bccf812bca41edf053260": [
+    "write-blog/SKILL.md"
+  ],
+  "26681f54c04719fca52e6dd447274227d3d77cc8": [
+    "docs/blog/2026-03-29-01-day-zero.md",
+    "docs/blog/2026-03-29-day-zero.md",
+    "docs/blog/2026-03-31-01-building-the-infrastructure.md",
+    "docs/blog/2026-03-31-building-the-infrastructure.md",
+    "docs/blog/2026-04-02-01-health-typescript-python.md",
+    "docs/blog/2026-04-02-health-typescript-python.md",
+    "docs/blog/2026-04-03-01-the-web-installer.md",
+    "docs/blog/2026-04-03-the-web-installer.md",
+    "docs/blog/2026-04-04-01-the-methodology-family.md",
+    "docs/blog/2026-04-04-the-methodology-family.md",
+    "docs/blog/2026-04-06-01-writing-about-itself.md",
+    "docs/blog/2026-04-06-writing-about-itself.md",
+    "write-blog/SKILL.md"
+  ],
+  "00efa7375012afb34fc445378f20c03026828de6": [
+    "write-blog/SKILL.md"
+  ],
+  "0cee62d2ae503c53ac7060be16b74b7be3ac850c": [
+    "write-blog/SKILL.md",
+    "write-blog/defaults/mandatory-rules.md"
+  ],
+  "9c2a5cc43327447aff69d3676209a2e2c0fc0b14": [
+    "write-blog/SKILL.md",
+    "write-blog/defaults/common-voice.md",
+    "write-blog/defaults/mandatory-rules.md"
+  ],
+  "4caced9a90dafc32e22bac69f16dad0af4e43e62": [
+    "write-blog/SKILL.md"
+  ],
+  "1bfb51f99530938f37b222c40190dac02a5fd293": [
+    "garden/SKILL.md"
+  ],
+  "f1ba7c329ea1c132aed2e9a024ff5ccc6a84629b": [
+    "write-blog/SKILL.md"
+  ],
+  "88cc7f69d7f3d95c5ee62660f1e4a999d41d74b9": [
+    "git-commit/project-type-setup.md",
+    "update-claude-md/SKILL.md"
+  ],
+  "2769c79c75e304a8108f87639e56f8a6200bc4c1": [
+    "CLAUDE.md",
+    "write-blog/SKILL.md"
+  ],
+  "e50dd469edccda57987a0679152c0df462cb60d2": [
+    "docs/blog/2026-04-06-writing-about-itself.md"
+  ],
+  "660088ddafbb63f2da45f6df61f39c5ca17e7229": [
+    "garden/SKILL.md"
+  ],
+  "1dec5aa0eafdff3277e37789dac12d7d8438c628": [
+    "garden/SKILL.md"
+  ],
+  "871633c37a17036decc057c0f2f8f82ca61585e6": [
+    "CLAUDE.md",
+    "sync-local/SKILL.md",
+    "sync-local/commands/sync-local.md"
+  ],
+  "6f63234cb47a857c1294a70cee17dd52f62aa39e": [
+    "write-blog/SKILL.md"
+  ],
+  "8e94d85c58cb577aef3ac63ccf21282c24896c92": [
+    "write-blog/SKILL.md"
+  ],
+  "773184b55badbd6ce7a3e6d6d8fd07f358078706": [
+    "write-blog/SKILL.md"
+  ],
+  "3e8a33e6f385d6739df4bdd39ff6aedc4eea2e77": [
+    "write-blog/SKILL.md"
+  ],
+  "268eeb0894eb48165500b8024624dc5eb44cc349": [
+    "session-handoff/SKILL.md"
+  ],
+  "fcccce13789655ecfbb219725870e83c8df24bec": [
+    "session-handoff/SKILL.md"
+  ],
+  "266c2b9073abf3b32832dc06bf1f910d2e00a953": [
+    "garden/SKILL.md"
+  ],
+  "15f0e8caab48f2a841df046d0c1c38488f21e5eb": [
+    "write-blog/SKILL.md",
+    "write-blog/commands/write-blog.md"
+  ],
+  "fe0a2e6b9b72bff33864a2756210b7bc8bf38cc8": [
+    "write-blog/commands/write-blog.md"
+  ],
+  "514ec1b1105441291e7b5fc9a774e9edd8e9e5fa": [
+    "write-blog/SKILL.md"
+  ],
+  "be8d6a12b4e4bd58ffbeae50a776ecda85c66395": [
+    "garden/SKILL.md"
+  ],
+  "1db6286a1ce5dafcc1e493cc09044e4e5a0a3365": [
+    "garden/SKILL.md"
+  ],
+  "c4046e7ac095bc043239ba3e936b43d7dd3804bf": [
+    "docs/blog/2026-03-29-day-zero.md",
+    "docs/blog/2026-03-31-building-the-infrastructure.md",
+    "docs/blog/2026-04-02-health-typescript-python.md",
+    "docs/blog/2026-04-03-the-web-installer.md",
+    "docs/blog/2026-04-04-the-methodology-family.md"
+  ],
+  "67ff53f71279ed935d6a70c92139d79b33a50abb": [
+    "garden/SKILL.md"
+  ],
+  "4bcc5b5c9c72fe6f432ced900ac1f0ec62048336": [
+    "garden/SKILL.md"
+  ],
+  "b76184656e30283b07318524d04ee407f2133d35": [
+    "session-handoff/SKILL.md"
+  ],
+  "119ea5009167716aa887531c49f4d8d188bdc111": [
+    "session-handoff/SKILL.md"
+  ],
+  "a227d82b4b30ab91bedbff4e1bba897ea746b5b8": [
+    "garden/SKILL.md"
+  ],
+  "2582cf27c83196f9b0f2dc5d74ea25553ba5ee8c": [
+    ".claude-plugin/marketplace.json",
+    "CLAUDE.md",
+    "README.md",
+    "docs/blog/2026-03-29-day-zero.md",
+    "docs/blog/2026-03-31-building-the-infrastructure.md",
+    "docs/blog/2026-04-02-health-typescript-python.md",
+    "docs/blog/2026-04-03-the-web-installer.md",
+    "docs/blog/2026-04-04-the-methodology-family.md",
+    "docs/index.html",
+    "docs/project-blog/2026-03-29-day-zero.md",
+    "docs/project-blog/2026-03-31-building-the-infrastructure.md",
+    "docs/project-blog/2026-04-02-health-typescript-python.md",
+    "docs/project-blog/2026-04-03-the-web-installer.md",
+    "docs/project-blog/2026-04-04-the-methodology-family.md",
+    "garden/SKILL.md",
+    "project-blog/SKILL.md",
+    "project-blog/commands/project-blog.md",
+    "scripts/generate_web_app_data.py",
+    "scripts/validation/validate_references.py",
+    "scripts/validation/validate_web_app.py",
+    "session-handoff/SKILL.md",
+    "tests/test_mockup_chaining.py",
+    "write-blog/SKILL.md",
+    "write-blog/commands/write-blog.md"
+  ],
+  "1a1842de9ad6d4460852be1d076dded8a1212d95": [
+    "project-blog/SKILL.md"
+  ],
+  "b5ca4dc7cf051e37aa8d81109ac754dd4405e45e": [
+    "project-blog/SKILL.md"
+  ],
+  "57b775a125abfe2ef863848b7b6378ce716b6bcd": [
+    "project-blog/SKILL.md",
+    "scripts/validation/validate_references.py"
+  ],
+  "bc20cfdf9f26cb136135da6ca7985f8c93debd6e": [
+    "garden/SKILL.md"
+  ],
+  "240bc8825d28838c9280160552d816e0c7f425c9": [
+    "garden/SKILL.md"
+  ],
+  "3e1caf38fb21a6cbb653a91301638cddde3a9207": [
+    ".claude-plugin/marketplace.json",
+    "docs/index.html",
+    "garden/SKILL.md",
+    "garden/commands/garden.md",
+    "knowledge-garden/SKILL.md",
+    "knowledge-garden/commands/knowledge-garden.md",
+    "scripts/generate_web_app_data.py",
+    "scripts/validation/validate_web_app.py",
+    "session-handoff/SKILL.md",
+    "tests/test_mockup_chaining.py"
+  ],
+  "e33c93288d3a4bc65573591f59d1dd41c04336c0": [
+    "session-handoff/SKILL.md"
+  ],
+  "4e13db88cb37681b8839a181872fb17b36674346": [
+    ".claude-plugin/marketplace.json",
+    "docs/ideas/IDEAS.md",
+    "docs/index.html",
+    "scripts/generate_web_app_data.py",
+    "scripts/validation/validate_web_app.py",
+    "session-handoff/SKILL.md",
+    "session-handoff/commands/session-handoff.md",
+    "tests/test_html_content.py",
+    "tests/test_mockup_chaining.py"
+  ],
+  "2aefad1cea7f28753636e9c31fa2653d7026fdfd": [
+    "docs/SKILL-MANAGER.md",
+    "docs/images/about-cta.png",
+    "docs/images/browse-card-with-install.png",
+    "docs/images/chain-grandchildren.png",
+    "docs/images/chain-navigate.png",
+    "docs/images/loading-state.png",
+    "docs/images/modal-smart-install.png",
+    "docs/images/modal-smart-uninstall.png",
+    "docs/images/nudge-box.png",
+    "docs/images/outdated-row.png",
+    "docs/images/success-banner.png",
+    "scripts/take_screenshots_extra.py"
+  ],
+  "372866458d6e717b2c46ecb9f75aa9ce5aa21413": [
+    "docs/SKILL-MANAGER.md",
+    "docs/images/about-hero.png",
+    "docs/images/browse-git-commit-card.png",
+    "docs/images/browse-skill-card.png",
+    "docs/images/chain-graph-git-commit.png",
+    "docs/images/chain-graph.png",
+    "docs/images/header-install.png",
+    "docs/images/header.png",
+    "docs/images/install-bundles-collapsed.png",
+    "docs/images/install-java-expanded.png",
+    "docs/images/install-sync-bar.png",
+    "docs/images/modal-install-bundle.png",
+    "docs/images/modal-install-skill-dep.png",
+    "docs/images/modal-show-command.png",
+    "docs/images/modal-update.png",
+    "docs/images/mode-toggle.png",
+    "docs/images/nav-bar.png",
+    "docs/images/search-filtered.png",
+    "scripts/take_screenshots.py"
+  ],
+  "93e18fabab6d6f4a5a20c0bab551efadb349fc9e": [
+    "docs/SKILL-MANAGER.md"
+  ],
+  "5a11f7fbfa0f80894952aa09c892dd1d3cf57132": [
+    "docs/project-blog/2026-03-29-day-zero.md",
+    "docs/project-blog/2026-03-31-building-the-infrastructure.md",
+    "docs/project-blog/2026-04-02-health-typescript-python.md",
+    "docs/project-blog/2026-04-03-the-web-installer.md",
+    "docs/project-blog/2026-04-04-the-methodology-family.md",
+    "project-blog/SKILL.md"
+  ],
+  "acef1d7df090739f8d3c95eceae75f6560f2e0e3": [
+    ".claude-plugin/marketplace.json",
+    "CLAUDE.md",
+    "README.md",
+    "docs/index.html",
+    "knowledge-garden/SKILL.md",
+    "knowledge-garden/commands/knowledge-garden.md",
+    "scripts/generate_web_app_data.py",
+    "scripts/validation/validate_web_app.py",
+    "tests/test_html_content.py",
+    "tests/test_mockup_chaining.py"
+  ],
+  "e2b059d3fc44ffb5a797a110d348971cb04c8e92": [
+    "README.md",
+    "docs/index.html",
+    "scripts/generate_web_app_data.py",
+    "scripts/validation/validate_web_app.py",
+    "tests/test_html_content.py",
+    "tests/test_mockup_chaining.py"
+  ],
+  "0077bca21727c750e1261f40bd61ac2137870831": [
+    ".claude-plugin/marketplace.json",
+    "CLAUDE.md",
+    "README.md",
+    "docs/index.html",
+    "project-blog/SKILL.md",
+    "project-blog/commands/project-blog.md",
+    "scripts/generate_web_app_data.py",
+    "scripts/validation/validate_web_app.py",
+    "tests/test_mockup_chaining.py"
+  ],
+  "a50c1241dc475f8f90d412d939d0de579b5e3ca1": [
+    "docs/index.html"
+  ],
+  "69b48e8417fa9648bd4e4206105edfdc196362e0": [
+    "docs/index.html",
+    "tests/test_html_content.py",
+    "tests/test_web_installer_ui.py"
+  ],
+  "b0e6553910a35d238476e4b04ccfcd3391fa3dc2": [
+    "docs/index.html"
+  ],
+  "cfc1c736b976562689afe34eab34a13d0df42c0c": [
+    "CLAUDE.md",
+    "README.md"
+  ],
+  "e9c41211871209ac0e698f3552274e0527eeebee": [
+    "docs/index.html",
+    "tests/test_web_installer_ui.py"
+  ],
+  "f977966b6321ddc4e0246c027f2dfdc66bcd171a": [
+    "docs/index.html",
+    "tests/test_web_installer_ui.py"
+  ],
+  "eb49244544c18d4d547e25a5c3d315900b6ea94b": [
+    "docs/index.html",
+    "scripts/claude-skill",
+    "scripts/web_installer.py",
+    "tests/test_web_installer_integration.py",
+    "tests/test_web_installer_server.py"
+  ],
+  "83bd53885da3e3847b7c29b8269015d498c7a39c": [
+    "docs/index.html",
+    "scripts/claude-skill",
+    "scripts/web_installer.py",
+    "tests/test_web_installer_server.py"
+  ],
+  "ab2cbfd064b5fc3c47e2de0ba405f146a80d2e55": [
+    ".claude-plugin/marketplace.json",
+    "bin/cc-praxis",
+    "cc-praxis-ui/SKILL.md",
+    "cc-praxis-ui/commands/cc-praxis-ui.md"
+  ],
+  "89054a3da2443dee4ee918ee81057e3c6f12977d": [
+    "adr/SKILL.md",
+    "design-snapshot/SKILL.md",
+    "docs/index.html",
+    "idea-log/SKILL.md",
+    "java-update-design/SKILL.md",
+    "tests/test_mockup_chaining.py",
+    "update-primary-doc/SKILL.md"
+  ],
+  "48dbc5cc71746b8a3527f032e8a96c4a592ca791": [
+    "docs/ideas/IDEAS.md"
+  ],
+  "d28d0e1f562c44107e3bfd8c2b5c7db1715302e0": [
+    "docs/index.html",
+    "scripts/web_installer.py",
+    "tests/test_chain_data_drift.py",
+    "tests/test_web_installer_server.py"
+  ],
+  "829e26f18b3427f60584002745fe40a2af6532ed": [
+    ".claude-plugin/marketplace.json",
+    "CLAUDE.md",
+    "README.md",
+    "design-snapshot/SKILL.md",
+    "docs/index.html",
+    "idea-log/SKILL.md",
+    "idea-log/commands/idea-log.md",
+    "scripts/generate_web_app_data.py",
+    "scripts/validation/validate_web_app.py",
+    "tests/test_mockup_chaining.py"
+  ],
+  "8a74b7a3870f7966e6cd89581a0c623c70a97e46": [
+    ".claude-plugin/marketplace.json",
+    "design-snapshot/.claude-plugin/plugin.json",
+    "design-snapshot/SKILL.md",
+    "design-snapshot/commands/design-snapshot.md",
+    "docs/index.html",
+    "scripts/generate_web_app_data.py",
+    "scripts/validation/validate_references.py",
+    "scripts/validation/validate_web_app.py",
+    "tests/test_mockup_chaining.py"
+  ],
+  "ab6354f2676dcacb3762d6d90a62d78360ed66dd": [
+    "docs/index.html",
+    "scripts/generate_web_app_data.py",
+    "scripts/validate_all.py",
+    "scripts/validation/validate_web_app.py",
+    "tests/test_mockup_chaining.py"
+  ],
+  "5d07ab7a02b51f81cea85c33141efd92bf4c357a": [
+    "README.md",
+    "docs/index.html",
+    "tests/test_mockup_chaining.py"
+  ],
+  "62bd5db3f08409a49711941cd009c3e424adbcaa": [
+    ".claude-plugin/marketplace.json",
+    "CLAUDE.md",
+    "dependency-management-principles/SKILL.md",
+    "pip-dependency-update/.claude-plugin/plugin.json",
+    "pip-dependency-update/SKILL.md",
+    "pip-dependency-update/commands/pip-dependency-update.md",
+    "python-code-review/.claude-plugin/plugin.json",
+    "python-code-review/SKILL.md",
+    "python-code-review/commands/python-code-review.md",
+    "python-dev/.claude-plugin/plugin.json",
+    "python-dev/SKILL.md",
+    "python-dev/commands/python-dev.md",
+    "python-project-health/.claude-plugin/plugin.json",
+    "python-project-health/SKILL.md",
+    "python-project-health/commands/python-project-health.md",
+    "python-security-audit/.claude-plugin/plugin.json",
+    "python-security-audit/SKILL.md",
+    "python-security-audit/commands/python-security-audit.md",
+    "scripts/validation/validate_references.py"
+  ],
+  "e05ae368f383e8b5e10f156445a67958b788acc4": [
+    "docs/test-spec-web-installer.md"
+  ],
+  "4081817d4a780786794ee64f6a1b9a44744a7022": [
+    ".claude-plugin/marketplace.json",
+    "docs/index.html",
+    "docs/web-installer-mockup.html"
+  ],
+  "cb0bc15481a6acf4791de81af35c5543d42178dc": [
+    "docs/web-installer-mockup.html",
+    "tests/test_mockup_chaining.py"
+  ],
+  "6ebb8431b21cc42120a691239b81ed91b6874888": [
+    ".claude-plugin/marketplace.json",
+    "docs/web-installer-mockup.html",
+    "tests/test_mockup_chaining.py"
+  ],
+  "136d50d31c5afa40a43c4c5aa83e073961ce780e": [
+    "CLAUDE.md",
+    "QUALITY.md",
+    "README.md",
+    "dependency-management-principles/SKILL.md",
+    "docs/PROJECT-TYPES.md",
+    "ts-project-health/SKILL.md"
+  ],
+  "29fa6ea89da1919d862ba6acd6d29d5056db8a0f": [
+    ".claude-plugin/marketplace.json",
+    "CLAUDE.md",
+    "README.md",
+    "code-review-principles/SKILL.md",
+    "npm-dependency-update/.claude-plugin/plugin.json",
+    "npm-dependency-update/SKILL.md",
+    "npm-dependency-update/commands/npm-dependency-update.md",
+    "scripts/validation/validate_references.py",
+    "security-audit-principles/SKILL.md",
+    "ts-code-review/.claude-plugin/plugin.json",
+    "ts-code-review/SKILL.md",
+    "ts-code-review/commands/ts-code-review.md",
+    "ts-dev/.claude-plugin/plugin.json",
+    "ts-dev/SKILL.md",
+    "ts-dev/commands/ts-dev.md",
+    "ts-project-health/.claude-plugin/plugin.json",
+    "ts-project-health/SKILL.md",
+    "ts-project-health/commands/ts-project-health.md",
+    "ts-security-audit/.claude-plugin/plugin.json",
+    "ts-security-audit/SKILL.md",
+    "ts-security-audit/commands/ts-security-audit.md"
+  ],
+  "2588c1e9796ff4f843e20262ca95425b6d9457cb": [
+    "requirements.txt",
+    "scripts/validate_all.py",
+    "scripts/validation/validate_examples.py",
+    "scripts/validation/validate_links.py"
+  ],
+  "85f771fb8f4e4b617fcae295ac6d4b1a0fde104c": [
+    ".github/workflows/skill-validation.yml"
+  ],
+  "a837e8000f26be302caf20a327a3b68798931bee": [
+    "scripts/validation/validate_flowcharts.py"
+  ],
+  "6c9de8a51233417656a5ba593752aa68956b6026": [
+    "scripts/validation/validate_flowcharts.py"
+  ],
+  "5c67edc60dee66f1a2423a8043ef861818a24fa2": [
+    ".github/workflows/skill-validation.yml"
+  ],
+  "741f95beefb676c701ab21679c78fd69e179f36c": [
+    "README.md",
+    "scripts/document_discovery.py",
+    "scripts/modular_validator.py",
+    "tests/test_base.py",
+    "tests/test_claude_skill.py",
+    "tests/test_document_discovery.py",
+    "tests/test_modular_validator.py"
+  ],
+  "e9efe98c9746795700afe5cf817c1ca16daf1e9c": [
+    "scripts/modular_validator.py",
+    "scripts/utils/__pycache__/common.cpython-313.pyc",
+    "scripts/utils/common.py",
+    "tests/test_modular_validator.py"
+  ],
+  "6acd634ec8826da48a873473b6ab3177accc3ac4": [
+    "CLAUDE.md",
+    "QUALITY.md",
+    "README.md",
+    "docs/PROJECT-TYPES.md",
+    "docs/ROADMAP.md",
+    "docs/archive/superpowers/plans/2026-03-30-comprehensive-quality-review.md",
+    "docs/archive/superpowers/specs/2026-03-30-comprehensive-quality-review-design.md",
+    "docs/custom-projects-guide.md",
+    "docs/superpowers/plans/2026-03-30-comprehensive-quality-review.md",
+    "docs/superpowers/specs/2026-03-30-comprehensive-quality-review-design.md",
+    "git-commit/SKILL.md",
+    "git-commit/commit-examples.md",
+    "git-commit/commit-format.md",
+    "git-commit/project-type-setup.md",
+    "readme-sync.md",
+    "scripts/convert_graphviz_to_mermaid.py",
+    "scripts/migrate_to_plugin_json.py",
+    "scripts/modular_validator.py",
+    "scripts/utils/markdown_patterns.py",
+    "scripts/utils/markdown_utils.py",
+    "skill-validation.md",
+    "tests/test_base.py"
+  ],
+  "9464b2dee51f70c776ae3d1318f897e8ff658067": [
+    ".gitignore",
+    "CLAUDE.md",
+    "QUALITY.md",
+    "README.md",
+    "docs/project-health.md",
+    "docs/project-refine.md",
+    "docs/session-handoff.md",
+    "git-commit/SKILL.md",
+    "java-code-review/SKILL.md",
+    "java-dev/SKILL.md",
+    "java-git-commit/SKILL.md",
+    "java-update-design/SKILL.md",
+    "java-update-design/mapping-reference.md",
+    "java-update-design/starter-template.md",
+    "maven-dependency-update/SKILL.md",
+    "project-health/SKILL.md",
+    "project-health/check-categories.md",
+    "scripts/validation/validate_references.py",
+    "update-claude-md/SKILL.md",
+    "update-primary-doc/SKILL.md",
+    "update-primary-doc/examples.md",
+    "update-primary-doc/pattern-matching.md",
+    "update-primary-doc/sync-strategies.md"
+  ],
+  "5846372187903f0caeafc39c2bab8822c58a80df": [
+    "docs/session-handoff.md"
+  ],
+  "11173468faefde87375c042ac9fb5bdde7a30cd8": [
+    ".claude-plugin/marketplace.json",
+    "blog-project-health/.claude-plugin/plugin.json",
+    "blog-project-health/SKILL.md",
+    "blog-project-health/commands/blog-project-health.md",
+    "custom-project-health/.claude-plugin/plugin.json",
+    "custom-project-health/SKILL.md",
+    "custom-project-health/commands/custom-project-health.md",
+    "docs/project-health.md",
+    "java-project-health/.claude-plugin/plugin.json",
+    "java-project-health/SKILL.md",
+    "java-project-health/commands/java-project-health.md",
+    "project-health/.claude-plugin/plugin.json",
+    "project-health/SKILL.md",
+    "project-health/commands/project-health.md",
+    "project-refine/.claude-plugin/plugin.json",
+    "project-refine/SKILL.md",
+    "project-refine/commands/project-refine.md",
+    "skills-project-health/.claude-plugin/plugin.json",
+    "skills-project-health/SKILL.md",
+    "skills-project-health/commands/skills-project-health.md"
+  ],
+  "42336744b785e65121443e86e8f941dadd24bb20": [
+    "docs/session-handoff.md"
+  ],
+  "c0ab36f166ea374b721f65226bf3baab6d7ffa0f": [
+    "docs/blog-project-health.md",
+    "docs/custom-project-health.md",
+    "docs/project-health.md",
+    "docs/skills-project-health.md"
+  ],
+  "d59abf0c31c0225f2867e0e4dbc471f096ebb7c1": [
+    "docs/project-refine.md"
+  ],
+  "446d1d2dc5dbe2581e475665ef9c432dbd4cfcf9": [
+    "docs/project-health.md",
+    "docs/project-refine.md"
+  ],
+  "dea8529b2833b4c2b9458430aab99abb74e0ed20": [
+    "docs/project-health.md",
+    "docs/project-refine.md"
+  ],
+  "fbeb55d54770b04524d0a8b7b5862e5b1096b388": [
+    "docs/project-health.md",
+    "docs/project-refine.md"
+  ],
+  "77e3c502ec26deb7b13e9e0b14116f09755027aa": [
+    "docs/project-health.md"
+  ],
+  "dbb59d5152dba722a6beb09d8af986c048473868": [
+    "docs/blog-project-health.md",
+    "docs/custom-project-health.md",
+    "docs/java-project-health.md",
+    "docs/project-health.md",
+    "docs/skills-project-health.md"
+  ],
+  "1c72e54762fed8b72b029f75884ca2ac97d89b8c": [
+    "docs/archive/diary-system-implementation-plan.md",
+    "docs/archive/known-issues.md",
+    "docs/comprehensive-quality-review-complete.md",
+    "docs/comprehensive-quality-review-findings.md",
+    "docs/deep-analysis-report-2026-03-30.md",
+    "docs/diary-system-implementation-plan.md",
+    "docs/known-issues.md",
+    "docs/phase1-findings-report.md"
+  ],
+  "a06036f692c2cb916be6e703d11de50cb9bc296b": [
+    "docs/blog-project-health.md",
+    "docs/custom-project-health.md",
+    "docs/java-project-health.md",
+    "docs/project-health.md",
+    "docs/project-refine.md",
+    "docs/skills-project-health.md"
+  ],
+  "d44d7e51ec6ffb601d72e5653b0a415799806a0d": [
+    "docs/project-health.md"
+  ],
+  "1120a4be56391616d62c0d9636ded818d53481a5": [
+    "docs/project-health.md"
+  ],
+  "f4001f908b12a25d46bbb6569cee16afcb84be54": [
+    "docs/project-health.md"
+  ],
+  "fb50a252cba0b4246b68080f530dbce00c519298": [
+    "docs/project-health.md"
+  ],
+  "116cca5213e0ca300a46104f8b551dd2b4341327": [
+    "docs/java-project-health.md"
+  ],
+  "f070ae36514913c6dd42d83f908964f469fc858a": [
+    "docs/blog-project-health.md",
+    "docs/custom-project-health.md",
+    "docs/java-project-health.md",
+    "docs/project-health.md",
+    "docs/skills-project-health.md"
+  ],
+  "df0cf271179ffeefa2b8d951f3c65cd12cce34c4": [
+    "docs/project-health.md",
+    "docs/project-refine.md"
+  ],
+  "bccba6c5be14c4e53f124ce45abda894c61eb604": [
+    "docs/project-health.md"
+  ],
+  "2fb8afa576163b534bea16b2e117c09414aadbe1": [
+    "docs/project-health.md"
+  ],
+  "ffa2715032680e91f78baf8ecdbae4f484b96faa": [
+    "docs/project-health.md"
+  ],
+  "c10617575d8db952683f7e7e050c177c8d988402": [
+    "docs/project-health.md"
+  ],
+  "285233e952757912104b88585da828fd6206ff56": [
+    "docs/project-health.md"
+  ],
+  "ad804ec5d99cc779647639b2f9dad5de37b24f50": [
+    "scripts/document_discovery.py"
+  ],
+  "b57a1858d1d663aa7d1ed15d9b028ded5435262f": [
+    "docs/project-health.md"
+  ],
+  "55e1c3eedcbe09b98771cd7a959793d8fb82b777": [
+    "docs/project-health.md"
+  ],
+  "8c0f3c15066a6b02011e4ee49c98741ce9ad03cc": [
+    "docs/project-health.md"
+  ],
+  "74c666956e04c93e9be1b9e7a4c34ed63156f20f": [
+    "docs/project-health.md"
+  ],
+  "48c0a816386b1a6a5440ab93181cb499247cc11f": [
+    "docs/project-health.md"
+  ],
+  "c3a3f89526339a9ff7fa52dd63b0876bfa2298b5": [
+    "CLAUDE.md",
+    "java-update-design/SKILL.md",
+    "update-claude-md/SKILL.md",
+    "update-primary-doc/SKILL.md"
+  ],
+  "cfb9fbf28dbb2487785a861cece4a0a691845b02": [
+    "docs/project-health.md"
+  ],
+  "76965e2748cb147cb63ddab049aff918efb12604": [
+    ".claude-plugin/marketplace.json",
+    "CLAUDE.md",
+    "README.md",
+    "docs/PROJECT-TYPES.md",
+    "issue-workflow/SKILL.md",
+    "scripts/utils/__pycache__/skill_parser.cpython-313.pyc"
+  ],
+  "cf5f3b90da76bb38cf54a71489a9c1673758cb0f": [
+    "CLAUDE.md"
+  ],
+  "8186242522b0c6623d6f85462c6209623f121c98": [
+    ".claude-plugin/marketplace.json",
+    "git-commit/SKILL.md",
+    "hooks/check_project_setup.sh",
+    "install-skills/SKILL.md",
+    "issue-workflow/.claude-plugin/plugin.json",
+    "issue-workflow/SKILL.md",
+    "issue-workflow/commands/issue-workflow.md"
+  ],
+  "23c5ff6a2d9b1765dc1c607af2709d8cc9f0fe73": [
+    "java-update-design/SKILL.md",
+    "scripts/validation/validate_doc_structure.py",
+    "tests/test_doc_structure.py",
+    "update-claude-md/SKILL.md",
+    "update-primary-doc/SKILL.md"
+  ],
+  "bf82bb47078ff6fdafc95a5aea38806357943d15": [
+    "CLAUDE.md",
+    "git-commit/SKILL.md"
+  ],
+  "8e4f19eb4ec72cc37e0b01d9f28361b2f3c430e2": [
+    "README.md",
+    "logo.svg"
+  ],
+  "a4a7e0bd931b4d785a8e6be0d648507b16c9e31b": [
+    ".claude-plugin/marketplace.json",
+    "blog-git-commit/.claude-plugin/plugin.json",
+    "blog-git-commit/SKILL.md",
+    "blog-git-commit/commands/blog-git-commit.md",
+    "git-commit/SKILL.md",
+    "scripts/validation/validate_blog_commit.py",
+    "tests/test_blog_commit.py"
+  ],
+  "891dcdc24555a6618898693dcf4bd8d58c61d3a2": [
+    ".claude-plugin/marketplace.json",
+    "README.md",
+    "RELEASE.md",
+    "docs/marketplace/REGISTRY.md",
+    "install-skills/SKILL.md",
+    "registry-template.json",
+    "scripts/claude-skill",
+    "scripts/generate_skill_metadata.py",
+    "uninstall-skills/SKILL.md"
+  ],
+  "564f0775c1ad9c8d189a69081c07bf5ecf6e93d1": [
+    "CLAUDE.md"
+  ],
+  "9ee94d2309919f8fa2711c3fb41f36fd59cf7446": [
+    "CLAUDE.md"
+  ],
+  "73fdc44fccb1336746a3ce63af1aaa82f8543830": [
+    "scripts/claude-skill",
+    "tests/test_claude_skill.py"
+  ],
+  "e019a05626d9ecb4455399060780bffa74b81413": [
+    "CLAUDE.md"
+  ],
+  "d00e87a00afa03a4babd1515341dcea4a5340ff6": [
+    "CLAUDE.md"
+  ],
+  "cf5e26ab65259d69807da56a4b987f2631a9aee8": [
+    ".claude-plugin/marketplace.json",
+    "install-skills/SKILL.md",
+    "uninstall-skills/SKILL.md"
+  ],
+  "d443b9318c67d4c6e446f8a1fbb19ef43cb7fc78": [
+    "install-skills/SKILL.md",
+    "uninstall-skills/SKILL.md",
+    "update-claude-md/SKILL.md",
+    "update-primary-doc/SKILL.md"
+  ],
+  "b334f436ea32a396aa7ff047900693b8ec947438": [
+    "java-dev/SKILL.md"
+  ],
+  "53efc440c061555bfd00c7db6ae81665a747328f": [
+    "CLAUDE.md",
+    "scripts/generate_commands.py",
+    "scripts/validation/validate_structure.py"
+  ],
+  "2e16d90cfab4258913d807e1ec4f70ddba961078": [
+    "adr/commands/adr.md",
+    "code-review-principles/commands/code-review-principles.md",
+    "custom-git-commit/commands/custom-git-commit.md",
+    "dependency-management-principles/commands/dependency-management-principles.md",
+    "git-commit/commands/git-commit.md",
+    "install-skills/commands/install-skills.md",
+    "java-code-review/commands/java-code-review.md",
+    "java-dev/commands/java-dev.md",
+    "java-git-commit/commands/java-git-commit.md",
+    "java-security-audit/commands/java-security-audit.md",
+    "java-update-design/commands/java-update-design.md",
+    "maven-dependency-update/commands/maven-dependency-update.md",
+    "observability-principles/commands/observability-principles.md",
+    "quarkus-flow-dev/commands/quarkus-flow-dev.md",
+    "quarkus-flow-testing/commands/quarkus-flow-testing.md",
+    "quarkus-observability/commands/quarkus-observability.md",
+    "security-audit-principles/commands/security-audit-principles.md",
+    "uninstall-skills/commands/uninstall-skills.md",
+    "update-claude-md/commands/update-claude-md.md",
+    "update-primary-doc/commands/update-primary-doc.md"
+  ],
+  "b2b6f6e4d72bf10dbbdcff1240ceaa943d6b676a": [
+    "README.md",
+    "install-skills/SKILL.md",
+    "scripts/claude-skill",
+    "tests/test_claude_skill.py",
+    "uninstall-skills/SKILL.md"
+  ],
+  "6c5fc05ad7c669f26bd31afb300f0ab7a43ea335": [
+    "scripts/claude-skill",
+    "tests/test_claude_skill.py"
+  ],
+  "55b5dffdc0e32828a23a0083275311537b8af6c7": [
+    "scripts/claude-skill",
+    "tests/test_claude_skill.py"
+  ],
+  "e95da137fa0cc72113a976abe22cfaaa3bd2807a": [
+    "java-dev/SKILL.md"
+  ],
+  "bd0e6ea7b61402a20ccbe0e1d800d6b396f9a42f": [
+    "java-dev/SKILL.md"
+  ],
+  "56e2c073885757573d252a6aab73e773e9eff361": [
+    "CLAUDE.md",
+    "README.md",
+    "adr/SKILL.md",
+    "code-review-principles/SKILL.md",
+    "custom-git-commit/SKILL.md",
+    "dependency-management-principles/SKILL.md",
+    "git-commit/SKILL.md",
+    "install-skills/SKILL.md",
+    "java-code-review/SKILL.md",
+    "java-dev/SKILL.md",
+    "java-security-audit/SKILL.md",
+    "java-update-design/SKILL.md",
+    "maven-dependency-update/SKILL.md",
+    "observability-principles/SKILL.md",
+    "quarkus-observability/SKILL.md",
+    "scripts/validate_all.py",
+    "security-audit-principles/SKILL.md",
+    "uninstall-skills/SKILL.md",
+    "update-claude-md/SKILL.md",
+    "update-primary-doc/SKILL.md"
+  ],
+  "1a2701ffc9a7caad9992e9ee46ce307ca2e51b72": [
+    "hooks/check_project_setup.sh",
+    "scripts/claude-skill",
+    "tests/test_claude_skill.py"
+  ],
+  "374d925b404ab679e1765479669fc3a8f05fd85d": [
+    "install-skills/SKILL.md"
+  ],
+  "40616c933a732eca5094a0af5597e044e6359288": [
+    ".claude-plugin/marketplace.json"
+  ],
+  "5a3274a4f41d849a68674f576c77bd2bd3aa877f": [
+    "scripts/claude-skill",
+    "tests/test_claude_skill.py"
+  ],
+  "3993cb0ddab594cfedfc4c688a214dedfb39a663": [
+    "java-dev/SKILL.md"
+  ],
+  "cde4f3a22eb8aa3a327457fa921c7bcad74aa49e": [
+    "CLAUDE.md",
+    "QUALITY.md",
+    "README.md",
+    "docs/PROJECT-TYPES.md",
+    "git-commit/SKILL.md",
+    "install-skills/SKILL.md",
+    "scripts/document_discovery.py",
+    "scripts/modular_validator.py",
+    "scripts/validate_document.py",
+    "scripts/validate_naming.py",
+    "update-claude-md/SKILL.md"
+  ],
+  "c09459911da4805a4ea44a0a054b861942d7fa86": [
+    "docs/adr/0001-documentation-completeness-must-be-universal.md",
+    "docs/adr/0003-modular-documentation-architecture.md",
+    "docs/adr/0008-skills-specific-logic-modularization.md",
+    "docs/adr/0009-automatic-workflow-orchestration-by-project-type.md",
+    "docs/adr/0010-universal-document-validation.md",
+    "docs/deep-analysis-report-2026-03-30.md",
+    "docs/diary-system-implementation-plan.md",
+    "docs/superpowers/specs/2026-03-30-comprehensive-quality-review-design.md",
+    "scripts/validate_all.py",
+    "scripts/validation/validate_project_types.py"
+  ],
+  "2fcb87f47c0a4d19d520b67cd6c5eb373e379438": [
+    ".claude-plugin/marketplace.json"
+  ],
+  "4bfc124f34004ef14ccffe5717b7f4075d98237d": [
+    "CLAUDE.md",
+    "QUALITY.md",
+    "README.md",
+    "adr/SKILL.md",
+    "code-review-principles/SKILL.md",
+    "docs/PROJECT-TYPES.md",
+    "java-code-review/SKILL.md",
+    "java-dev/SKILL.md",
+    "java-security-audit/SKILL.md",
+    "scripts/utils/skill_parser.py",
+    "scripts/validate_all.py",
+    "scripts/validation/validate_flowcharts.py",
+    "skill-validation.md"
+  ],
+  "1a6b964bafe21f37f2bfc8ec2a2029a362961ad5": [
+    "adr/SKILL.md",
+    "code-review-principles/SKILL.md",
+    "custom-git-commit/SKILL.md",
+    "dependency-management-principles/SKILL.md",
+    "git-commit/SKILL.md",
+    "java-code-review/SKILL.md",
+    "java-dev/SKILL.md",
+    "java-git-commit/SKILL.md",
+    "java-security-audit/SKILL.md",
+    "maven-dependency-update/SKILL.md",
+    "scripts/convert_graphviz_to_mermaid.py",
+    "security-audit-principles/SKILL.md",
+    "skill-validation.md"
+  ],
+  "90fde2d9718c8b66bb6c08d6821ab2de2257aa5d": [
+    ".claude-plugin/marketplace.json",
+    "README.md",
+    "uninstall-skills/.claude-plugin/plugin.json",
+    "uninstall-skills/SKILL.md"
+  ],
+  "7e579f007f89f84eb722422cfdb0167cbca9b412": [
+    ".claude-plugin/marketplace.json",
+    "README.md",
+    "install-skills/.claude-plugin/plugin.json",
+    "install-skills/SKILL.md"
+  ],
+  "46da70b1b9f6f025c597bfd6b811c3026545c8ee": [
+    "README.md"
+  ],
+  "0a0dbb5e1924faf6e4e198ce1eb630a306ecc305": [
+    "README.md"
+  ],
+  "a21ce930327830a47c934cf717cce36c19d9a132": [
+    "scripts/claude-skill"
+  ],
+  "258b125ce3f0c387cb5855f4776a24ce8bd4ba73": [
+    "scripts/claude-skill"
+  ],
+  "080e9c8bc0829f5f3c7640d8eab361ccc5e7a0e4": [
+    ".claude-plugin/marketplace.json",
+    "RELEASE.md",
+    "adr/.claude-plugin/plugin.json",
+    "code-review-principles/.claude-plugin/plugin.json",
+    "custom-git-commit/.claude-plugin/plugin.json",
+    "dependency-management-principles/.claude-plugin/plugin.json",
+    "docs/archive/marketplace-v1/2026-03-30-skill-marketplace-design.md",
+    "docs/archive/marketplace-v1/2026-03-30-skill-marketplace.md",
+    "docs/archive/marketplace-v1/README.md",
+    "docs/marketplace/REGISTRY.md",
+    "docs/superpowers/plans/2026-03-30-skill-marketplace.md",
+    "docs/superpowers/specs/2026-03-30-skill-marketplace-design.md",
+    "git-commit/.claude-plugin/plugin.json",
+    "java-code-review/.claude-plugin/plugin.json",
+    "java-dev/.claude-plugin/plugin.json",
+    "java-git-commit/.claude-plugin/plugin.json",
+    "java-security-audit/.claude-plugin/plugin.json",
+    "java-update-design/.claude-plugin/plugin.json",
+    "maven-dependency-update/.claude-plugin/plugin.json",
+    "observability-principles/.claude-plugin/plugin.json",
+    "quarkus-flow-dev/.claude-plugin/plugin.json",
+    "quarkus-flow-testing/.claude-plugin/plugin.json",
+    "quarkus-observability/.claude-plugin/plugin.json",
+    "scripts/__pycache__/document_discovery.cpython-313.pyc",
+    "scripts/__pycache__/document_group_cache.cpython-313.pyc",
+    "scripts/__pycache__/modular_validator.cpython-313.pyc",
+    "scripts/__pycache__/validate_document.cpython-313.pyc",
+    "scripts/claude-skill",
+    "scripts/marketplace/__init__.py",
+    "scripts/marketplace/cli.py",
+    "scripts/marketplace/dependency_resolver.py",
+    "scripts/marketplace/installer.py",
+    "scripts/marketplace/registry.py",
+    "scripts/marketplace/validator.py",
+    "scripts/migrate_to_plugin_json.py",
+    "security-audit-principles/.claude-plugin/plugin.json",
+    "tests/marketplace/__init__.py",
+    "tests/marketplace/test_cli_integration.py",
+    "tests/marketplace/test_dependency_resolver.py",
+    "tests/marketplace/test_e2e.py",
+    "tests/marketplace/test_installer.py",
+    "tests/marketplace/test_metadata_generator.py",
+    "tests/marketplace/test_registry.py",
+    "tests/marketplace/test_validator.py",
+    "update-claude-md/.claude-plugin/plugin.json",
+    "update-primary-doc/.claude-plugin/plugin.json"
+  ],
+  "4c7c724c150f315e961b1ae83f83709e7530f931": [
+    "docs/superpowers/plans/2026-03-30-skill-marketplace.md",
+    "docs/superpowers/specs/2026-03-30-skill-marketplace-design.md"
+  ],
+  "785b3819d4ccc1ab692c868c61f95df42a80a58e": [
+    "registry-template.json"
+  ],
+  "eed6049d3ec9576d2b1d727791d666e555660c9e": [
+    "pytest.ini",
+    "tests/marketplace/test_e2e.py"
+  ],
+  "dc9f97a6ec40f6ffa7a295a96e296a160d7510d8": [
+    "README.md"
+  ],
+  "46b4c22d55df6f7358f376d4a763c86e780a16cd": [
+    "docs/marketplace/REGISTRY.md"
+  ],
+  "7ce99b222ab2b7cc328a1e296abff8201d916f09": [
+    "scripts/claude-skill",
+    "scripts/marketplace/cli.py"
+  ],
+  "0df183635cdc97e2ba8ddcca92720d764f8ea5db": [
+    "scripts/marketplace/cli.py",
+    "tests/marketplace/test_cli_integration.py"
+  ],
+  "3f88bc5f5e43d53c32c850ddfb58a5d7d17b624b": [
+    "scripts/marketplace/cli.py",
+    "tests/marketplace/test_cli_integration.py"
+  ],
+  "9a4e2991cd9506bc034e8688f6a24421e8a3a83f": [
+    "scripts/marketplace/cli.py",
+    "tests/marketplace/test_cli_integration.py"
+  ],
+  "3e7a6e515004b40fea8eff9874a37685859620d3": [
+    "scripts/marketplace/cli.py",
+    "tests/marketplace/test_cli_integration.py"
+  ],
+  "0af2980bcffb0be286130f04b75ce47f36c5e7c1": [
+    "tests/marketplace/test_validator.py"
+  ],
+  "1da9b7bca499ac72395242aaa20cbe44bc89ea74": [
+    "scripts/marketplace/validator.py",
+    "tests/marketplace/test_validator.py"
+  ],
+  "a3db12d762b48114f245bacbeeea84ddeefb695c": [
+    "scripts/marketplace/installer.py",
+    "tests/marketplace/test_installer.py"
+  ],
+  "96980f6d71c4c9dfa99eec5ff2e4637a74724540": [
+    "scripts/marketplace/installer.py",
+    "tests/marketplace/test_installer.py"
+  ],
+  "2379c6233422a98ca0ad3cb5a2ec376222bbae39": [
+    "scripts/marketplace/dependency_resolver.py",
+    "tests/marketplace/test_dependency_resolver.py"
+  ],
+  "bb813118a01ee7979cf189ff5e8655adb6db4e4f": [
+    "scripts/marketplace/dependency_resolver.py",
+    "tests/marketplace/test_dependency_resolver.py"
+  ],
+  "66b49e5944b76e4a8084c2f09c6b310acf3d82a6": [
+    "scripts/marketplace/dependency_resolver.py",
+    "tests/marketplace/test_dependency_resolver.py"
+  ],
+  "10ebd0297ea42c3242177e5f05cda1427d13d3b7": [
+    "scripts/marketplace/registry.py",
+    "tests/marketplace/test_registry.py"
+  ],
+  "7ad797e39d56ed136f2bf25a6d4d1040b6d3f93c": [
+    "requirements.txt",
+    "scripts/marketplace/__init__.py",
+    "scripts/marketplace/registry.py",
+    "tests/marketplace/__init__.py",
+    "tests/marketplace/test_registry.py"
+  ],
+  "ce3fe4d847835130b677be449bf7ee785bf1a771": [
+    "scripts/generate_skill_metadata.py",
+    "tests/marketplace/test_metadata_generator.py"
+  ],
+  "512e4b9b19036be6e2975abf5b5d87443e99afc1": [
+    ".gitignore",
+    "scripts/generate_skill_metadata.py",
+    "tests/marketplace/test_metadata_generator.py"
+  ],
+  "b3c05c183f4b0ce909405f1f5434e10e0685ea74": [
+    "scripts/generate_skill_metadata.py",
+    "tests/marketplace/test_metadata_generator.py"
+  ],
+  "01a57e05719b161592f64d898677399a224abd3d": [
+    "scripts/generate_skill_metadata.py",
+    "tests/marketplace/test_metadata_generator.py"
+  ],
+  "f6fef419c3b08a15d4bdcbcf23c26c738c89e964": [
+    "scripts/generate_skill_metadata.py",
+    "tests/marketplace/test_metadata_generator.py"
+  ],
+  "b517779ff480db4f0ce49c3106e3c1a3b3291219": [
+    "scripts/generate_skill_metadata.py",
+    "tests/marketplace/test_metadata_generator.py"
+  ],
+  "6fb1050447fd8b89717567f3849510de9afd5436": [
+    "scripts/generate_skill_metadata.py",
+    "tests/marketplace/test_metadata_generator.py"
+  ],
+  "a14325f24938b25bfa6c10fca807c84bbc0c6648": [
+    "scripts/generate_skill_metadata.py",
+    "tests/marketplace/test_metadata_generator.py"
+  ],
+  "12dccc7d52a0568c3e70524dbec6ea50457b31a3": [
+    "README.md"
+  ],
+  "0f038a3f462538ba931974ac3360a4808b6c1418": [
+    "CLAUDE.md"
+  ],
+  "3418e0a42e9d7d5138fc14ecfdb004b82a8b8e98": [
+    "CLAUDE.md"
+  ],
+  "b71fbba3800cfe7e0807a731789b9d6846e447a7": [
+    "CLAUDE.md"
+  ],
+  "b26f273a3df7991a9ee973588ff60a1d00fb4612": [
+    "CLAUDE.md"
+  ],
+  "8c272ed9bd237adcef7c7caae3706cad36e45d77": [
+    "CLAUDE.md"
+  ],
+  "653d6bf483312212c8b662317a1616247d830f1f": [
+    "QUALITY.md"
+  ],
+  "a625acbac5c3d6bc220a9265fa2ff04adb98d701": [
+    "docs/PROJECT-TYPES.md"
+  ],
+  "5ea3ddb0fc28ad743ff42d9dc3f6f948001f61e0": [
+    "CLAUDE.md"
+  ],
+  "53f03145aa12899fd21d365bed2020e136ec5f0a": [
+    "QUALITY.md",
+    "README.md"
+  ],
+  "acc5c767f0d9b2fff2c41971f0768060bb520970": [
+    "docs/comprehensive-quality-review-complete.md"
+  ],
+  "bb6781c54c9743de7e93e4b7cd33652f7210c9a8": [
+    "scripts/validate_all.py"
+  ],
+  "cd9e521d9a4ad06b8c7b28651dcc3e3b3c074e81": [
+    "docs/comprehensive-quality-review-complete.md"
+  ],
+  "9ddc8ff1d7975fc630972eec463c0d9f2da510b9": [
+    "adr/tests/test_cases.json",
+    "code-review-principles/tests/test_cases.json",
+    "dependency-management-principles/tests/test_cases.json",
+    "java-dev/tests/test_cases.json",
+    "java-security-audit/tests/test_cases.json",
+    "observability-principles/tests/test_cases.json",
+    "quarkus-flow-dev/tests/test_cases.json",
+    "quarkus-flow-testing/tests/test_cases.json",
+    "quarkus-observability/tests/test_cases.json",
+    "security-audit-principles/tests/test_cases.json",
+    "update-primary-doc/tests/test_cases.json"
+  ],
+  "615c57dd4b316e456d8094fb0d3a33a94ed55d44": [
+    "docs/comprehensive-quality-review-complete.md"
+  ],
+  "eb151803c71b075f7ceb20484b1593cdc4429aca": [
+    "custom-git-commit/tests/test_cases.json",
+    "java-code-review/tests/test_cases.json",
+    "java-update-design/tests/test_cases.json",
+    "scripts/testing/test_coverage.py",
+    "update-claude-md/tests/test_cases.json"
+  ],
+  "bdd8d629c8faa2e4986f231560bd3c90507008bd": [
+    ".gitignore"
+  ],
+  "3010f0406ed91ea15056b3b1a94cd44c22f35d8e": [
+    "docs/comprehensive-quality-review-complete.md"
+  ],
+  "0b03f28195d3c2748328b1ebb433706d2fbac6e4": [
+    "README.md"
+  ],
+  "c0bf720f24d9b6611970f160dd7b75a21c7f1cf9": [
+    "docs/comprehensive-quality-review-findings.md"
+  ],
+  "ae5723bdbe55c43406f4a64ce619f7af2a06bedf": [
+    "CLAUDE.md"
+  ],
+  "8a9e9d9daa0b6eec033b73c4889d28154b4bd319": [
+    "scripts/validation/validate_python_quality.py"
+  ],
+  "7a865fd8f67af3efe91e1ccd02f4d54d9e93f1d3": [
+    "scripts/validation/validate_behavior.py"
+  ],
+  "776916c14c7105f218ed0abbc06fb1dd6dcb3c86": [
+    "scripts/validation/validate_edge_cases.py"
+  ],
+  "902e983dabc90d1ce1b9ff86321273ba99aec965": [
+    "scripts/validation/validate_usability.py"
+  ],
+  "49401dfab1ce6dcba926efce5bd9e402b06e1517": [
+    "scripts/validation/validate_temporal.py"
+  ],
+  "12fa045e80fc28fd545d5a07e4e4f4f7ef38ee13": [
+    "scripts/validation/validate_cross_document.py"
+  ],
+  "62ec73002b679d9bdca55875283290b5cedc7f09": [
+    "docs/phase1-findings-report.md"
+  ],
+  "f0c341a654ea7252a588a4db3e1d694a83df9995": [
+    "scripts/validate_all.py"
+  ],
+  "bc6404b5fefccbc20842f15ef5a64aa8920f3a89": [
+    "scripts/validation/validate_readme_sync.py"
+  ],
+  "e86e2faefd8dee9d467037ac51e0fe6dabadf938": [
+    "scripts/testing/test_coverage.py"
+  ],
+  "1ee0a0225d589812d7ef95844281359283322c3c": [
+    "scripts/testing/run_regression_tests.py"
+  ],
+  "075b0d364a29c17fd6cc034d473b9ca6270b24bc": [
+    "scripts/testing/run_regression_tests.py"
+  ],
+  "aa64f561f906216f600bd46dfb06395dd3e38398": [
+    "scripts/testing/run_skill_tests.py"
+  ],
+  "bb98a5fc88e67e912bcb67ea6487f699898f9cb8": [
+    "scripts/testing/run_skill_tests.py"
+  ],
+  "82a1984569395d7f98bdfda3c27e3b83c36b2756": [
+    "scripts/testing/run_skill_tests.py"
+  ],
+  "ff8c329afa195041a57e2551de58d211d14ef013": [
+    "CLAUDE.md",
+    "docs/superpowers/plans/2026-03-30-comprehensive-quality-review.md"
+  ],
+  "e44c8ec253309e307d03afd4b9562f95c8a3943c": [
+    "docs/superpowers/specs/2026-03-30-comprehensive-quality-review-design.md"
+  ],
+  "e900fd05b2ec40d124aabe540ad60148958860d0": [
+    "docs/adr/0003-modular-documentation-architecture.md",
+    "docs/adr/0004-claude-search-optimization-rules.md",
+    "docs/adr/0005-no-ai-attribution-unless-requested.md",
+    "docs/adr/0006-generic-principles-foundation-skills.md",
+    "docs/adr/0007-design-md-enforcement-for-java-projects.md",
+    "docs/adr/0008-skills-specific-logic-modularization.md",
+    "docs/adr/0009-automatic-workflow-orchestration-by-project-type.md",
+    "docs/adr/0010-universal-document-validation.md",
+    "docs/adr/ADR-0002-modular-documentation-architecture.md"
+  ],
+  "258036dcce31826a95d193f84aeaad673c4e9fc6": [
+    ".gitignore",
+    "CLAUDE.md",
+    "QUALITY.md",
+    "README.md",
+    "docs/adr/ADR-0002-modular-documentation-architecture.md",
+    "java-update-design/SKILL.md",
+    "readme-sync.md",
+    "scripts/__pycache__/document_discovery.cpython-313.pyc",
+    "scripts/__pycache__/document_group_cache.cpython-313.pyc",
+    "scripts/__pycache__/modular_validator.cpython-313.pyc",
+    "scripts/__pycache__/validate_document.cpython-313.pyc",
+    "scripts/document_discovery.py",
+    "scripts/document_group_cache.py",
+    "scripts/modular_validator.py",
+    "scripts/validate_document.py",
+    "tests/test_document_cache.py",
+    "tests/test_document_discovery.py",
+    "tests/test_modular_validator.py",
+    "update-claude-md/SKILL.md",
+    "update-primary-doc/SKILL.md"
+  ],
+  "e825a6994c83728d2c1f10030e895a8daeea8b0d": [
+    "QUALITY.md",
+    "README.md",
+    "scripts/validate_document.py"
+  ],
+  "b9547a3ec07db72730046cf5bfbff1c5e6b7a2ea": [
+    "CLAUDE.md",
+    "PHILOSOPHY.md",
+    "git-commit/SKILL.md"
+  ],
+  "dfc350c5067e4522a22f6374c44db41489de38a6": [
+    "PHILOSOPHY.md"
+  ],
+  "6f3f76cc917cfc36fe8c06de323edd6d8cece6ec": [
+    "PHILOSOPHY.md"
+  ],
+  "7e7c41cdd2e3f46b4e32344f8630d55aa0e4eed4": [
+    "git-commit/SKILL.md"
+  ],
+  "32167df899f046fafe20c576bb92be4411fed923": [
+    "README.md"
+  ],
+  "fb5ede82c59958958381befb422d1da389bbd3ef": [
+    "README.md",
+    "maven-dependency-update/SKILL.md"
+  ],
+  "8f7e822c52745d4514ac4d0e1713666ae21268aa": [
+    "CLAUDE.md",
+    "README.md",
+    "git-commit/SKILL.md",
+    "readme-sync.md",
+    "skills-update-readme/SKILL.md"
+  ],
+  "73bbc2dc07b3394477478f5d0452c5078706a28f": [
+    "update-claude-md/SKILL.md"
+  ],
+  "7897569340efb1fb92a77209f1a6e5a1a6ac5589": [
+    "CLAUDE.md",
+    "README.md",
+    "custom-git-commit/SKILL.md",
+    "custom-update-primary-doc/SKILL.md",
+    "java-update-design/SKILL.md",
+    "scripts/validate_naming.py",
+    "skills-update-readme/SKILL.md",
+    "update-primary-doc/SKILL.md"
+  ],
+  "da124953c3ebbbc3760cbf642654a2d0a028a376": [
+    "CLAUDE.md",
+    "README.md",
+    "custom-git-commit/SKILL.md",
+    "custom-update-primary-doc/SKILL.md",
+    "docs/adr/0001-documentation-completeness-must-be-universal.md",
+    "docs/adr/0002-project-type-specific-skills-must-use-type-prefix.md",
+    "git-commit/SKILL.md",
+    "java-git-commit/SKILL.md",
+    "java-update-design/SKILL.md",
+    "readme-sync.md",
+    "scripts/validate_naming.py",
+    "skills-update-readme/SKILL.md",
+    "sync-primary-doc/SKILL.md",
+    "update-claude-md/SKILL.md",
+    "update-design/SKILL.md"
+  ],
+  "c862907f735612c4e67cd7002019eb3f4dd6b3e5": [
+    "CLAUDE.md",
+    "git-commit/SKILL.md",
+    "readme-sync.md",
+    "scripts/validate_document.py",
+    "sync-primary-doc/SKILL.md",
+    "update-claude-md/SKILL.md",
+    "update-design/SKILL.md"
+  ],
+  "adba2e398274a47d6f947bb82482e9ea498ea1e2": [
+    "README.md"
+  ],
+  "95cd8e5209257ccf19028b29dbc9b1dd148a2499": [
+    "CLAUDE.md",
+    "git-commit/SKILL.md",
+    "readme-sync.md",
+    "skill-review/SKILL.md",
+    "skill-review/tests/test_cases.json",
+    "skill-validation.md",
+    "update-readme/SKILL.md"
+  ],
+  "2a6416156052b65fcd938fad4a93838213080ab7": [
+    "CLAUDE.md",
+    "README.md",
+    "update-design/SKILL.md",
+    "update-readme/SKILL.md"
+  ],
+  "0010d39cff785d4a97f7d329108d0e0b29af21dd": [
+    "CLAUDE.md",
+    "git-commit/tests/test_cases.json",
+    "java-git-commit/tests/test_cases.json",
+    "maven-dependency-update/tests/test_cases.json",
+    "scripts/testing/run_regression_tests.py",
+    "scripts/testing/run_skill_tests.py",
+    "scripts/testing/test_coverage.py",
+    "skill-review/tests/test_cases.json"
+  ],
+  "8b36d33e5206e438627e7d2dba99ee73fbd83540": [
+    ".github/workflows/skill-validation.yml",
+    "CLAUDE.md",
+    "README.md",
+    "docs/deep-analysis-report-2026-03-30.md",
+    "docs/known-issues.md",
+    "scripts/README.md",
+    "scripts/utils/__pycache__/common.cpython-313.pyc",
+    "scripts/utils/__pycache__/skill_parser.cpython-313.pyc",
+    "scripts/utils/__pycache__/yaml_utils.cpython-313.pyc",
+    "scripts/utils/common.py",
+    "scripts/utils/skill_parser.py",
+    "scripts/utils/yaml_utils.py",
+    "scripts/validate_all.py",
+    "scripts/validation/validate_cso.py",
+    "scripts/validation/validate_flowcharts.py",
+    "scripts/validation/validate_frontmatter.py",
+    "scripts/validation/validate_naming.py",
+    "scripts/validation/validate_references.py",
+    "scripts/validation/validate_sections.py",
+    "scripts/validation/validate_structure.py",
+    "skill-review/SKILL.md",
+    "tests/README.md",
+    "tests/regression/issue-001-cso-violation.json",
+    "tests/templates/regression_test_template.json",
+    "tests/templates/test_case_template.json"
+  ],
+  "50b945cd80b2dbe6906d0816b6a44421ae65ef31": [
+    "CLAUDE.md",
+    "README.md",
+    "custom-git-commit/SKILL.md",
+    "git-commit/SKILL.md",
+    "java-git-commit/SKILL.md",
+    "skill-review/SKILL.md",
+    "sync-primary-doc/SKILL.md",
+    "update-claude-md/SKILL.md",
+    "update-design/SKILL.md",
+    "update-readme/SKILL.md"
+  ],
+  "665b5ce3c4a65cc2f99ddfa706fccd13f5c2d207": [
+    "CLAUDE.md"
+  ],
+  "615d3d43bc8c34ebe85fbab1793acdd038281445": [
+    "CLAUDE.md"
+  ],
+  "025fdde2731ae9642ab6929317b9f75ebf36e9ad": [
+    "git-commit/SKILL.md"
+  ],
+  "2bbd5569261c1072b515a2e86cd09393ca5d137a": [
+    "git-commit/SKILL.md",
+    "java-git-commit/SKILL.md"
+  ],
+  "17adbf251a97e7682ce2842f7dd201645d86b211": [
+    "README.md"
+  ],
+  "3a6fa19624feaa6eb2defa54d243b6328ba8f373": [
+    "java-git-commit/SKILL.md"
+  ],
+  "1baf79a3810ce4cae291e8a66593be8e9bf4fa1d": [
+    "adr/SKILL.md",
+    "java-code-review/SKILL.md",
+    "java-git-commit/SKILL.md",
+    "maven-dependency-update/SKILL.md",
+    "quarkus-flow-dev/SKILL.md",
+    "quarkus-flow-testing/SKILL.md",
+    "update-claude-md/SKILL.md",
+    "update-readme/SKILL.md"
+  ],
+  "273441185dc4a33eff6bc8d5ea46a8c1d920cd32": [
+    "code-review-principles/SKILL.md",
+    "dependency-management-principles/SKILL.md",
+    "git-commit/SKILL.md",
+    "java-dev/SKILL.md",
+    "java-security-audit/SKILL.md",
+    "observability-principles/SKILL.md",
+    "quarkus-observability/SKILL.md",
+    "security-audit-principles/SKILL.md"
+  ],
+  "4066ac240ccf94fda85f17e042d9f42bac834ce9": [
+    "README.md",
+    "git-commit/SKILL.md",
+    "java-dev/SKILL.md",
+    "maven-dependency-update/SKILL.md",
+    "quarkus-flow-dev/SKILL.md",
+    "skill-review/SKILL.md"
+  ],
+  "b6147f668e2bab22b02570d9b1bf6af489627733": [
+    "README.md"
+  ],
+  "9e16af8b38649700642a3d60d856dccd5d419162": [
+    "adr/SKILL.md",
+    "code-review-principles/SKILL.md",
+    "dependency-management-principles/SKILL.md",
+    "git-commit/SKILL.md",
+    "java-code-review/SKILL.md",
+    "java-git-commit/SKILL.md",
+    "maven-dependency-update/SKILL.md",
+    "observability-principles/SKILL.md",
+    "quarkus-flow-dev/SKILL.md",
+    "security-audit-principles/SKILL.md",
+    "skill-review/SKILL.md",
+    "update-claude-md/SKILL.md",
+    "update-design/SKILL.md",
+    "update-readme/SKILL.md"
+  ],
+  "a0e0dcd3e42c1495e24477d9dd7f2ab40bc0ec53": [
+    "adr/SKILL.md",
+    "dependency-management-principles/SKILL.md",
+    "git-commit/SKILL.md",
+    "java-code-review/SKILL.md",
+    "java-git-commit/SKILL.md",
+    "java-security-audit/SKILL.md",
+    "maven-dependency-update/SKILL.md",
+    "quarkus-observability/SKILL.md",
+    "skill-review/SKILL.md",
+    "update-design/SKILL.md",
+    "update-readme/SKILL.md"
+  ],
+  "b55fa0ae21b26b37a8d4e97ac7c8f56644cf7426": [
+    "adr/SKILL.md",
+    "code-review-principles/SKILL.md",
+    "dependency-management-principles/SKILL.md",
+    "git-commit/SKILL.md",
+    "java-code-review/SKILL.md",
+    "java-dev/SKILL.md",
+    "java-git-commit/SKILL.md",
+    "java-security-audit/SKILL.md",
+    "maven-dependency-update/SKILL.md",
+    "observability-principles/SKILL.md",
+    "quarkus-flow-dev/SKILL.md",
+    "quarkus-flow-testing/SKILL.md",
+    "quarkus-observability/SKILL.md",
+    "security-audit-principles/SKILL.md",
+    "skill-review/SKILL.md",
+    "update-claude-md/SKILL.md",
+    "update-design/SKILL.md",
+    "update-readme/SKILL.md"
+  ],
+  "d1aea37db78d455001a00f1c63662efb974fb1ca": [
+    "git-commit/SKILL.md",
+    "java-code-review/SKILL.md",
+    "java-dev/SKILL.md",
+    "java-git-commit/SKILL.md",
+    "update-claude-md/SKILL.md",
+    "update-design/SKILL.md",
+    "update-readme/SKILL.md"
+  ],
+  "9972c3f148116d5b1b05ac0db806dde6afd49336": [
+    "java-security-audit/SKILL.md",
+    "quarkus-flow-testing/SKILL.md",
+    "quarkus-observability/SKILL.md",
+    "skill-review/SKILL.md"
+  ],
+  "0d1c568f2935cd03e6f8f9df742fdc6b8d465917": [
+    "CLAUDE.md",
+    "README.md",
+    "git-commit/SKILL.md",
+    "skill-review/SKILL.md",
+    "update-readme/SKILL.md"
+  ],
+  "2cefb9869629e28f9583803a4ee6b34e7587d2ec": [
+    "CLAUDE.md",
+    "README.md",
+    "git-commit/SKILL.md",
+    "java-git-commit/SKILL.md",
+    "update-claude-md/SKILL.md",
+    "update-design/SKILL.md"
+  ],
+  "7221ad0fdde92e4b46e3393fae6a66120cc58322": [
+    "CLAUDE.md",
+    "README.md",
+    "adr/SKILL.md",
+    "code-review-principles/SKILL.md",
+    "code-review/SKILL.md",
+    "dependency-management-principles/SKILL.md",
+    "dependency-update/SKILL.md",
+    "java-code-review/SKILL.md",
+    "java-dev/SKILL.md",
+    "java-git-commit/SKILL.md",
+    "java-security-audit/SKILL.md",
+    "logging-observability/SKILL.md",
+    "maven-dependency-update/SKILL.md",
+    "observability-principles/SKILL.md",
+    "quarkus-flow-dev/SKILL.md",
+    "quarkus-flow-testing/SKILL.md",
+    "quarkus-observability/SKILL.md",
+    "security-audit-principles/SKILL.md",
+    "security-audit/SKILL.md"
+  ],
+  "bbd81e66ea3c0cd9bf0401c02c71b84b0457dfbe": [
+    "code-review/SKILL.md",
+    "java-git-commit/SKILL.md",
+    "logging-observability/SKILL.md",
+    "security-audit/SKILL.md",
+    "update-design/SKILL.md"
+  ],
+  "230d898a2290a538456cd32aeacf3e2919cb8959": [
+    "README.md",
+    "adr/SKILL.md",
+    "code-review/SKILL.md",
+    "dependency-update/SKILL.md",
+    "git-commit/SKILL.md",
+    "java-dev/SKILL.md",
+    "java-git-commit/SKILL.md",
+    "logging-observability/SKILL.md",
+    "quarkus-flow-dev/SKILL.md",
+    "quarkus-flow-testing/SKILL.md",
+    "security-audit/SKILL.md"
+  ],
+  "1068cf89bc7bde4e8e30e376c429d7f866423bd3": [
+    "README.md"
+  ],
+  "8dc53825d4b93b86e3b4b5e297e7a234b70d665a": [
+    "README.md"
+  ],
+  "b1b7db8f3d6709d9014fd2dae042d466e8e29515": [
+    "README.md"
+  ],
+  "6ee3ed336c3e276fdc27ddeb6576028baf85c42d": [
+    ".gitignore",
+    "README.md",
+    "code-review/SKILL.md",
+    "java-dev/SKILL.md",
+    "security-audit/SKILL.md"
+  ],
+  "7ff998634ce7c4d52b3c9e6f9920e6753f340583": [
+    "LICENSE",
+    "README.md",
+    "adr/SKILL.md",
+    "code-review/SKILL.md",
+    "dependency-update/SKILL.md",
+    "java-dev/SKILL.md",
+    "java-git-commit/SKILL.md",
+    "logging-observability/SKILL.md",
+    "quarkus-flow-dev/SKILL.md",
+    "quarkus-flow-dev/funcDSL-reference.md",
+    "quarkus-flow-testing/SKILL.md",
+    "update-design/SKILL.md"
+  ],
+  "77a4dca0aba28247a6314dfe5f9dde25df8c1aab": []
+}

@@ -703,6 +703,17 @@ Ad-hoc issues discovered during implementation are always assessed for epic fit 
 
 **Triggers:** `/issue-workflow`, or invoked automatically throughout the session when Work Tracking is enabled in CLAUDE.md.
 
+#### **retro-issues**
+One-off retrospective mapping of git history to GitHub epics and issues:
+- Analyses git log, ADRs, blog entries, and design docs to detect phase boundaries (ADR dates, blog milestones, git tags, commit gaps >7 days)
+- Groups functional commits into issues by directory; trivial commits (typos, formatting, merges) excluded with reasons listed separately
+- Enforces 2-child minimum for epics — single-child candidates demoted to standalone
+- Writes full proposed structure to `docs/retro-issues.md` for direct review and editing before any GitHub calls
+- Creates all issues as closed, in order: epics → children (with epic refs) → standalones
+- Optional: amends historical commit messages with `Refs #N` / `Closes #N` via branch-swap pattern — work on `retro-amended`, verify with `git diff`, swap labels, keep original as backup
+
+**Triggers:** `/retro-issues` only. Never auto-triggered.
+
 ---
 
 ### Layer 8: TypeScript/Node.js Development

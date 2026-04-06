@@ -1,0 +1,172 @@
+{
+  "462c50b7228e4936cb0df9e1481fb790e39deea4": [
+    "tests/test_convert_post.py"
+  ],
+  "14e3ee362e5fa7cce1b1c1118f644cf6e4e9013f": [
+    "scripts/convert_post.py"
+  ],
+  "59a2180fc16788f0712ab02bf3d21974fcccc4a6": [
+    "tests/test_garbling_e2e.py"
+  ],
+  "a06039d6b9419a8b5923c6103f3e76bcf4e2d83d": [
+    "tests/test_garbling_e2e.py"
+  ],
+  "cd3c664d9847ccdbebb1f88f4bb275a094fd9282": [
+    "tests/test_convert_post.py"
+  ],
+  "b5aac11354e4863f3d261106a13d795e0e22fbf1": [
+    "tests/test_convert_post.py"
+  ],
+  "b4382728814afa6b26d863a24a7ea5216916e14d": [
+    "scripts/convert_post.py",
+    "server.py"
+  ],
+  "30f57d40d004a0b8900fc50486c012b0d8ac4555": [
+    "scripts/scan_html.py",
+    "server.py",
+    "tests/test_scan_html.py"
+  ],
+  "8caf60a522879c901ec6f9215e3752032fc0d2cf": [
+    "HANDOVER.md",
+    "docs/design-snapshots/2026-04-06-canonical-paths-and-confusion.md",
+    "docs/design-snapshots/2026-04-06-sparge-consolidation.md"
+  ],
+  "e62b6a045b84476c249bebdd30853c2671eb9c34": [
+    "CLAUDE.md"
+  ],
+  "245017b6125ea09273b5bd828647319049c2397c": [
+    "tests/test_server_api.py"
+  ],
+  "779dfc4bf9ff264d18de9464ec5984b7ca549c75": [
+    "HANDOVER.md",
+    "docs/design-snapshots/2026-04-06-sparge-consolidation.md",
+    "docs/design-snapshots/2026-04-06-sparge-edit-experience-and-docs.md"
+  ],
+  "3194335cc1daa8a82b25771f5f35de7cd7786993": [
+    "CLAUDE.md",
+    "HANDOVER.md",
+    "assets/blog/sparge-edit-mode-thumb.jpg",
+    "assets/blog/sparge-edit-mode.png",
+    "assets/blog/sparge-enrich-thumb.jpg",
+    "assets/blog/sparge-enrich.png",
+    "assets/blog/sparge-ingest-thumb.jpg",
+    "assets/blog/sparge-ingest.png",
+    "assets/blog/sparge-two-panel-reviewer-thumb.jpg",
+    "assets/blog/sparge-two-panel-reviewer-thumb.png",
+    "assets/blog/sparge-two-panel-reviewer.png",
+    "docs/blog/2026-04-01-kie-archive-day-zero.md",
+    "docs/blog/2026-04-03-two-apps-one-tool.md",
+    "docs/blog/2026-04-04-sparge-is-born.md",
+    "docs/blog/2026-04-05-content-fidelity.md",
+    "docs/blog/2026-04-05-edit-experience.md",
+    "docs/blog/mockups/entry2-two-panel.html",
+    "docs/blog/mockups/entry3-ingest.html",
+    "docs/blog/mockups/entry4-enrich.html",
+    "docs/blog/mockups/entry5-edit-mode.html"
+  ],
+  "5ac23ed979bc1c85f3ab64e624650ec3212605c1": [
+    "docs/FEATURES.md",
+    "docs/HANDOFF.md",
+    "docs/adr/0001-three-stage-immutable-pipeline.md",
+    "docs/adr/0002-user-level-storage-architecture.md",
+    "docs/adr/0003-author-filter-config-and-ui.md",
+    "docs/adr/0004-enrichment-at-scan-not-ingest.md",
+    "docs/design-snapshots/2026-04-05-sparge-pipeline-and-storage.md",
+    "docs/design-snapshots/2026-04-06-sparge-edit-experience-and-docs.md",
+    "docs/ideas/IDEAS.md",
+    "docs/pipeline.md",
+    "docs/project-blog/2026-04-03-kie-migration-day-zero.md",
+    "docs/project-blog/2026-04-03-the-archive-cleaner.md",
+    "docs/project-blog/2026-04-03-the-markdown-reviewer.md",
+    "docs/project-blog/2026-04-04-from-tool-to-product.md",
+    "docs/project-blog/2026-04-04-projects-system.md",
+    "docs/project-blog/2026-04-04-tests-security-handoff.md",
+    "docs/project-blog/2026-04-04-three-stage-pipeline.md",
+    "docs/superpowers/plans/2026-04-05-codemirror-editors.md",
+    "docs/superpowers/plans/2026-04-05-content-fidelity.md",
+    "docs/superpowers/plans/2026-04-05-edit-mode-redesign.md",
+    "docs/superpowers/plans/2026-04-05-storage-and-author-filter.md",
+    "docs/superpowers/specs/2026-04-05-author-filter-design.md",
+    "docs/superpowers/specs/2026-04-05-codemirror-editors-design.md",
+    "docs/superpowers/specs/2026-04-05-edit-mode-redesign.md",
+    "mock.html",
+    "projects.json",
+    "projects/delete-me-50f616/config.json",
+    "projects/kie-fresh/config.json",
+    "projects/kie-fresh/state.json",
+    "projects/test-project-5652be/config.json",
+    "scripts/config.py",
+    "scripts/convert_post.py",
+    "scripts/enrich.py",
+    "scripts/ingest.py",
+    "scripts/sparge_home.py",
+    "scripts/state.py",
+    "server.py",
+    "tests/conftest.py",
+    "tests/test_config.py",
+    "tests/test_edit_flow.py",
+    "tests/test_edit_flow_comprehensive.py",
+    "tests/test_enrich.py",
+    "tests/test_html_prettify.py",
+    "tests/test_ingest.py",
+    "tests/test_ingest_integration.py",
+    "tests/test_md_validator.py",
+    "tests/test_scan_html.py",
+    "tests/test_security.py",
+    "tests/test_server_api.py",
+    "tests/test_sparge_home.py",
+    "ui/index.html",
+    "ui/projects.html",
+    "ui/tests/edit-mode-unit.html"
+  ],
+  "d010f0fa406b43dfd7a46bb1da6d1b0dc5a4a870": [
+    "docs/ideas/IDEAS.md"
+  ],
+  "560312801b2babd0fb7176fee0b3b9f15369b2a4": [
+    "docs/project-blog/2026-04-03-kie-migration-day-zero.md",
+    "docs/project-blog/2026-04-03-the-archive-cleaner.md",
+    "docs/project-blog/2026-04-03-the-markdown-reviewer.md",
+    "docs/project-blog/2026-04-04-from-tool-to-product.md",
+    "docs/project-blog/2026-04-04-projects-system.md",
+    "docs/project-blog/2026-04-04-tests-security-handoff.md",
+    "docs/project-blog/2026-04-04-three-stage-pipeline.md"
+  ],
+  "a0cdacfcaed36f9ff67fc5f9a393bdb0b48bab66": [
+    "docs/HANDOFF.md"
+  ],
+  "9fe8e8da00fbc7e62ea4f76fb4344bc9618cdaae": [
+    "docs/HANDOFF.md"
+  ],
+  "416c07707e42e530fdbec6f954800aaa9ca57963": [
+    "scripts/ingest.py",
+    "tests/test_ingest_integration.py",
+    "tests/test_server_api.py",
+    "ui/projects.html"
+  ],
+  "34df4c09c49e92b0c5e213079755b5601e4715ed": [
+    "projects.json",
+    "projects/kie-fresh/config.json",
+    "projects/kie-fresh/state.json",
+    "scripts/ingest.py",
+    "server.py",
+    "tests/test_ingest.py",
+    "tests/test_server_api.py",
+    "ui/projects.html"
+  ],
+  "9a19a74e7aef56faae68f8a065f0337e16ff0d61": [
+    "scripts/config.py",
+    "scripts/convert_post.py",
+    "scripts/ingest.py",
+    "server.py",
+    "tests/test_ingest.py",
+    "tests/test_security.py",
+    "ui/index.html"
+  ],
+  "d2ee8028ea5775f691df02d5f6c59a6d127fd088": [
+    "scripts/asset_store.py",
+    "scripts/consolidate.py",
+    "tests/test_asset_store.py",
+    "tests/test_consolidate.py"
+  ],
+  "cc1bfb5f28aacff0ca30dbdff89e6da5a63e5c1c": []
+}

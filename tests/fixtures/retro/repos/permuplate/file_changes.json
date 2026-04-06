@@ -1,0 +1,747 @@
+{
+  "4fa64005b12a6fe1a86fffa44ce2a47084ce594c": [
+    "docs/superpowers/specs/2026-04-06-phase6-named-rules-params.md"
+  ],
+  "bb9c8dd1bed0a19283ef5cab55e190990545290d": [
+    "CLAUDE.md"
+  ],
+  "3946b235168fcef87fcb2a2ec3269bac767daac5": [
+    "permuplate-mvn-examples/src/test/java/io/quarkiverse/permuplate/example/drools/RuleBuilderTest.java"
+  ],
+  "f48360995deb333094c89a772da08de89b50d5ef": [
+    "CLAUDE.md",
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/RuleBuilderExamples.java",
+    "permuplate-mvn-examples/src/main/permuplate/io/quarkiverse/permuplate/example/drools/JoinBuilder.java",
+    "permuplate-mvn-examples/src/test/java/io/quarkiverse/permuplate/example/drools/RuleBuilderTest.java"
+  ],
+  "c6791ea227562a419ed8e10486b2a7f5e779ad45": [
+    "CLAUDE.md",
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/BaseTuple.java",
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/RuleBuilderExamples.java",
+    "permuplate-mvn-examples/src/test/java/io/quarkiverse/permuplate/example/drools/TupleAsTest.java"
+  ],
+  "12cd8d39ab825f3bb3e85ae7cac0511d42e351dc": [
+    "permuplate-mvn-examples/src/test/java/io/quarkiverse/permuplate/example/drools/RuleBuilderTest.java"
+  ],
+  "6b3b8ac381fe24fa24341074f77798d63e0d39a7": [
+    "CLAUDE.md",
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/RuleBuilder.java",
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/RuleBuilderExamples.java",
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/RuleDefinition.java",
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/Variable.java",
+    "permuplate-mvn-examples/src/test/java/io/quarkiverse/permuplate/example/drools/RuleBuilderTest.java"
+  ],
+  "9194a0fca32294033168205da16aa5ca10490966": [
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/RuleBuilderExamples.java"
+  ],
+  "7d8a05cc87abb4c20b2b25d403dfbb315aae1e1b": [
+    "permuplate-mvn-examples/src/test/java/io/quarkiverse/permuplate/example/drools/ExtensionPointTest.java"
+  ],
+  "d7ce8241dac7862323acf877697eb8e6bb67badb": [
+    "permuplate-mvn-examples/src/test/java/io/quarkiverse/permuplate/example/drools/ExtensionPointTest.java"
+  ],
+  "d613da0b548fc930b8f03ea38bf3ae635d36a2dd": [
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/RuleBuilder.java",
+    "permuplate-mvn-examples/src/main/permuplate/io/quarkiverse/permuplate/example/drools/JoinBuilder.java"
+  ],
+  "a577978e1b9ffe1df54bffe58c9ddc576b51901b": [
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/RuleDefinition.java",
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/RuleExtendsPoint.java"
+  ],
+  "9af89a20ded6b62ae64bf6edab4103e68cc3fd03": [
+    "docs/superpowers/plans/2026-04-06-phase5-extends.md"
+  ],
+  "16317b8d9be0c33be70ddba37b59eaef5c14aa6a": [
+    "docs/superpowers/specs/2026-04-06-phase5-extends.md"
+  ],
+  "1ed8caf4ecc9aba77810f0d2b7514f2db2e585c8": [
+    "docs/superpowers/specs/2026-04-06-phase5-extends.md"
+  ],
+  "55fdc12f44a18b6c49906d2f9fbabd4ddd687123": [
+    "CLAUDE.md"
+  ],
+  "42fc28d6d82b33f4b45898cb0eb6842f7bb4a8da": [
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/RuleBuilderExamples.java"
+  ],
+  "37566b30500da50e46c82a0c431d10f17b85f042": [
+    "permuplate-mvn-examples/src/main/permuplate/io/quarkiverse/permuplate/example/drools/JoinBuilder.java",
+    "permuplate-mvn-examples/src/test/java/io/quarkiverse/permuplate/example/drools/RuleBuilderTest.java"
+  ],
+  "43e938c0862aa24c8ed220d22a9579de6bfa4d08": [
+    "permuplate-mvn-examples/src/test/java/io/quarkiverse/permuplate/example/drools/RuleBuilderTest.java"
+  ],
+  "1875c1db3866770e5ca5143267becad18e1df346": [
+    "permuplate-mvn-examples/src/main/permuplate/io/quarkiverse/permuplate/example/drools/JoinBuilder.java",
+    "permuplate-mvn-examples/src/test/java/io/quarkiverse/permuplate/example/drools/RuleBuilderTest.java"
+  ],
+  "93948b1ba175fce4cb08cd759ff6b612f9a722a3": [
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/RuleDefinition.java",
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/Variable.java",
+    "permuplate-mvn-examples/src/test/java/io/quarkiverse/permuplate/example/drools/RuleBuilderTest.java"
+  ],
+  "7929068e254c660f24782d3d84ff299fb70d163c": [
+    "docs/superpowers/plans/2026-04-06-phase4-variable-binding.md"
+  ],
+  "4929dd83a6e7b592fe4184705629b9debc478b1d": [
+    "docs/blog/2026-04-06-04-oopath-traversal.md",
+    "docs/superpowers/specs/2026-04-06-phase4-variable-binding.md"
+  ],
+  "70b1851cacd0cfc439ead442fbc4e56bacd5ef19": [
+    "HANDOVER.md",
+    "docs/blog/001-the-boilerplate-problem.md",
+    "docs/blog/002-transforming-the-template.md",
+    "docs/blog/003-when-apt-hits-a-wall.md",
+    "docs/blog/004-validation-and-expression-functions.md",
+    "docs/blog/005-type-parameters-and-return-types.md",
+    "docs/blog/006-overloads-extends-and-a-hidden-bug.md",
+    "docs/blog/007-building-the-drools-dsl.md",
+    "docs/blog/008-making-joins-type-safe.md",
+    "docs/blog/2026-04-04-01-the-boilerplate-problem.md",
+    "docs/blog/2026-04-04-02-transforming-the-template.md",
+    "docs/blog/2026-04-04-03-when-apt-hits-a-wall.md",
+    "docs/blog/2026-04-04-04-validation-and-expression-functions.md",
+    "docs/blog/2026-04-04-05-type-parameters-and-return-types.md",
+    "docs/blog/2026-04-04-06-overloads-extends-and-a-hidden-bug.md",
+    "docs/blog/2026-04-04-07-building-the-drools-dsl.md",
+    "docs/blog/2026-04-06-01-making-joins-type-safe.md",
+    "docs/blog/2026-04-06-02-the-first-second-split.md",
+    "docs/blog/2026-04-06-03-ruling-things-out.md"
+  ],
+  "59333331e1623a759b8da573e2c923abde301947": [
+    "docs/blog/001-the-boilerplate-problem.md",
+    "docs/blog/003-when-apt-hits-a-wall.md",
+    "docs/blog/008-making-joins-type-safe.md"
+  ],
+  "c95d56617bfd4c7b30ee1cefa7f63c890389cc25": [
+    "HANDOVER.md"
+  ],
+  "66aff4eb17b00a6b0c83f729d7fb24866f263b16": [
+    "docs/design-snapshots/2026-04-05-drools-dsl-sandbox.md",
+    "docs/design-snapshots/2026-04-06-drools-dsl-sandbox.md"
+  ],
+  "f4c15f090c5f9d7b12c7ff7e37cfd08f5e664b0f": [
+    "docs/blog/001-the-boilerplate-problem.md",
+    "docs/blog/002-transforming-the-template.md",
+    "docs/blog/003-when-apt-hits-a-wall.md",
+    "docs/blog/004-validation-and-expression-functions.md",
+    "docs/blog/007-building-the-drools-dsl.md"
+  ],
+  "447c8f0087d9ab8f92d4aecce4b7dc4a97dc510a": [
+    "docs/blog/001-the-boilerplate-problem.md",
+    "docs/blog/002-transforming-the-template.md",
+    "docs/blog/003-when-apt-hits-a-wall.md",
+    "docs/blog/004-validation-and-expression-functions.md",
+    "docs/blog/005-type-parameters-and-return-types.md",
+    "docs/blog/006-overloads-extends-and-a-hidden-bug.md",
+    "docs/blog/007-building-the-drools-dsl.md"
+  ],
+  "da9582cb692d7b3782b07f6f78f0788cfa5ec5ff": [
+    "CLAUDE.md"
+  ],
+  "5aa916990a332527fc91ed6095c7d35e7c069c2c": [
+    "docs/blog/001-the-boilerplate-problem.md",
+    "docs/blog/002-transforming-the-template.md",
+    "docs/blog/003-when-apt-hits-a-wall.md",
+    "docs/blog/004-validation-and-expression-functions.md",
+    "docs/blog/005-type-parameters-and-return-types.md",
+    "docs/blog/006-overloads-extends-and-a-hidden-bug.md",
+    "docs/blog/007-building-the-drools-dsl.md"
+  ],
+  "5181fbdbe8140292cd04128970abc9d95170ffbf": [
+    "docs/adr/0001-standalone-method-level-permutetypeparam-with-propagation.md",
+    "docs/adr/0002-oopath-runtime-as-pipeline-on-ruledefinition.md",
+    "docs/adr/0003-end-phantom-type-added-in-phase-2.md",
+    "docs/adr/0004-negationscope-as-separate-class.md"
+  ],
+  "72eceb79dd2f4ebb5798f9aadbff56af2c3a4789": [
+    "HANDOVER.md"
+  ],
+  "5e21a31180f83bf4fc06e8d4757149d5a98ea7c2": [
+    "docs/design-snapshots/2026-04-05-drools-dsl-sandbox.md"
+  ],
+  "b2c6bd2bfb4939ec84a9f0e6ac4b06fade811464": [
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/RuleOOPathBuilder.java",
+    "permuplate-mvn-examples/src/main/permuplate/io/quarkiverse/permuplate/example/drools/JoinBuilder.java",
+    "permuplate-mvn-examples/src/test/java/io/quarkiverse/permuplate/example/drools/RuleBuilderTest.java"
+  ],
+  "74f452206e5b42c3657e727a03e6757952d112d4": [
+    "permuplate-mvn-examples/src/main/permuplate/io/quarkiverse/permuplate/example/drools/JoinBuilder.java"
+  ],
+  "aa345bf836561feae79ff104ff4725fd2be7a20d": [
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/RuleDefinition.java"
+  ],
+  "79590a28e5d04eb01b2cf1130b6b4a789b1b782f": [
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/RuleDefinition.java",
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/RuleOOPathBuilder.java"
+  ],
+  "b25d7fd2f89ee0a238154c66a389bedfb7a637f4": [
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/Book.java",
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/Ctx.java",
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/Library.java",
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/Room.java"
+  ],
+  "3710fcbabe0f08ae819eaba6be8d955457c200a9": [
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/BaseTuple.java",
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/Function2.java",
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/OOPathStep.java",
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/PathContext.java"
+  ],
+  "d93c8f944c2ea2ff2d456a1e8b20f9aa9951de12": [
+    "docs/superpowers/plans/2026-04-05-phase3b-oopath.md"
+  ],
+  "ddbc33c967461104ceff2e17f63f7291865c12f4": [
+    "docs/superpowers/specs/2026-04-05-phase3b-oopath.md"
+  ],
+  "fd2094a7ddfc439a0be5187ad2cb1d5162f4e9b9": [
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/ExistenceScope.java",
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/NegationScope.java",
+    "permuplate-mvn-examples/src/test/java/io/quarkiverse/permuplate/example/drools/RuleBuilderTest.java"
+  ],
+  "7dff2d62037d92b2a81c4e4138c2234e2950a24e": [
+    "permuplate-mvn-examples/src/main/permuplate/io/quarkiverse/permuplate/example/drools/JoinBuilder.java",
+    "permuplate-mvn-examples/src/test/java/io/quarkiverse/permuplate/example/drools/RuleBuilderTest.java"
+  ],
+  "d8a5ec92a93716a39efeecd91db7cdf49d47024e": [
+    "permuplate-mvn-examples/src/test/java/io/quarkiverse/permuplate/example/drools/RuleBuilderTest.java"
+  ],
+  "603341024fe284f8a696a248125a18a6de6732a2": [
+    "permuplate-mvn-examples/src/main/permuplate/io/quarkiverse/permuplate/example/drools/JoinBuilder.java"
+  ],
+  "ecf4787dc585ef111b2381a19c36f387d13e2999": [
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/RuleDefinition.java"
+  ],
+  "94105f488eeed8972969d83be6e2b087952ec2c3": [
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/ExistenceScope.java",
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/NegationScope.java"
+  ],
+  "c2ca110201abfd10a87b2440a9b7cbdaeed8bba6": [
+    "docs/superpowers/plans/2026-04-05-phase3a-not-exists.md"
+  ],
+  "a653fb01b9055f6c81bd522af30f19700c661464": [
+    "docs/superpowers/specs/2026-04-05-phase3a-not-exists.md"
+  ],
+  "d484ba72726b9cf0a4660168beda01246e338efa": [
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/RuleBuilder.java"
+  ],
+  "ebd3b7aa31ee525480b2a782b777672f91d68bac": [
+    "permuplate-mvn-examples/DROOLS-DSL.md"
+  ],
+  "57479dc99a932499327c6a21ca28501ecb84bf24": [
+    "permuplate-mvn-examples/src/test/java/io/quarkiverse/permuplate/example/drools/RuleBuilderTest.java"
+  ],
+  "5ff6326434fc6b904ddce5cbd7f435b1d4676ee3": [
+    "permuplate-mvn-examples/src/main/permuplate/io/quarkiverse/permuplate/example/drools/JoinBuilder.java"
+  ],
+  "8163c4e12e12fdebd5c494b8544ade853b11e8fd": [
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/RuleBuilder.java"
+  ],
+  "3d969b3f3150c5f5ce5894247766e9e25bbeb64f": [
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/RuleDefinition.java"
+  ],
+  "239bb89e4dc226779850809493c242bcc7ee14f6": [
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/BaseRuleBuilder.java",
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/JoinSecond.java"
+  ],
+  "6c077730bfacdc18196c323c5c76ed660ee25496": [
+    "permuplate-maven-plugin/src/main/java/io/quarkiverse/permuplate/maven/PermuteMojo.java"
+  ],
+  "d5edf3356071c610f9440d2c38862aae6b1cd343": [
+    "docs/superpowers/plans/2026-04-05-phase2-bilinear-joins.md"
+  ],
+  "985d4942453deb3e198409c9eb8acc4883418626": [
+    "docs/superpowers/specs/2026-04-05-phase2-first-second-split.md"
+  ],
+  "ddb599ab0d03a0f555ac17dfdf233910aca281da": [
+    "CLAUDE.md",
+    "permuplate-mvn-examples/DROOLS-DSL.md"
+  ],
+  "52bd06e884274b0c9c9dc0142ce7b576b7d0548b": [
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/RuleDefinition.java",
+    "permuplate-mvn-examples/src/main/permuplate/io/quarkiverse/permuplate/example/drools/JoinBuilder.java",
+    "permuplate-mvn-examples/src/test/java/io/quarkiverse/permuplate/example/drools/RuleBuilderTest.java"
+  ],
+  "e73dc1502088939c2a70e020cadbac32ed3a890b": [
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/PermuteMethodTest.java"
+  ],
+  "e75584c6bbe9cd943fb051cd902c6dcaf759734e": [
+    "permuplate-annotations/src/main/java/io/quarkiverse/permuplate/PermuteTypeParam.java",
+    "permuplate-core/src/main/java/io/quarkiverse/permuplate/core/PermuteTypeParamTransformer.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/PermuteTypeParamTest.java"
+  ],
+  "2e291a2431e158c8a64a2567752dd331377c29bd": [
+    "docs/superpowers/plans/2026-04-04-typed-join-and-dual-filter.md"
+  ],
+  "8ceade226368af50de1ccf783b590dbb1a437450": [
+    "docs/superpowers/specs/2026-04-04-method-type-param-propagation.md"
+  ],
+  "9c7596e88cf742f70c2a26dfa6d8e50987569edf": [
+    "docs/superpowers/specs/2026-04-04-method-type-param-propagation.md"
+  ],
+  "04f9519c10b38e04edbbd2cb549ecc7e2d54aba7": [
+    "docs/blog/001-the-boilerplate-problem.md",
+    "docs/blog/002-transforming-the-template.md",
+    "docs/blog/003-when-apt-hits-a-wall.md",
+    "docs/blog/004-validation-and-expression-functions.md",
+    "docs/blog/005-type-parameters-and-return-types.md",
+    "docs/blog/006-overloads-extends-and-a-hidden-bug.md",
+    "docs/blog/007-building-the-drools-dsl.md"
+  ],
+  "1913fd7dd11b13073e2d0d022a1b29e5cc2fd268": [
+    "docs/handoffs/gotchas.md",
+    "docs/handoffs/session-handoff-2026-04-04.md",
+    "docs/handoffs/test-plan-2026-04-04.md"
+  ],
+  "bcea45deb1eeb4efecb162664208b0e0925adde5": [
+    "CLAUDE.md"
+  ],
+  "7d2c1cf1e80e537f12373eab636916054f7b9dd4": [
+    "permuplate-maven-plugin/src/main/java/io/quarkiverse/permuplate/maven/InlineGenerator.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/PermuteMethodTest.java"
+  ],
+  "7131f827aa2c6774ebd3080644bb077d7bcc16fb": [
+    "docs/superpowers/plans/2026-04-04-g3-alpha-extends-expansion.md"
+  ],
+  "59be2693882522fcc780bcc444a3998e86b6eb02": [
+    "docs/superpowers/specs/2026-04-04-g3-alpha-extends-expansion.md"
+  ],
+  "695584eca091e4018540c1cee129f56976689a9d": [
+    "permuplate-mvn-examples/src/test/java/io/quarkiverse/permuplate/example/drools/RuleBuilderTest.java"
+  ],
+  "66d6c5d5ffe0da33e7ad3c565c020084f0f12206": [
+    "permuplate-mvn-examples/DROOLS-DSL.md"
+  ],
+  "892e651e5cc8742c3b1d4774096f8ba022494140": [
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/RuleDefinition.java",
+    "permuplate-mvn-examples/src/main/permuplate/io/quarkiverse/permuplate/example/drools/JoinBuilder.java",
+    "permuplate-mvn-examples/src/test/java/io/quarkiverse/permuplate/example/drools/RuleBuilderTest.java"
+  ],
+  "ba73d10b5f46024febfb71428c7af83b16b61faa": [
+    "permuplate-mvn-examples/DROOLS-DSL.md",
+    "permuplate-mvn-examples/src/main/permuplate/io/quarkiverse/permuplate/example/drools/JoinBuilder.java"
+  ],
+  "635c101427eba70e101e11de813065a1786bdaa8": [
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/RuleBuilder.java",
+    "permuplate-mvn-examples/src/main/permuplate/io/quarkiverse/permuplate/example/drools/JoinBuilder.java"
+  ],
+  "e584a436060834de62d1fc505b8f1ec18ff827f0": [
+    "permuplate-maven-plugin/src/main/java/io/quarkiverse/permuplate/maven/PermuteMojo.java",
+    "permuplate-mvn-examples/src/main/permuplate/io/quarkiverse/permuplate/example/drools/Consumer1.java",
+    "permuplate-mvn-examples/src/main/permuplate/io/quarkiverse/permuplate/example/drools/Predicate1.java"
+  ],
+  "6098cd10b282753cf51393311b9c162002724770": [
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/RuleDefinition.java"
+  ],
+  "43839fa78c614d15512eccb7cf33f12e377f503d": [
+    "permuplate-mvn-examples/pom.xml",
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/Account.java",
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/Ctx.java",
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/DataSource.java",
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/Order.java",
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/Person.java",
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/Product.java",
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/drools/Transaction.java"
+  ],
+  "0c113fdd1841f693dd02a54f0eefbd54b92348fc": [
+    "docs/superpowers/plans/2026-04-04-drools-example-implementation.md"
+  ],
+  "5cbca4d3e0f277a9623d04a719d2d1d4e68e71f1": [
+    "docs/superpowers/specs/2026-04-04-drools-rulebuilder-example-design.md"
+  ],
+  "43f5eb0289dbc96c7132179075fe08ae09ac12f7": [
+    "permuplate-mvn-examples/DROOLS-DSL.md"
+  ],
+  "fc75e7e989be75fb9cd25085b415be6b58b7059e": [
+    "permuplate-mvn-examples/DROOLS-DSL.md"
+  ],
+  "79cc6a745e931b4d7dbe5df2c425b771275e8810": [
+    "permuplate-mvn-examples/DROOLS-DSL.md"
+  ],
+  "c9b287694ce32c782a72e04b7aab6d15129fe272": [
+    "permuplate-mvn-examples/DROOLS-DSL.md"
+  ],
+  "d26bdaf86b380adfd1038accab367dfbeb504494": [
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/PermuteReturnTest.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/PermuteTypeParamTest.java"
+  ],
+  "fef11e12ed30216fc7209c8e6748ac1829ce061f": [
+    "docs/gap-analysis.md"
+  ],
+  "2832a473630bd9178f62e2d368a354bbb1839acf": [
+    "docs/SESSION-HANDOFF.md"
+  ],
+  "279fd8d3ec66bb572fadc0065735850aa3b5ddb8": [
+    "docs/SESSION-HANDOFF.md",
+    "docs/gap-analysis.md"
+  ],
+  "e7f1ac02b5d855bb556a0e803fa8e82618681059": [
+    "CLAUDE.md",
+    "README.md",
+    "docs/gap-analysis.md"
+  ],
+  "0b9bd2abdba74e8269e6b17fd8b818170f4d01ee": [
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/InlineGenerationTest.java"
+  ],
+  "3e00768e8847e9bfa265239956dea1925371fcee": [
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/PermuteParamTest.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/PrefixValidationTest.java"
+  ],
+  "b3b89bccbd451146bc3e82cb803a00812d259563": [
+    "permuplate-core/src/main/java/io/quarkiverse/permuplate/core/PermuteTypeParamTransformer.java",
+    "permuplate-maven-plugin/src/main/java/io/quarkiverse/permuplate/maven/InlineGenerator.java",
+    "permuplate-processor/src/main/java/io/quarkiverse/permuplate/processor/PermuteProcessor.java"
+  ],
+  "059d9c9c466c48c1af5522cbbc7043afcc799333": [
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/PermuteMethodTest.java"
+  ],
+  "9bfefd6220c03ce4f2c3fdd9eff41b5f41838799": [
+    "permuplate-core/src/main/java/io/quarkiverse/permuplate/core/PermuteTypeParamTransformer.java"
+  ],
+  "ba66b482f124e9df31020b779406972b0cbbfc37": [
+    "permuplate-annotations/src/main/java/io/quarkiverse/permuplate/PermuteMethod.java",
+    "permuplate-maven-plugin/src/main/java/io/quarkiverse/permuplate/maven/InlineGenerator.java",
+    "permuplate-processor/src/main/java/io/quarkiverse/permuplate/processor/PermuteProcessor.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/PermuteMethodTest.java"
+  ],
+  "9d16dadd3b240a23d7001b00675ebe264afc1225": [
+    "permuplate-maven-plugin/src/main/java/io/quarkiverse/permuplate/maven/InlineGenerator.java"
+  ],
+  "648a2010a28ee6ed19221b98641969bef44a8f96": [
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/PermuteMethodTest.java"
+  ],
+  "0ba7dbad02045e6415307547d2344095c6282e9f": [
+    "permuplate-core/src/main/java/io/quarkiverse/permuplate/core/PermuteDeclrTransformer.java",
+    "permuplate-maven-plugin/src/main/java/io/quarkiverse/permuplate/maven/AnnotationReader.java"
+  ],
+  "089d7f52f538684ac49daccf42e07630e7f7e3f2": [
+    "permuplate-annotations/src/main/java/io/quarkiverse/permuplate/PermuteExtends.java",
+    "permuplate-annotations/src/main/java/io/quarkiverse/permuplate/PermuteMethod.java"
+  ],
+  "eb62c75cdb045f76bbf53cc8d561edda29b2f849": [
+    "permuplate-maven-plugin/src/main/java/io/quarkiverse/permuplate/maven/InlineGenerator.java"
+  ],
+  "8e87d9d3ad84e6ab43f9742e0542b602e9c71cbe": [
+    "permuplate-maven-plugin/src/main/java/io/quarkiverse/permuplate/maven/AnnotationReader.java",
+    "permuplate-maven-plugin/src/main/java/io/quarkiverse/permuplate/maven/InlineGenerator.java"
+  ],
+  "b38831119664b22e00937fa450760cd1f4179533": [
+    "permuplate-processor/src/main/java/io/quarkiverse/permuplate/processor/PermuteProcessor.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/PermuteReturnTest.java"
+  ],
+  "f08e3d87185e58e84119fb36a10cda9bb9b96cd0": [
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/PermuteReturnTest.java"
+  ],
+  "5f172a129f27bda8208f96f22b28d0c28c302c13": [
+    "permuplate-annotations/src/main/java/io/quarkiverse/permuplate/PermuteReturn.java"
+  ],
+  "9b1653de0b01dae9d8c03ee7569ecb18b29de06f": [
+    "permuplate-core/src/main/java/io/quarkiverse/permuplate/core/PermuteDeclrTransformer.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/PermuteDeclrTest.java"
+  ],
+  "8c3c11e131bbf6eb03e7ff0b1b9797379289014e": [
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/PermuteDeclrTest.java"
+  ],
+  "affe111086689cf42cd376c386e583c139c6e09e": [
+    "permuplate-annotations/src/main/java/io/quarkiverse/permuplate/PermuteDeclr.java"
+  ],
+  "9273559e4433aebb934e6e200dc7e968f9c211d2": [
+    "permuplate-processor/src/main/java/io/quarkiverse/permuplate/processor/PermuteProcessor.java"
+  ],
+  "5b03e8dfda7d30d0ee9036f7702a740a90b3c120": [
+    "permuplate-maven-plugin/src/main/java/io/quarkiverse/permuplate/maven/InlineGenerator.java",
+    "permuplate-processor/src/main/java/io/quarkiverse/permuplate/processor/PermuteProcessor.java"
+  ],
+  "2554b2c03dce152eef44d00351f9dfe18cb4667f": [
+    "permuplate-core/src/main/java/io/quarkiverse/permuplate/core/PermuteTypeParamTransformer.java"
+  ],
+  "1dad5de1446a7c6dec74c49b05c28f9bdf41c50f": [
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/PermuteTypeParamTest.java"
+  ],
+  "0df126c1ebf3d48b0589f13a9daf071af7c90ddb": [
+    "permuplate-annotations/src/main/java/io/quarkiverse/permuplate/PermuteTypeParam.java"
+  ],
+  "95f7dca91a4a37883383772e7c8aeb08a6e8a12b": [
+    "docs/gap-analysis.md",
+    "docs/superpowers/specs/2026-04-01-generic-type-params-g1-design.md",
+    "docs/superpowers/specs/2026-04-02-expression-language-functions-n4-design.md",
+    "docs/superpowers/specs/2026-04-02-multi-join-g3-design.md",
+    "docs/superpowers/specs/2026-04-02-named-method-series-g4-design.md",
+    "docs/superpowers/specs/2026-04-02-return-type-narrowing-g2-design.md"
+  ],
+  "12d091a94411191342d87014985987ce40eb86e9": [
+    "CLAUDE.md",
+    "README.md",
+    "docs/gap-analysis.md",
+    "permuplate-core/src/main/java/io/quarkiverse/permuplate/core/EvaluationContext.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/ExpressionFunctionsTest.java"
+  ],
+  "bae193c1169f56ef556404e7cb68f41c3c842d3b": [
+    "permuplate-core/src/main/java/io/quarkiverse/permuplate/core/EvaluationContext.java",
+    "permuplate-processor/src/main/java/io/quarkiverse/permuplate/processor/PermuteProcessor.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/ExpressionFunctionsTest.java"
+  ],
+  "5691ed9bd1a907808cedda957aabb35e3eb1f074": [
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/ExpressionFunctionsTest.java"
+  ],
+  "dcecec1890ae7cf4226aa00c37dc0e748069d2c9": [
+    "permuplate-maven-plugin/src/main/java/io/quarkiverse/permuplate/maven/PermuteMojo.java"
+  ],
+  "b6f14faf8dfd33aefcc85fb197cdbe42ecd91c7b": [
+    ".gitignore"
+  ],
+  "0f083ca576508736beacba5820a25db47eea5b2c": [
+    "docs/gap-analysis.md",
+    "docs/superpowers/specs/2026-04-02-multi-join-g3-design.md",
+    "docs/superpowers/specs/2026-04-02-return-type-narrowing-g2-design.md"
+  ],
+  "fc8d44f3808a1a1308019adf0df8655437989dc4": [
+    "docs/gap-analysis.md",
+    "docs/superpowers/specs/2026-04-02-expression-language-functions-n4-design.md",
+    "docs/superpowers/specs/2026-04-02-return-type-narrowing-g2-design.md"
+  ],
+  "eaf7c267606990fb231d59d0b67b71282e2ac97a": [
+    "docs/superpowers/specs/2026-04-02-return-type-narrowing-g2-design.md"
+  ],
+  "cae7ed90f615c9885169c9e18c43fa8b87f46f31": [
+    "docs/superpowers/specs/2026-04-01-generic-type-params-g1-design.md"
+  ],
+  "b306c595d8379774aa2b08ccbe54b9f22525f4f3": [
+    "docs/gap-analysis.md"
+  ],
+  "4cc9d303b15c0635c865ade061e7db50137c5316": [
+    "docs/examples/rule-interfaces-example-proposal.md",
+    "docs/gap-analysis.md"
+  ],
+  "4df55419d736a4cad6cb568933827e2ea3b57fb6": [
+    "OVERVIEW.md",
+    "permuplate-core/src/main/java/io/quarkiverse/permuplate/core/PermuteConfig.java",
+    "permuplate-core/src/main/java/io/quarkiverse/permuplate/core/PermuteDeclrTransformer.java",
+    "permuplate-maven-plugin/src/main/java/io/quarkiverse/permuplate/maven/PermuteMojo.java",
+    "permuplate-processor/src/main/java/io/quarkiverse/permuplate/processor/PermuteProcessor.java"
+  ],
+  "a496f80a42af33be1000e78b494df4e2aa18674f": [
+    "CLAUDE.md",
+    "README.md",
+    "permuplate-ide-support/src/main/java/io/quarkiverse/permuplate/ide/AnnotationStringAlgorithm.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/PrefixValidationTest.java"
+  ],
+  "4a181f96bae95ebdda86ceff323d67b99a5b06f5": [
+    "CLAUDE.md",
+    "OVERVIEW.md"
+  ],
+  "391a2e0675552cf17454cdc26abcfbbc13adf011": [
+    ".superpowers/brainstorm/62687-1775054627/state/server-info",
+    ".superpowers/brainstorm/62687-1775054627/state/server-stopped",
+    ".superpowers/brainstorm/62687-1775054627/state/server.log",
+    "permuplate-processor/pom.xml",
+    "permuplate-processor/src/main/java/io/quarkiverse/permuplate/processor/PermuteProcessor.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/DegenerateInputTest.java"
+  ],
+  "ceb8addfa61edbd3cf5596dc980f50e7c963a0da": [
+    "permuplate-annotations/src/main/java/io/quarkiverse/permuplate/PermuteParam.java",
+    "permuplate-apt-examples/pom.xml",
+    "permuplate-core/pom.xml",
+    "permuplate-core/src/main/java/io/quarkiverse/permuplate/core/PermuteDeclrTransformer.java",
+    "permuplate-core/src/main/java/io/quarkiverse/permuplate/core/PermuteParamTransformer.java",
+    "permuplate-processor/src/main/java/io/quarkiverse/permuplate/processor/PermuteProcessor.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/OrphanVariableTest.java"
+  ],
+  "112f0ffcd8b336c36bffbe3b5620bf0f5920c654": [
+    "permuplate-processor/src/main/java/io/quarkiverse/permuplate/processor/PermuteProcessor.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/DegenerateInputTest.java"
+  ],
+  "7c194a6bfaa508708ce1a25e10e7871be1581e05": [
+    "permuplate-ide-support/src/main/java/io/quarkiverse/permuplate/ide/AnnotationStringAlgorithm.java",
+    "permuplate-ide-support/src/test/java/io/quarkiverse/permuplate/ide/AnnotationStringAlgorithmTest.java"
+  ],
+  "b1cfee176a5ed8f43c4b0b501476d59223c557cc": [
+    "permuplate-ide-support/src/main/java/io/quarkiverse/permuplate/ide/AnnotationStringAlgorithm.java",
+    "permuplate-ide-support/src/test/java/io/quarkiverse/permuplate/ide/AnnotationStringAlgorithmTest.java"
+  ],
+  "47b8a7b1133996271e9f22bd4550adc122136915": [
+    "permuplate-ide-support/src/main/java/io/quarkiverse/permuplate/ide/AnnotationStringAlgorithm.java",
+    "permuplate-ide-support/src/test/java/io/quarkiverse/permuplate/ide/AnnotationStringAlgorithmTest.java"
+  ],
+  "da75996da6ea2c0dadf1c64c8feeafa500800e5d": [
+    "permuplate-ide-support/src/main/java/io/quarkiverse/permuplate/ide/AnnotationStringAlgorithm.java",
+    "permuplate-ide-support/src/test/java/io/quarkiverse/permuplate/ide/AnnotationStringAlgorithmTest.java"
+  ],
+  "0ebe302b272e8f7c951a3319840a1582e838939d": [
+    "permuplate-ide-support/src/main/java/io/quarkiverse/permuplate/ide/AnnotationStringAlgorithm.java",
+    "permuplate-ide-support/src/test/java/io/quarkiverse/permuplate/ide/AnnotationStringAlgorithmTest.java"
+  ],
+  "3ed8a1f83f42bbb954b499794f21e6cb3fdaaf1e": [
+    "permuplate-ide-support/src/main/java/io/quarkiverse/permuplate/ide/AnnotationStringPart.java",
+    "permuplate-ide-support/src/main/java/io/quarkiverse/permuplate/ide/AnnotationStringTemplate.java",
+    "permuplate-ide-support/src/main/java/io/quarkiverse/permuplate/ide/RenameResult.java",
+    "permuplate-ide-support/src/main/java/io/quarkiverse/permuplate/ide/ValidationError.java"
+  ],
+  "f81ed514532b3b9ec721bb598d94388920ba9b67": [
+    "permuplate-ide-support/pom.xml",
+    "pom.xml"
+  ],
+  "c2249e723edb3be6f346fc7cf6f8df6f33f78cd9": [
+    "docs/superpowers/plans/2026-04-01-ide-plugins-phase1.md"
+  ],
+  "5729f5cbc6db8293b6911cdae8520a057ede42ae": [
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/PrefixValidationTest.java"
+  ],
+  "1f5c8cbd6948acff0f738cfadc8ef721d8effaeb": [
+    "docs/superpowers/specs/2026-04-01-ide-plugins-design.md"
+  ],
+  "1142f92f199b2032d7a44845c1c45b264367d5c6": [
+    "docs/superpowers/specs/2026-04-01-ide-plugins-design.md"
+  ],
+  "35df67817a43ed09e987a80a748da956e32b85ab": [
+    "docs/superpowers/specs/2026-04-01-ide-plugins-design.md"
+  ],
+  "420b4349229c58ad976297f2ee4e61445f46e750": [
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/PrefixValidationTest.java"
+  ],
+  "a19c1656f813dd2665b93b4cdf9b26f6c1fc4538": [
+    "docs/superpowers/specs/2026-04-01-ide-plugins-design.md"
+  ],
+  "279c99da668201b29533c62545b77ca39b0146e1": [
+    ".superpowers/brainstorm/62687-1775054627/content/plugin-mockups.html",
+    ".superpowers/brainstorm/62687-1775054627/content/waiting.html",
+    ".superpowers/brainstorm/62687-1775054627/state/server-info",
+    ".superpowers/brainstorm/62687-1775054627/state/server.log",
+    ".superpowers/brainstorm/62687-1775054627/state/server.pid",
+    "docs/superpowers/specs/2026-04-01-ide-plugins-design.md"
+  ],
+  "8dce6277212ca4e84c0206b9a66e3aab4dfd197b": [
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/AptInlineGuardTest.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/DegenerateInputTest.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/PrefixValidationTest.java"
+  ],
+  "dd7ca49fe5c5e5306f281972d22c9a026bc48970": [
+    "CLAUDE.md",
+    "OVERVIEW.md",
+    "README.md"
+  ],
+  "4dcbdfec9b59fd3fdda8cffca517569528651d00": [
+    "permuplate-tests/pom.xml",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/InlineGenerationTest.java",
+    "pom.xml"
+  ],
+  "2bb529221caafe0dbccbcbfab63847c82a5e19b4": [
+    "permuplate-apt-examples/pom.xml",
+    "permuplate-apt-examples/src/main/java/io/quarkiverse/permuplate/example/AuditRecord2.java",
+    "permuplate-apt-examples/src/main/java/io/quarkiverse/permuplate/example/BiCallable1x1.java",
+    "permuplate-apt-examples/src/main/java/io/quarkiverse/permuplate/example/Callable1.java",
+    "permuplate-apt-examples/src/main/java/io/quarkiverse/permuplate/example/ProductFilter2.java",
+    "permuplate-apt-examples/src/main/java/io/quarkiverse/permuplate/example/ValidationSuite.java",
+    "permuplate-example/pom.xml",
+    "permuplate-example/src/main/java/io/quarkiverse/permuplate/example/AuditRecord2.java",
+    "permuplate-example/src/main/java/io/quarkiverse/permuplate/example/BiCallable1x1.java",
+    "permuplate-example/src/main/java/io/quarkiverse/permuplate/example/Callable1.java",
+    "permuplate-example/src/main/java/io/quarkiverse/permuplate/example/ProductFilter2.java",
+    "permuplate-example/src/main/java/io/quarkiverse/permuplate/example/ValidationSuite.java",
+    "permuplate-maven-plugin/src/main/java/io/quarkiverse/permuplate/maven/InlineGenerator.java",
+    "permuplate-mvn-examples/pom.xml",
+    "permuplate-mvn-examples/src/main/java/io/quarkiverse/permuplate/example/Callable1.java",
+    "permuplate-mvn-examples/src/main/permuplate/io/quarkiverse/permuplate/example/Handlers.java",
+    "pom.xml"
+  ],
+  "5349d60f5d6533d6c97e761052d7e77563eb901f": [
+    "permuplate-maven-plugin/src/main/java/io/quarkiverse/permuplate/maven/PermuteMojo.java"
+  ],
+  "52c215cb14b9042a4853abc3ce3acc5354733110": [
+    "permuplate-core/src/main/java/io/quarkiverse/permuplate/core/PermuteDeclrTransformer.java",
+    "permuplate-maven-plugin/pom.xml",
+    "permuplate-maven-plugin/src/main/java/io/quarkiverse/permuplate/maven/AnnotationReader.java",
+    "permuplate-maven-plugin/src/main/java/io/quarkiverse/permuplate/maven/InlineGenerator.java",
+    "permuplate-maven-plugin/src/main/java/io/quarkiverse/permuplate/maven/PermuteMojo.java",
+    "permuplate-maven-plugin/src/main/java/io/quarkiverse/permuplate/maven/SourceScanner.java",
+    "pom.xml"
+  ],
+  "292e960f58dc93ebbc27253193abeb8008034313": [
+    "permuplate-processor/src/main/java/io/quarkiverse/permuplate/processor/EvaluationContext.java",
+    "permuplate-processor/src/main/java/io/quarkiverse/permuplate/processor/PermuteDeclrTransformer.java",
+    "permuplate-processor/src/main/java/io/quarkiverse/permuplate/processor/PermuteParamTransformer.java"
+  ],
+  "c426458f02582253ab72440b19a499ac4a19da24": [
+    "permuplate-processor/pom.xml",
+    "permuplate-processor/src/main/java/io/quarkiverse/permuplate/processor/PermuteProcessor.java"
+  ],
+  "a888b09ecf6d9c8bbd884f7cfc3f1a0d6090d069": [
+    "permuplate-core/pom.xml",
+    "permuplate-core/src/main/java/io/quarkiverse/permuplate/core/EvaluationContext.java",
+    "permuplate-core/src/main/java/io/quarkiverse/permuplate/core/PermuteConfig.java",
+    "permuplate-core/src/main/java/io/quarkiverse/permuplate/core/PermuteDeclrTransformer.java",
+    "permuplate-core/src/main/java/io/quarkiverse/permuplate/core/PermuteParamTransformer.java",
+    "permuplate-core/src/main/java/io/quarkiverse/permuplate/core/PermuteVarConfig.java",
+    "pom.xml"
+  ],
+  "38021682139a5b6eea91fb1f6646e130ea938d2b": [
+    "permuplate-processor/src/main/java/io/quarkiverse/permuplate/processor/PermuteProcessor.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/DegenerateInputTest.java"
+  ],
+  "0d11070e9b1c557fe11e02ca9dd3d51b308090c7": [
+    "permuplate-annotations/src/main/java/io/quarkiverse/permuplate/Permute.java"
+  ],
+  "aa44dee613a1b2440e3542a1fa5d9a43f9533065": [
+    "docs/superpowers/plans/2026-04-01-inline-generation.md"
+  ],
+  "4f4e4417ab70adfa64045c2d72de434d40a10245": [
+    "docs/superpowers/specs/2026-04-01-inline-generation-design.md"
+  ],
+  "12c05228860f4be0d24cb003e78e17f3b98dcb33": [
+    ".gitignore",
+    "CLAUDE.md",
+    "OVERVIEW.md",
+    "README.md",
+    "permuplate-annotations/pom.xml",
+    "permuplate-annotations/src/main/java/io/quarkiverse/permuplate/Permute.java",
+    "permuplate-annotations/src/main/java/io/quarkiverse/permuplate/PermuteDeclr.java",
+    "permuplate-annotations/src/main/java/io/quarkiverse/permuplate/PermuteParam.java",
+    "permuplate-annotations/src/main/java/io/quarkiverse/permuplate/PermuteVar.java",
+    "permuplate-example/pom.xml",
+    "permuplate-example/src/main/java/io/quarkiverse/permuplate/example/AuditRecord2.java",
+    "permuplate-example/src/main/java/io/quarkiverse/permuplate/example/BiCallable1x1.java",
+    "permuplate-example/src/main/java/io/quarkiverse/permuplate/example/Callable1.java",
+    "permuplate-example/src/main/java/io/quarkiverse/permuplate/example/ProductFilter2.java",
+    "permuplate-example/src/main/java/io/quarkiverse/permuplate/example/ValidationSuite.java",
+    "permuplate-processor/pom.xml",
+    "permuplate-processor/src/main/java/io/quarkiverse/permuplate/processor/EvaluationContext.java",
+    "permuplate-processor/src/main/java/io/quarkiverse/permuplate/processor/PermuteDeclrTransformer.java",
+    "permuplate-processor/src/main/java/io/quarkiverse/permuplate/processor/PermuteParamTransformer.java",
+    "permuplate-processor/src/main/java/io/quarkiverse/permuplate/processor/PermuteProcessor.java",
+    "permuplate-processor/src/main/resources/META-INF/services/javax.annotation.processing.Processor",
+    "permuplate-tests/pom.xml",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/DegenerateInputTest.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/DogFoodingTest.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/ExampleTest.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/PermuteDeclrTest.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/PermuteParamTest.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/PermuteTest.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/ProcessorTestSupport.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/example/AuditRecord2.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/example/BiCallable1x1.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/example/Callable1.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/example/Callable2.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/example/Combo1x1.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/example/ContextJoin2.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/example/CtorDeclr2.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/example/DualForEach2.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/example/DualParam2.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/example/FieldDeclr2.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/example/ForEachDeclr2.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/example/InterfaceLibrary.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/example/Join2.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/example/JoinLibrary.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/example/MultiArityJoin.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/example/MultiFixed2.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/example/PrefixedJoin2.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/example/ProductFilter2.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/example/RichJoin2.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/example/TwoFieldDeclr2.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/example/TwoMethodParam2.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/example/ValidationSuite.java",
+    "permuplate-tests/src/test/java/io/quarkiverse/permuplate/example/WideJoin2.java",
+    "pom.xml"
+  ],
+  "9e1aab36f96f56076c19931784c03093e94dfa17": [
+    "docs/superpowers/plans/2026-04-01-multiple-permutation-variables.md"
+  ],
+  "c0e55c8c70b954fb63d17d6c74238876b64e13c9": []
+}

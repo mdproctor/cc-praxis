@@ -338,13 +338,13 @@ Commits:
 
 #### Issue #13: "Add java-code-review skill" [enhancement]
 Commits:
-- `ghi9012` 2024-02-01 — Add java-code-review skill
+- `cafe012` 2024-02-01 — Add java-code-review skill
 
 ## Excluded Commits
 
 | Hash | Date | Message | Reason |
 |------|------|---------|--------|
-| `jkl3456` | 2024-02-10 | fix typo | Typo fix |
+| `beef456` | 2024-02-10 | fix typo | Typo fix |
 EOF
 
 python3 retro-issues/scripts/retro-parse-mapping.py /tmp/test_retro.md
@@ -355,7 +355,7 @@ Expected output:
 {
   "abc1234": "Refs #12",
   "def5678": "Closes #12",
-  "ghi9012": "Closes #13"
+  "cafe012": "Closes #13"
 }
 ```
 
@@ -699,7 +699,7 @@ Commits to be amended:
 
   abc1234  2024-01-15  "Add java-dev skill"    → + Refs #12
   def5678  2024-01-18  "Add java-dev tests"    → + Closes #12
-  ghi9012  2024-02-01  "Add code-review skill" → + Closes #13
+  cafe012  2024-02-01  "Add code-review skill" → + Closes #13
 
 {N} commits will be amended. {M} excluded commits untouched.
 
@@ -1178,19 +1178,19 @@ Commits:
 
 #### Issue #13: "Add java-code-review skill" [enhancement]
 Commits:
-- `ghi9012` 2024-02-01 — Add java-code-review skill
+- `cafe012` 2024-02-01 — Add java-code-review skill
 
 ## Standalone Issues
 
 ### Issue #20: "Bump junit to 4.13.1" [enhancement]
 Commits:
-- `jkl3456` 2024-03-01 — Bump junit from 4.11 to 4.13.1
+- `beef456` 2024-03-01 — Bump junit from 4.11 to 4.13.1
 
 ## Excluded Commits
 
 | Hash | Date | Message | Reason |
 |------|------|---------|--------|
-| `mno7890` | 2024-03-10 | fix typo | Typo fix |
+| `dead890` | 2024-03-10 | fix typo | Typo fix |
 ```
 
 `tests/fixtures/retro/parser/tbd_placeholders.md`:
@@ -1258,17 +1258,17 @@ def test_basic_two_issue_epic():
     assert mapping["abc1234"] == "Refs #12"
     assert mapping["def5678"] == "Closes #12"
     # Issue #13: one commit — Closes
-    assert mapping["ghi9012"] == "Closes #13"
+    assert mapping["cafe012"] == "Closes #13"
 
 
 def test_standalone_issue():
     mapping = run_parser("basic.md")
-    assert mapping["jkl3456"] == "Closes #20"
+    assert mapping["beef456"] == "Closes #20"
 
 
 def test_excluded_commits_not_in_mapping():
     mapping = run_parser("basic.md")
-    assert "mno7890" not in mapping
+    assert "dead890" not in mapping
 
 
 def test_tbd_placeholders_skipped():
@@ -1288,7 +1288,7 @@ def test_all_excluded_no_mapping():
 def test_single_commit_issue_gets_closes():
     """Single-commit issues always get Closes, not Refs."""
     mapping = run_parser("basic.md")
-    assert mapping["ghi9012"] == "Closes #13"
+    assert mapping["cafe012"] == "Closes #13"
 
 
 def test_nonexistent_file_exits_1():

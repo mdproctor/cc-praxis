@@ -1,0 +1,52 @@
+{"hash": "cce8159e54a2ed464f842bb1e9e2fda56011f9b1", "date": "2026-04-06", "subject": "remove validate_garden.py \u2014 now bundled with the garden skill at ~/.claude/skills/garden/scripts/"}
+{"hash": "ffdff6290982ccb93c4845c0ad74eb0856de8b77", "date": "2026-04-06", "subject": "feat(validator): check each GE-ID appears in By Technology section, not just anywhere in GARDEN.md"}
+{"hash": "d10e143fafd2e57ac77cb1453f2fc62d31b1d2b6", "date": "2026-04-06", "subject": "submit(starcraft): 4 gotchas \u2014 Maven .dat files not in JAR, quarkus:dev silent skip, CDI profile unsatisfied dependency, Maven aggregator packaging"}
+{"hash": "7e8bc867e21337cf0a997581dae43065fed6071b", "date": "2026-04-06", "subject": "fix(garden): add GE-0009 and GE-0018 to By Technology section \u2014 defensive programming entries were missing"}
+{"hash": "905b1cde57a2d865179ec13e00d4000cce855ac2", "date": "2026-04-06", "subject": "merge: integrate 40 submissions \u2014 GE-0001 through GE-0040"}
+{"hash": "b941343b645a4e7dcc79e7b6a6d6759976243051", "date": "2026-04-06", "subject": "submit(cccli): Panama FFM PTY SIGTRAP crash, waitpid signal verification, surefire reuseForks"}
+{"hash": "58572f66905ef58efaa0a0c233800d536d569e2f", "date": "2026-04-06", "subject": "submit(remotecc): GE-0037 'Inject Supplier<Instant> to test time-dependent logic without sleeping'"}
+{"hash": "3769bf31ea6056af55a08b1c9b61426775e5e179", "date": "2026-04-06", "subject": "submit(remotecc): GE-0036 '@ApplicationScoped bean state bleeds across @QuarkusTest classes'"}
+{"hash": "d8efd54d80a421e077ad2016de028c9d2acef3fb", "date": "2026-04-06", "subject": "submit(cc-praxis): GE-0034 sparse pair log for O(N\u00b2) dedup, GE-0035 drift-based sweep trigger"}
+{"hash": "d1c3c0295d1f128e35cff7f065f78c6ce3f272b5", "date": "2026-04-06", "subject": "fix(submissions): retroactively assign GE-0001 through GE-0033 to pre-ID submissions"}
+{"hash": "e3fbd892b7d70dc4173bce2199f72079eee938c2", "date": "2026-04-06", "subject": "feat: add DISCARDED.md, validation script, test scenarios"}
+{"hash": "717e0124af2fb693d68091c26b9e0cc0cf908661", "date": "2026-04-06", "subject": "feat(approaches): add varargs type-capture for nested generic DSL APIs"}
+{"hash": "7e87742052d34189432db6ade00bda4341a6fcdb", "date": "2026-04-06", "subject": "fix: initialize GARDEN.md metadata, create CHECKED.md, fix incomplete fix section"}
+{"hash": "942da74870fe191cbe11514b6ec065b63555006d", "date": "2026-04-06", "subject": "submit(sparge): html.parser no body wrapper gotcha \u2014 .body.next breaks on fragment parsing"}
+{"hash": "90aad00fa489179b03e7ff7e5879c633fb8826b6", "date": "2026-04-06", "subject": "fix(submissions): add Garden Scores to April 5 batch \u2014 predated scoring system"}
+{"hash": "ef3e244ed11cad05ce04c7b0daa383f332258c30", "date": "2026-04-06", "subject": "submit(sparge): 3 entries \u2014 enriched path resolution gotcha, browser cache gotcha, layered encoding test technique"}
+{"hash": "1ae8c9fc2181a645779e5a6b474c7911b5f5fedf", "date": "2026-04-06", "subject": "feat(quarkus): add 'Authenticator.publicKeyAlgorithm has no getter/setter \u2014 cannot be persisted in WebAuthnUserProvider'"}
+{"hash": "91866b486d85cdb626de7cfdfdc776c345510461", "date": "2026-04-06", "subject": "feat(drools): add 'extendsRule() is authoring-time deduplication \u2014 not a runtime inheritance mechanism'"}
+{"hash": "25cd92c06f1750cbab07afdec23dca299eaff56b", "date": "2026-04-06", "subject": "feat(tools/tmux): add 'TUI apps garble on WebSocket connect \u2014 tmux pane dimensions not synced to browser viewport'"}
+{"hash": "9cccc60be12362b6e886faf1a0c5c1ff7ea72ab5", "date": "2026-04-06", "subject": "submit(starcraft): 6 ocraft entries \u2014 5 gotchas (UnitInPool wrapper, coordinator terminal method, debug() onStep restriction, no precise resource setter, Units enum underscore naming), 1 technique (debug command queue pattern)"}
+{"hash": "3edd344d0e7439abc0f2413ffbaf05ef01fc57ce", "date": "2026-04-06", "subject": "submit(starcraft): 7 entries \u2014 3 gotchas (Quarkus @Scheduled concurrency, volatile torn snapshot, records List mutability), 3 techniques (mock-as-living-spec, @UnlessBuildProfile, dual-runner scenarios), 1 undocumented (quarkus packaging element)"}
+{"hash": "dcfb0f25499d884dd923ebcad003f9b70e11f943", "date": "2026-04-06", "subject": "submit(sparge): typora-root-url front matter for Jekyll/Typora image path compatibility"}
+{"hash": "fa256a3dc70c5b7ed1c04b1cbc9e541b6e32966d", "date": "2026-04-06", "subject": "submit(sparge): Playwright headless screenshots for blog illustrations"}
+{"hash": "a91c86a086e8b015a18d7aecb565707886fc1e4c", "date": "2026-04-06", "subject": "submit(remotecc): revise 'TUI garbling on terminal history replay' \u2014 permanent fix via SIGWINCH"}
+{"hash": "59c40b76982ba3d9b85efeea48603e3445bfbe30", "date": "2026-04-06", "subject": "submit(cccli): 'Inject mandatory instructions into existing session to override ignored guidelines'"}
+{"hash": "05168a65ccc7c77dffa05e4919a020c9dc70f2a6", "date": "2026-04-06", "subject": "submit(cc-praxis): three entries from session sweep"}
+{"hash": "81b31833d339893b2aeaa2c3098268c60ded306a", "date": "2026-04-05", "subject": "submit(cross-project): three techniques from Permuplate blog session"}
+{"hash": "903179fa71d4d2a2622a91486072f57e38049aff", "date": "2026-04-05", "subject": "submit(sparge): BeautifulSoup lxml double-encoding gotcha + corruption signature check technique"}
+{"hash": "748e1f76417d970906b9e5b426cb2935ab84d5c7", "date": "2026-04-05", "subject": "fix: add retrospective version numbers to all 3rd party library entries"}
+{"hash": "1fede72ea675a51f8f298b5e1a52673deedcead7", "date": "2026-04-05", "subject": "fix: add missing file headers, remove tag index duplicates"}
+{"hash": "3e563b91604fc2528a4acd3b2719a206cde02854", "date": "2026-04-05", "subject": "fix: garden coherence review \u2014 structure, duplicates, missing entries, format consistency"}
+{"hash": "4aefa5688d9ef9023538cd73a5bc651178b0ef3f", "date": "2026-04-05", "subject": "refactor: add labels to all technique entries, restructure By Label index, fix Tag Index and outdated code"}
+{"hash": "6b3bc8137d1c8e9cf7b6ca5e1d66e64172f00578", "date": "2026-04-05", "subject": "feat(macos-native-appkit): add 'PTY master reads every line twice \u2014 ECHO flag'"}
+{"hash": "fcae56f6effef5492ff1a5ee187b4fd5b7f79721", "date": "2026-04-05", "subject": "submit(permuplate, java): 3 entries from 2026-04-05 session"}
+{"hash": "d1edd7265af1bb322c5551753818b8ddb2c92ea8", "date": "2026-04-05", "subject": "submit(claude-code): settings.json rejects unknown top-level fields despite additionalProperties schema"}
+{"hash": "a50883f51c393f48262110a03bb8fe599e031cd8", "date": "2026-04-05", "subject": "fix: --mcp-config requires mcpServers wrapper, not top-level server names"}
+{"hash": "745c60fe7e633751804227480837d0910202532b", "date": "2026-04-05", "subject": "merge(remotecc): claude CLI keychain auth \u2014 ANTHROPIC_API_KEY not required on dev machines"}
+{"hash": "5df5d102f54af369e0ef9e0ae08c4501a45e7cdb", "date": "2026-04-05", "subject": "submit(remotecc): 'claude CLI subprocess uses keychain OAuth \u2014 ANTHROPIC_API_KEY not required'"}
+{"hash": "f0a9b4787f41642344102b4e8d0b829b6648b85a", "date": "2026-04-05", "subject": "merge: clean up garden structure \u2014 integrate 8 submissions, consolidate approaches/"}
+{"hash": "cf0a7b50137eff3b5b69134e920bf53bfa9cbfc0", "date": "2026-04-05", "subject": "fix(remotecc): correct --mcp-config format \u2014 mcpServers wrapper IS required"}
+{"hash": "035e9ce541f6949c7f68e793a58b223e93ab6658", "date": "2026-04-05", "subject": "feat(apache-jexl, java): add JEXL3 string interpolation and Java lambda wildcard gotchas"}
+{"hash": "12ddab21e7d6a1a1039b5608ff2c4142c90fdd1c", "date": "2026-04-05", "subject": "submit(remotecc): 3 entries from e2e testing hardening session"}
+{"hash": "0b3099b0f664ed074267e57144c99bcc5ccb9a26", "date": "2026-04-05", "subject": "feat(java-panama-ffm): add hand-written MethodHandle class needs run-time init + MissingForeignRegistrationError diagnosis"}
+{"hash": "e4871cd752229e44ac362ab4475d6ca9b27ab3e9", "date": "2026-04-05", "subject": "submit(cc-praxis): 5 entries \u2014 3 Playwright gotchas + 2 techniques"}
+{"hash": "0534810e1ac0fbbbfea8ed13437f11928532c682", "date": "2026-04-04", "subject": "feat(approaches): add novel approaches section \u2014 LLM tool testing and tmux streaming"}
+{"hash": "0f8933b0f4283aa517b1244c63c6a3a9464a4108", "date": "2026-04-04", "subject": "docs: rewrite README with structure, intent, and token-efficient usage patterns"}
+{"hash": "159e3952be31f5ad4d29351cd655d6be2be893e1", "date": "2026-04-04", "subject": "feat(quarkus,tmux): import 5 entries from RemoteCC session"}
+{"hash": "aad827270d5a8b2310f5c2f08b3912f5efc45c18", "date": "2026-04-04", "subject": "feat: add submissions/ directory for the submission-based contribution model"}
+{"hash": "9af60637815017f2ff30cbbf9be3d66dbcb5535f", "date": "2026-04-04", "subject": "docs: add GARDEN.md dual index (by technology + by symptom type)"}
+{"hash": "157108bb1473638b975d54fadc6db08e09e4f7ab", "date": "2026-04-04", "subject": "revert(permuplate): move handoff docs back to permuplate project \u2014 project-specific, not reusable"}
+{"hash": "3f4e47f26e4947433bbbf3513fb5e6f242f7a9cb", "date": "2026-04-04", "subject": "feat(permuplate): session handoff, gotchas, and test plan \u2014 2026-04-04"}
+{"hash": "19605a3ad24415608a80f409582c4e96af0d956e", "date": "2026-04-04", "subject": "feat: initial knowledge garden \u2014 AppKit+Panama FFM gotchas, skill spec"}

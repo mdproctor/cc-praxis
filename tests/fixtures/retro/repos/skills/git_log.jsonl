@@ -1,0 +1,278 @@
+{"hash": "9fe442d9a44e0be991347e4fcc7b8147afafb9e0", "date": "2026-04-06", "subject": "docs(plans): add retro-issues implementation plan"}
+{"hash": "ea2fb91ab1eb2a90701829ff81e5cefe5f08c59d", "date": "2026-04-06", "subject": "feat(issue-workflow): add epic planning and proactive issue creation"}
+{"hash": "07d9269ff65b734b7195b72bfdf72f4a023ece51", "date": "2026-04-06", "subject": "feat(garden): bundle validate_garden.py with skill; update SKILL.md reference"}
+{"hash": "8cd9158b2a48f1c9a99918859d74aba02b629b10", "date": "2026-04-06", "subject": "feat(garden): add validator run to MERGE success criteria"}
+{"hash": "9881f5c293232b88a7c1498601e1e84016840ff4", "date": "2026-04-06", "subject": "docs: session handover 2026-04-06"}
+{"hash": "b1c929ab1ae8b33d50e75179d7c7660894dbff03", "date": "2026-04-06", "subject": "docs: add project blog entry 2026-04-06-03-garden-remembers-itself"}
+{"hash": "1db993daa50876416b6f3a2bbbc25d8bf48a73f2", "date": "2026-04-06", "subject": "docs: add design snapshot 2026-04-06-writing-infrastructure-and-garden"}
+{"hash": "0631f68e8a1c88c7dde3f40cd9a66decb719ee91", "date": "2026-04-06", "subject": "docs(CLAUDE.md): document /sync-local slash command and defaults/ skill pattern"}
+{"hash": "ad4897312a1dfb6c9e7ec2795564c8879998b3a5", "date": "2026-04-06", "subject": "feat(garden): IDs at submission time, three-tier dedup, DISCARDED.md"}
+{"hash": "5fafb7db10e3d1672741d865a158f1b0447818c9", "date": "2026-04-06", "subject": "fix(garden): mandatory 'What was tried' heading in gotcha template"}
+{"hash": "1c0bc6185895e3532eec2a521aa2dd025c5fcdfb", "date": "2026-04-06", "subject": "feat(garden): add GE-IDs, DEDUPE workflow, drift algorithm, CHECKED.md"}
+{"hash": "918ae17b5bab4be5615297e3363aa2f6e9384f17", "date": "2026-04-06", "subject": "feat(write-blog): add image guidance \u2014 screenshots, generated, web search, index"}
+{"hash": "33730686376d6992e74e0cb710628ed336c1a711", "date": "2026-04-06", "subject": "docs: log idea \u2014 periodically evolve personal writing style guide"}
+{"hash": "155f86fdaf1753c245475dd844f9e5ea017c2da2", "date": "2026-04-06", "subject": "docs: add project blog entry 2026-04-06-02-writing-rules-get-teeth"}
+{"hash": "23900192c4659b3d024bccf812bca41edf053260", "date": "2026-04-06", "subject": "fix(write-blog): move CLAUDE.md style guide check to Step 0c \u2014 gate not offer"}
+{"hash": "26681f54c04719fca52e6dd447274227d3d77cc8", "date": "2026-04-06", "subject": "refactor: rename blog entries to YYYY-MM-DD-NN-title.md convention"}
+{"hash": "00efa7375012afb34fc445378f20c03026828de6", "date": "2026-04-06", "subject": "feat(write-blog): always use two-digit sequence number in filenames"}
+{"hash": "0cee62d2ae503c53ac7060be16b74b7be3ac850c", "date": "2026-04-06", "subject": "fix(write-blog): address systematic review findings"}
+{"hash": "9c2a5cc43327447aff69d3676209a2e2c0fc0b14", "date": "2026-04-06", "subject": "feat(write-blog): four-layer writing architecture"}
+{"hash": "4caced9a90dafc32e22bac69f16dad0af4e43e62", "date": "2026-04-06", "subject": "fix(write-blog): note series exception to no-Next: rule"}
+{"hash": "1bfb51f99530938f37b222c40190dac02a5fd293", "date": "2026-04-06", "subject": "feat(garden): add REVISE workflow for enriching existing entries"}
+{"hash": "f1ba7c329ea1c132aed2e9a024ff5ccc6a84629b", "date": "2026-04-06", "subject": "feat(write-blog): chain to update-claude-md on first blog entry"}
+{"hash": "88cc7f69d7f3d95c5ee62660f1e4a999d41d74b9", "date": "2026-04-06", "subject": "feat: propagate writing style guide requirement to all CLAUDE.md files"}
+{"hash": "2769c79c75e304a8108f87639e56f8a6200bc4c1", "date": "2026-04-06", "subject": "feat: enforce style guide as hard gate in write-blog and CLAUDE.md"}
+{"hash": "e50dd469edccda57987a0679152c0df462cb60d2", "date": "2026-04-06", "subject": "docs: add project blog entry 2026-04-06-writing-about-itself"}
+{"hash": "660088ddafbb63f2da45f6df61f39c5ca17e7229", "date": "2026-04-06", "subject": "fix(garden): compute and show score at SWEEP proposal time, not after confirmation"}
+{"hash": "1dec5aa0eafdff3277e37789dac12d7d8438c628", "date": "2026-04-05", "subject": "feat(garden): add scoring system to submission and merge workflow"}
+{"hash": "871633c37a17036decc057c0f2f8f82ca61585e6", "date": "2026-04-05", "subject": "feat: add sync-local dev skill and document dev-only skill pattern"}
+{"hash": "6f63234cb47a857c1294a70cee17dd52f62aa39e", "date": "2026-04-05", "subject": "feat(write-blog): add RETROSPECTIVE decision flowchart"}
+{"hash": "8e94d85c58cb577aef3ac63ccf21282c24896c92", "date": "2026-04-05", "subject": "fix(write-blog): resolve 9 consistency issues from systematic review"}
+{"hash": "773184b55badbd6ce7a3e6d6d8fd07f358078706", "date": "2026-04-05", "subject": "fix(write-blog): replace vague Next: pitfall with don't use Next: at all"}
+{"hash": "3e8a33e6f385d6739df4bdd39ff6aedc4eea2e77", "date": "2026-04-05", "subject": "feat(write-blog): align heading guidance with style guide"}
+{"hash": "268eeb0894eb48165500b8024624dc5eb44cc349", "date": "2026-04-05", "subject": "fix(session-handoff): correct wrap checklist order \u2014 garden\u2192claude-md\u2192snapshot\u2192blog"}
+{"hash": "fcccce13789655ecfbb219725870e83c8df24bec", "date": "2026-04-05", "subject": "feat(session-handoff): add session wrap checklist before handover"}
+{"hash": "266c2b9073abf3b32832dc06bf1f910d2e00a953", "date": "2026-04-05", "subject": "feat(garden): version policy \u2014 required for 3rd party libs, omit for own pre-1.0 projects"}
+{"hash": "15f0e8caab48f2a841df046d0c1c38488f21e5eb", "date": "2026-04-05", "subject": "feat: write-blog command is intent-driven \u2014 blank=retrospective, context=single entry"}
+{"hash": "fe0a2e6b9b72bff33864a2756210b7bc8bf38cc8", "date": "2026-04-05", "subject": "fix: update write-blog command \u2014 fix stale skill name and add RETROSPECTIVE trigger"}
+{"hash": "514ec1b1105441291e7b5fc9a774e9edd8e9e5fa", "date": "2026-04-05", "subject": "feat: write-blog RETROSPECTIVE mode \u2014 blog all work to date"}
+{"hash": "be8d6a12b4e4bd58ffbeae50a776ecda85c66395", "date": "2026-04-05", "subject": "feat(garden): improve MERGE guidance, file header rules, label compliance, three-axis index"}
+{"hash": "1db6286a1ce5dafcc1e493cc09044e4e5a0a3365", "date": "2026-04-05", "subject": "refactor(garden): technique covers approaches; labels for cross-cutting; remove approaches/ dir"}
+{"hash": "c4046e7ac095bc043239ba3e936b43d7dd3804bf", "date": "2026-04-05", "subject": "refactor: revise all 5 blog entries to match writing style guide"}
+{"hash": "67ff53f71279ed935d6a70c92139d79b33a50abb", "date": "2026-04-05", "subject": "feat(garden): add techniques to description trigger, approaches/ directory, and routing"}
+{"hash": "4bcc5b5c9c72fe6f432ced900ac1f0ec62048336", "date": "2026-04-05", "subject": "feat: garden SWEEP operation \u2014 scans session for all 3 entry types"}
+{"hash": "b76184656e30283b07318524d04ee407f2133d35", "date": "2026-04-05", "subject": "fix: garden sweep in session-handoff is done by handoff itself, not by garden"}
+{"hash": "119ea5009167716aa887531c49f4d8d188bdc111", "date": "2026-04-05", "subject": "feat: session-handoff always performs garden sweep before writing handover"}
+{"hash": "a227d82b4b30ab91bedbff4e1bba897ea746b5b8", "date": "2026-04-05", "subject": "feat: garden accepts undocumented entries as third type"}
+{"hash": "2582cf27c83196f9b0f2dc5d74ea25553ba5ee8c", "date": "2026-04-05", "subject": "rename: project-blog \u2192 write-blog, write-blog-post \u2192 publish-blog"}
+{"hash": "1a1842de9ad6d4460852be1d076dded8a1212d95", "date": "2026-04-05", "subject": "fix: project-blog = writing, write-blog-post = publishing"}
+{"hash": "b5ca4dc7cf051e37aa8d81109ac754dd4405e45e", "date": "2026-04-05", "subject": "feat: project-blog loads personal writing style guide before drafting"}
+{"hash": "57b775a125abfe2ef863848b7b6378ce716b6bcd", "date": "2026-04-05", "subject": "fix: project-blog is for publication, not private \u2014 clarify pipeline with write-blog-post"}
+{"hash": "bc20cfdf9f26cb136135da6ca7985f8c93debd6e", "date": "2026-04-04", "subject": "feat: garden accepts techniques alongside gotchas"}
+{"hash": "240bc8825d28838c9280160552d816e0c7f425c9", "date": "2026-04-04", "subject": "refactor: garden \u2014 submission-based contribution model"}
+{"hash": "3e1caf38fb21a6cbb653a91301638cddde3a9207", "date": "2026-04-04", "subject": "rename: knowledge-garden \u2192 garden"}
+{"hash": "e33c93288d3a4bc65573591f59d1dd41c04336c0", "date": "2026-04-04", "subject": "refactor: session-handoff \u2014 delta-first writing + git history as archive"}
+{"hash": "4e13db88cb37681b8839a181872fb17b36674346", "date": "2026-04-04", "subject": "feat: add session-handoff skill + log holistic memory architecture idea"}
+{"hash": "2aefad1cea7f28753636e9c31fa2653d7026fdfd", "date": "2026-04-04", "subject": "docs: expand SKILL-MANAGER.md with 10 additional screenshots and sections"}
+{"hash": "372866458d6e717b2c46ecb9f75aa9ce5aa21413", "date": "2026-04-04", "subject": "docs: replace ASCII art in SKILL-MANAGER.md with real screenshots"}
+{"hash": "93e18fabab6d6f4a5a20c0bab551efadb349fc9e", "date": "2026-04-04", "subject": "docs: add SKILL-MANAGER.md user guide for the web UI"}
+{"hash": "5a11f7fbfa0f80894952aa09c892dd1d3cf57132", "date": "2026-04-04", "subject": "feat: project blog (4 entries) + revised project-blog skill"}
+{"hash": "acef1d7df090739f8d3c95eceae75f6560f2e0e3", "date": "2026-04-04", "subject": "feat: add knowledge-garden skill \u2014 cross-project gotcha library"}
+{"hash": "e2b059d3fc44ffb5a797a110d348971cb04c8e92", "date": "2026-04-04", "subject": "fix: close all consistency gaps found in audit"}
+{"hash": "0077bca21727c750e1261f40bd61ac2137870831", "date": "2026-04-04", "subject": "feat: add project-blog skill \u2014 living R&D diary"}
+{"hash": "a50c1241dc475f8f90d412d939d0de579b5e3ca1", "date": "2026-04-04", "subject": "feat: ergonomics, aesthetics and user flow improvements"}
+{"hash": "69b48e8417fa9648bd4e4206105edfdc196362e0", "date": "2026-04-04", "subject": "test: add coverage for all UX/design review fixes (37 new tests)"}
+{"hash": "b0e6553910a35d238476e4b04ccfcd3391fa3dc2", "date": "2026-04-04", "subject": "fix: UX/design review \u2014 11 improvements to web installer UI"}
+{"hash": "cfc1c736b976562689afe34eab34a13d0df42c0c", "date": "2026-04-04", "subject": "docs: document cc-praxis-ui, web installer, and new test infrastructure"}
+{"hash": "e9c41211871209ac0e698f3552274e0527eeebee", "date": "2026-04-04", "subject": "fix: bundle modal shows actual skill count, not hardcoded total"}
+{"hash": "f977966b6321ddc4e0246c027f2dfdc66bcd171a", "date": "2026-04-04", "subject": "fix: missing bundle buttons + 30 Playwright UI tests"}
+{"hash": "eb49244544c18d4d547e25a5c3d315900b6ea94b", "date": "2026-04-04", "subject": "fix: bundle state UI never updated + add integration tests"}
+{"hash": "83bd53885da3e3847b7c29b8269015d498c7a39c", "date": "2026-04-04", "subject": "fix: install specific skills from web UI"}
+{"hash": "ab2cbfd064b5fc3c47e2de0ba405f146a80d2e55", "date": "2026-04-04", "subject": "feat: add cc-praxis-ui skill and bin/cc-praxis launcher"}
+{"hash": "89054a3da2443dee4ee918ee81057e3c6f12977d", "date": "2026-04-04", "subject": "refactor: wire methodology skills into a cohesive family"}
+{"hash": "48dbc5cc71746b8a3527f032e8a96c4a592ca791", "date": "2026-04-04", "subject": "docs: log idea \u2014 dual-repo model for epic-scoped developer work"}
+{"hash": "d28d0e1f562c44107e3bfd8c2b5c7db1715302e0", "date": "2026-04-04", "subject": "feat: implement web_installer.py with live state and 60 tests"}
+{"hash": "829e26f18b3427f60584002745fe40a2af6532ed", "date": "2026-04-04", "subject": "feat: add idea-log skill for parking undecided ideas"}
+{"hash": "8a74b7a3870f7966e6cd89581a0c623c70a97e46", "date": "2026-04-03", "subject": "feat: add design-snapshot skill"}
+{"hash": "ab6354f2676dcacb3762d6d90a62d78360ed66dd", "date": "2026-04-03", "subject": "feat: generate_web_app_data.py + validate_web_app.py prevent drift"}
+{"hash": "5d07ab7a02b51f81cea85c33141efd92bf4c357a", "date": "2026-04-03", "subject": "docs: systematic Python documentation coverage"}
+{"hash": "62bd5db3f08409a49711941cd009c3e424adbcaa", "date": "2026-04-03", "subject": "feat: add Python skill suite (5 skills)"}
+{"hash": "e05ae368f383e8b5e10f156445a67958b788acc4", "date": "2026-04-03", "subject": "docs: web installer test specification (80 test cases)"}
+{"hash": "4081817d4a780786794ee64f6a1b9a44744a7022", "date": "2026-04-03", "subject": "feat: unified web app \u2014 single index.html adapts to local vs web context"}
+{"hash": "cb0bc15481a6acf4791de81af35c5543d42178dc", "date": "2026-04-03", "subject": "fix: git-commit is a universal root \u2014 not invoked by ts-code-review"}
+{"hash": "6ebb8431b21cc42120a691239b81ed91b6874888", "date": "2026-04-03", "subject": "docs: thorough bidirectional chaining audit and test"}
+{"hash": "136d50d31c5afa40a43c4c5aa83e073961ce780e", "date": "2026-04-02", "subject": "docs: systematic TypeScript documentation coverage review"}
+{"hash": "29fa6ea89da1919d862ba6acd6d29d5056db8a0f", "date": "2026-04-02", "subject": "feat: add TypeScript/Node.js skill suite (5 skills)"}
+{"hash": "2588c1e9796ff4f843e20262ca95425b6d9457cb", "date": "2026-04-02", "subject": "feat: add validate_links and validate_examples to PUSH tier"}
+{"hash": "85f771fb8f4e4b617fcae295ac6d4b1a0fde104c", "date": "2026-04-02", "subject": "ci: opt into Node.js 24 for GitHub Actions runners"}
+{"hash": "a837e8000f26be302caf20a327a3b68798931bee", "date": "2026-04-02", "subject": "fix: only treat explicit 'Parse error' as Mermaid syntax failure in CI"}
+{"hash": "6c9de8a51233417656a5ba593752aa68956b6026", "date": "2026-04-02", "subject": "fix: flowchart validator treats puppeteer CI failures as mmdc unavailable"}
+{"hash": "5c67edc60dee66f1a2423a8043ef861818a24fa2", "date": "2026-04-02", "subject": "ci: replace stub workflow with working two-job CI"}
+{"hash": "741f95beefb676c701ab21679c78fd69e179f36c", "date": "2026-04-02", "subject": "refactor: complete near-term cleanup items"}
+{"hash": "e9efe98c9746795700afe5cf817c1ca16daf1e9c", "date": "2026-04-02", "subject": "refactor: unify ValidationResult \u2014 remove duplicate class from modular_validator"}
+{"hash": "6acd634ec8826da48a873473b6ab3177accc3ac4", "date": "2026-04-02", "subject": "refactor: project-refine tier-4 improvements across collection"}
+{"hash": "9464b2dee51f70c776ae3d1318f897e8ff658067", "date": "2026-04-02", "subject": "fix: address project-health tier-4 findings"}
+{"hash": "5846372187903f0caeafc39c2bab8822c58a80df", "date": "2026-04-02", "subject": "docs: update session handoff for health/refine trial session"}
+{"hash": "11173468faefde87375c042ac9fb5bdde7a30cd8", "date": "2026-04-02", "subject": "feat: implement project-health and project-refine skill suite"}
+{"hash": "42336744b785e65121443e86e8f941dadd24bb20", "date": "2026-04-02", "subject": "docs: add session handoff document for health/refine trial"}
+{"hash": "c0ab36f166ea374b721f65226bf3baab6d7ffa0f", "date": "2026-04-02", "subject": "fix: design review corrections across all health documents"}
+{"hash": "d59abf0c31c0225f2867e0e4dbc471f096ebb7c1", "date": "2026-04-02", "subject": "docs(project-refine): defer tracking is a TODO \u2014 always show all findings for now"}
+{"hash": "446d1d2dc5dbe2581e475665ef9c432dbd4cfcf9", "date": "2026-04-02", "subject": "docs: add tier system to project-health and project-refine"}
+{"hash": "dea8529b2833b4c2b9458430aab99abb74e0ed20", "date": "2026-04-02", "subject": "docs(project-refine): merge tests into code domain \u2014 tests are code"}
+{"hash": "fbeb55d54770b04524d0a8b7b5862e5b1096b388", "date": "2026-04-02", "subject": "docs: resolve all five open questions for project-health and project-refine"}
+{"hash": "77e3c502ec26deb7b13e9e0b14116f09755027aa", "date": "2026-04-02", "subject": "docs(project-health): resolve type-context-before-checks \u2014 type detection is step 1"}
+{"hash": "dbb59d5152dba722a6beb09d8af986c048473868", "date": "2026-04-02", "subject": "docs(project-health): resolve routing \u2014 Option B auto-chain"}
+{"hash": "1c72e54762fed8b72b029f75884ca2ac97d89b8c", "date": "2026-04-02", "subject": "chore(docs): remove stale reports, archive superseded plans"}
+{"hash": "a06036f692c2cb916be6e703d11de50cb9bc296b", "date": "2026-04-02", "subject": "docs(health): enrich all six health documents with additional checks"}
+{"hash": "d44d7e51ec6ffb601d72e5653b0a415799806a0d", "date": "2026-04-02", "subject": "docs(project-health): remove all remaining type-specific content"}
+{"hash": "1120a4be56391616d62c0d9636ded818d53481a5", "date": "2026-04-02", "subject": "docs(project-health): move type-specific scan targets to type-specific skills"}
+{"hash": "f4001f908b12a25d46bbb6569cee16afcb84be54", "date": "2026-04-02", "subject": "docs(project-health): emphasise bidirectional chaining with type-specific skills"}
+{"hash": "fb50a252cba0b4246b68080f530dbce00c519298", "date": "2026-04-02", "subject": "docs(project-health): remove skills-specific categories from universal, fix narrow checks"}
+{"hash": "116cca5213e0ca300a46104f8b551dd2b4341327", "date": "2026-04-02", "subject": "docs(java-project-health): add java-code-quality category for duplication and extraction"}
+{"hash": "f070ae36514913c6dd42d83f908964f469fc858a", "date": "2026-04-01", "subject": "docs(project-health): adopt Option B \u2014 universal base + type-specific skills"}
+{"hash": "df0cf271179ffeefa2b8d951f3c65cd12cce34c4", "date": "2026-04-01", "subject": "docs: split project-health into two companion skills"}
+{"hash": "bccba6c5be14c4e53f124ce45abda894c61eb604", "date": "2026-04-01", "subject": "docs(project-health): extract four universal checks from per-type additions"}
+{"hash": "2fb8afa576163b534bea16b2e117c09414aadbe1", "date": "2026-04-01", "subject": "docs(project-health): structural consistency pass \u2014 Quality and Refinement aligned"}
+{"hash": "ffa2715032680e91f78baf8ecdbae4f484b96faa", "date": "2026-04-01", "subject": "docs(project-health): add refinement dimension to every check category"}
+{"hash": "c10617575d8db952683f7e7e050c177c8d988402", "date": "2026-04-01", "subject": "docs(project-health): rename 'improve' category to 'refine'"}
+{"hash": "285233e952757912104b88585da828fd6206ff56", "date": "2026-04-01", "subject": "docs(project-health): add 'improve' category with bloat scoring"}
+{"hash": "ad804ec5d99cc779647639b2f9dad5de37b24f50", "date": "2026-04-01", "subject": "feat(discovery): add well-known doc names and user-configured paths to scanner"}
+{"hash": "b57a1858d1d663aa7d1ed15d9b028ded5435262f", "date": "2026-04-01", "subject": "docs(project-health): add well-known root doc filenames, case-insensitive"}
+{"hash": "55e1c3eedcbe09b98771cd7a959793d8fb82b777", "date": "2026-04-01", "subject": "docs(project-health): extend scanning scope for inline docs and user-configured paths"}
+{"hash": "8c0f3c15066a6b02011e4ee49c98741ce9ad03cc", "date": "2026-04-01", "subject": "docs(project-health): define universal document scanning scope"}
+{"hash": "74c666956e04c93e9be1b9e7a4c34ed63156f20f", "date": "2026-04-01", "subject": "docs(project-health): split category table by universal vs project type"}
+{"hash": "48c0a816386b1a6a5440ab93181cb499247cc11f", "date": "2026-04-01", "subject": "docs(project-health): add category overview table and invocation groups"}
+{"hash": "c3a3f89526339a9ff7fa52dd63b0876bfa2298b5", "date": "2026-04-01", "subject": "refactor: centralise health checks by referencing project-health design doc"}
+{"hash": "cfb9fbf28dbb2487785a861cece4a0a691845b02", "date": "2026-04-01", "subject": "docs: add project-health skill design document"}
+{"hash": "76965e2748cb147cb63ddab049aff918efb12604", "date": "2026-04-01", "subject": "fix: pre-v1.0 system review \u2014 13 issues resolved"}
+{"hash": "cf5f3b90da76bb38cf54a71489a9c1673758cb0f", "date": "2026-04-01", "subject": "docs(claude-md): add project identity, developer workflow, and new skills for fresh sessions"}
+{"hash": "8186242522b0c6623d6f85462c6209623f121c98", "date": "2026-04-01", "subject": "feat(issue-workflow): add GitHub issue tracking skill"}
+{"hash": "23c5ff6a2d9b1765dc1c607af2709d8cc9f0fe73", "date": "2026-04-01", "subject": "feat(docs): progressive modular doc nudge with user-adjustable threshold"}
+{"hash": "bf82bb47078ff6fdafc95a5aea38806357943d15", "date": "2026-04-01", "subject": "fix: make no-AI-attribution rule impossible to miss"}
+{"hash": "8e4f19eb4ec72cc37e0b01d9f28361b2f3c430e2", "date": "2026-04-01", "subject": "feat: add cc-praxis logo to repository and README"}
+{"hash": "a4a7e0bd931b4d785a8e6be0d648507b16c9e31b", "date": "2026-04-01", "subject": "feat(blog): add blog-git-commit skill with commit message validation"}
+{"hash": "891dcdc24555a6618898693dcf4bd8d58c61d3a2", "date": "2026-04-01", "subject": "rename: claude-skills \u2192 cc-praxis"}
+{"hash": "564f0775c1ad9c8d189a69081c07bf5ecf6e93d1", "date": "2026-04-01", "subject": "docs(claude-md): add no-AI-attribution rule to pre-commit checklist"}
+{"hash": "9ee94d2309919f8fa2711c3fb41f36fd59cf7446", "date": "2026-04-01", "subject": "docs(claude-md): document skill loading rules \u2014 symlinks, commands, cache"}
+{"hash": "73fdc44fccb1336746a3ce63af1aaa82f8543830", "date": "2026-04-01", "subject": "refactor(scripts): install skills to ~/.claude/skills/ not plugin cache"}
+{"hash": "e019a05626d9ecb4455399060780bffa74b81413", "date": "2026-04-01", "subject": "docs(claude-md): consistency pass \u2014 remove duplication and stale content"}
+{"hash": "d00e87a00afa03a4babd1515341dcea4a5340ff6", "date": "2026-04-01", "subject": "docs(claude-md): document bundle management workflow"}
+{"hash": "cf5e26ab65259d69807da56a4b987f2631a9aee8", "date": "2026-04-01", "subject": "feat(marketplace): make bundle lists dynamic from marketplace.json"}
+{"hash": "d443b9318c67d4c6e446f8a1fbb19ef43cb7fc78", "date": "2026-04-01", "subject": "fix(skills): systematic review fixes across 4 skills"}
+{"hash": "b334f436ea32a396aa7ff047900693b8ec947438", "date": "2026-04-01", "subject": "fix(java-dev): remove artifacts, fix stale refs, tighten incident narratives"}
+{"hash": "53efc440c061555bfd00c7db6ae81665a747328f", "date": "2026-04-01", "subject": "feat(validation): enforce slash command files for all skills"}
+{"hash": "2e16d90cfab4258913d807e1ec4f70ddba961078", "date": "2026-04-01", "subject": "feat(skills): add slash commands to all 20 skills"}
+{"hash": "b2b6f6e4d72bf10dbbdcff1240ceaa943d6b676a", "date": "2026-04-01", "subject": "refactor(scripts): remove .marketplace \u2014 install directly to Claude plugin cache"}
+{"hash": "6c5fc05ad7c669f26bd31afb300f0ab7a43ea335", "date": "2026-04-01", "subject": "fix(scripts): never symlink into Claude Code plugin cache"}
+{"hash": "55b5dffdc0e32828a23a0083275311537b8af6c7", "date": "2026-04-01", "subject": "fix(scripts): sync-local now updates Claude Code's real plugin cache"}
+{"hash": "e95da137fa0cc72113a976abe22cfaaa3bd2807a", "date": "2026-04-01", "subject": "feat(java-dev): extend no-string-literals rule to cover package names"}
+{"hash": "bd0e6ea7b61402a20ccbe0e1d800d6b396f9a42f", "date": "2026-04-01", "subject": "feat(java-dev): require .class references instead of String class names"}
+{"hash": "56e2c073885757573d252a6aab73e773e9eff361", "date": "2026-04-01", "subject": "docs: comprehensive documentation audit \u2014 accuracy, structure, CSO compliance"}
+{"hash": "1a2701ffc9a7caad9992e9ee46ce307ca2e51b72", "date": "2026-04-01", "subject": "feat(scripts): sync-local now installs and updates the session-start hook"}
+{"hash": "374d925b404ab679e1765479669fc3a8f05fd85d", "date": "2026-04-01", "subject": "fix(hooks): make session-start hook directive so Claude acts on it"}
+{"hash": "40616c933a732eca5094a0af5597e044e6359288", "date": "2026-04-01", "subject": "chore(marketplace): update description to reflect broader scope"}
+{"hash": "5a3274a4f41d849a68674f576c77bd2bd3aa877f", "date": "2026-04-01", "subject": "feat(scripts): add sync-local command and claude-skill test suite"}
+{"hash": "3993cb0ddab594cfedfc4c688a214dedfb39a663", "date": "2026-04-01", "subject": "feat(java-dev): MCP refactoring tiers, multi-line strings, attribution"}
+{"hash": "cde4f3a22eb8aa3a327457fa921c7bcad74aa49e", "date": "2026-04-01", "subject": "feat(project-types): add blog type for GitHub Pages / Jekyll"}
+{"hash": "c09459911da4805a4ea44a0a054b861942d7fa86", "date": "2026-04-01", "subject": "feat(validation): add project-type list consistency validator"}
+{"hash": "2fcb87f47c0a4d19d520b67cd6c5eb373e379438", "date": "2026-03-31", "subject": "fix(marketplace): use relative paths in plugin source fields"}
+{"hash": "4bfc124f34004ef14ccffe5717b7f4075d98237d", "date": "2026-03-31", "subject": "fix(mermaid): quote parentheses in labels and add Mermaid syntax validator"}
+{"hash": "1a6b964bafe21f37f2bfc8ec2a2029a362961ad5", "date": "2026-03-31", "subject": "docs: convert all Graphviz diagrams to Mermaid format"}
+{"hash": "90fde2d9718c8b66bb6c08d6821ab2de2257aa5d", "date": "2026-03-31", "subject": "feat(marketplace): add uninstall-skills cleanup wizard"}
+{"hash": "7e579f007f89f84eb722422cfdb0167cbca9b412", "date": "2026-03-31", "subject": "feat(marketplace): add install-skills bootstrap wizard"}
+{"hash": "46da70b1b9f6f025c597bfd6b811c3026545c8ee", "date": "2026-03-31", "subject": "docs(readme): add skill authoring benefit to cloning"}
+{"hash": "0a0dbb5e1924faf6e4e198ce1eb630a306ecc305", "date": "2026-03-31", "subject": "docs(readme): move installation to top and document both methods"}
+{"hash": "a21ce930327830a47c934cf717cce36c19d9a132", "date": "2026-03-31", "subject": "feat(marketplace): add uninstall-all command"}
+{"hash": "258b125ce3f0c387cb5855f4776a24ce8bd4ba73", "date": "2026-03-31", "subject": "feat(marketplace): add install-all command"}
+{"hash": "080e9c8bc0829f5f3c7640d8eab361ccc5e7a0e4", "date": "2026-03-31", "subject": "refactor(marketplace): adopt official formats and reduce custom code by 92%"}
+{"hash": "4c7c724c150f315e961b1ae83f83709e7530f931", "date": "2026-03-31", "subject": "docs: add skill marketplace implementation plan and design spec"}
+{"hash": "785b3819d4ccc1ab692c868c61f95df42a80a58e", "date": "2026-03-31", "subject": "feat(marketplace): add registry template with all skills"}
+{"hash": "eed6049d3ec9576d2b1d727791d666e555660c9e", "date": "2026-03-31", "subject": "test(marketplace): add end-to-end integration tests"}
+{"hash": "dc9f97a6ec40f6ffa7a295a96e296a160d7510d8", "date": "2026-03-31", "subject": "docs(readme): add marketplace installation instructions"}
+{"hash": "46b4c22d55df6f7358f376d4a763c86e780a16cd", "date": "2026-03-31", "subject": "docs(marketplace): add registry usage and publishing guide"}
+{"hash": "7ce99b222ab2b7cc328a1e296abff8201d916f09", "date": "2026-03-31", "subject": "feat(marketplace): add main CLI entry point"}
+{"hash": "0df183635cdc97e2ba8ddcca92720d764f8ea5db", "date": "2026-03-31", "subject": "feat(marketplace): add CLI list command"}
+{"hash": "3f88bc5f5e43d53c32c850ddfb58a5d7d17b624b", "date": "2026-03-31", "subject": "feat(marketplace): add CLI uninstall command"}
+{"hash": "9a4e2991cd9506bc034e8688f6a24421e8a3a83f", "date": "2026-03-31", "subject": "fix(marketplace): improve CLI input handling and test coverage"}
+{"hash": "3e7a6e515004b40fea8eff9874a37685859620d3", "date": "2026-03-31", "subject": "feat(marketplace): add CLI install command"}
+{"hash": "0af2980bcffb0be286130f04b75ce47f36c5e7c1", "date": "2026-03-31", "subject": "test(marketplace): add missing validator test coverage"}
+{"hash": "1da9b7bca499ac72395242aaa20cbe44bc89ea74", "date": "2026-03-31", "subject": "feat(marketplace): add skill validation"}
+{"hash": "a3db12d762b48114f245bacbeeea84ddeefb695c", "date": "2026-03-31", "subject": "fix(marketplace): add validation and atomic installation"}
+{"hash": "96980f6d71c4c9dfa99eec5ff2e4637a74724540", "date": "2026-03-31", "subject": "feat(marketplace): add git sparse checkout installer"}
+{"hash": "2379c6233422a98ca0ad3cb5a2ec376222bbae39", "date": "2026-03-31", "subject": "feat(marketplace): add dependency conflict detection"}
+{"hash": "bb813118a01ee7979cf189ff5e8655adb6db4e4f", "date": "2026-03-31", "subject": "fix(marketplace): add circular dependency detection to graph builder"}
+{"hash": "66b49e5944b76e4a8084c2f09c6b310acf3d82a6", "date": "2026-03-31", "subject": "feat(marketplace): add dependency graph builder"}
+{"hash": "10ebd0297ea42c3242177e5f05cda1427d13d3b7", "date": "2026-03-31", "subject": "feat(marketplace): add skill lookup in registry"}
+{"hash": "7ad797e39d56ed136f2bf25a6d4d1040b6d3f93c", "date": "2026-03-31", "subject": "feat(marketplace): add registry fetcher"}
+{"hash": "ce3fe4d847835130b677be449bf7ee785bf1a771", "date": "2026-03-31", "subject": "fix(marketplace): add error resilience and complete test coverage for main CLI"}
+{"hash": "512e4b9b19036be6e2975abf5b5d87443e99afc1", "date": "2026-03-31", "subject": "feat(marketplace): add main CLI for metadata generation"}
+{"hash": "b3c05c183f4b0ce909405f1f5434e10e0685ea74", "date": "2026-03-30", "subject": "fix(marketplace): add write error handling and complete test coverage"}
+{"hash": "01a57e05719b161592f64d898677399a224abd3d", "date": "2026-03-30", "subject": "fix(marketplace): add error handling and validation to skill.json generator"}
+{"hash": "f6fef419c3b08a15d4bdcbcf23c26c738c89e964", "date": "2026-03-30", "subject": "feat(marketplace): add skill.json generator"}
+{"hash": "b517779ff480db4f0ce49c3106e3c1a3b3291219", "date": "2026-03-30", "subject": "feat(marketplace): add dependency parser from Prerequisites section"}
+{"hash": "6fb1050447fd8b89717567f3849510de9afd5436", "date": "2026-03-30", "subject": "feat(marketplace): add frontmatter parser for skill name"}
+{"hash": "a14325f24938b25bfa6c10fca807c84bbc0c6648", "date": "2026-03-30", "subject": "feat(marketplace): add skill scanner for metadata generation"}
+{"hash": "12dccc7d52a0568c3e70524dbec6ea50457b31a3", "date": "2026-03-30", "subject": "docs(readme): add reference to PROJECT-TYPES.md"}
+{"hash": "0f038a3f462538ba931974ac3360a4808b6c1418", "date": "2026-03-30", "subject": "docs(claude-md): consolidate document sync QA"}
+{"hash": "3418e0a42e9d7d5138fc14ecfdb004b82a8b8e98", "date": "2026-03-30", "subject": "docs(claude-md): consolidate QA framework with QUALITY.md"}
+{"hash": "b71fbba3800cfe7e0807a731789b9d6846e447a7", "date": "2026-03-30", "subject": "docs(claude-md): minimize modular documentation section"}
+{"hash": "b26f273a3df7991a9ee973588ff60a1d00fb4612", "date": "2026-03-30", "subject": "docs(claude-md): consolidate project type awareness"}
+{"hash": "8c272ed9bd237adcef7c7caae3706cad36e45d77", "date": "2026-03-30", "subject": "docs(claude-md): standardize tier naming to match implementation"}
+{"hash": "653d6bf483312212c8b662317a1616247d830f1f", "date": "2026-03-30", "subject": "docs(quality): document Quick tier and universal framework vision"}
+{"hash": "a625acbac5c3d6bc220a9265fa2ff04adb98d701", "date": "2026-03-30", "subject": "docs: extract project type taxonomy to reference doc"}
+{"hash": "5ea3ddb0fc28ad743ff42d9dc3f6f948001f61e0", "date": "2026-03-30", "subject": "docs(claude-md): make checklists mandatory by default"}
+{"hash": "53f03145aa12899fd21d365bed2020e136ec5f0a", "date": "2026-03-30", "subject": "docs: update README and QUALITY.md with completed validation infrastructure"}
+{"hash": "acc5c767f0d9b2fff2c41971f0768060bb520970", "date": "2026-03-30", "subject": "docs: update quality review completion with validator validation"}
+{"hash": "bb6781c54c9743de7e93e4b7cd33652f7210c9a8", "date": "2026-03-30", "subject": "fix(validation): fix orchestrator target passing to validators"}
+{"hash": "cd9e521d9a4ad06b8c7b28651dcc3e3b3c074e81", "date": "2026-03-30", "subject": "docs: update review completion with 100% test coverage achievement"}
+{"hash": "9ddc8ff1d7975fc630972eec463c0d9f2da510b9", "date": "2026-03-30", "subject": "test: achieve 100% coverage with tier-appropriate tests"}
+{"hash": "615c57dd4b316e456d8094fb0d3a33a94ed55d44", "date": "2026-03-30", "subject": "docs: update comprehensive review with test coverage improvements"}
+{"hash": "eb151803c71b075f7ceb20484b1593cdc4429aca", "date": "2026-03-30", "subject": "test: add test cases for high-priority skills + fix coverage bug"}
+{"hash": "bdd8d629c8faa2e4986f231560bd3c90507008bd", "date": "2026-03-30", "subject": "chore: ignore Python cache directories"}
+{"hash": "3010f0406ed91ea15056b3b1a94cd44c22f35d8e", "date": "2026-03-30", "subject": "docs: comprehensive quality review completion summary"}
+{"hash": "0b03f28195d3c2748328b1ebb433706d2fbac6e4", "date": "2026-03-30", "subject": "fix(docs): remove skill-review references from README.md"}
+{"hash": "c0bf720f24d9b6611970f160dd7b75a21c7f1cf9", "date": "2026-03-30", "subject": "docs(qa): comprehensive quality review findings report"}
+{"hash": "ae5723bdbe55c43406f4a64ce619f7af2a06bedf", "date": "2026-03-30", "subject": "docs(qa): mark Phase 2 validators as complete"}
+{"hash": "8a9e9d9daa0b6eec033b73c4889d28154b4bd319", "date": "2026-03-30", "subject": "feat(validation): add Python quality validator"}
+{"hash": "7a865fd8f67af3efe91e1ccd02f4d54d9e93f1d3", "date": "2026-03-30", "subject": "feat(validation): add behavior consistency validator"}
+{"hash": "776916c14c7105f218ed0abbc06fb1dd6dcb3c86", "date": "2026-03-30", "subject": "feat(validation): add edge case coverage validator"}
+{"hash": "902e983dabc90d1ce1b9ff86321273ba99aec965", "date": "2026-03-30", "subject": "feat(validation): add usability/UX validator"}
+{"hash": "49401dfab1ce6dcba926efce5bd9e402b06e1517", "date": "2026-03-30", "subject": "feat(validation): add temporal consistency validator"}
+{"hash": "12fa045e80fc28fd545d5a07e4e4f4f7ef38ee13", "date": "2026-03-30", "subject": "feat(validation): add cross-document consistency validator"}
+{"hash": "62ec73002b679d9bdca55875283290b5cedc7f09", "date": "2026-03-30", "subject": "docs(qa): document Phase 1 findings and tiering strategy"}
+{"hash": "f0c341a654ea7252a588a4db3e1d694a83df9995", "date": "2026-03-30", "subject": "feat(validation): add tier support to validation orchestrator"}
+{"hash": "bc6404b5fefccbc20842f15ef5a64aa8920f3a89", "date": "2026-03-30", "subject": "feat(validation): add README/CLAUDE.md sync validator"}
+{"hash": "e86e2faefd8dee9d467037ac51e0fe6dabadf938", "date": "2026-03-30", "subject": "feat(testing): add test coverage reporter"}
+{"hash": "1ee0a0225d589812d7ef95844281359283322c3c", "date": "2026-03-30", "subject": "fix(testing): improve regression test runner robustness"}
+{"hash": "075b0d364a29c17fd6cc034d473b9ca6270b24bc", "date": "2026-03-30", "subject": "feat(testing): add regression test runner"}
+{"hash": "aa64f561f906216f600bd46dfb06395dd3e38398", "date": "2026-03-30", "subject": "fix(testing): improve test runner resilience"}
+{"hash": "bb98a5fc88e67e912bcb67ea6487f699898f9cb8", "date": "2026-03-30", "subject": "test(testing): add basic test runner structure"}
+{"hash": "82a1984569395d7f98bdfda3c27e3b83c36b2756", "date": "2026-03-30", "subject": "test(testing): add git worktree isolation to skill test runner"}
+{"hash": "ff8c329afa195041a57e2551de58d211d14ef013", "date": "2026-03-30", "subject": "feat(qa): add validation tiering strategy to plan and CLAUDE.md"}
+{"hash": "e44c8ec253309e307d03afd4b9562f95c8a3943c", "date": "2026-03-30", "subject": "docs(spec): comprehensive quality review design"}
+{"hash": "e900fd05b2ec40d124aabe540ad60148958860d0", "date": "2026-03-30", "subject": "docs(adr): add architectural decision records for key design choices"}
+{"hash": "258036dcce31826a95d193f84aeaad673c4e9fc6", "date": "2026-03-30", "subject": "feat: add modular documentation support with hybrid discovery"}
+{"hash": "e825a6994c83728d2c1f10030e895a8daeea8b0d", "date": "2026-03-30", "subject": "docs: create QUALITY.md and streamline README"}
+{"hash": "b9547a3ec07db72730046cf5bfbff1c5e6b7a2ea", "date": "2026-03-30", "subject": "docs: add comprehensive QA framework and validation guidance"}
+{"hash": "dfc350c5067e4522a22f6374c44db41489de38a6", "date": "2026-03-30", "subject": "docs(philosophy): make reflection timeless and universal"}
+{"hash": "6f3f76cc917cfc36fe8c06de323edd6d8cece6ec", "date": "2026-03-30", "subject": "docs(philosophy): add reflection on what makes this collection special"}
+{"hash": "7e7c41cdd2e3f46b4e32344f8630d55aa0e4eed4", "date": "2026-03-30", "subject": "docs(git-commit): add pragmatic scope guidance"}
+{"hash": "32167df899f046fafe20c576bb92be4411fed923", "date": "2026-03-30", "subject": "docs(readme): comprehensive Quality & Validation Framework documentation"}
+{"hash": "fb5ede82c59958958381befb422d1da389bbd3ef", "date": "2026-03-30", "subject": "fix: implement adr invocation and update Skill Chaining Reference"}
+{"hash": "8f7e822c52745d4514ac4d0e1713666ae21268aa", "date": "2026-03-30", "subject": "refactor: modularize skills-update-readme to save tokens"}
+{"hash": "73bbc2dc07b3394477478f5d0452c5078706a28f", "date": "2026-03-30", "subject": "refactor(update-claude-md): remove redundant skills-specific section"}
+{"hash": "7897569340efb1fb92a77209f1a6e5a1a6ac5589", "date": "2026-03-30", "subject": "refactor: extract generic update-primary-doc base"}
+{"hash": "da124953c3ebbbc3760cbf642654a2d0a028a376", "date": "2026-03-30", "subject": "feat: add project type taxonomy and routing"}
+{"hash": "c862907f735612c4e67cd7002019eb3f4dd6b3e5", "date": "2026-03-30", "subject": "feat: add universal document validation to prevent sync corruption"}
+{"hash": "adba2e398274a47d6f947bb82482e9ea498ea1e2", "date": "2026-03-30", "subject": "refactor(readme): remove duplicate sections and clean structure"}
+{"hash": "95cd8e5209257ccf19028b29dbc9b1dd148a2499", "date": "2026-03-30", "subject": "refactor: modularize skills-specific validation to eliminate token waste"}
+{"hash": "2a6416156052b65fcd938fad4a93838213080ab7", "date": "2026-03-30", "subject": "docs: add third-party exclusion policy and restructure"}
+{"hash": "0010d39cff785d4a97f7d329108d0e0b29af21dd", "date": "2026-03-30", "subject": "test(qa): implement functional testing infrastructure"}
+{"hash": "8b36d33e5206e438627e7d2dba99ee73fbd83540", "date": "2026-03-30", "subject": "feat(qa): add comprehensive quality assurance framework"}
+{"hash": "50b945cd80b2dbe6906d0816b6a44421ae65ef31", "date": "2026-03-30", "subject": "feat(commit): add project type taxonomy and routing"}
+{"hash": "665b5ce3c4a65cc2f99ddfa706fccd13f5c2d207", "date": "2026-03-30", "subject": "docs(claude-md): comprehensive project type taxonomy and guidance"}
+{"hash": "615d3d43bc8c34ebe85fbab1793acdd038281445", "date": "2026-03-29", "subject": "docs(claude-md): add project type awareness and extensibility guidance"}
+{"hash": "025fdde2731ae9642ab6929317b9f75ebf36e9ad", "date": "2026-03-29", "subject": "fix(git-commit): clarify repository type distinction vs java-git-commit"}
+{"hash": "2bbd5569261c1072b515a2e86cd09393ca5d137a", "date": "2026-03-29", "subject": "fix(git-commit): strengthen no-attribution rule and add examples"}
+{"hash": "17adbf251a97e7682ce2842f7dd201645d86b211", "date": "2026-03-29", "subject": "docs(readme): document java-git-commit DESIGN.md enforcement"}
+{"hash": "3a6fa19624feaa6eb2defa54d243b6328ba8f373", "date": "2026-03-29", "subject": "feat(java-git-commit): add DESIGN.md existence check"}
+{"hash": "1baf79a3810ce4cae291e8a66593be8e9bf4fa1d", "date": "2026-03-29", "subject": "docs: improve frontmatter CSO compliance and clarity"}
+{"hash": "273441185dc4a33eff6bc8d5ea46a8c1d920cd32", "date": "2026-03-29", "subject": "refactor(skills): tighten frontmatter triggers to prevent token waste"}
+{"hash": "4066ac240ccf94fda85f17e042d9f42bac834ce9", "date": "2026-03-29", "subject": "style(skills): add light developer humor to reinforce key points"}
+{"hash": "b6147f668e2bab22b02570d9b1bf6af489627733", "date": "2026-03-29", "subject": "docs(readme): fix gaps and update quality validation"}
+{"hash": "9e16af8b38649700642a3d60d856dccd5d419162", "date": "2026-03-29", "subject": "refactor(skills): improve readability and scannability"}
+{"hash": "a0e0dcd3e42c1495e24477d9dd7f2ab40bc0ec53", "date": "2026-03-29", "subject": "refactor(skills): fix logic errors and improve clarity"}
+{"hash": "b55fa0ae21b26b37a8d4e97ac7c8f56644cf7426", "date": "2026-03-29", "subject": "refactor(skills): improve readability and consistency across all skills"}
+{"hash": "d1aea37db78d455001a00f1c63662efb974fb1ca", "date": "2026-03-29", "subject": "fix(skills): complete structural consistency across all skills"}
+{"hash": "9972c3f148116d5b1b05ac0db806dde6afd49336", "date": "2026-03-29", "subject": "fix(skills): correct bidirectional cross-references and chaining descriptions"}
+{"hash": "0d1c568f2935cd03e6f8f9df742fdc6b8d465917", "date": "2026-03-29", "subject": "feat(skills): add skill-review and update-readme for complete skills repository workflow"}
+{"hash": "2cefb9869629e28f9583803a4ee6b34e7587d2ec", "date": "2026-03-29", "subject": "feat(skills): add CLAUDE.md synchronization via update-claude-md skill"}
+{"hash": "7221ad0fdde92e4b46e3393fae6a66120cc58322", "date": "2026-03-29", "subject": "refactor(skills): extract generic principles and rename for clarity"}
+{"hash": "bbd81e66ea3c0cd9bf0401c02c71b84b0457dfbe", "date": "2026-03-29", "subject": "refactor(skills): complete cross-reference and consistency fixes"}
+{"hash": "230d898a2290a538456cd32aeacf3e2919cb8959", "date": "2026-03-29", "subject": "refactor(skills): improve consistency and cross-referencing"}
+{"hash": "1068cf89bc7bde4e8e30e376c429d7f866423bd3", "date": "2026-03-29", "subject": "docs(readme): expand Key Features with missing highlights"}
+{"hash": "8dc53825d4b93b86e3b4b5e297e7a234b70d665a", "date": "2026-03-29", "subject": "docs(readme): rename 'Key improvements' to 'Key Features'"}
+{"hash": "b1b7db8f3d6709d9014fd2dae042d466e8e29515", "date": "2026-03-29", "subject": "docs(readme): add humorous section on commit message importance"}
+{"hash": "6ee3ed336c3e276fdc27ddeb6576028baf85c42d", "date": "2026-03-29", "subject": "docs(skills): enhance skills with code examples and add security-audit"}
+{"hash": "7ff998634ce7c4d52b3c9e6f9920e6753f340583", "date": "2026-03-29", "subject": "docs: enhance skills with quality improvements and validation"}
+{"hash": "77a4dca0aba28247a6314dfe5f9dde25df8c1aab", "date": "2026-03-29", "subject": "This is my first set of skills"}

@@ -1,0 +1,226 @@
+{
+  "1925c81bbb7c71d8b305ebcdae45fdc63d63b4ee": [
+    "HANDOVER.md"
+  ],
+  "3e07252ec1a21ea452a4bc2eaa956c80a3f916ba": [
+    "docs/blog/2026-04-06-04-replays-the-long-way-round.md"
+  ],
+  "7b569173b91c7dd5598b3676299fd4593f829d33": [
+    "CLAUDE.md",
+    "docs/design-snapshots/2026-04-06-phase0-phase1-complete.md"
+  ],
+  "e6b1fea6619893b55735d96fa1ab1cdea7e327fc": [
+    "replays/aiarena_protoss/ArgoBot_4721222.SC2Replay",
+    "replays/aiarena_protoss/ArgoBot_4721229.SC2Replay",
+    "replays/aiarena_protoss/ArgoBot_4721230.SC2Replay",
+    "replays/aiarena_protoss/ArgoBot_4721231.SC2Replay",
+    "replays/aiarena_protoss/Nothing_4720935.SC2Replay",
+    "replays/aiarena_protoss/Nothing_4720936.SC2Replay",
+    "replays/aiarena_protoss/Nothing_4720937.SC2Replay",
+    "replays/aiarena_protoss/Nothing_4720938.SC2Replay",
+    "replays/aiarena_protoss/Nothing_4720939.SC2Replay",
+    "replays/aiarena_protoss/Starlight_4721162.SC2Replay",
+    "replays/aiarena_protoss/Starlight_4721163.SC2Replay",
+    "replays/aiarena_protoss/Starlight_4721164.SC2Replay",
+    "replays/aiarena_protoss/Starlight_4721165.SC2Replay",
+    "replays/aiarena_protoss/Starlight_4721166.SC2Replay",
+    "replays/aiarena_protoss/Tyckles_4721034.SC2Replay",
+    "replays/aiarena_protoss/Tyckles_4721035.SC2Replay",
+    "replays/aiarena_protoss/Tyckles_4721036.SC2Replay",
+    "replays/aiarena_protoss/Tyckles_4721037.SC2Replay",
+    "replays/aiarena_protoss/Tyckles_4721038.SC2Replay",
+    "replays/aiarena_protoss/Zozo_4720215.SC2Replay",
+    "replays/aiarena_protoss/Zozo_4720216.SC2Replay",
+    "replays/aiarena_protoss/Zozo_4720217.SC2Replay",
+    "replays/aiarena_protoss/Zozo_4721232.SC2Replay",
+    "replays/aiarena_protoss/Zozo_4721236.SC2Replay",
+    "replays/aiarena_protoss/puck_4720479.SC2Replay",
+    "replays/aiarena_protoss/puck_4720480.SC2Replay",
+    "replays/aiarena_protoss/puck_4721233.SC2Replay",
+    "replays/aiarena_protoss/puck_4721234.SC2Replay",
+    "replays/aiarena_protoss/puck_4721235.SC2Replay",
+    "replays/replay-index.md"
+  ],
+  "3abe4551a50017f01bc278f6da8119df652eeb09": [
+    "replays/2016_IEM_10_Taipei.zip",
+    "replays/replay-index.md"
+  ],
+  "cc6ffba3bbc0e4ddf2e21f82736d5f39a3da573c": [
+    "CLAUDE.md",
+    "pom.xml"
+  ],
+  "2b3c859eda8ee520e2f8ef25ead4cadd1cc1bc13": [
+    "docs/superpowers/plans/2026-04-06-scelight-standalone-modules.md"
+  ],
+  "a1e8930837d808faba1e1e84c14a528e4f793df6": [
+    "src/main/java/org/acme/starcraft/qa/GameControlResource.java",
+    "src/main/java/org/acme/starcraft/sc2/real/SC2StartupBean.java"
+  ],
+  "c8e6b93f694af196729eb4c8a50f300bfde80fd1": [
+    "src/main/java/org/acme/starcraft/qa/CaseFileResource.java",
+    "src/main/java/org/acme/starcraft/qa/IntentResource.java"
+  ],
+  "cf09b720c5a409c27a7908bdc5ffe409cffd005e": [
+    "pom.xml"
+  ],
+  "f1cd9352436730156da1012fb9edb79d4f366e5e": [
+    "docs/blog/2026-04-06-phase-1-wiring-real-sc2.md",
+    "docs/blog/assets/sc2-stalker.jpg",
+    "docs/sc2-image-index.md"
+  ],
+  "e87faa5a832e4db0b8cff0434e80c149a8130ab6": [
+    "docs/blog/2026-04-06-phase-1-wiring-real-sc2.md"
+  ],
+  "da57b6be79b5303d5bc2df2c8a3b772c05f66b06": [
+    "src/main/java/org/acme/starcraft/sc2/real/package-info.java"
+  ],
+  "b531179f5bd425e5da662bab92f2428f6d109014": [
+    "src/main/java/org/acme/starcraft/sc2/real/SC2BotAgent.java",
+    "src/main/java/org/acme/starcraft/sc2/real/SC2DebugScenarioRunner.java"
+  ],
+  "a7cd08da5ce9584699b26735b889c1e5739aa49e": [
+    "src/main/java/org/acme/starcraft/sc2/real/RealSC2Client.java"
+  ],
+  "1b90a722a6c383c371c5c25c1174bf6a6b613492": [
+    "src/main/java/org/acme/starcraft/sc2/real/RealCommandDispatcher.java",
+    "src/main/java/org/acme/starcraft/sc2/real/RealGameObserver.java"
+  ],
+  "8d11190815c316cbc6a8e2c1b3e7bd15e8547709": [
+    "src/main/java/org/acme/starcraft/sc2/real/SC2BotAgent.java"
+  ],
+  "bf0a60a808f289443542e385266849e6de62d11c": [
+    "src/main/java/org/acme/starcraft/sc2/real/ObservationTranslator.java",
+    "src/test/java/org/acme/starcraft/sc2/real/ObservationTranslatorTest.java"
+  ],
+  "1df8622602581e3c7a693c4a20fd5b69174300e4": [
+    "src/main/java/org/acme/starcraft/agent/AgentOrchestrator.java"
+  ],
+  "7a6382754cf54fdb4c91470cf2b73caba204632e": [
+    "pom.xml",
+    "src/main/java/org/acme/starcraft/sc2/mock/MockCommandDispatcher.java",
+    "src/main/java/org/acme/starcraft/sc2/mock/MockGameObserver.java",
+    "src/main/java/org/acme/starcraft/sc2/mock/MockSC2Client.java",
+    "src/main/java/org/acme/starcraft/sc2/mock/MockScenarioRunner.java",
+    "src/main/java/org/acme/starcraft/sc2/mock/SimulatedGame.java",
+    "src/main/resources/application.properties"
+  ],
+  "2d72b901ac38922a49a6309b8d0becce5a06f77d": [
+    "docs/superpowers/plans/2026-04-06-phase1-sc2-bootstrap.md"
+  ],
+  "ae1dcef47325cbc778d4526e29cc8f631ba81274": [
+    "docs/sc2-image-index.md"
+  ],
+  "66a8c7aa7d1d4f5854af5d1ee8686f7e9ff97db0": [
+    "CLAUDE.md"
+  ],
+  "f5e0fb980265ae46e5ad59d8f78faee04eacfaab": [
+    "docs/sc2-image-index.md"
+  ],
+  "686443e36656c8bd7bd7e41b075a44e763b13c83": [
+    "docs/blog/2026-04-06-day-zero.md",
+    "docs/blog/2026-04-06-phase-0-mock-that-runs.md",
+    "docs/blog/assets/architecture-plugins.png",
+    "docs/blog/assets/protoss-icon.png",
+    "docs/blog/assets/sc2-zealot.jpg"
+  ],
+  "6c53b46faa72aa96f273d63052dcde5a7eec5cf3": [
+    "docs/blog/2026-04-06-day-zero.md",
+    "docs/blog/2026-04-06-phase-0-mock-that-runs.md"
+  ],
+  "9093a4e330b7840829287951bc80264cfecd8e6b": [
+    "src/main/java/org/acme/starcraft/agent/AgentOrchestrator.java",
+    "src/test/java/org/acme/starcraft/sc2/mock/FullMockPipelineIT.java"
+  ],
+  "38ec4adc9983486d6e954796f6afc026f8857836": [
+    "src/main/java/org/acme/starcraft/qa/CaseFileResource.java",
+    "src/main/java/org/acme/starcraft/qa/IntentResource.java",
+    "src/main/java/org/acme/starcraft/qa/ScenarioResource.java"
+  ],
+  "8f034a3702fa1c70b45b1b6674c0693b4091ccfa": [
+    "pom.xml",
+    "src/main/java/org/acme/starcraft/qa/CaseFileResource.java",
+    "src/main/java/org/acme/starcraft/qa/IntentResource.java",
+    "src/main/java/org/acme/starcraft/qa/ScenarioResource.java",
+    "src/test/java/org/acme/starcraft/qa/QaEndpointsTest.java"
+  ],
+  "6de2fd995f279458cfc7207d2fb53ab72cf3a9f5": [
+    "src/main/java/org/acme/starcraft/agent/plugin/EconomicsTask.java",
+    "src/main/java/org/acme/starcraft/agent/plugin/ScoutingTask.java",
+    "src/main/java/org/acme/starcraft/agent/plugin/StrategyTask.java",
+    "src/main/java/org/acme/starcraft/agent/plugin/TacticsTask.java",
+    "src/main/java/org/acme/starcraft/plugin/PassThroughEconomicsTask.java",
+    "src/main/java/org/acme/starcraft/plugin/PassThroughScoutingTask.java",
+    "src/main/java/org/acme/starcraft/plugin/PassThroughStrategyTask.java",
+    "src/main/java/org/acme/starcraft/plugin/PassThroughTacticsTask.java"
+  ],
+  "210ed65f13a87878ad5e1f76f0caaf0128da27ba": [
+    "src/main/java/org/acme/starcraft/agent/AgentOrchestrator.java"
+  ],
+  "56adbd44d258a1d7c246b65b5e162cb7b84bdacb": [
+    "src/main/java/org/acme/starcraft/agent/AgentOrchestrator.java",
+    "src/main/java/org/acme/starcraft/agent/GameStateTranslator.java",
+    "src/main/java/org/acme/starcraft/agent/StarCraftCaseFile.java",
+    "src/test/java/org/acme/starcraft/agent/GameStateTranslatorTest.java"
+  ],
+  "f185fdd5e7c426af17145dccf2736afb5b00488c": [
+    "src/main/java/org/acme/starcraft/sc2/mock/MockScenarioRunner.java",
+    "src/main/java/org/acme/starcraft/sc2/mock/scenario/EnemyExpandsScenario.java",
+    "src/main/java/org/acme/starcraft/sc2/mock/scenario/Scenario.java",
+    "src/main/java/org/acme/starcraft/sc2/mock/scenario/ScenarioLibrary.java",
+    "src/main/java/org/acme/starcraft/sc2/mock/scenario/SetResourcesScenario.java",
+    "src/main/java/org/acme/starcraft/sc2/mock/scenario/SpawnEnemyAttackScenario.java",
+    "src/main/java/org/acme/starcraft/sc2/mock/scenario/SupplyAlmostCappedScenario.java",
+    "src/test/java/org/acme/starcraft/sc2/mock/ScenarioLibraryTest.java"
+  ],
+  "9a68f6327375ec0a4dd7f0f32e3c300cb20d3169": [
+    "src/main/java/org/acme/starcraft/sc2/mock/MockCommandDispatcher.java",
+    "src/main/java/org/acme/starcraft/sc2/mock/MockGameObserver.java",
+    "src/main/java/org/acme/starcraft/sc2/mock/MockSC2Client.java",
+    "src/test/java/org/acme/starcraft/sc2/mock/MockPipelineTest.java"
+  ],
+  "5349c95e9401db6b8ae52ace4a8973b1adc4c5c7": [
+    "src/main/java/org/acme/starcraft/sc2/mock/SimulatedGame.java"
+  ],
+  "ee8f87118208b5a93be2687923012f8d5e2e13f1": [
+    "src/main/java/org/acme/starcraft/sc2/mock/SimulatedGame.java",
+    "src/test/java/org/acme/starcraft/sc2/mock/SimulatedGameTest.java"
+  ],
+  "f6c62f116fa87351df9345b9e64a794a2a0c8d9e": [
+    "src/test/java/org/acme/starcraft/sc2/IntentQueueTest.java"
+  ],
+  "ae63701e444b947eeeed1f3d4cb596a4400c5650": [
+    "src/main/java/org/acme/starcraft/sc2/CommandDispatcher.java",
+    "src/main/java/org/acme/starcraft/sc2/GameObserver.java",
+    "src/main/java/org/acme/starcraft/sc2/IntentQueue.java",
+    "src/main/java/org/acme/starcraft/sc2/SC2Client.java",
+    "src/main/java/org/acme/starcraft/sc2/ScenarioRunner.java",
+    "src/main/java/org/acme/starcraft/sc2/intent/AttackIntent.java",
+    "src/main/java/org/acme/starcraft/sc2/intent/BuildIntent.java",
+    "src/main/java/org/acme/starcraft/sc2/intent/Intent.java",
+    "src/main/java/org/acme/starcraft/sc2/intent/MoveIntent.java",
+    "src/main/java/org/acme/starcraft/sc2/intent/TrainIntent.java",
+    "src/test/java/org/acme/starcraft/sc2/IntentQueueTest.java"
+  ],
+  "1f39f248f0f541a73634c4b3ddb364033eee505f": [
+    "src/main/java/org/acme/starcraft/domain/GameMap.java",
+    "src/main/java/org/acme/starcraft/domain/GameState.java",
+    "src/main/java/org/acme/starcraft/domain/PlayerInfo.java"
+  ],
+  "4527949048873ea3745b879f8b2bafd4fa5beaca": [
+    "src/main/java/org/acme/starcraft/domain/Building.java",
+    "src/main/java/org/acme/starcraft/domain/BuildingType.java",
+    "src/main/java/org/acme/starcraft/domain/GameMap.java",
+    "src/main/java/org/acme/starcraft/domain/GameState.java",
+    "src/main/java/org/acme/starcraft/domain/PlayerInfo.java",
+    "src/main/java/org/acme/starcraft/domain/Point2d.java",
+    "src/main/java/org/acme/starcraft/domain/Resource.java",
+    "src/main/java/org/acme/starcraft/domain/Unit.java",
+    "src/main/java/org/acme/starcraft/domain/UnitType.java",
+    "src/test/java/org/acme/starcraft/domain/GameStateTest.java"
+  ],
+  "07715ef6baf4b2b5b8229018753e91e22af9f7b4": [
+    "NATIVE.md",
+    "pom.xml"
+  ],
+  "7dd776ba848d5be90668a06928256796839850f3": []
+}

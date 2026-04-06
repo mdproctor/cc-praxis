@@ -1,0 +1,102 @@
+{"hash": "f3c390d32e8af17acaf5f51b79ed6e3e01779e42", "date": "2026-04-06", "subject": "chore: add CLAUDE.md and configure GitHub issue tracking"}
+{"hash": "5a2b4e264decfa63efd786bfbc92e06e0e1b7973", "date": "2026-04-06", "subject": "docs: session handover 2026-04-06"}
+{"hash": "d3548bba6310fbc7b2e3983db3c8906f09f1c8e1", "date": "2026-04-06", "subject": "docs: blog post 6 \u2014 .app bundle, test quality review, SIGTRAP diagnosis"}
+{"hash": "28cf2dbe99d30c33afbf7dc2202cc55e396182d2", "date": "2026-04-06", "subject": "test: add genuinely high-value tests for resize, sendSigInt + fix JVM crash"}
+{"hash": "42df19abe2babbd1d702d0f026289aca0e27574d", "date": "2026-04-06", "subject": "test: expand coverage to solid across all 6 classes \u2014 26 \u2192 58 tests"}
+{"hash": "6566d302e0dc0218e4aa285ecc9ec90a2d0b486d", "date": "2026-04-06", "subject": "feat(macos): wire bundle.sh into native Maven profile \u2014 mvn install -Pnative produces .app"}
+{"hash": "f28102657234db2c2acebc3c34e0e2e6c374dfc0", "date": "2026-04-06", "subject": "feat: bundle.sh \u2014 assembles and signs .app bundle"}
+{"hash": "c6f4e7d3ded113407a956c01a762349857feeef7", "date": "2026-04-06", "subject": "feat(macos): auto-detect dylib path from .app bundle via ProcessHandle"}
+{"hash": "d4812b481b45bf476979b7b59df9fa8dc90351db", "date": "2026-04-06", "subject": "feat(macos): add Info.plist for .app bundle"}
+{"hash": "592f5fe8596553f8ecff96d9fba379bac3622f20", "date": "2026-04-06", "subject": "build: add @rpath to native binary for .app bundle dylib resolution"}
+{"hash": "15e5590faa275e5dfbe830d67c7ffcfe848a2408", "date": "2026-04-06", "subject": "docs: Plan 6 \u2014 .app bundle packaging"}
+{"hash": "885375b8a8029342e9b51311c170bb424a425994", "date": "2026-04-06", "subject": "docs: session handover 2026-04-06"}
+{"hash": "8d0fcf2da288107f3e680cf64931e2308a768735", "date": "2026-04-06", "subject": "docs: ADR-012 through ADR-015 \u2014 performSelectorOnMainThread, PTY echo, InteractionDetector, AnsiStripper"}
+{"hash": "e1cbb536c347b16e3dff9eeac2fc93b27587836a", "date": "2026-04-06", "subject": "docs: add design snapshot 2026-04-06 \u2014 architecture after Plans 1-5"}
+{"hash": "e9e98246797fb8644d025bc8754652c19e78490a", "date": "2026-04-06", "subject": "docs: update DESIGN.md \u2014 reflects Plans 3-5 implementation (PTY, claude, passive mode)"}
+{"hash": "072c4d8c1fc656ae1de1e19f91d7ed85544de113", "date": "2026-04-06", "subject": "docs(blog): align 005 with mandatory rules \u2014 Claude intro before first we, paragraph break"}
+{"hash": "de7a596518ff28fc12e04c95bf64b50188e00b63", "date": "2026-04-06", "subject": "docs(blog): align 004 with mandatory rules \u2014 metadata, subtitle, Claude intro, name Claude in closing"}
+{"hash": "3c04a812fdb1ea45d280813895f09ca80af4df7f", "date": "2026-04-06", "subject": "docs(blog): align 003 with mandatory rules \u2014 metadata, subtitle, Claude intro, vary consecutive we"}
+{"hash": "fa8f522ff47f7bfee1901af52c9db312a3c3147d", "date": "2026-04-06", "subject": "docs(blog): align 002 with mandatory rules \u2014 metadata, subtitle, Claude intro"}
+{"hash": "a65f7950dcbfd2b1e127417d8b0d43214c4e0c38", "date": "2026-04-06", "subject": "docs(blog): align 001 with mandatory rules \u2014 metadata, subtitle, Claude intro, paragraph break"}
+{"hash": "b5ecf87106009fd8f00cdb13385fd69fdbb04932", "date": "2026-04-06", "subject": "refactor(blog): rename to YYYY-MM-DD-NN-title.md convention, fix HANDOFF.md references"}
+{"hash": "0ffa27f75f339f7c7882d7a41ecc13432a013167", "date": "2026-04-05", "subject": "docs: restore lost thematic headings, fix bare structural slot in 005"}
+{"hash": "93b2ec4cf465ac6a384d00b932b3e0a0bd190175", "date": "2026-04-05", "subject": "docs: align blog entries with updated style guide \u2014 dual headings, integrated closings"}
+{"hash": "a33c5560f11e165f3898a43d5275d6365137adfd", "date": "2026-04-05", "subject": "docs: update HANDOFF.md \u2014 Plans 3-6 complete, Plan 6 is next"}
+{"hash": "a996e2b7f141973c977d80afdce3fa9a7d248914", "date": "2026-04-05", "subject": "docs: blog post 5 \u2014 PTY layer, claude wiring, passive mode"}
+{"hash": "977a725567d1fa168ed7bfe08980112ddc3231f5", "date": "2026-04-05", "subject": "chore: native image validates passive mode"}
+{"hash": "c63c79fb132220c3dbf538f2074e38085db390d3", "date": "2026-04-05", "subject": "feat(macos): wire InteractionDetector \u2014 PASSIVE mode, Stop button"}
+{"hash": "0ccb376ea02c9fbc28e0af7dbac3ad0f37d44d47", "date": "2026-04-05", "subject": "feat(macos): Panama bindings for StopClickedCallback and setPassiveMode"}
+{"hash": "5bc512f78310a060249cc1aa034fceb5a2d3bafb", "date": "2026-04-05", "subject": "feat(bridge): Stop button, passive mode, StopClickedCallback in myui_start"}
+{"hash": "0260f76ff1d7d224d6b1b055e4aef9e4c38cf952", "date": "2026-04-05", "subject": "revert: remove unnecessary Java 25 / --enable-preview from pom.xml"}
+{"hash": "b5ea8e051ab9df9f800105beff56b486ead07736", "date": "2026-04-05", "subject": "feat(core): InteractionDetector, ClaudeState, PtyProcess.sendSigInt"}
+{"hash": "ed1d0d33053e122ad359f6612405d723bb6f118b", "date": "2026-04-05", "subject": "chore: native image validates claude CLI integration"}
+{"hash": "a91d103c77aa1c7c6701d99119b2b5227589a5a3", "date": "2026-04-05", "subject": "feat(macos): wire claude CLI via PtyProcess with ANSI stripping"}
+{"hash": "e4b1c04caee2229b6e9bf737c96d8cdfbba5f263", "date": "2026-04-05", "subject": "fix(core): restore interrupt status on InterruptedException in ClaudeLocator"}
+{"hash": "31629f8d1ac72d27af1e838a2eb3fe7d739efa1e", "date": "2026-04-05", "subject": "feat(core): ClaudeLocator \u2014 resolve claude binary via login shell"}
+{"hash": "513e43adf5b8c62e20e7d3c1a0a549789f6d668e", "date": "2026-04-05", "subject": "fix(core): narrow AnsiStripper other-escape pattern, add null guard"}
+{"hash": "001c0633ec5a3e966b190562ff37aa357ec14397", "date": "2026-04-05", "subject": "feat(core): AnsiStripper \u2014 strip VT100 escape sequences for NSTextView display"}
+{"hash": "92ac37a7ad97ecadba9ec4a39550a7c3421504dd", "date": "2026-04-05", "subject": "fix: PTY echo suppression and AppKit cross-thread output"}
+{"hash": "69593ef659edd50ede9b70c4378b3a44c80e4095", "date": "2026-04-05", "subject": "build: fix native image \u2014 add POSIX downcall signatures and run-time init"}
+{"hash": "5b081e66c4b8224a8a668f08ffc4f62a0935d428", "date": "2026-04-05", "subject": "feat(macos): wire PtyProcess to UI \u2014 /bin/cat round-trip via PTY"}
+{"hash": "bcfab71c9962e589946f787886a261944b6d8ac0", "date": "2026-04-05", "subject": "test(core): PtyProcess resize and close tests"}
+{"hash": "49a827b4623c06cdc3b08bfb5cb6bdacc1056c29", "date": "2026-04-05", "subject": "test(core): PtyProcess spawn, reader, and cat round-trip tests"}
+{"hash": "a692c9485f98a53cfbb7e083c318b6b8ae842fd4", "date": "2026-04-04", "subject": "fix(core): remove vestigial arena, fix partial-write loop, correct close() javadoc"}
+{"hash": "4b101b94c1b0e4638f37361da24775f077d2504c", "date": "2026-04-04", "subject": "fix(core): guard arena.close() against double-call in PtyProcess.close()"}
+{"hash": "72b5e20f0795f7b8db6cd77ee001cb60da657336", "date": "2026-04-04", "subject": "feat(core): PtyProcess \u2014 open PTY master/slave pair via POSIX calls"}
+{"hash": "22cf9f93ef9c27572b75ac6d8c7df7fe611f32b0", "date": "2026-04-04", "subject": "feat(core): PosixLibrary \u2014 Panama FFM downcalls for POSIX PTY functions"}
+{"hash": "b146f17f1173e32e632b7d5798e6572d4e0f7f48", "date": "2026-04-04", "subject": "build: add JUnit5 to app-core for PTY tests"}
+{"hash": "aa30db134cdfc8497092026e8bf167686053897b", "date": "2026-04-04", "subject": "docs: reference knowledge garden from HANDOFF.md"}
+{"hash": "9c492a358c7684af896c2c7493d71d851df86829", "date": "2026-04-04", "subject": "docs: comprehensive handoff document for future Claude instances"}
+{"hash": "67562d50d5710c75f76d7ed5f02de156caf0ff88", "date": "2026-04-04", "subject": "docs: blog post 4 \u2014 enhanced with tables, ASCII diagrams, and quick reference"}
+{"hash": "7e595215d51f6ead97bf470c9aa988858f240336", "date": "2026-04-04", "subject": "docs: blog post 4 \u2014 seven AppKit bugs, narrative form for end users"}
+{"hash": "6f8770cf2f5cc7b6e5ffd668260eccf759ced677", "date": "2026-04-04", "subject": "docs: APPKIT_PITFALLS.md \u2014 reference guide of hard-won debugging knowledge for future Claude instances"}
+{"hash": "e9fa9382694ba08afdb5d9c3b3470a5a0b6914d7", "date": "2026-04-04", "subject": "docs: blog post 3 \u2014 split pane UI, seven bugs and what they taught us"}
+{"hash": "cba514c0c4d657aac65dc9be669611ffe8260528", "date": "2026-04-04", "subject": "docs: ADR-008/009/010/011 \u2014 key Plan 2 architectural findings"}
+{"hash": "bf2bcce5e2eeaf8aee01807e8854a300505ee1c4", "date": "2026-04-04", "subject": "fix: cursor blink via windowDidBecomeKey: \u2014 GCD dispatch blocks can't fire while [NSApp run] is inside dispatch_async; use AppKit delegate instead"}
+{"hash": "a5657da3c48bbca7d4243548765932e8367e48d4", "date": "2026-04-04", "subject": "fix: no-op string assignment after makeFirstResponder to start NSTextField cursor blink timer (AppKit empty-field bug)"}
+{"hash": "bef71996c1c22d315f18791a190582f657efb286", "date": "2026-04-04", "subject": "fix: visible placeholder colour on dark bg; defer focus with updateInsertionPointStateAndRestartTimer to show cursor on startup"}
+{"hash": "c0ae8e38d0e4c00d29c9d8ef63361999a4bffe15", "date": "2026-04-04", "subject": "fix: use window.initialFirstResponder for NSTextField cursor \u2014 AppKit honours it after run loop starts, blink timer initialises correctly"}
+{"hash": "29888a951393053732448e0b53cbe8d9b9b0b610", "date": "2026-04-04", "subject": "chore: remove debug try/catch from Main.java \u2014 appendOutput working"}
+{"hash": "dc44e337a12e23608441c27f54841708886122e7", "date": "2026-04-04", "subject": "fix: update NSTextView synchronously when on main thread \u2014 dispatch_async not drained inside Panama upcall context"}
+{"hash": "4ba279f65db82e87e2d9c282b802ee438b3ccee2", "date": "2026-04-04", "subject": "debug: log every step of append chain to find the break point"}
+{"hash": "d63b944499101e91f2a7f013afb939e2e9d02491", "date": "2026-04-04", "subject": "fix: proper NSTextView scroll config + setString: for reliable append and redraw"}
+{"hash": "4cb591b53689dd47140755c31c325134bdc98956", "date": "2026-04-04", "subject": "fix: replace WKWebView with NSTextView for output \u2014 WKWebView subprocess fails in non-bundle JVM process; add myui_append_output"}
+{"hash": "e3a72838764fdc3c53ca524af3d8cdefe8c2beb7", "date": "2026-04-04", "subject": "debug: WKNavigationDelegate + verbose JS logging to diagnose WebView rendering"}
+{"hash": "4072155a2cf929358b54126dc60ff46920087b0a", "date": "2026-04-04", "subject": "fix: log JS errors from evaluateJavaScript; move script inside body tag in initial HTML"}
+{"hash": "c4fc6dccd75edb3f8d05c438a822d809f3a7cfaa", "date": "2026-04-04", "subject": "fix: add views to existing contentView instead of replacing it \u2014 preserves keyboard event routing"}
+{"hash": "438082b88ca370cf6038933d8f5e924daa7131ab", "date": "2026-04-04", "subject": "fix: replace NSSplitView with plain NSView container \u2014 NSSplitView blocks keyboard events to subviews"}
+{"hash": "475426bdff9dc188290c0a87c3f0cb84bfd9f148", "date": "2026-04-04", "subject": "fix: recalculateKeyViewLoop after contentView replacement \u2014 restores keyboard routing through NSSplitView"}
+{"hash": "5860686df8e29ae60db0c3144ea0e76f3c32d563", "date": "2026-04-04", "subject": "fix: replace NSScrollView+NSTextView with NSTextField \u2014 reliable focus and Enter key handling"}
+{"hash": "56561a6b6a47cb43374c3e23a5a26faf5dd3b488", "date": "2026-04-04", "subject": "debug: add NSLog instrumentation for window key status and text view interactions"}
+{"hash": "52b201c74658c60129938681215ee4028d81cb55", "date": "2026-04-04", "subject": "fix: delay makeFirstResponder 200ms \u2014 WKWebView claims focus during init"}
+{"hash": "a3e451dc74707928fcfc07f274055692d1f825c3", "date": "2026-04-04", "subject": "fix: make NSTextView first responder on startup \u2014 enables keyboard focus in input pane"}
+{"hash": "7126cd1915d29339ab7ab59caaa2c8e2de6b57de", "date": "2026-04-04", "subject": "feat: Main \u2014 split pane with initial HTML and echo input handler"}
+{"hash": "591c9317227dcf8ce351a08470ca28b55b46e522", "date": "2026-04-04", "subject": "feat: update native image metadata \u2014 TextSubmittedCallback upcall + 6-param myui_start downcall"}
+{"hash": "f4c76384f15727b944da794c03b31fe1ef6f85e5", "date": "2026-04-04", "subject": "feat: MacUIBridge \u2014 extend start() with html/text params, add loadHtml/evaluateJavaScript"}
+{"hash": "7355889622eddd0534b670ea1b15b9fbcc6be6be", "date": "2026-04-04", "subject": "feat: add TextSubmittedCallback upcall to Callbacks (findStatic pattern)"}
+{"hash": "6b8c233a6a61987780312725d6d789248f784988", "date": "2026-04-04", "subject": "feat: regenerate Panama bindings \u2014 split pane API with 6-param myui_start"}
+{"hash": "7dff32b0118d54cfcaf013cce3a0849bf248ac6e", "date": "2026-04-04", "subject": "feat: add WebKit framework to dylib build"}
+{"hash": "627e1b0025cc8d056e5f76c600fe6a4f20ab1493", "date": "2026-04-04", "subject": "feat: split pane UI \u2014 NSSplitView + WKWebView + NSTextView + Enter key callback"}
+{"hash": "ad4b38bc6c9ac4198f8396cc5d703cea2a773fc1", "date": "2026-04-04", "subject": "feat: add TextSubmittedCallback, myui_load_html, myui_evaluate_javascript to bridge header"}
+{"hash": "e8a6421f3375ea72a69cb4580ea7332e8a04ab13", "date": "2026-04-04", "subject": "docs: Plan 2 \u2014 split pane UI (NSSplitView + WKWebView + NSTextView)"}
+{"hash": "40c7cafa3f9530c1d2c975be170bded6f1725d4c", "date": "2026-04-04", "subject": "docs: blog post 2 \u2014 bridge foundation pivots and first native window"}
+{"hash": "eeec501d87bd3f55affd58f541060643d528c28d", "date": "2026-04-04", "subject": "docs: ADR-007 \u2014 myui_start thread detection for native image vs JVM mode"}
+{"hash": "316d5650a38ea3ed530211119f2aedc8f1f2901b", "date": "2026-04-04", "subject": "fix: myui_start handles both main-thread (CFRunLoopRun) and worker-thread (semaphore) callers"}
+{"hash": "8a5f1051f34ee989396af4c2f372185b55e21861", "date": "2026-04-03", "subject": "fix: correct reachability-metadata.json format \u2014 directUpcalls with class/method, downcall descriptors"}
+{"hash": "598e4305b51bd699473eec8489abaeac48c479fb", "date": "2026-04-03", "subject": "fix: add reachability-metadata.json registering void upcall descriptor for GraalVM native image"}
+{"hash": "649fac002237b8f018872ec0d73546501f9abaa7", "date": "2026-04-03", "subject": "fix: bypass jextract upcall helper \u2014 use findStatic on own class for native image compatibility"}
+{"hash": "c5d2d78d1fe56e879fc1f6d40c015673bd62721c", "date": "2026-04-03", "subject": "fix: defer jextract generated class init to runtime \u2014 symbols not available at build time"}
+{"hash": "af0e5035aab8ddc097f5dbe9dd7a560979d99bc0", "date": "2026-04-03", "subject": "feat: native image config \u2014 enable-native-access and Panama FFM reflection"}
+{"hash": "6c46e2bc4dc475610363ba27c40be41b41005359", "date": "2026-04-03", "subject": "fix: clear onClosed before invoking \u2014 prevents double-fire on NSApp terminate"}
+{"hash": "8f901eeebf0628e37a8acc1fc0e72069ecefbe45", "date": "2026-04-03", "subject": "docs: ADR-006 \u2014 main thread dispatch via GCD (myui_start)"}
+{"hash": "0c454c6201e1b54cfd217704f6bedcdf7c0d8b0f", "date": "2026-04-03", "subject": "fix: dispatch AppKit to main thread via GCD in myui_start() \u2014 Quarkus worker thread fix"}
+{"hash": "a712a7680bf43560ce644803c1906bffc55f013c", "date": "2026-04-03", "subject": "feat: @QuarkusMain entry point \u2014 init AppKit, create window, run event loop"}
+{"hash": "ede00caaa4429199a053155042f63408b9e3aa8f", "date": "2026-04-03", "subject": "fix: use Arena.ofShared() in MacUIBridge \u2014 ofAuto() does not support close()"}
+{"hash": "a5a320b0457d300c4dc5c2161ba6ca52f2c6e070", "date": "2026-04-03", "subject": "feat: MacUIBridge facade \u2014 loads dylib, wraps Panama downcalls and upcall"}
+{"hash": "d77366e53d03477fcc3311504c8670c757fa2c65", "date": "2026-04-03", "subject": "feat: Panama upcall stub for window-close callback"}
+{"hash": "fb36d7ed502a3181dcfd404764a8a846c159c204", "date": "2026-04-03", "subject": "feat: Panama FFM bindings generated from MyMacUI.h via jextract"}
+{"hash": "e476c68f69dce7844da10b3629b76b9a4d430be5", "date": "2026-04-03", "subject": "feat: Makefile builds libMyMacUI.dylib via clang"}
+{"hash": "120325aab64441f086ac9fb2048aca6228ef8af5", "date": "2026-04-03", "subject": "docs: note single-window delegate callback limitation"}
+{"hash": "7ad45db12a7cd0e1dd5c8413f9ee51a63918f111", "date": "2026-04-03", "subject": "feat: Objective-C bridge implementation (NSWindow + close callback)"}
+{"hash": "a84bd28b991c843fb3f1e5da5b8e5ac0cc2fcfff", "date": "2026-04-03", "subject": "feat: Objective-C bridge C ABI header (Phase 1 primitives)"}
+{"hash": "024e9ccb0c6e749aebbe437a21cdc628acd4d40a", "date": "2026-04-03", "subject": "feat: Maven multi-module skeleton (app-core, app-macos)"}

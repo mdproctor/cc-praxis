@@ -1,0 +1,84 @@
+{"hash": "ae65a6ef4071b0f5fb041412c000d88b11dc9845", "date": "2026-04-06", "subject": "docs: session handover 2026-04-06"}
+{"hash": "670952774dbdffe09ae06f7eac61bc8b3b01cb9e", "date": "2026-04-06", "subject": "docs: session wrap 2026-04-06 \u2014 snapshot, blog, CLAUDE.md updates"}
+{"hash": "b33bdc309f25cb8d44b7e6066075ae460c079acf", "date": "2026-04-06", "subject": "test(auth): close remaining test gaps \u2014 window expiry, credential interface, /app/* protection"}
+{"hash": "26ac367c8fbfc026b236fd5ff90bbb8d7dffeb2b", "date": "2026-04-06", "subject": "test(auth): add HTTP-level rate limiter test and dev cookie rejection test"}
+{"hash": "06c403194204d11ff8cd5283618776eb6b5a8009", "date": "2026-04-06", "subject": "feat(auth): production-harden auth \u2014 rate limiting, /app/* protection, dev cookie fix"}
+{"hash": "6613c19c9d4cc2bf8f3d675e330a8319062a5c22", "date": "2026-04-06", "subject": "docs: session handover 2026-04-06"}
+{"hash": "8037c273a355421c1ee57bab0d3753101ef70ef1", "date": "2026-04-06", "subject": "docs: add design snapshot 2026-04-06-post-blog-catchup"}
+{"hash": "ad73a90e6f722f55ebafcb21043291134873919f", "date": "2026-04-06", "subject": "docs: add project blog entry 2026-04-05-locking-the-door"}
+{"hash": "eebf0b935c4b5a8a07a604afa99735898a3758d4", "date": "2026-04-06", "subject": "docs: session handover 2026-04-06"}
+{"hash": "642d611f45d19a93a9eaf395c266e2460c4b0208", "date": "2026-04-06", "subject": "docs: add design snapshot 2026-04-06-full-system-state"}
+{"hash": "ddd9435bed022a02ae7c17d007f954cd82f844bd", "date": "2026-04-06", "subject": "docs: add project blog entry 2026-04-05-01-testing-what-wasnt-tested"}
+{"hash": "0c6b1940b77822042e1902433955b4e19cb98a32", "date": "2026-04-06", "subject": "docs: add Project Blog section to CLAUDE.md \u2014 blog location and style guide pointer"}
+{"hash": "8837690b2f1c33686d22199805f4850ead51f1e0", "date": "2026-04-06", "subject": "refactor: move docs/project-blog/ \u2192 docs/blog/ (aligned with write-blog skill convention)"}
+{"hash": "e25ef6734faeb3c1cec48f4ebd096dc7ad8da7b5", "date": "2026-04-06", "subject": "fix: auto-resize tmux pane on WebSocket connect \u2014 eliminates TUI garble on reconnect"}
+{"hash": "f873c89f7f93459a3c7ef6306a6ff679aa6cca0f", "date": "2026-04-05", "subject": "docs: update CLAUDE.md \u2014 106 tests, auth package, new config properties, directory convention"}
+{"hash": "79131677b870656cc36185f81d8126cedd1c359d", "date": "2026-04-05", "subject": "fix: split ~/.remotecc (config) from ~/remotecc-workspace (session working dir)"}
+{"hash": "2a5be5449acf2ce2700efcaf3574153a1cbf303d", "date": "2026-04-05", "subject": "feat: duplicate session name detection \u2014 409 on conflict, overwrite=true to replace, live validation in UI"}
+{"hash": "3ff9c7aa4ab459b828cf09c85b9f7c3e06d3a2f5", "date": "2026-04-05", "subject": "feat: default working dir is ~/.remotecc \u2014 created automatically if absent"}
+{"hash": "ad8933b245724121f6a221a445dce5da6e1174f3", "date": "2026-04-05", "subject": "feat: dev quick login \u2014 overlay dialog with one-click auth via cookie (dev mode only)"}
+{"hash": "de2a82f6ae7e6b9b56e744f247378bf073ba8dfd", "date": "2026-04-05", "subject": "fix: redirect to /auth/login on 401 in dashboard.js \u2014 silent failure on unauthenticated API calls"}
+{"hash": "5e97a5b7ca0a176175170a204076d5a3d71e33ab", "date": "2026-04-05", "subject": "fix: address auth review issues \u2014 consume invite token, timing-safe key comparison, file permissions, JSON serialization"}
+{"hash": "abeed7b8165138cbe7f8001e833e50dedd2bec5d", "date": "2026-04-05", "subject": "feat: add WebAuthn login and register pages"}
+{"hash": "f1dcfdd7ec7a1264047c90ed040b9222d823d436", "date": "2026-04-05", "subject": "feat: add ApiKeyClientFilter \u2014 Agent injects X-Api-Key on all ServerClient calls"}
+{"hash": "dcdcfd20dc4ab32fc05efa7018e4fcd38d99ae64", "date": "2026-04-05", "subject": "feat: add AuthResource \u2014 POST /auth/invite and GET /auth/register"}
+{"hash": "1493d20d9273824ea717e022f8b086c8886bc9de", "date": "2026-04-05", "subject": "feat: add ApiKeyAuthMechanism; protect /api/* with @Authenticated; fix tests with @TestSecurity"}
+{"hash": "b9bd68479965d7a2c42b701575dcaa192a09f0f3", "date": "2026-04-05", "subject": "feat: add CredentialStore \u2014 WebAuthnUserProvider backed by JSON file"}
+{"hash": "4e2faca512a12c756786587cb409d8d86d72f7e9", "date": "2026-04-05", "subject": "feat: add InviteService \u2014 24h one-time invite token management"}
+{"hash": "ac80d56b59402026bb6bf89004eee0260eccc93d", "date": "2026-04-05", "subject": "feat: add quarkus-security-webauthn dependency and auth config"}
+{"hash": "88696208f54cec7bd491f2588154b63473648ba8", "date": "2026-04-05", "subject": "docs: add authentication implementation plan"}
+{"hash": "1131cfb5837b8e8cc8c5306391d9c129ed1b5c4c", "date": "2026-04-05", "subject": "docs: add authentication design spec \u2014 passkeys + invite links"}
+{"hash": "50b76366b2f3c1b3c2f970e00d56310f40f2ebfa", "date": "2026-04-05", "subject": "docs: session handover 2026-04-05"}
+{"hash": "5d959a8be5173c943e3e49cbb23985c45c54ae01", "date": "2026-04-05", "subject": "docs: update CLAUDE.md \u2014 81 tests, -Pe2e profile, E2E validated"}
+{"hash": "ad7dcd7cbadf176a59d215a6b333659b0c2dc3fc", "date": "2026-04-05", "subject": "fix: correct MCP config format in ClaudeE2ETest \u2014 mcpServers wrapper required"}
+{"hash": "df621245a3e610719fa0b5261bf1ed21f7545a19", "date": "2026-04-05", "subject": "test: add ClaudeE2ETest \u2014 real claude CLI invocations against MCP server (-Pe2e)"}
+{"hash": "97d343cdc53d79a911d1d194ce93debd409bec30", "date": "2026-04-05", "subject": "build: exclude *E2ETest from default surefire run; add -Pe2e profile"}
+{"hash": "76b8bc6b4eb34a2e8a9f950a82272a40145bfebd", "date": "2026-04-05", "subject": "test: add explicit bootstrap test; make bootstrapRegistry package-private"}
+{"hash": "0d1535dd08d981efe7da5190c91c0e110c999a38", "date": "2026-04-05", "subject": "test: add history replay and concurrent connections tests to TerminalWebSocketTest"}
+{"hash": "36439ca3e3c391cabd90db272a02178038d508d3", "date": "2026-04-05", "subject": "test: add 5 integration tests to McpServerIntegrationTest \u2014 tools/list, error handling, rename, key name lifecycle, handshake sequence"}
+{"hash": "e8fb8601245af1b73dc042cf18065bc6fc32e0d2", "date": "2026-04-05", "subject": "test: add 5 unit tests to McpServerTest \u2014 error handling, send_input, rename, open_in_terminal, get_server_info"}
+{"hash": "98bd3e0d5ca927e84f8c2ba6b7d49076ee2787e1", "date": "2026-04-05", "subject": "test: add rename and resize endpoint coverage to SessionResourceTest"}
+{"hash": "3a300f9a351133ec8a60cb480caa7a0a9fde7a60", "date": "2026-04-05", "subject": "test: prove sendKeys -l fix works end-to-end through REST input endpoint"}
+{"hash": "15ed86874eb8e7f1eaa70746b07fbd3b7432f343", "date": "2026-04-05", "subject": "docs: add comment explaining -l flag in TmuxService.sendKeys"}
+{"hash": "9d357f08a0d6e92242a4d0182652f89baaa6b88c", "date": "2026-04-05", "subject": "fix: use -l flag in TmuxService.sendKeys to prevent tmux key name interpretation"}
+{"hash": "ba36934c42f389f3e23648ea0cfd73b6de7ec894", "date": "2026-04-05", "subject": "chore: fix .gitignore to correctly exclude .worktrees"}
+{"hash": "780f708c36cf4ea2e00dc7cf7680a433607b2f5b", "date": "2026-04-05", "subject": "chore: add .gitignore to exclude .worktrees/"}
+{"hash": "455dbe85a84d94694b7d7b9b93840ff81129b94c", "date": "2026-04-05", "subject": "docs: add E2E testing and hardening implementation plan"}
+{"hash": "cab84615c8e83b12e60a083bcb827eb8aea1ed46", "date": "2026-04-05", "subject": "docs: add E2E testing and hardening design spec"}
+{"hash": "8e9e2bbfaf24f8024f0c1cfaee398a693896ade7", "date": "2026-04-04", "subject": "docs: add CLAUDE.md and session handoff \u2014 project state, architecture, known issues, next steps"}
+{"hash": "280eca4e563076cdf9d09269c3a62da1950ebf17", "date": "2026-04-04", "subject": "docs: add project blog \u2014 5 entries covering the full development journey from iPad itch to terminal rendering saga"}
+{"hash": "97d064f92c3e7911e5594b731fbb1a4b26aea0bf", "date": "2026-04-04", "subject": "docs: add BUGS-AND-ODDITIES.md capturing all bugs, fixes, and oddities from initial dev session"}
+{"hash": "7f381745fe45ca6634341339cf3e2215b6f23370", "date": "2026-04-04", "subject": "fix: restore one trailing space on last history line so cursor lands after prompt $ correctly"}
+{"hash": "23ffa4df4c2a03094a12be4eae48360fab2bc252", "date": "2026-04-04", "subject": "fix: join history lines with \\r\\n between (not after last) to eliminate trailing blank line"}
+{"hash": "ed95a3a52623acb33741304020e79a1f9c6ebf84", "date": "2026-04-04", "subject": "feat: use capture-pane -e for colored history replay with ANSI stripping for blank line detection"}
+{"hash": "c0275d4757209ef83d07f7173eee71f0d4c0637b", "date": "2026-04-04", "subject": "fix: remove all blank lines from history replay (pane grid artifacts)"}
+{"hash": "8466cfb66c9435ac8975dd81f772f917a14ef5f0", "date": "2026-04-04", "subject": "fix: send history before starting pipe-pane to eliminate race condition"}
+{"hash": "107af6c30d64e7305c663cf77bb3120b8ab765aa", "date": "2026-04-04", "subject": "fix: collapse consecutive blank lines in history replay, trim leading and trailing"}
+{"hash": "39184b26bacda1874361e535f9cc3f5c952145ae", "date": "2026-04-04", "subject": "fix: skip leading empty lines in history replay (fresh pane has blank rows at top)"}
+{"hash": "98f3bb95c085c70e552316a4b89b7b0792601fbc", "date": "2026-04-04", "subject": "fix: replay history on reconnect, stripping trailing whitespace per line"}
+{"hash": "68155d0fda029afccabb611ec45f672c30523b26", "date": "2026-04-04", "subject": "fix: remove capture-pane history replay (causes indentation artifacts from padded grid output)"}
+{"hash": "99093b586f1352ca8ba84572150ef33753a7f7e3", "date": "2026-04-04", "subject": "fix: replay pane scrollback on WebSocket reconnect via capture-pane"}
+{"hash": "199dc8fe7765472d595f7942bf79913fc4183278", "date": "2026-04-04", "subject": "fix: replace tmux attach-session with pipe-pane+FIFO for PTY-free terminal streaming"}
+{"hash": "4174de26e4960a93a6252d5f554ee71725d9601d", "date": "2026-04-04", "subject": "feat: add PWA manifest, service worker registration, and SVG icons for iPad install"}
+{"hash": "d0e11f92cb3691c0e020a722b831c4c35e6fca84", "date": "2026-04-04", "subject": "feat: add management dashboard with session cards, create dialog, auto-refresh"}
+{"hash": "1ea74cf4072c9fb1c96b4298f992c52cd0b2d59c", "date": "2026-04-04", "subject": "feat: add static resource structure, resize endpoint, and frontend test scaffolding"}
+{"hash": "b2273b66e9624db79c31dc5fdfa4b1e5d0e17d86", "date": "2026-04-04", "subject": "fix: add quarkus-rest-client-reactive-jackson for ServerClient JSON deserialization"}
+{"hash": "6ebcac9c26ea976a06e2f42bd92a7b98d818c062", "date": "2026-04-04", "subject": "feat: add AgentStartup with server connectivity, adapter detection, and clipboard check"}
+{"hash": "1184204e8d9c02302b1418ee5d527dbd46d41b1d", "date": "2026-04-04", "subject": "feat: add MCP JSON-RPC server with all 8 tools at POST /mcp"}
+{"hash": "b4d6e9b6a4be436c44d3e1f65f6506605ae38cea", "date": "2026-04-04", "subject": "feat: add ClipboardChecker to detect and fix tmux clipboard config"}
+{"hash": "5aafd28b14a13abdee8be7b06f3967738a0f7b19", "date": "2026-04-04", "subject": "feat: add terminal adapter interface, ITerm2Adapter, and TerminalAdapterFactory"}
+{"hash": "c08ff08248120a099b0867edd85d5529e5ba5619", "date": "2026-04-04", "subject": "feat: add ServerClient REST client interface and test mock support"}
+{"hash": "e6943b8ff31dd3649fd5f26c9f5ba5e36e3691f1", "date": "2026-04-04", "subject": "feat: add send_input and get_output REST endpoints to SessionResource"}
+{"hash": "35b8dde1748a7499dff352588830e7f0bb3fbde2", "date": "2026-04-04", "subject": "docs: mark GraalVM native build as verified (graalvm-25 via SDKMAN)"}
+{"hash": "435b094f5e1c30fe99479832b19ef8ddc6c3aca9", "date": "2026-04-04", "subject": "feat: add native image reflection config for model classes"}
+{"hash": "5176cdd27e1133ae18d8d392eef7be0991ea6369", "date": "2026-04-04", "subject": "fix: extract cleanup() in TerminalWebSocket so @OnError properly cleans up processes"}
+{"hash": "bf5eecc0ff74a4033ee519feb84dd43c97aae3f5", "date": "2026-04-04", "subject": "feat: add WebSocket terminal streaming via ProcessBuilder tmux attach"}
+{"hash": "4c4581927687fa34b64f3aaa41a5c72b8364106b", "date": "2026-04-04", "subject": "feat: add Session REST API \u2014 list, get, create, delete, rename"}
+{"hash": "cd2966bd5bd416f462832981908a006047d7dc21", "date": "2026-04-04", "subject": "feat: bootstrap SessionRegistry from tmux sessions on startup"}
+{"hash": "bf0655ba4367d58eb9f36740429aebe3154e763e", "date": "2026-04-04", "subject": "feat: add in-memory SessionRegistry with ConcurrentHashMap"}
+{"hash": "4fa7ffde9258a99599c15f8c0b5445689f52c742", "date": "2026-04-04", "subject": "fix: close process streams and redirect stderr in TmuxService"}
+{"hash": "6a55c358ebe7c2943241b41a0b2b76e909e42f62", "date": "2026-04-03", "subject": "feat: add TmuxService wrapping tmux via ProcessBuilder"}
+{"hash": "bd6c7b2d370e37ac1f40ff0faf6ae80e0bb4ef4c", "date": "2026-04-03", "subject": "feat: add Session record and SessionStatus enum"}
+{"hash": "e57cf4645b8cc449ad06594ff5d53936003492d0", "date": "2026-04-03", "subject": "fix: set Java compiler release to 21 (running on Java 26)"}
+{"hash": "d3c43b3a6717f65fb88599e655a6fd7861d96450", "date": "2026-04-03", "subject": "docs: add comment noting Java 21 requirement for Task 7 (Thread.ofVirtual)"}
+{"hash": "dca6ff334e2fe2808dca31614adee8318f38a533", "date": "2026-04-03", "subject": "feat: bootstrap Quarkus project with config and smoke test"}

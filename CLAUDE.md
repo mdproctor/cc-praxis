@@ -527,6 +527,7 @@ When you identify a problem and prepare a solution, STOP and consider:
 - `custom-git-commit` — user-configured commits with primary doc sync. type: custom only
 - `java-code-review` — triggers `java-security-audit` for security-critical code
 - `issue-workflow` — full-lifecycle GitHub issue tracking: Phase 0 setup (labels, CLAUDE.md), Phase 1 pre-implementation planning (epics + child issues), Phase 2 task intake (proactive issue creation + epic placement + cross-cutting detection), Phase 3 pre-commit safety net (issue linkage + split detection). Invoked automatically when Work Tracking is enabled
+- `retro-issues` — on-demand retrospective mapping of git history to epics and issues; analyses git log + ADRs + blog entries; proposes structure in `docs/retro-issues.md` for review before creating anything on GitHub; never auto-triggered
 - `skill-validation.md` workflow — blocks `git-commit` if CRITICAL findings exist (not a portable skill; lives at repo root)
 
 **Specialized skills** (domain-specific):

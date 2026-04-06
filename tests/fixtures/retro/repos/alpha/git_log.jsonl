@@ -1,0 +1,10 @@
+{"hash": "45209c0d13d7f7c019672b452a5a8844daca8a12", "date": "2026-03-28", "subject": "Standardize design document naming to DESIGN.md"}
+{"hash": "0a6ce63f27fef8a7c73c48aafe4a487bc102e413", "date": "2026-03-28", "subject": "Reorganize documentation: rename design/ to docs/ and organize summary files"}
+{"hash": "3c4aad6515da7191582ba0addece5b3e88b3ae1c", "date": "2026-03-28", "subject": "Move CLAUDE.md back to root folder"}
+{"hash": "a09bcdb1f90df949a0f8cda8d019362d889d7696", "date": "2026-03-28", "subject": "Move design documents to design/ folder and update all references"}
+{"hash": "259e55f775ee31fe90ead0ece5fcb0b395081d67", "date": "2026-03-28", "subject": "Add CMMN Stages/Milestones, in-memory storage providers, and Flow worker module."}
+{"hash": "0a664efc3f3f0d918ed5ee80fce8ff697849b772", "date": "2026-03-28", "subject": "Stages and Milestones added."}
+{"hash": "63927e996aac8a17e7252e08203e8ab073d0ac96", "date": "2026-03-27", "subject": "Refactoring to a multi-module maven project."}
+{"hash": "e4814476c14ca0deb9fbbd8429e9fdc118711316", "date": "2026-03-27", "subject": "Refactoring to a multi-module maven project."}
+{"hash": "8788fcf5254e3345f5aeffc4466bfd8228b0bb6e", "date": "2026-03-27", "subject": "commit 2"}
+{"hash": "a91fa875a678f9b256b1bfa3367d793a298595c9", "date": "2026-03-27", "subject": "commit 1"}

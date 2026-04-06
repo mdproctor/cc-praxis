@@ -1,0 +1,29 @@
+{
+  "96b6e0fd63d9905ec18046d687e6330c14a1160c": [
+    ".github/workflows/documentation-validation.yml",
+    "CLAUDE.md",
+    "docs/QA-FRAMEWORK-IMPLEMENTATION.md",
+    "docs/QA-GUIDE.md"
+  ],
+  "92c4d44b22598a916654957a9d826a0512eba0e1": [
+    "README.md"
+  ],
+  "ce5252d5b0994b03a0afc690edcce237d74bbd36": [
+    "examples/README.md"
+  ],
+  "fb3ea23c438077158089395116647012dcc7c83c": [
+    "CODE_OF_CONDUCT.md",
+    "CONTRIBUTING.md"
+  ],
+  "a45d0103fdc5660cb89d3c9dbfb9d2cd7b1bba48": [
+    "docs/working-group/README.md",
+    "docs/working-group/meeting-notes/.gitkeep",
+    "docs/working-group/stakeholder-outreach-template.md"
+  ],
+  "2a47308e90b48876d5ff0c62e1714e7ea20408af": [
+    "docs/catalog/README.md",
+    "docs/catalog/projects.md",
+    "docs/catalog/template.md"
+  ],
+  "fadbbf4af0e3b32f6bf9e2b365f496e571eb3504": []
+}

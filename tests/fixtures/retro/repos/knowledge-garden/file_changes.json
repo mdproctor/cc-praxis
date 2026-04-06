@@ -1,0 +1,384 @@
+{
+  "cce8159e54a2ed464f842bb1e9e2fda56011f9b1": [
+    "scripts/validate_garden.py"
+  ],
+  "ffdff6290982ccb93c4845c0ad74eb0856de8b77": [
+    "scripts/validate_garden.py"
+  ],
+  "d10e143fafd2e57ac77cb1453f2fc62d31b1d2b6": [
+    "submissions/2026-04-06-starcraft-maven-aggregator-packaging-pom.md",
+    "submissions/2026-04-06-starcraft-quarkus-dev-skips-without-build-goal.md",
+    "submissions/2026-04-06-starcraft-quarkus-profile-cdi-unsatisfied.md",
+    "submissions/2026-04-06-starcraft-scelight-dat-files-not-in-jar.md"
+  ],
+  "7e8bc867e21337cf0a997581dae43065fed6071b": [
+    "GARDEN.md"
+  ],
+  "905b1cde57a2d865179ec13e00d4000cce855ac2": [
+    "CHECKED.md",
+    "GARDEN.md",
+    "beautifulsoup/encoding.md",
+    "claude-code/settings-json-quirks.md",
+    "java-panama-ffm/pty-patterns.md",
+    "java/clock-testing.md",
+    "java/concurrency.md",
+    "java/generics.md",
+    "java/records.md",
+    "permuplate/permuplate-templates.md",
+    "quarkus/cdi.md",
+    "quarkus/maven.md",
+    "quarkus/scheduler.md",
+    "quarkus/testing.md",
+    "submissions/2026-04-05-claude-code-GE-0001-settings-json-custom-keys.md",
+    "submissions/2026-04-05-cross-project-GE-0002-git-c-flag.md",
+    "submissions/2026-04-05-cross-project-GE-0003-two-claude-verification.md",
+    "submissions/2026-04-05-java-GE-0004-typed-return-in-generator-predicate-pair.md",
+    "submissions/2026-04-05-permuplate-GE-0005-hand-written-return-type-boundary-omission.md",
+    "submissions/2026-04-05-permuplate-GE-0006-svg-ci-sed-target.md",
+    "submissions/2026-04-05-permuplate-GE-0007-typearglist-dynamic-from-to.md",
+    "submissions/2026-04-05-sparge-GE-0008-beautifulsoup-lxml-encoding.md",
+    "submissions/2026-04-05-sparge-GE-0009-corruption-signature-check.md",
+    "submissions/2026-04-06-cc-praxis-GE-0010-artifact-information-flow-order.md",
+    "submissions/2026-04-06-cc-praxis-GE-0011-commit-message-not-proof.md",
+    "submissions/2026-04-06-cc-praxis-GE-0012-git-hash-multi-agent-arbiter.md",
+    "submissions/2026-04-06-cc-praxis-GE-0034-sparse-pair-log-dedup.md",
+    "submissions/2026-04-06-cc-praxis-GE-0035-drift-based-sweep-trigger.md",
+    "submissions/2026-04-06-cccli-GE-0013-inject-session-instructions.md",
+    "submissions/2026-04-06-cccli-panama-pty-jvm-crash.md",
+    "submissions/2026-04-06-cccli-surefire-reuseforks.md",
+    "submissions/2026-04-06-cccli-waitpid-signal-test.md",
+    "submissions/2026-04-06-remotecc-GE-0014-revise-tui-garbling.md",
+    "submissions/2026-04-06-remotecc-GE-0036-quarkustest-shared-singleton-state-bleeds.md",
+    "submissions/2026-04-06-remotecc-GE-0037-supplier-instant-clock-injection.md",
+    "submissions/2026-04-06-sparge-GE-0015-browser-cache-hides-fix.md",
+    "submissions/2026-04-06-sparge-GE-0016-enriched-path-resolution.md",
+    "submissions/2026-04-06-sparge-GE-0017-html-parser-no-body-wrapper.md",
+    "submissions/2026-04-06-sparge-GE-0018-layered-encoding-tests.md",
+    "submissions/2026-04-06-sparge-GE-0019-playwright-screenshots.md",
+    "submissions/2026-04-06-sparge-GE-0020-typora-root-url.md",
+    "submissions/2026-04-06-starcraft-GE-0021-debug-command-queue-pattern.md",
+    "submissions/2026-04-06-starcraft-GE-0022-dual-runner-scenario-parity.md",
+    "submissions/2026-04-06-starcraft-GE-0023-java-records-list-mutability.md",
+    "submissions/2026-04-06-starcraft-GE-0024-java-volatile-torn-snapshot.md",
+    "submissions/2026-04-06-starcraft-GE-0025-mock-living-specification.md",
+    "submissions/2026-04-06-starcraft-GE-0026-ocraft-coordinator-terminal-method.md",
+    "submissions/2026-04-06-starcraft-GE-0027-ocraft-debug-only-in-onstep.md",
+    "submissions/2026-04-06-starcraft-GE-0028-ocraft-no-precise-resource-debug.md",
+    "submissions/2026-04-06-starcraft-GE-0029-ocraft-unit-observation-types.md",
+    "submissions/2026-04-06-starcraft-GE-0030-ocraft-units-enum-underscores.md",
+    "submissions/2026-04-06-starcraft-GE-0031-quarkus-packaging-element.md",
+    "submissions/2026-04-06-starcraft-GE-0032-quarkus-scheduled-concurrent-execution.md",
+    "submissions/2026-04-06-starcraft-GE-0033-quarkus-unless-build-profile.md",
+    "tools/browser-testing.md",
+    "tools/ci-cd.md",
+    "tools/claude-code.md",
+    "tools/data-structures.md",
+    "tools/defensive-programming.md",
+    "tools/git.md",
+    "tools/llm-testing.md",
+    "tools/maven.md",
+    "tools/ocraft-s2client.md",
+    "tools/playwright.md",
+    "tools/testing-patterns.md",
+    "tools/tmux.md",
+    "tools/typora.md",
+    "tools/workflow.md"
+  ],
+  "b941343b645a4e7dcc79e7b6a6d6759976243051": [
+    "submissions/2026-04-06-cccli-panama-pty-jvm-crash.md",
+    "submissions/2026-04-06-cccli-surefire-reuseforks.md",
+    "submissions/2026-04-06-cccli-waitpid-signal-test.md"
+  ],
+  "58572f66905ef58efaa0a0c233800d536d569e2f": [
+    "GARDEN.md",
+    "submissions/2026-04-06-remotecc-GE-0037-supplier-instant-clock-injection.md"
+  ],
+  "3769bf31ea6056af55a08b1c9b61426775e5e179": [
+    "GARDEN.md",
+    "submissions/2026-04-06-remotecc-GE-0036-quarkustest-shared-singleton-state-bleeds.md"
+  ],
+  "d8efd54d80a421e077ad2016de028c9d2acef3fb": [
+    "GARDEN.md",
+    "submissions/2026-04-06-cc-praxis-GE-0034-sparse-pair-log-dedup.md",
+    "submissions/2026-04-06-cc-praxis-GE-0035-drift-based-sweep-trigger.md"
+  ],
+  "d1c3c0295d1f128e35cff7f065f78c6ce3f272b5": [
+    "GARDEN.md",
+    "submissions/2026-04-05-claude-code-GE-0001-settings-json-custom-keys.md",
+    "submissions/2026-04-05-claude-code-settings-json-custom-keys.md",
+    "submissions/2026-04-05-cross-project-GE-0002-git-c-flag.md",
+    "submissions/2026-04-05-cross-project-GE-0003-two-claude-verification.md",
+    "submissions/2026-04-05-cross-project-git-c-flag.md",
+    "submissions/2026-04-05-cross-project-two-claude-verification.md",
+    "submissions/2026-04-05-java-GE-0004-typed-return-in-generator-predicate-pair.md",
+    "submissions/2026-04-05-java-typed-return-in-generator-predicate-pair.md",
+    "submissions/2026-04-05-permuplate-GE-0005-hand-written-return-type-boundary-omission.md",
+    "submissions/2026-04-05-permuplate-GE-0006-svg-ci-sed-target.md",
+    "submissions/2026-04-05-permuplate-GE-0007-typearglist-dynamic-from-to.md",
+    "submissions/2026-04-05-permuplate-hand-written-return-type-boundary-omission.md",
+    "submissions/2026-04-05-permuplate-svg-ci-sed-target.md",
+    "submissions/2026-04-05-permuplate-typearglist-dynamic-from-to.md",
+    "submissions/2026-04-05-sparge-GE-0008-beautifulsoup-lxml-encoding.md",
+    "submissions/2026-04-05-sparge-GE-0009-corruption-signature-check.md",
+    "submissions/2026-04-05-sparge-beautifulsoup-lxml-encoding.md",
+    "submissions/2026-04-05-sparge-corruption-signature-check.md",
+    "submissions/2026-04-06-cc-praxis-GE-0010-artifact-information-flow-order.md",
+    "submissions/2026-04-06-cc-praxis-GE-0011-commit-message-not-proof.md",
+    "submissions/2026-04-06-cc-praxis-GE-0012-git-hash-multi-agent-arbiter.md",
+    "submissions/2026-04-06-cc-praxis-artifact-information-flow-order.md",
+    "submissions/2026-04-06-cc-praxis-commit-message-not-proof.md",
+    "submissions/2026-04-06-cc-praxis-git-hash-multi-agent-arbiter.md",
+    "submissions/2026-04-06-cccli-GE-0013-inject-session-instructions.md",
+    "submissions/2026-04-06-cccli-inject-session-instructions.md",
+    "submissions/2026-04-06-remotecc-GE-0014-revise-tui-garbling.md",
+    "submissions/2026-04-06-remotecc-revise-tui-garbling.md",
+    "submissions/2026-04-06-sparge-GE-0015-browser-cache-hides-fix.md",
+    "submissions/2026-04-06-sparge-GE-0016-enriched-path-resolution.md",
+    "submissions/2026-04-06-sparge-GE-0017-html-parser-no-body-wrapper.md",
+    "submissions/2026-04-06-sparge-GE-0018-layered-encoding-tests.md",
+    "submissions/2026-04-06-sparge-GE-0019-playwright-screenshots.md",
+    "submissions/2026-04-06-sparge-GE-0020-typora-root-url.md",
+    "submissions/2026-04-06-sparge-browser-cache-hides-fix.md",
+    "submissions/2026-04-06-sparge-enriched-path-resolution.md",
+    "submissions/2026-04-06-sparge-html-parser-no-body-wrapper.md",
+    "submissions/2026-04-06-sparge-layered-encoding-tests.md",
+    "submissions/2026-04-06-sparge-playwright-screenshots.md",
+    "submissions/2026-04-06-sparge-typora-root-url.md",
+    "submissions/2026-04-06-starcraft-GE-0021-debug-command-queue-pattern.md",
+    "submissions/2026-04-06-starcraft-GE-0022-dual-runner-scenario-parity.md",
+    "submissions/2026-04-06-starcraft-GE-0023-java-records-list-mutability.md",
+    "submissions/2026-04-06-starcraft-GE-0024-java-volatile-torn-snapshot.md",
+    "submissions/2026-04-06-starcraft-GE-0025-mock-living-specification.md",
+    "submissions/2026-04-06-starcraft-GE-0026-ocraft-coordinator-terminal-method.md",
+    "submissions/2026-04-06-starcraft-GE-0027-ocraft-debug-only-in-onstep.md",
+    "submissions/2026-04-06-starcraft-GE-0028-ocraft-no-precise-resource-debug.md",
+    "submissions/2026-04-06-starcraft-GE-0029-ocraft-unit-observation-types.md",
+    "submissions/2026-04-06-starcraft-GE-0030-ocraft-units-enum-underscores.md",
+    "submissions/2026-04-06-starcraft-GE-0031-quarkus-packaging-element.md",
+    "submissions/2026-04-06-starcraft-GE-0032-quarkus-scheduled-concurrent-execution.md",
+    "submissions/2026-04-06-starcraft-GE-0033-quarkus-unless-build-profile.md",
+    "submissions/2026-04-06-starcraft-debug-command-queue-pattern.md",
+    "submissions/2026-04-06-starcraft-dual-runner-scenario-parity.md",
+    "submissions/2026-04-06-starcraft-java-records-list-mutability.md",
+    "submissions/2026-04-06-starcraft-java-volatile-torn-snapshot.md",
+    "submissions/2026-04-06-starcraft-mock-living-specification.md",
+    "submissions/2026-04-06-starcraft-ocraft-coordinator-terminal-method.md",
+    "submissions/2026-04-06-starcraft-ocraft-debug-only-in-onstep.md",
+    "submissions/2026-04-06-starcraft-ocraft-no-precise-resource-debug.md",
+    "submissions/2026-04-06-starcraft-ocraft-unit-observation-types.md",
+    "submissions/2026-04-06-starcraft-ocraft-units-enum-underscores.md",
+    "submissions/2026-04-06-starcraft-quarkus-packaging-element.md",
+    "submissions/2026-04-06-starcraft-quarkus-scheduled-concurrent-execution.md",
+    "submissions/2026-04-06-starcraft-quarkus-unless-build-profile.md"
+  ],
+  "e3fbd892b7d70dc4173bce2199f72079eee938c2": [
+    "DISCARDED.md",
+    "GARDEN.md",
+    "scripts/TEST-SCENARIOS.md",
+    "scripts/validate_garden.py"
+  ],
+  "717e0124af2fb693d68091c26b9e0cc0cf908661": [
+    "approaches/java-dsl-design.md"
+  ],
+  "7e87742052d34189432db6ade00bda4341a6fcdb": [
+    "CHECKED.md",
+    "GARDEN.md",
+    "submissions/2026-04-06-starcraft-ocraft-no-precise-resource-debug.md"
+  ],
+  "942da74870fe191cbe11514b6ec065b63555006d": [
+    "submissions/2026-04-06-sparge-html-parser-no-body-wrapper.md"
+  ],
+  "90aad00fa489179b03e7ff7e5879c633fb8826b6": [
+    "submissions/2026-04-05-claude-code-settings-json-custom-keys.md",
+    "submissions/2026-04-05-cross-project-git-c-flag.md",
+    "submissions/2026-04-05-cross-project-two-claude-verification.md",
+    "submissions/2026-04-05-java-typed-return-in-generator-predicate-pair.md",
+    "submissions/2026-04-05-permuplate-hand-written-return-type-boundary-omission.md",
+    "submissions/2026-04-05-permuplate-svg-ci-sed-target.md",
+    "submissions/2026-04-05-permuplate-typearglist-dynamic-from-to.md",
+    "submissions/2026-04-05-sparge-beautifulsoup-lxml-encoding.md",
+    "submissions/2026-04-05-sparge-corruption-signature-check.md"
+  ],
+  "ef3e244ed11cad05ce04c7b0daa383f332258c30": [
+    "submissions/2026-04-06-sparge-browser-cache-hides-fix.md",
+    "submissions/2026-04-06-sparge-enriched-path-resolution.md",
+    "submissions/2026-04-06-sparge-layered-encoding-tests.md"
+  ],
+  "1ae8c9fc2181a645779e5a6b474c7911b5f5fedf": [
+    "GARDEN.md",
+    "quarkus/webauthn.md"
+  ],
+  "91866b486d85cdb626de7cfdfdc776c345510461": [
+    "GARDEN.md",
+    "drools/rule-builder-dsl.md"
+  ],
+  "25cd92c06f1750cbab07afdec23dca299eaff56b": [
+    "GARDEN.md",
+    "tools/tmux.md"
+  ],
+  "9cccc60be12362b6e886faf1a0c5c1ff7ea72ab5": [
+    "submissions/2026-04-06-starcraft-debug-command-queue-pattern.md",
+    "submissions/2026-04-06-starcraft-ocraft-coordinator-terminal-method.md",
+    "submissions/2026-04-06-starcraft-ocraft-debug-only-in-onstep.md",
+    "submissions/2026-04-06-starcraft-ocraft-no-precise-resource-debug.md",
+    "submissions/2026-04-06-starcraft-ocraft-unit-observation-types.md",
+    "submissions/2026-04-06-starcraft-ocraft-units-enum-underscores.md"
+  ],
+  "3edd344d0e7439abc0f2413ffbaf05ef01fc57ce": [
+    "submissions/2026-04-06-starcraft-dual-runner-scenario-parity.md",
+    "submissions/2026-04-06-starcraft-java-records-list-mutability.md",
+    "submissions/2026-04-06-starcraft-java-volatile-torn-snapshot.md",
+    "submissions/2026-04-06-starcraft-mock-living-specification.md",
+    "submissions/2026-04-06-starcraft-quarkus-packaging-element.md",
+    "submissions/2026-04-06-starcraft-quarkus-scheduled-concurrent-execution.md",
+    "submissions/2026-04-06-starcraft-quarkus-unless-build-profile.md"
+  ],
+  "dcfb0f25499d884dd923ebcad003f9b70e11f943": [
+    "submissions/2026-04-06-sparge-typora-root-url.md"
+  ],
+  "fa256a3dc70c5b7ed1c04b1cbc9e541b6e32966d": [
+    "submissions/2026-04-06-sparge-playwright-screenshots.md"
+  ],
+  "a91c86a086e8b015a18d7aecb565707886fc1e4c": [
+    "submissions/2026-04-06-remotecc-revise-tui-garbling.md"
+  ],
+  "59c40b76982ba3d9b85efeea48603e3445bfbe30": [
+    "submissions/2026-04-06-cccli-inject-session-instructions.md"
+  ],
+  "05168a65ccc7c77dffa05e4919a020c9dc70f2a6": [
+    "submissions/2026-04-06-cc-praxis-artifact-information-flow-order.md",
+    "submissions/2026-04-06-cc-praxis-commit-message-not-proof.md",
+    "submissions/2026-04-06-cc-praxis-git-hash-multi-agent-arbiter.md"
+  ],
+  "81b31833d339893b2aeaa2c3098268c60ded306a": [
+    "submissions/2026-04-05-cross-project-git-c-flag.md",
+    "submissions/2026-04-05-cross-project-two-claude-verification.md",
+    "submissions/2026-04-05-permuplate-svg-ci-sed-target.md"
+  ],
+  "903179fa71d4d2a2622a91486072f57e38049aff": [
+    "submissions/2026-04-05-sparge-beautifulsoup-lxml-encoding.md",
+    "submissions/2026-04-05-sparge-corruption-signature-check.md"
+  ],
+  "748e1f76417d970906b9e5b426cb2935ab84d5c7": [
+    "apache-jexl/jexl3.md",
+    "java-panama-ffm/native-image-patterns.md",
+    "quarkus/rest-client.md",
+    "tools/maven.md",
+    "tools/playwright.md",
+    "tools/tmux.md"
+  ],
+  "1fede72ea675a51f8f298b5e1a52673deedcead7": [
+    "GARDEN.md",
+    "quarkus/websockets-next.md"
+  ],
+  "3e563b91604fc2528a4acd3b2719a206cde02854": [
+    "GARDEN.md",
+    "quarkus/rest-client.md",
+    "tools/llm-testing.md",
+    "tools/tmux.md"
+  ],
+  "4aefa5688d9ef9023538cd73a5bc651178b0ef3f": [
+    "GARDEN.md",
+    "tools/git.md",
+    "tools/llm-testing.md",
+    "tools/markdown.md",
+    "tools/tmux.md"
+  ],
+  "6b3bc8137d1c8e9cf7b6ca5e1d66e64172f00578": [
+    "GARDEN.md",
+    "macos-native-appkit/appkit-panama-ffm.md"
+  ],
+  "fcae56f6effef5492ff1a5ee187b4fd5b7f79721": [
+    "submissions/2026-04-05-java-typed-return-in-generator-predicate-pair.md",
+    "submissions/2026-04-05-permuplate-hand-written-return-type-boundary-omission.md",
+    "submissions/2026-04-05-permuplate-typearglist-dynamic-from-to.md"
+  ],
+  "d1edd7265af1bb322c5551753818b8ddb2c92ea8": [
+    "submissions/2026-04-05-claude-code-settings-json-custom-keys.md"
+  ],
+  "a50883f51c393f48262110a03bb8fe599e031cd8": [
+    "tools/llm-testing.md"
+  ],
+  "745c60fe7e633751804227480837d0910202532b": [
+    "GARDEN.md",
+    "submissions/2026-04-05-remotecc-claude-keychain-auth.md",
+    "tools/llm-testing.md"
+  ],
+  "5df5d102f54af369e0ef9e0ae08c4501a45e7cdb": [
+    "submissions/2026-04-05-remotecc-claude-keychain-auth.md"
+  ],
+  "f0a9b4787f41642344102b4e8d0b829b6648b85a": [
+    "submissions/2026-04-05-ccpraxis-awk-section-extraction.md",
+    "submissions/2026-04-05-ccpraxis-git-file-history-versioning.md",
+    "submissions/2026-04-05-ccpraxis-playwright-evaluate-async.md",
+    "submissions/2026-04-05-ccpraxis-playwright-hidden-collapsed.md",
+    "submissions/2026-04-05-ccpraxis-playwright-modal-hidden-state.md",
+    "submissions/2026-04-05-remotecc-maven-surefire-combine-override.md",
+    "submissions/2026-04-05-remotecc-mcp-config-testing.md",
+    "submissions/2026-04-05-remotecc-tmux-sendkeys-argument-granularity.md"
+  ],
+  "cf0a7b50137eff3b5b69134e920bf53bfa9cbfc0": [
+    "GARDEN.md",
+    "approaches/llm-tool-testing.md",
+    "approaches/tmux.md",
+    "submissions/2026-04-05-remotecc-mcp-config-testing.md",
+    "tools/git.md",
+    "tools/llm-testing.md",
+    "tools/markdown.md",
+    "tools/maven.md",
+    "tools/playwright.md",
+    "tools/tmux.md"
+  ],
+  "035e9ce541f6949c7f68e793a58b223e93ab6658": [
+    "GARDEN.md",
+    "apache-jexl/jexl3.md",
+    "java/generics.md"
+  ],
+  "12ddab21e7d6a1a1039b5608ff2c4142c90fdd1c": [
+    "submissions/2026-04-05-remotecc-maven-surefire-combine-override.md",
+    "submissions/2026-04-05-remotecc-mcp-config-testing.md",
+    "submissions/2026-04-05-remotecc-tmux-sendkeys-argument-granularity.md"
+  ],
+  "0b3099b0f664ed074267e57144c99bcc5ccb9a26": [
+    "GARDEN.md",
+    "java-panama-ffm/native-image-patterns.md"
+  ],
+  "e4871cd752229e44ac362ab4475d6ca9b27ab3e9": [
+    "submissions/2026-04-05-ccpraxis-awk-section-extraction.md",
+    "submissions/2026-04-05-ccpraxis-git-file-history-versioning.md",
+    "submissions/2026-04-05-ccpraxis-playwright-evaluate-async.md",
+    "submissions/2026-04-05-ccpraxis-playwright-hidden-collapsed.md",
+    "submissions/2026-04-05-ccpraxis-playwright-modal-hidden-state.md"
+  ],
+  "0534810e1ac0fbbbfea8ed13437f11928532c682": [
+    "GARDEN.md",
+    "approaches/llm-tool-testing.md",
+    "approaches/tmux.md"
+  ],
+  "0f8933b0f4283aa517b1244c63c6a3a9464a4108": [
+    "README.md"
+  ],
+  "159e3952be31f5ad4d29351cd655d6be2be893e1": [
+    "GARDEN.md",
+    "quarkus/rest-client.md",
+    "quarkus/websockets-next.md",
+    "tools/tmux.md"
+  ],
+  "aad827270d5a8b2310f5c2f08b3912f5efc45c18": [
+    "submissions/.gitkeep"
+  ],
+  "9af60637815017f2ff30cbbf9be3d66dbcb5535f": [
+    "GARDEN.md"
+  ],
+  "157108bb1473638b975d54fadc6db08e09e4f7ab": [
+    "permuplate/gotchas.md",
+    "permuplate/session-handoff-2026-04-04.md",
+    "permuplate/test-plan-2026-04-04.md"
+  ],
+  "3f4e47f26e4947433bbbf3513fb5e6f242f7a9cb": [
+    "permuplate/gotchas.md",
+    "permuplate/session-handoff-2026-04-04.md",
+    "permuplate/test-plan-2026-04-04.md"
+  ],
+  "19605a3ad24415608a80f409582c4e96af0d956e": []
+}

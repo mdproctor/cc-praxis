@@ -335,6 +335,12 @@
       "source": "./custom-project-health",
       "description": "Health checks for custom projects \u2014 extends project-health with sync-rules and project-currency checks",
       "version": "1.0.0-SNAPSHOT"
+    },
+    {
+      "name": "retro-issues",
+      "source": "./retro-issues",
+      "description": "One-off retrospective mapping of git history to GitHub epics and issues \u2014 analyses git log, ADRs, blog entries, and design docs; proposes structure for review before creating anything",
+      "version": "1.0.0-SNAPSHOT"
     }
   ]
 }

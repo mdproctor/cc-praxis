@@ -153,30 +153,12 @@ Confirm:
 
 ### Step 6 — Past work reconstruction (if user chose option 2)
 
-```bash
-git log --oneline --no-merges -50
-```
+Use the `/retro-issues` skill for retrospective mapping of git history to
+epics and issues. It is a dedicated on-demand command that analyses git log,
+ADRs, blog entries, and design docs to propose a structured hierarchy before
+creating anything on GitHub.
 
-Group commits into logical themes. For each, propose a closed issue to create:
-
-> I found these themes in your recent history:
->
-> 1. **Skills infrastructure** (12 commits) — install/uninstall wizards, sync-local
-> 2. **Blog support** (6 commits) — blog project type, blog-git-commit skill
->
-> Create closed GitHub issues for these? Reply YES or name which ones to include.
-
-For each confirmed theme:
-
-```bash
-gh issue create \
-  --title "{suggested title}" \
-  --body "{summary of what was done}" \
-  --label "{appropriate label}" \
-  --repo {owner/repo}
-
-gh issue close {number} --comment "Completed in earlier development phase."
-```
+> Run `/retro-issues` to begin retrospective mapping.
 
 ---
 

@@ -1,0 +1,23 @@
+{"hash": "462c50b7228e4936cb0df9e1481fb790e39deea4", "date": "2026-04-06", "subject": "test(convert-post): add placeholder regression tests for .body.next \u2192 .find() fix"}
+{"hash": "14e3ee362e5fa7cce1b1c1118f644cf6e4e9013f", "date": "2026-04-06", "subject": "fix(convert-post): replace .body.next with .find() \u2014 html.parser doesn't add body wrapper to fragments unlike lxml"}
+{"hash": "59a2180fc16788f0712ab02bf3d21974fcccc4a6", "date": "2026-04-06", "subject": "fix(test): activate kie-mark-proctor project in e2e fixture to prevent test interference"}
+{"hash": "a06039d6b9419a8b5923c6103f3e76bcf4e2d83d", "date": "2026-04-06", "subject": "test(garbling-e2e): 6 end-to-end tests \u2014 disk file, mtime, HTTP response, all 31 files, Playwright browser render"}
+{"hash": "cd3c664d9847ccdbebb1f88f4bb275a094fd9282", "date": "2026-04-06", "subject": "test(convert-post): strengthen garbling detection \u2014 all 3 patterns (A/B/C), real-post test, assert_not_garbled helper"}
+{"hash": "b5aac11354e4863f3d261106a13d795e0e22fbf1", "date": "2026-04-06", "subject": "test(convert-post): 20 tests \u2014 non-ASCII garbling regression, json_path routing, front matter, generate-md endpoint"}
+{"hash": "b4382728814afa6b26d863a24a7ea5216916e14d", "date": "2026-04-06", "subject": "fix(generate-md): copy convert_post.py into scripts/, fix lxml\u2192html.parser, add json_path param for enriched copies"}
+{"hash": "30f57d40d004a0b8900fc50486c012b0d8ac4555", "date": "2026-04-06", "subject": "fix(scan): pass posts_dir to check_missing_local_images \u2014 resolves assets correctly when scanning enriched copies outside the original posts tree"}
+{"hash": "8caf60a522879c901ec6f9215e3752032fc0d2cf", "date": "2026-04-06", "subject": "docs: snapshot + handover \u2014 canonical paths, two-codebase confusion documented"}
+{"hash": "e62b6a045b84476c249bebdd30853c2671eb9c34", "date": "2026-04-06", "subject": "docs: update CLAUDE.md with canonical paths, remove legacy orphan artifacts"}
+{"hash": "245017b6125ea09273b5bd828647319049c2397c", "date": "2026-04-06", "subject": "test(consolidate): 6 endpoint tests \u2014 result shape, idempotency, empty project"}
+{"hash": "779dfc4bf9ff264d18de9464ec5984b7ca549c75", "date": "2026-04-06", "subject": "docs: updated HANDOVER.md + design snapshot 2026-04-06-sparge-consolidation"}
+{"hash": "3194335cc1daa8a82b25771f5f35de7cd7786993", "date": "2026-04-06", "subject": "docs: move all project docs, HANDOVER.md, CLAUDE.md, and blog entries into sparge"}
+{"hash": "5ac23ed979bc1c85f3ab64e624650ec3212605c1", "date": "2026-04-06", "subject": "feat: replace frozen ancestor with active blog-migrator codebase \u2014 full consolidation"}
+{"hash": "d010f0fa406b43dfd7a46bb1da6d1b0dc5a4a870", "date": "2026-04-06", "subject": "docs: log idea \u2014 full ingest rearchitecture (Option B)"}
+{"hash": "560312801b2babd0fb7176fee0b3b9f15369b2a4", "date": "2026-04-04", "subject": "docs: add project blog \u2014 7 entries covering full Sparge journey"}
+{"hash": "a0cdacfcaed36f9ff67fc5f9a393bdb0b48bab66", "date": "2026-04-04", "subject": "docs: add test plan and date stamping to handoff document"}
+{"hash": "9fe8e8da00fbc7e62ea4f76fb4344bc9618cdaae", "date": "2026-04-04", "subject": "docs: comprehensive handoff document for future Claude sessions"}
+{"hash": "416c07707e42e530fdbec6f954800aaa9ca57963", "date": "2026-04-04", "subject": "test: comprehensive ingest integration tests + sidecar bug fix"}
+{"hash": "34df4c09c49e92b0c5e213079755b5601e4715ed", "date": "2026-04-04", "subject": "feat: 3-mode Import with modal, URL date filtering, wipe endpoint"}
+{"hash": "9a19a74e7aef56faae68f8a065f0337e16ff0d61", "date": "2026-04-04", "subject": "feat: three-stage pipeline \u2014 source/cleaned/assets with global consolidation"}
+{"hash": "d2ee8028ea5775f691df02d5f6c59a6d127fd088", "date": "2026-04-04", "subject": "feat: asset organisation engine \u2014 per-post folders + global consolidation"}
+{"hash": "cc1bfb5f28aacff0ca30dbdff89e6da5a63e5c1c", "date": "2026-04-04", "subject": "feat: initial commit \u2014 Sparge v0.1"}

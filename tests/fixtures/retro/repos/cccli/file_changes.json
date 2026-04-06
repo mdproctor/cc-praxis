@@ -1,0 +1,393 @@
+{
+  "f3c390d32e8af17acaf5f51b79ed6e3e01779e42": [
+    "CLAUDE.md"
+  ],
+  "5a2b4e264decfa63efd786bfbc92e06e0e1b7973": [
+    "docs/HANDOFF.md"
+  ],
+  "d3548bba6310fbc7b2e3983db3c8906f09f1c8e1": [
+    "blog/2026-04-06-01-packaging-test-quality.md"
+  ],
+  "28cf2dbe99d30c33afbf7dc2202cc55e396182d2": [
+    "app-core/pom.xml",
+    "app-core/src/test/java/dev/mproctor/cccli/pty/PtyProcessTest.java"
+  ],
+  "42df19abe2babbd1d702d0f026289aca0e27574d": [
+    ".claude/settings.local.json",
+    "VISION.md",
+    "app-core/src/main/java/dev/mproctor/cccli/ClaudeLocator.java",
+    "app-core/src/test/java/dev/mproctor/cccli/ClaudeLocatorTest.java",
+    "app-core/src/test/java/dev/mproctor/cccli/InteractionDetectorTest.java",
+    "app-core/src/test/java/dev/mproctor/cccli/pty/PosixLibraryTest.java",
+    "app-core/src/test/java/dev/mproctor/cccli/pty/PtyProcessTest.java",
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/MacUIBridge.java",
+    "app-macos/src/test/java/dev/mproctor/cccli/bridge/MacUIBridgeTest.java",
+    "archive/VISION_original_javafx.md",
+    "docs/superpowers/plans/2026-04-03-bridge-foundation.md",
+    "docs/superpowers/plans/2026-04-04-pty-management.md",
+    "docs/superpowers/plans/2026-04-04-wire-to-claude.md",
+    "docs/superpowers/plans/2026-04-05-passive-mode.md"
+  ],
+  "6566d302e0dc0218e4aa285ecc9ec90a2d0b486d": [
+    "app-macos/pom.xml"
+  ],
+  "f28102657234db2c2acebc3c34e0e2e6c374dfc0": [
+    "scripts/bundle.sh"
+  ],
+  "c6f4e7d3ded113407a956c01a762349857feeef7": [
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/MacUIBridge.java"
+  ],
+  "d4812b481b45bf476979b7b59df9fa8dc90351db": [
+    "app-macos/src/main/resources/Info.plist"
+  ],
+  "592f5fe8596553f8ecff96d9fba379bac3622f20": [
+    "app-macos/src/main/resources/META-INF/native-image/native-image.properties"
+  ],
+  "15e5590faa275e5dfbe830d67c7ffcfe848a2408": [
+    "docs/superpowers/plans/2026-04-06-app-bundle.md"
+  ],
+  "885375b8a8029342e9b51311c170bb424a425994": [
+    "docs/HANDOFF.md"
+  ],
+  "8d0fcf2da288107f3e680cf64931e2308a768735": [
+    "DECISIONS.md"
+  ],
+  "e1cbb536c347b16e3dff9eeac2fc93b27587836a": [
+    "docs/design-snapshots/2026-04-06-current-architecture.md"
+  ],
+  "e9e98246797fb8644d025bc8754652c19e78490a": [
+    "DESIGN.md"
+  ],
+  "072c4d8c1fc656ae1de1e19f91d7ed85544de113": [
+    "blog/2026-04-05-01-pty-claude-passive.md"
+  ],
+  "de7a596518ff28fc12e04c95bf64b50188e00b63": [
+    "blog/2026-04-04-04-appkit-seven-bugs.md"
+  ],
+  "3c04a812fdb1ea45d280813895f09ca80af4df7f": [
+    "blog/2026-04-04-03-split-pane-ui.md"
+  ],
+  "fa8f522ff47f7bfee1901af52c9db312a3c3147d": [
+    "blog/2026-04-04-02-first-window.md"
+  ],
+  "a65f7950dcbfd2b1e127417d8b0d43214c4e0c38": [
+    "blog/2026-04-04-01-architecture-evolution.md"
+  ],
+  "b5ecf87106009fd8f00cdb13385fd69fdbb04932": [
+    "blog/001-architecture-evolution.md",
+    "blog/002-first-window.md",
+    "blog/003-split-pane-ui.md",
+    "blog/004-appkit-seven-bugs.md",
+    "blog/005-pty-claude-passive.md",
+    "blog/2026-04-04-01-architecture-evolution.md",
+    "blog/2026-04-04-02-first-window.md",
+    "blog/2026-04-04-03-split-pane-ui.md",
+    "blog/2026-04-04-04-appkit-seven-bugs.md",
+    "blog/2026-04-05-01-pty-claude-passive.md",
+    "docs/HANDOFF.md"
+  ],
+  "0ffa27f75f339f7c7882d7a41ecc13432a013167": [
+    "blog/002-first-window.md",
+    "blog/003-split-pane-ui.md",
+    "blog/005-pty-claude-passive.md"
+  ],
+  "93b2ec4cf465ac6a384d00b932b3e0a0bd190175": [
+    "blog/001-architecture-evolution.md",
+    "blog/002-first-window.md",
+    "blog/003-split-pane-ui.md",
+    "blog/004-appkit-seven-bugs.md",
+    "blog/005-pty-claude-passive.md"
+  ],
+  "a33c5560f11e165f3898a43d5275d6365137adfd": [
+    "docs/HANDOFF.md"
+  ],
+  "a996e2b7f141973c977d80afdce3fa9a7d248914": [
+    "blog/005-pty-claude-passive.md"
+  ],
+  "977a725567d1fa168ed7bfe08980112ddc3231f5": [],
+  "c63c79fb132220c3dbf538f2074e38085db390d3": [
+    "app-macos/src/main/java/dev/mproctor/cccli/Main.java"
+  ],
+  "0ccb376ea02c9fbc28e0af7dbac3ad0f37d44d47": [
+    "app-macos/src/main/java/dev/mproctor/cccli/Main.java",
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/Callbacks.java",
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/MacUIBridge.java",
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/gen/MyMacUI_h.java",
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/gen/StopClickedCallback.java",
+    "app-macos/src/main/resources/META-INF/native-image/dev.mproctor.cccli/app-macos/reachability-metadata.json",
+    "app-macos/src/main/resources/META-INF/native-image/reflect-config.json"
+  ],
+  "5bc512f78310a060249cc1aa034fceb5a2d3bafb": [
+    "mac-ui-bridge/include/MyMacUI.h",
+    "mac-ui-bridge/src/MyMacUI.m"
+  ],
+  "0260f76ff1d7d224d6b1b055e4aef9e4c38cf952": [
+    "app-core/pom.xml",
+    "pom.xml"
+  ],
+  "b5ea8e051ab9df9f800105beff56b486ead07736": [
+    "app-core/pom.xml",
+    "app-core/src/main/java/dev/mproctor/cccli/ClaudeState.java",
+    "app-core/src/main/java/dev/mproctor/cccli/InteractionDetector.java",
+    "app-core/src/main/java/dev/mproctor/cccli/pty/PosixLibrary.java",
+    "app-core/src/main/java/dev/mproctor/cccli/pty/PtyProcess.java",
+    "app-core/src/test/java/dev/mproctor/cccli/InteractionDetectorTest.java",
+    "pom.xml"
+  ],
+  "ed1d0d33053e122ad359f6612405d723bb6f118b": [],
+  "a91d103c77aa1c7c6701d99119b2b5227589a5a3": [
+    "app-macos/src/main/java/dev/mproctor/cccli/Main.java"
+  ],
+  "e4b1c04caee2229b6e9bf737c96d8cdfbba5f263": [
+    "app-core/src/main/java/dev/mproctor/cccli/ClaudeLocator.java"
+  ],
+  "31629f8d1ac72d27af1e838a2eb3fe7d739efa1e": [
+    "app-core/src/main/java/dev/mproctor/cccli/ClaudeLocator.java",
+    "app-core/src/test/java/dev/mproctor/cccli/ClaudeLocatorTest.java"
+  ],
+  "513e43adf5b8c62e20e7d3c1a0a549789f6d668e": [
+    "app-core/src/main/java/dev/mproctor/cccli/AnsiStripper.java",
+    "app-core/src/test/java/dev/mproctor/cccli/AnsiStripperTest.java"
+  ],
+  "001c0633ec5a3e966b190562ff37aa357ec14397": [
+    "app-core/src/main/java/dev/mproctor/cccli/AnsiStripper.java",
+    "app-core/src/test/java/dev/mproctor/cccli/AnsiStripperTest.java"
+  ],
+  "92ac37a7ad97ecadba9ec4a39550a7c3421504dd": [
+    "app-core/src/main/java/dev/mproctor/cccli/pty/PosixLibrary.java",
+    "app-core/src/main/java/dev/mproctor/cccli/pty/PtyProcess.java",
+    "app-macos/src/main/resources/META-INF/native-image/dev.mproctor.cccli/app-macos/reachability-metadata.json",
+    "mac-ui-bridge/src/MyMacUI.m"
+  ],
+  "69593ef659edd50ede9b70c4378b3a44c80e4095": [
+    "app-macos/src/main/resources/META-INF/native-image/dev.mproctor.cccli/app-macos/reachability-metadata.json",
+    "app-macos/src/main/resources/META-INF/native-image/native-image.properties"
+  ],
+  "5b081e66c4b8224a8a668f08ffc4f62a0935d428": [
+    "app-macos/src/main/java/dev/mproctor/cccli/Main.java"
+  ],
+  "bcfab71c9962e589946f787886a261944b6d8ac0": [
+    "app-core/src/test/java/dev/mproctor/cccli/pty/PtyProcessTest.java"
+  ],
+  "49a827b4623c06cdc3b08bfb5cb6bdacc1056c29": [
+    "app-core/src/test/java/dev/mproctor/cccli/pty/PtyProcessTest.java"
+  ],
+  "a692c9485f98a53cfbb7e083c318b6b8ae842fd4": [
+    "app-core/src/main/java/dev/mproctor/cccli/pty/PtyProcess.java"
+  ],
+  "4b101b94c1b0e4638f37361da24775f077d2504c": [
+    "app-core/src/main/java/dev/mproctor/cccli/pty/PtyProcess.java"
+  ],
+  "72b5e20f0795f7b8db6cd77ee001cb60da657336": [
+    "app-core/src/main/java/dev/mproctor/cccli/pty/PtyProcess.java",
+    "app-core/src/test/java/dev/mproctor/cccli/pty/PtyProcessTest.java"
+  ],
+  "22cf9f93ef9c27572b75ac6d8c7df7fe611f32b0": [
+    "app-core/pom.xml",
+    "app-core/src/main/java/dev/mproctor/cccli/pty/PosixLibrary.java",
+    "app-core/src/test/java/dev/mproctor/cccli/pty/PosixLibraryTest.java"
+  ],
+  "b146f17f1173e32e632b7d5798e6572d4e0f7f48": [
+    "app-core/pom.xml"
+  ],
+  "aa30db134cdfc8497092026e8bf167686053897b": [
+    "docs/HANDOFF.md"
+  ],
+  "9c492a358c7684af896c2c7493d71d851df86829": [
+    "docs/HANDOFF.md"
+  ],
+  "67562d50d5710c75f76d7ed5f02de156caf0ff88": [
+    "blog/004-appkit-seven-bugs.md"
+  ],
+  "7e595215d51f6ead97bf470c9aa988858f240336": [
+    "blog/004-appkit-seven-bugs.md"
+  ],
+  "6f8770cf2f5cc7b6e5ffd668260eccf759ced677": [
+    "docs/APPKIT_PITFALLS.md"
+  ],
+  "e9fa9382694ba08afdb5d9c3b3470a5a0b6914d7": [
+    "blog/003-split-pane-ui.md"
+  ],
+  "cba514c0c4d657aac65dc9be669611ffe8260528": [
+    "DECISIONS.md"
+  ],
+  "bf2bcce5e2eeaf8aee01807e8854a300505ee1c4": [
+    "mac-ui-bridge/src/MyMacUI.m"
+  ],
+  "a5657da3c48bbca7d4243548765932e8367e48d4": [
+    "mac-ui-bridge/src/MyMacUI.m"
+  ],
+  "bef71996c1c22d315f18791a190582f657efb286": [
+    "mac-ui-bridge/src/MyMacUI.m"
+  ],
+  "c0ae8e38d0e4c00d29c9d8ef63361999a4bffe15": [
+    "mac-ui-bridge/src/MyMacUI.m"
+  ],
+  "29888a951393053732448e0b53cbe8d9b9b0b610": [
+    "app-macos/src/main/java/dev/mproctor/cccli/Main.java"
+  ],
+  "dc44e337a12e23608441c27f54841708886122e7": [
+    "mac-ui-bridge/src/MyMacUI.m"
+  ],
+  "4ba279f65db82e87e2d9c282b802ee438b3ccee2": [
+    "app-macos/src/main/java/dev/mproctor/cccli/Main.java",
+    "mac-ui-bridge/src/MyMacUI.m"
+  ],
+  "d63b944499101e91f2a7f013afb939e2e9d02491": [
+    "mac-ui-bridge/src/MyMacUI.m"
+  ],
+  "4cb591b53689dd47140755c31c325134bdc98956": [
+    "app-macos/src/main/java/dev/mproctor/cccli/Main.java",
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/MacUIBridge.java",
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/gen/MyMacUI_h.java",
+    "mac-ui-bridge/include/MyMacUI.h",
+    "mac-ui-bridge/src/MyMacUI.m"
+  ],
+  "e3a72838764fdc3c53ca524af3d8cdefe8c2beb7": [
+    "mac-ui-bridge/src/MyMacUI.m"
+  ],
+  "4072155a2cf929358b54126dc60ff46920087b0a": [
+    "app-macos/src/main/java/dev/mproctor/cccli/Main.java",
+    "mac-ui-bridge/src/MyMacUI.m"
+  ],
+  "c4fc6dccd75edb3f8d05c438a822d809f3a7cfaa": [
+    "mac-ui-bridge/src/MyMacUI.m"
+  ],
+  "438082b88ca370cf6038933d8f5e924daa7131ab": [
+    "mac-ui-bridge/src/MyMacUI.m"
+  ],
+  "475426bdff9dc188290c0a87c3f0cb84bfd9f148": [
+    "mac-ui-bridge/src/MyMacUI.m"
+  ],
+  "5860686df8e29ae60db0c3144ea0e76f3c32d563": [
+    "mac-ui-bridge/src/MyMacUI.m"
+  ],
+  "56561a6b6a47cb43374c3e23a5a26faf5dd3b488": [
+    "mac-ui-bridge/src/MyMacUI.m"
+  ],
+  "52b201c74658c60129938681215ee4028d81cb55": [
+    "mac-ui-bridge/src/MyMacUI.m"
+  ],
+  "a3e451dc74707928fcfc07f274055692d1f825c3": [
+    "mac-ui-bridge/src/MyMacUI.m"
+  ],
+  "7126cd1915d29339ab7ab59caaa2c8e2de6b57de": [
+    "app-macos/src/main/java/dev/mproctor/cccli/Main.java"
+  ],
+  "591c9317227dcf8ce351a08470ca28b55b46e522": [
+    "app-macos/src/main/resources/META-INF/native-image/dev.mproctor.cccli/app-macos/reachability-metadata.json",
+    "app-macos/src/main/resources/META-INF/native-image/reflect-config.json"
+  ],
+  "f4c76384f15727b944da794c03b31fe1ef6f85e5": [
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/MacUIBridge.java"
+  ],
+  "7355889622eddd0534b670ea1b15b9fbcc6be6be": [
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/Callbacks.java"
+  ],
+  "6b8c233a6a61987780312725d6d789248f784988": [
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/gen/MyMacUI_h.java",
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/gen/TextSubmittedCallback.java"
+  ],
+  "7dff32b0118d54cfcaf013cce3a0849bf248ac6e": [
+    "mac-ui-bridge/Makefile"
+  ],
+  "627e1b0025cc8d056e5f76c600fe6a4f20ab1493": [
+    "mac-ui-bridge/src/MyMacUI.m"
+  ],
+  "ad4b38bc6c9ac4198f8396cc5d703cea2a773fc1": [
+    "mac-ui-bridge/include/MyMacUI.h"
+  ],
+  "e8a6421f3375ea72a69cb4580ea7332e8a04ab13": [
+    "docs/superpowers/plans/2026-04-04-split-pane-ui.md"
+  ],
+  "40c7cafa3f9530c1d2c975be170bded6f1725d4c": [
+    "blog/002-first-window.md"
+  ],
+  "eeec501d87bd3f55affd58f541060643d528c28d": [
+    "DECISIONS.md"
+  ],
+  "316d5650a38ea3ed530211119f2aedc8f1f2901b": [
+    "mac-ui-bridge/src/MyMacUI.m"
+  ],
+  "8a5f1051f34ee989396af4c2f372185b55e21861": [
+    "app-macos/src/main/resources/META-INF/native-image/dev.mproctor.cccli/app-macos/reachability-metadata.json"
+  ],
+  "598e4305b51bd699473eec8489abaeac48c479fb": [
+    "app-macos/src/main/resources/META-INF/native-image/dev.mproctor.cccli/app-macos/reachability-metadata.json"
+  ],
+  "649fac002237b8f018872ec0d73546501f9abaa7": [
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/Callbacks.java",
+    "app-macos/src/main/resources/META-INF/native-image/reflect-config.json"
+  ],
+  "c5d2d78d1fe56e879fc1f6d40c015673bd62721c": [
+    "app-macos/src/main/resources/META-INF/native-image/native-image.properties"
+  ],
+  "af0e5035aab8ddc097f5dbe9dd7a560979d99bc0": [
+    "app-macos/src/main/resources/META-INF/native-image/native-image.properties",
+    "app-macos/src/main/resources/META-INF/native-image/reflect-config.json"
+  ],
+  "6c46e2bc4dc475610363ba27c40be41b41005359": [
+    "mac-ui-bridge/src/MyMacUI.m"
+  ],
+  "8f901eeebf0628e37a8acc1fc0e72069ecefbe45": [
+    "DECISIONS.md"
+  ],
+  "0c454c6201e1b54cfd217704f6bedcdf7c0d8b0f": [
+    "app-macos/src/main/java/dev/mproctor/cccli/Main.java",
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/MacUIBridge.java",
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/gen/MyMacUI_h.java",
+    "mac-ui-bridge/include/MyMacUI.h",
+    "mac-ui-bridge/src/MyMacUI.m"
+  ],
+  "a712a7680bf43560ce644803c1906bffc55f013c": [
+    "app-macos/src/main/java/dev/mproctor/cccli/Main.java",
+    "app-macos/src/main/resources/application.properties"
+  ],
+  "ede00caaa4429199a053155042f63408b9e3aa8f": [
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/MacUIBridge.java"
+  ],
+  "a5a320b0457d300c4dc5c2161ba6ca52f2c6e070": [
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/MacUIBridge.java"
+  ],
+  "d77366e53d03477fcc3311504c8670c757fa2c65": [
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/Callbacks.java"
+  ],
+  "fb36d7ed502a3181dcfd404764a8a846c159c204": [
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/gen/MyMacUI_h.java",
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/gen/WindowClosedCallback.java",
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/gen/__darwin_mbstate_t.java",
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/gen/__darwin_pthread_attr_t.java",
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/gen/__darwin_pthread_cond_t.java",
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/gen/__darwin_pthread_condattr_t.java",
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/gen/__darwin_pthread_handler_rec.java",
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/gen/__darwin_pthread_mutex_t.java",
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/gen/__darwin_pthread_mutexattr_t.java",
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/gen/__darwin_pthread_once_t.java",
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/gen/__darwin_pthread_rwlock_t.java",
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/gen/__darwin_pthread_rwlockattr_t.java",
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/gen/__mbstate_t.java",
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/gen/_opaque_pthread_attr_t.java",
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/gen/_opaque_pthread_cond_t.java",
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/gen/_opaque_pthread_condattr_t.java",
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/gen/_opaque_pthread_mutex_t.java",
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/gen/_opaque_pthread_mutexattr_t.java",
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/gen/_opaque_pthread_once_t.java",
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/gen/_opaque_pthread_rwlock_t.java",
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/gen/_opaque_pthread_rwlockattr_t.java",
+    "app-macos/src/main/java/dev/mproctor/cccli/bridge/gen/_opaque_pthread_t.java"
+  ],
+  "e476c68f69dce7844da10b3629b76b9a4d430be5": [
+    ".gitignore",
+    "mac-ui-bridge/Makefile"
+  ],
+  "120325aab64441f086ac9fb2048aca6228ef8af5": [
+    "DECISIONS.md"
+  ],
+  "7ad45db12a7cd0e1dd5c8413f9ee51a63918f111": [
+    "mac-ui-bridge/src/MyMacUI.m"
+  ],
+  "a84bd28b991c843fb3f1e5da5b8e5ac0cc2fcfff": [
+    "mac-ui-bridge/include/MyMacUI.h"
+  ],
+  "024e9ccb0c6e749aebbe437a21cdc628acd4d40a": []
+}
