@@ -9,8 +9,18 @@ description: >
 
 # Retro Issues
 
-Maps a repository's git history to a structured set of GitHub epics and issues.
-Run once per repository when issue tracking is being introduced retrospectively.
+Maps a repository's git history to a structured set of GitHub issues and, where
+naturally warranted, epics.
+
+**Priority order — most important first:**
+
+1. **Group similar commits into the right tickets.** This is the primary goal.
+   Commits that belong together should land in one issue, not several.
+2. **Produce useful standalone issues** grouped by feature area.
+3. **Form epics only when structure emerges naturally** — never force an epic
+   to contain unrelated work just because the commits happened at the same time.
+
+If the only output is standalone issues, that is a perfectly correct result.
 
 **This skill is invoked only explicitly.** It is never auto-triggered by
 Work Tracking or any other automatic behaviour. Use `issue-workflow` for
@@ -156,17 +166,36 @@ If no scope is present in a commit, group it by the top-level directory of its
 changed files. This applies to older commits or repos that don't use conventional
 commits.
 
+**Merge related scope clusters (most important step):**
+
+Before finalising individual issues, look for scopes that represent facets of
+the same feature area and collapse them into one issue:
+
+| Pattern | Example | Collapse to |
+|---------|---------|-------------|
+| Common prefix | `java-dev`, `java-code-review`, `java-git-commit` | "Add Java development skills" |
+| Same feature, split by layer | `marketplace`, `install-skills`, `uninstall-skills` | "Build marketplace and installation" |
+| Same tool, split by concern | `validation`, `validate-cso`, `validate-docs` | "Add skill validation framework" |
+
+The test: could these issues be reviewed and reverted together without leaving
+the repo in a broken state? If yes — they belong in one issue.
+
+Do NOT merge scopes that are genuinely independent features that happen to share
+a time window (`garden` and `marketplace` are separate even if committed on the
+same day).
+
 **Merge small clusters:**
 - A cluster with < 2 commits and a low-signal message ("fix", "wip", "update", "misc")
-  → promote to standalone, don't create a dedicated issue
+  → absorb into the nearest related cluster, or promote to standalone
 
 **Split large clusters:**
 - A single scope with commits clearly spanning two unrelated feature areas
-  → split into two issues if the work is independently releasable
+  → split into two issues if each part is independently releasable
 
 **Naming issues from clusters:**
-- Scope-based cluster: title reflects the scope feature area ("Add {scope} skill/feature")
-- Directory-based cluster: title reflects the directory's purpose
+- Collapsed multi-scope cluster: title describes the shared feature ("Add {common theme}")
+- Single scope cluster: title reflects the scope feature area ("Add {scope} skill/feature")
+- Directory-based cluster (fallback): title reflects the directory's purpose
 
 ---
 
