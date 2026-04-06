@@ -51,8 +51,9 @@ yours from the start.
 
 ## Voice and Perspective Rules
 
-These rules are not optional. Applying them consistently is what makes the
-blog feel authentic rather than generated.
+These are a brief orientation. The **complete and authoritative register rules**
+are in `write-blog/defaults/mandatory-rules.md` — loaded as Layer 1 of Step 0.
+Read this section as context; follow mandatory-rules.md as the binding specification.
 
 **The developer's voice is "I"** — solo thinking, decisions made, what I
 believed. Not "Mark Proctor thought X." Not "the developer found." Just "I."
@@ -227,8 +228,9 @@ Note both. They calibrate what to explain vs. what to assume throughout the entr
 echo "$PERSONAL_WRITING_STYLES_PATH"
 ```
 
-If set → load the personal style guide from that path (typically `blog-technical.md`
-or equivalent). Read it in full — it overrides and extends the common voice.
+If set → it points to a directory. List the `.md` files there, select the
+blog/diary style guide (typically `blog-technical.md` or equivalent), and
+read it in full. It overrides and extends the common voice.
 
 If not set → load `write-blog/defaults/common-voice.md`. This is the fallback voice:
 peer-to-peer tone, ~17 word sentences, direct, no AI filler. Functional but not
@@ -486,6 +488,7 @@ When in doubt, propose more phases rather than fewer — the user can deselect. 
 ```mermaid
 flowchart TD
     Trigger((User triggers write-blog))
+    LoadRules[Step 0: Load writing rules\n1. mandatory-rules.md\n2. Scan CLAUDE.md\n3. Personal or common voice\n4. Invocation overrides]
     EntryType{What type\nof entry?}
     DetermineVoice[Determine voice:\nI for solo,\nwe for collaborative]
     DayZero[Day Zero:\ngather initial vision\nand first approach]
@@ -503,7 +506,8 @@ flowchart TD
     Commit[Commit via git-commit]
     Done((Done))
 
-    Trigger --> EntryType
+    Trigger --> LoadRules
+    LoadRules --> EntryType
     EntryType -->|first entry| DayZero
     EntryType -->|milestone| PhaseUpdate
     EntryType -->|direction change| Pivot

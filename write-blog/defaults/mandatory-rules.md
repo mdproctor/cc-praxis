@@ -54,10 +54,22 @@ Repeated "we" across consecutive sentences reads as a tic. Mix in alternatives:
 **Do:**
 > "We built the API layer. Testing revealed a bug — Claude flagged it during the first run. The fix was a simple backoff."
 
+### When NOT to name Claude
+
+Don't name Claude for routine execution — "Claude implemented PosixLibrary",
+"Claude added the endpoint". Use "we" or just describe the outcome. Name Claude
+only when its behaviour has character — catching, reporting, going off-script,
+pushing back, or getting something wrong.
+
 ### Common register mistakes
 
 **"we" as editorial device** — "we'll see why this matters later" — not collaboration,
 it's an authorial tic. Change to "I'll return to this" or remove.
+
+**"we" for team or community conventions** — "in Drools, we follow this pattern",
+"for this project, we use alpha naming" — if this was a solo design decision or
+a convention you followed alone, it's "I chose", not "we". "We" means the author
+and Claude did this together.
 
 **"we" for solo design decisions** — if the decision was the author's alone, it's "I",
 not "we". The work may have been joint; the decision was singular.
