@@ -63,7 +63,8 @@ it belongs.
 
 ```
 ~/claude/knowledge-garden/
-├── GARDEN.md                   ← dual index (loaded into context, never detail)
+├── GARDEN.md                   ← dual index + metadata header (loaded into context, never detail)
+├── CHECKED.md                  ← duplicate check pair log (sparse cross-product)
 ├── submissions/                ← incoming entries from any Claude session
 │   ├── 2026-04-04-cccli-gcd-dispatch.md
 │   └── 2026-04-05-sparge-html-quirk.md
@@ -79,17 +80,32 @@ it belongs.
     └── <topic>.md
 ```
 
+**`CHECKED.md`** tracks which pairs of entries have been semantically compared for duplicate detection. Only within-category pairs are checked. Pairs not appearing here are unchecked candidates for the next DEDUPE sweep.
+
 **Three axes, one entry per fact:**
 - **Directory** — where the content lives (by technology or problem domain)
 - **Labels** — cross-cutting tags on technique entries (`#strategy`, `#testing`, `#ci-cd`, etc.)
 - **GARDEN.md** — indexes every entry under all applicable axes; no content duplication
+
+**GARDEN.md carries a metadata header at the top:**
+
+```markdown
+**Last assigned ID:** GE-0042
+**Last full DEDUPE sweep:** YYYY-MM-DD
+**Entries merged since last sweep:** 3
+**Drift threshold:** 10
+```
 
 GARDEN.md has three index sections:
 - `## By Technology` — all entries grouped by tech/tool (gotchas, techniques, and undocumented)
 - `## By Symptom / Type` — gotchas grouped by failure pattern (silent failure, symptom misleads, etc.)
 - `## By Label` — techniques grouped by cross-cutting character (`#strategy`, `#testing`, `#pattern`, etc.)
 
-Each entry appears in exactly one file. The index cross-references it in multiple sections.
+Each entry appears in exactly one file. The index cross-references it in multiple sections. Index entries include the GE-ID:
+
+```
+- GE-0001 [Entry Title](file.md#entry-title)
+```
 
 **`submissions/`** is how all Claude sessions contribute. Submissions are
 written without reading the main garden files. A separate MERGE operation
@@ -287,6 +303,17 @@ The **Suggested target** is a hint to the merge Claude — which garden file thi
 likely belongs in. The merge Claude decides final placement after checking for
 duplicates and related entries.
 
+**Garden file entry format (after merge):** Merged entries in garden files include a GE-ID immediately after the entry heading:
+
+```markdown
+## Entry Title
+
+**ID:** GE-0001
+**Stack:** ...
+```
+
+IDs are assigned by the merging Claude. Submissions do not include IDs.
+
 **Revise entry** (solution, alternative, variant, update, or status change for an existing entry):
 
 ```markdown
@@ -296,6 +323,7 @@ duplicates and related entries.
 **Type:** revise
 **Revision kind:** solution | alternative | variant | update | resolved | deprecated
 **Target:** `<directory>/<file>.md` — `## Exact Entry Title`
+**Target ID:** GE-XXXX  *(optional — if known, takes precedence over path+title matching)*
 **Source project:** project-name (or "cross-project")
 **Session context:** One sentence on what was being worked on when this surfaced
 
@@ -648,6 +676,21 @@ merging, with full context budget available for reading.
 - There are several pending submissions (check: `ls ~/claude/knowledge-garden/submissions/`)
 - Before a session that will need to search the garden for existing knowledge
 
+**Step 0 — Drift check**
+
+Read GARDEN.md metadata header:
+- `Entries merged since last sweep` — how many entries have been merged since the last full DEDUPE
+- `Drift threshold` — the trigger point (default: 10)
+
+If `entries_merged_since_sweep >= drift_threshold`:
+  Notify the user:
+  > "The garden has drifted — [N] entries have been added since the last full duplicate sweep
+  > (threshold: [T]). Run a full DEDUPE sweep before merging this batch?"
+  >
+  > Options: **YES** (run DEDUPE now, then continue) / **defer** (merge now, sweep later) / **skip** (merge and reset counter)
+
+If `entries_merged_since_sweep < drift_threshold`: proceed silently to Step 1.
+
 **Step 1 — List pending submissions**
 
 ```bash
@@ -729,6 +772,21 @@ Then classify against existing garden content:
 - **Duplicate** — identical to an existing entry; discard submission regardless of score
 - **Related** — overlaps with an existing entry; enrich or note the variant
 
+**Step 5b — Light duplicate check (new entries only)**
+
+For each submission classified as "New" in Step 5:
+1. Extract its technology/stack keywords
+2. Scan GARDEN.md index for existing entries in the same technology category
+3. For each candidate: compare title, symptom/description for semantic overlap
+4. If similar: present to user — "This looks similar to GE-XXXX [title] — duplicate, related, or distinct?"
+   - Duplicate → discard submission, log pair in CHECKED.md as `duplicate-discarded`
+   - Related → note cross-references to add at merge time, log as `related`
+   - Distinct → proceed as new, log as `distinct`
+5. Record every comparison made in CHECKED.md, regardless of outcome
+
+Pairs to add to CHECKED.md: `[submission-slug] × GE-XXXX | result | date`
+Note: submission slug is replaced by the assigned GE-ID once the entry is merged.
+
 **Step 6 — Integrate new and related entries**
 
 For new entries: append to the appropriate garden file. Then update GARDEN.md:
@@ -738,6 +796,14 @@ For new entries: append to the appropriate garden file. Then update GARDEN.md:
 | Gotcha | ✅ add | ✅ add under matching symptom category | — |
 | Technique | ✅ add | — | ✅ add under each matching label |
 | Undocumented | ✅ add | ✅ add (or new "Undocumented" category) | — |
+
+**Assign GE-ID:**
+1. Read `Last assigned ID` from GARDEN.md metadata header
+2. Assign the next sequential ID (GE-0001, GE-0002, etc.)
+3. Add `**ID:** GE-XXXX` to the entry header immediately after the `## Entry Title` heading
+4. Update GARDEN.md index: prefix the entry's index line with `GE-XXXX`
+5. Update GARDEN.md metadata: increment `Last assigned ID` and `Entries merged since last sweep`
+6. Update CHECKED.md: replace submission-slug references with the new GE-ID
 
 **Creating a new garden file:** Add the correct header on line 1:
 - `# <Technology> Gotchas` / `# <Technology> Techniques` / `# <Technology> Gotchas and Techniques`
@@ -772,6 +838,81 @@ git commit -m "merge: integrate N submissions — <brief summary>"
 
 Tell the user how many submissions were merged, how many were duplicates,
 how many were related entries, and which garden files were updated.
+
+---
+
+### DEDUPE (find and resolve duplicate entries)
+
+Use when: drift threshold exceeded (prompted by MERGE Step 0), or user explicitly says
+"dedupe the garden", "check for duplicates", "run a duplicate sweep".
+
+Unlike MERGE which checks new submissions against existing entries, DEDUPE checks
+*existing entries against each other* — finding near-duplicates that slipped through
+incremental merges.
+
+**Step 1 — Load the index and pair log**
+
+Read GARDEN.md: enumerate all entries with their GE-IDs, grouped by technology category.
+Read CHECKED.md: build the set of already-verified pairs.
+
+**Step 2 — Generate unchecked pairs per category**
+
+For each technology category (e.g., `quarkus/`, `tools/tmux.md`, `java/`):
+- List all entries in that category
+- Generate all within-category pairs
+- Exclude pairs already in CHECKED.md
+- These are the unchecked pairs to process
+
+Cross-category pairs (e.g., GE-0001 in `quarkus/` vs GE-0042 in `tools/tmux.md`) are
+never checked — they cannot be duplicates.
+
+**Step 3 — Compare unchecked pairs**
+
+For each unchecked pair, read both entries surgically:
+
+```bash
+grep -A 40 "## Entry Title" ~/claude/knowledge-garden/<file>.md
+```
+
+Classify:
+- **Distinct** — different enough; no action needed
+- **Related** — similar but legitimately separate; add cross-references to both entries
+- **Duplicate** — one is a subset or copy of the other; propose to user which to keep
+
+**Step 4 — Resolve duplicates and related entries**
+
+For related pairs: add `**See also:** GE-XXXX [title]` to both entries.
+For duplicates: present both to user, keep the more complete one, discard the other.
+
+**Step 5 — Update CHECKED.md**
+
+Log every comparison:
+
+```markdown
+| GE-0003 × GE-0007 | distinct | YYYY-MM-DD | |
+| GE-0004 × GE-0008 | related | YYYY-MM-DD | cross-referenced |
+| GE-0005 × GE-0009 | duplicate-discarded | YYYY-MM-DD | GE-0005 kept |
+```
+
+**Step 6 — Reset drift counter**
+
+Update GARDEN.md metadata:
+- `Last full DEDUPE sweep: YYYY-MM-DD`
+- `Entries merged since last sweep: 0`
+
+**Step 7 — Commit**
+
+```bash
+git add .
+git commit -m "dedupe: sweep N pairs — M related, K duplicates resolved"
+```
+
+**Step 8 — Report**
+
+Tell the user:
+- How many pairs were checked
+- How many were distinct / related / duplicate
+- Which garden files were updated
 
 ---
 
@@ -933,6 +1074,9 @@ flowchart TD
 | MERGE: By Symptom / Type updated for a technique (not a gotcha) | Wrong section for techniques | By Symptom / Type is for gotchas; techniques go in By Label |
 | Missing version for a 3rd party library | Future readers can't tell if the gotcha applies to them | Include version or range: `Quarkus 3.9.x`, `tmux 3.2+`; "all versions" only when verified |
 | Version included for own pre-1.0 project | Version is meaningless before first release | Omit until 1.0; add a "Version: 1.0+" note at that point |
+| Assigning IDs in submissions | IDs are assigned at merge time, not by submitters | Never add GE-XXXX to a submission file; let MERGE assign it |
+| Not updating CHECKED.md during MERGE | Loses track of which pairs have been compared; DEDUPE re-checks unnecessarily | Every comparison made during light check must be logged |
+| Running DEDUPE across categories | Cross-category entries can't be duplicates; wastes context | Only compare within-category pairs |
 
 ---
 
@@ -963,8 +1107,20 @@ MERGE is complete when:
 - ✅ Technique entries have `**Labels:**` field in the content file
 - ✅ GARDEN.md updated: By Technology always; By Symptom/Type for gotchas; By Label for techniques
 - ✅ New labels added to Tag Index if used
+- ✅ GE-IDs assigned to all new entries (header + index)
+- ✅ GARDEN.md metadata updated (last ID, entries_merged_since_sweep)
+- ✅ Light duplicate check run for all new entries; results logged in CHECKED.md
+- ✅ DEDUPE offered if drift threshold exceeded
 - ✅ Processed submissions removed
 - ✅ Committed with `merge:` format
+
+DEDUPE is complete when:
+- ✅ All within-category unchecked pairs processed
+- ✅ CHECKED.md updated with all results
+- ✅ Related entries have cross-references
+- ✅ Duplicate entries resolved (user confirmed which to keep)
+- ✅ GARDEN.md drift counter reset
+- ✅ Committed with `dedupe:` format
 
 SEARCH is complete when:
 - ✅ Full entry returned for any matching bugs
@@ -984,9 +1140,10 @@ the garden", "add this to the garden", "merge garden submissions")
 **Invokes:** Nothing — handles its own git commits to `~/claude/knowledge-garden/`
 
 **Reads from:**
-- `~/claude/knowledge-garden/GARDEN.md` — for SEARCH and MERGE only
+- `~/claude/knowledge-garden/GARDEN.md` — for SEARCH, MERGE, and DEDUPE
+- `~/claude/knowledge-garden/CHECKED.md` — for MERGE (light duplicate check) and DEDUPE
 - `~/claude/knowledge-garden/submissions/` — for MERGE only
-- Garden detail files — MERGE only, surgical section reads
+- Garden detail files — MERGE and DEDUPE only, surgical section reads
 
 **Complements:** `idea-log`, `adr`, `write-blog` — the garden holds
 reusable cross-project technical gotchas none of those capture
