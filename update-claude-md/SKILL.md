@@ -145,6 +145,28 @@ Map changes to CLAUDE.md sections:
 
 **This check applies to ALL project types** (skills/java/blog/custom/generic).
 
+### Step 4b: Check for missing Writing Style Guide section
+
+```bash
+ls docs/blog/ 2>/dev/null | head -1
+```
+
+If `docs/blog/` exists (meaning write-blog has been used in this project), check whether CLAUDE.md already contains the Writing Style Guide requirement:
+
+```bash
+grep -l "writing style guide\|blog-technical" CLAUDE.md 2>/dev/null
+```
+
+If `docs/blog/` exists **and** the requirement is absent from CLAUDE.md, propose adding:
+
+```markdown
+## Writing Style Guide
+
+**The writing style guide at `~/claude-workspace/writing-styles/blog-technical.md` is mandatory for all blog and diary entries.** Load it in full before drafting. Complete the pre-draft voice classification (I / we / Claude-named) before generating any prose. Do not show a draft without verifying it against the style guide.
+```
+
+This is a one-time addition per project — once present, this check passes silently.
+
 ### Step 5: Propose updates
 
 **For single-file CLAUDE.md:**

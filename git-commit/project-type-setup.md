@@ -13,6 +13,10 @@ Create or update CLAUDE.md:
 
 **NEVER add AI attribution to commit messages** (no `Co-Authored-By: Claude`, no `Generated-by:`, no AI mentions) unless the user explicitly requests it for a specific commit. Commit messages describe WHAT changed and WHY only.
 
+## Writing Style Guide
+
+**The writing style guide at `~/claude-workspace/writing-styles/blog-technical.md` is mandatory for all blog and diary entries.** Load it in full before drafting. Complete the pre-draft voice classification (I / we / Claude-named) before generating any prose. Do not show a draft without verifying it against the style guide.
+
 ## Project Type
 
 **Type:** skills
@@ -47,6 +51,10 @@ Create or update CLAUDE.md:
 
 **NEVER add AI attribution to commit messages** (no `Co-Authored-By: Claude`, no `Generated-by:`, no AI mentions) unless the user explicitly requests it for a specific commit. Commit messages describe WHAT changed and WHY only.
 
+## Writing Style Guide
+
+**The writing style guide at `~/claude-workspace/writing-styles/blog-technical.md` is mandatory for all blog and diary entries.** Load it in full before drafting. Complete the pre-draft voice classification (I / we / Claude-named) before generating any prose. Do not show a draft without verifying it against the style guide.
+
 ## Project Type
 
 **Type:** java
@@ -79,6 +87,10 @@ Create or update CLAUDE.md:
 ## Commit Messages
 
 **NEVER add AI attribution to commit messages** (no `Co-Authored-By: Claude`, no `Generated-by:`, no AI mentions) unless the user explicitly requests it for a specific commit. Commit messages describe WHAT changed and WHY only.
+
+## Writing Style Guide
+
+**The writing style guide at `~/claude-workspace/writing-styles/blog-technical.md` is mandatory for all blog and diary entries.** Load it in full before drafting. Complete the pre-draft voice classification (I / we / Claude-named) before generating any prose. Do not show a draft without verifying it against the style guide.
 
 ## Project Type
 
@@ -131,6 +143,10 @@ Create CLAUDE.md:
 
 **NEVER add AI attribution to commit messages** (no `Co-Authored-By: Claude`, no `Generated-by:`, no AI mentions) unless the user explicitly requests it for a specific commit. Commit messages describe WHAT changed and WHY only.
 
+## Writing Style Guide
+
+**The writing style guide at `~/claude-workspace/writing-styles/blog-technical.md` is mandatory for all blog and diary entries.** Load it in full before drafting. Complete the pre-draft voice classification (I / we / Claude-named) before generating any prose. Do not show a draft without verifying it against the style guide.
+
 ## Project Type
 
 **Type:** custom
@@ -175,6 +191,10 @@ Create or update CLAUDE.md:
 ## Commit Messages
 
 **NEVER add AI attribution to commit messages** (no `Co-Authored-By: Claude`, no `Generated-by:`, no AI mentions) unless the user explicitly requests it for a specific commit. Commit messages describe WHAT changed and WHY only.
+
+## Writing Style Guide
+
+**The writing style guide at `~/claude-workspace/writing-styles/blog-technical.md` is mandatory for all blog and diary entries.** Load it in full before drafting. Complete the pre-draft voice classification (I / we / Claude-named) before generating any prose. Do not show a draft without verifying it against the style guide.
 
 ## Project Type
 
