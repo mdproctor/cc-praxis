@@ -159,8 +159,10 @@ error messages. "No error" is important context.
 ### Root cause
 Why it happens. The underlying mechanism — WHY, not just WHAT.
 
-### Fix
+### Fix *(or "None known — workaround: [X]" if unsolved)*
 Code block or config. Be complete. Include what NOT to do alongside what works.
+If no fix exists yet, describe the best available workaround — the entry is still worth capturing.
+A REVISE submission can add a solution later.
 
 ### Why this is non-obvious
 The insight. What makes this a gotcha? Why would a skilled developer be misled?
@@ -285,6 +287,49 @@ The **Suggested target** is a hint to the merge Claude — which garden file thi
 likely belongs in. The merge Claude decides final placement after checking for
 duplicates and related entries.
 
+**Revise entry** (solution, alternative, variant, update, or status change for an existing entry):
+
+```markdown
+# Garden Revision Submission
+
+**Date:** YYYY-MM-DD
+**Type:** revise
+**Revision kind:** solution | alternative | variant | update | resolved | deprecated
+**Target:** `<directory>/<file>.md` — `## Exact Entry Title`
+**Source project:** project-name (or "cross-project")
+**Session context:** One sentence on what was being worked on when this surfaced
+
+---
+
+## What this adds
+[1–2 sentences on what new knowledge this brings to the existing entry]
+
+## Content
+[The actual solution, alternative, update, or note — complete and runnable where code is involved]
+
+## Why it belongs with the existing entry
+[How it relates — is it a complete fix, an alternative approach, additional context?]
+
+## Trade-offs / caveats
+[Any limitations, constraints, or conditions under which this applies or doesn't]
+```
+
+**Revision kind guide:**
+
+| Kind | When to use |
+|------|------------|
+| `solution` | Gotcha had no fix / workaround only — now there's a real fix |
+| `alternative` | Entry has one solution — found a different approach with different trade-offs |
+| `variant` | Same pattern but different context, constraint, or technology |
+| `update` | Additional context, edge cases, or discovery that enriches the entry |
+| `resolved` | The library/tool fixed the bug — entry stays but notes the version |
+| `deprecated` | Feature removed or approach obsolete — entry stays with a warning |
+
+**Filename convention:** include "revise" in the slug so MERGE Claude can identify it immediately:
+`YYYY-MM-DD-<project>-revise-<entry-slug>.md`
+
+**Garden Score for REVISE submissions:** score the revision itself, not the original entry. A solution to a previously-unsolved gotcha scores high on pain/impact (it makes an existing entry actionable). Use the same 5-dimension table.
+
 ---
 
 ## Garden Score
@@ -384,9 +429,14 @@ Confirm before proceeding.
 **Step 2 — Duplicate awareness check (context only, no reads)**
 
 Ask: is any garden content already in context from this session?
-- Searched the garden earlier → you know what's there; skip obvious duplicates
+- Searched the garden earlier → you know what's there; if the new knowledge **enriches** an existing entry (solution, alternative, additional context) → pivot to **REVISE** instead of CAPTURE
 - Already submitted this entry this session → skip it
 - Neither → proceed without reading anything; let the merge handle it
+
+**CAPTURE vs REVISE decision:**
+- New fact, new bug, new technique with no existing entry → **CAPTURE**
+- Solution / alternative / update for a known existing entry → **REVISE**
+- Uncertain → proceed with CAPTURE; MERGE Claude will recognise it as an enrichment
 
 Do NOT run `grep -r` across the garden. Do NOT read garden files. The token
 cost is not justified here; the merge Claude handles deduplication.
@@ -529,6 +579,65 @@ Tell the user:
 
 ---
 
+### REVISE (submit an enrichment to an existing entry)
+
+Use when new knowledge enriches an existing garden entry rather than standing alone: a solution surfaces for a previously-unsolved gotcha, an alternative approach is found, additional context or edge cases emerge, or an entry's status changes.
+
+**Step 1 — Identify the target entry**
+
+If the entry is already in context from this session (you searched the garden earlier, or it was referenced), use that knowledge directly — no need to re-read.
+
+If you need to find it:
+```bash
+grep -r "keywords" ~/claude/knowledge-garden/ --include="*.md" \
+  --exclude-dir=submissions -l
+```
+Then read only the specific entry:
+```bash
+grep -A 60 "## Entry Title" ~/claude/knowledge-garden/<path>.md
+```
+
+**Step 2 — Determine the revision kind**
+
+| Situation | Kind |
+|-----------|------|
+| Gotcha had no fix / workaround only — now there's a real fix | `solution` |
+| Entry has one solution — found a different approach | `alternative` |
+| Same pattern in a different context or with different constraints | `variant` |
+| Additional context, edge cases, or discovery | `update` |
+| Bug fixed in a newer library/tool version | `resolved` |
+| Feature removed or approach obsolete | `deprecated` |
+
+**Step 3 — Draft and confirm**
+
+Draft the REVISE submission. Show it:
+> "Does this accurately capture the new knowledge and how it enriches the existing entry?"
+
+Wait for confirmation before writing.
+
+**Step 4 — Write the submission file**
+
+```bash
+mkdir -p ~/claude/knowledge-garden/submissions
+# write YYYY-MM-DD-<project>-revise-<entry-slug>.md
+```
+
+Include "revise" in the filename so MERGE Claude identifies it immediately.
+
+**Step 5 — Commit**
+
+```bash
+cd ~/claude/knowledge-garden
+git add submissions/
+git commit -m "submit(<project>): revise '<entry title>' — <what's new>"
+```
+
+**Step 6 — Report back**
+
+Tell the user what was submitted and what it adds to the existing entry.
+
+---
+
 ### MERGE (integrate submissions into the garden)
 
 Run this as a dedicated operation — ideally a session whose primary purpose is
@@ -567,6 +676,45 @@ grep -A 30 "## <existing title>" ~/claude/knowledge-garden/<file>.md
 ```
 
 Don't load entire garden files — read only the sections that might overlap.
+
+**Step 4b — Identify REVISE submissions**
+
+Check filenames for "revise" — these need different handling from new entries.
+
+For each REVISE submission:
+1. Read the target entry (the section, not the whole file)
+2. Integrate based on revision kind:
+
+| Kind | How to integrate |
+|------|-----------------|
+| `solution` | If Fix says "None known": replace with the solution. If Fix already has a solution: restructure into Solution 1 / Solution 2 with pros/cons for each (see Multiple Solutions below) |
+| `alternative` | Add `### Alternative — [brief name]` after the existing Fix/Solution section with pros/cons |
+| `variant` | Add `## Variant — [context]` section within the file |
+| `update` | Append to the relevant section (Root cause, Context, Caveats, etc.) |
+| `resolved` | Add `**Resolved in: vX.Y** — [brief note]` immediately after the Stack line; keep the entry intact for users on older versions |
+| `deprecated` | Add `**Deprecated:** [reason and date]` near the top; keep the entry for historical reference |
+
+**Multiple solutions structure** (only when 2 or more exist):
+
+```markdown
+### Solution 1 — [brief descriptive name]
+**Approach:** [one sentence]
+**Pros:** [what makes it good]
+**Cons/trade-offs:** [limitations, constraints]
+[code block]
+
+### Solution 2 — [brief descriptive name]
+**Approach:** [one sentence]
+**Pros:** [what makes it good]
+**Cons/trade-offs:** [limitations, constraints]
+[code block]
+```
+
+Single solutions don't get pros/cons — that section only appears when there are genuinely multiple options. Do NOT retroactively reformat existing single-solution entries; apply this structure only when a second solution is being added.
+
+After integrating a REVISE submission: append the compact score line (same format as new entries), then remove the submission file.
+
+---
 
 **Step 5 — Classify each submission**
 
@@ -684,6 +832,17 @@ Offer, don't assume — and name the type:
 > "This was non-obvious — want me to submit it to the garden as a [gotcha /
 > technique / undocumented]? Would go under [category] as '[short title]'."
 
+**Also fire for REVISE** when:
+- A solution is found for a problem that was previously unsolved or only had a workaround
+- An alternative approach surfaces that's meaningfully different from the known one
+- A garden entry's status changes (bug fixed upstream, feature deprecated)
+- The user says: "we finally fixed that", "turns out there's a better way", "that's been fixed in the new version"
+
+Offer:
+> "This looks like a solution to an existing garden entry — want me to submit a REVISE to enrich '[entry title]' with the fix?"
+
+If the entry isn't in context but the problem is clearly documented somewhere in the garden, the user can confirm and the REVISE workflow will locate it.
+
 ---
 
 ## Decision Flow
@@ -757,6 +916,11 @@ flowchart TD
 | Technique: no "why non-obvious" section | Just becomes documentation | Must explain what developers would normally do instead |
 | Adding general best practices as techniques | Not garden-worthy — it's well-known advice | The bar is: skilled developer would be surprised this exists |
 | Using CAPTURE when you meant SWEEP | Asks user what to capture instead of proposing findings | Say "sweep" for systematic session review; "capture" for a known specific thing |
+| Using CAPTURE for a solution to an existing entry | Creates a duplicate or near-duplicate instead of enriching the original | If the knowledge belongs with an existing entry, use REVISE |
+| Adding a second solution without pros/cons | Reader can't choose between approaches | When 2+ solutions exist, restructure into Solution 1 / Solution 2 with explicit pros/cons for each |
+| Retroactively reformatting single-solution entries to add pros/cons | Unnecessary churn; pros/cons only add value when there's a choice | Only add pros/cons when a second solution arrives |
+| REVISE "resolved" entry: deleting the original content | Users on older versions still need the entry | Add "Resolved in: vX.Y" note — never delete the entry content |
+| Not including "revise" in the REVISE submission filename | MERGE Claude has to infer from content rather than seeing it immediately | Always include "revise" in the filename slug |
 | SWEEP: asking the user what was discovered | Defeats the purpose — Claude has the context, user shouldn't have to re-explain | Scan session memory and propose specific candidates; don't ask open-ended questions |
 | SWEEP: only checking gotchas | Techniques and undocumented items are easy to miss | Always check all three categories explicitly |
 | Forgetting to run MERGE periodically | Submissions accumulate, garden stays stale | MERGE after 3–5 submissions, or before a search-heavy session |
@@ -779,6 +943,13 @@ SWEEP is complete when:
 - ✅ Each finding proposed explicitly with type and description
 - ✅ Confirmed entries submitted via CAPTURE
 - ✅ Report given: N found, M submitted per category
+
+REVISE is complete when:
+- ✅ Submission file written with "revise" in the filename
+- ✅ Target entry path and exact title specified
+- ✅ Revision kind declared (solution / alternative / variant / update / resolved / deprecated)
+- ✅ User confirmed the draft before writing
+- ✅ Committed with `submit(<project>): revise '<title>' — <what's new>` format
 
 CAPTURE is complete when:
 - ✅ Submission file written to `~/claude/knowledge-garden/submissions/`
