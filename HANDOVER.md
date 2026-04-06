@@ -1,40 +1,40 @@
-# Handover — 2026-04-06
+# Handover — 2026-04-07
 
-**Head commit:** `0e5b992` — feat(retro-issues): all commits get tickets; narrow trivial exclusions; full commit lists in report
+**Head commit:** `84b40cb` — docs: session handover 2026-04-06
 **Previous handover:** `git show HEAD~1:HANDOVER.md` | diff: `git diff HEAD~1 HEAD -- HANDOVER.md`
 
 ## What Changed This Session
 
-Four refinements to `retro-issues` after the initial build:
-- **Epic coherence gates** — Gate 2 (max 8 children) + Gate 3 (max 3 distinct scopes): time-bucket epics now dissolve to standalones automatically
-- **Ticket grouping is primary** — explicit priority order stated in skill intro; related-scope merging added to Step 5 (java-dev + java-code-review + java-git-commit → one ticket)
-- **All commits get tickets** — trivial exclusions narrowed to pure typos, whitespace, merge commits only; everything else gets a ticket
-- **Report format** — full commit list + scopes on every ticket; sub-epic nesting; summary line; excluded table warns if long
-
-Live validation against this repo revealed: ADR Date: fields are empty (GE-0044), scope > file-path clustering (GE-0043), regex plural false positive (GE-0042). All submitted to garden.
+- **retro-issues first live run** — 285 commits → 27 standalone issues, 0 epics (all epic gates fired correctly), 1 excluded commit (Mermaid conversion). Issues #1–#27 created and closed on mdproctor/cc-praxis.
+- **docs/retro-issues.md** written (untracked → committed this session)
+- **Garden submissions** — GE-0048 (bash large output → use Read tool), GE-0049 (`${url##*/}` bulk issue creation), GE-0050 (conventional commit scope as grouping signal)
+- **Design snapshot** — `docs/design-snapshots/2026-04-07-retro-issues-validation.md`
+- **Blog entry** — `docs/blog/2026-04-07-01-retrospective-runs-on-itself.md`
 
 ## State Right Now
 
-- `main` clean, pushed, 46/46 synced
-- `docs/` has no `retro-issues.md` yet — will be created on first `/retro-issues` run
-- GitHub repo has standard labels but NOT `epic` label — no epics expected for this repo so not a blocker for the test run
+- `main` clean after this session's commit
+- All 27 GitHub issues closed at mdproctor/cc-praxis#1–#27
+- Garden: 3 new submissions pending merge (GE-0048, GE-0049, GE-0050)
+- retro-issues skill validated — epic path NOT tested (scope spread too wide for this repo)
 
 ## Immediate Next Step
 
-Open a **new session** in this repo and run `/retro-issues`. Stop at Step 7 (do not say YES to create GitHub issues). Review `docs/retro-issues.md` critically:
-- Expect ~277 commits in tickets, ~2–3 excluded (Mermaid conversion, whitespace fix)
-- Expect no epics — all standalones grouped by scope (marketplace, garden, write-blog, validation, project-health, etc.)
-- Verify related scopes collapsed correctly (e.g. java-dev + java-code-review merged)
-- Excluded table should be very short
+Test retro-issues on a repo where the epic path fires — needs a codebase with coherent multi-phase development (few dominant scopes per window, ≤ 3 distinct scopes, 2–8 child issues). Candidate: any Java project with clear feature phases.
 
 ## Open Questions / Blockers
 
 *Unchanged — `git show HEAD~1:HANDOVER.md`* (image index, publish-blog, v1.0.1 tag, ADR Date: auto-populate)
 
+New: Should `docs/retro-issues.md` be retained long-term as a permanent record, or deleted after issue creation? Currently kept — permanent record of the mapping.
+
 ## References
 
 | Context | Where | Retrieve with |
 |---------|-------|---------------|
-| retro-issues skill | `retro-issues/SKILL.md` | `cat` |
-| Previous handover detail | git history | `git show HEAD~1:HANDOVER.md` |
+| Retro-issues skill | `skills/retro-issues/SKILL.md` | `cat` |
+| Issue mapping | `docs/retro-issues.md` | `cat` |
+| Design snapshot | `docs/design-snapshots/2026-04-07-retro-issues-validation.md` | `cat` |
+| Blog entry | `docs/blog/2026-04-07-01-retrospective-runs-on-itself.md` | `cat` |
 | Garden submissions | `~/claude/knowledge-garden/submissions/` | `ls` |
+| Previous handover | git history | `git show HEAD~1:HANDOVER.md` |
