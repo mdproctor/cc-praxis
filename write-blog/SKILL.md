@@ -317,9 +317,12 @@ File name: `YYYY-MM-DD-<kebab-case-title>.md` — today's date, topic slug ≤30
 
 After writing:
 
-1. **Significant decision in the entry?** — offer to create a formal `adr`
-2. **Major milestone?** — offer a `design-snapshot` to freeze the full state
-3. **Commit** — invoke `git-commit` with message:
+1. **First entry ever in this project?** — check if `docs/blog/` had no entries before this one. If yes, offer to run `update-claude-md` to add the Writing Style Guide section to CLAUDE.md so future Claude sessions load it automatically:
+   > "First blog entry in this project. CLAUDE.md doesn't yet know about the mandatory writing style guide — run update-claude-md to add that pointer?"
+   This is a one-time setup action. Once the section is in CLAUDE.md, this check passes silently on all future entries.
+2. **Significant decision in the entry?** — offer to create a formal `adr`
+3. **Major milestone?** — offer a `design-snapshot` to freeze the full state
+4. **Commit** — invoke `git-commit` with message:
    ```
    docs: add project blog entry YYYY-MM-DD-<title>
    ```
@@ -575,7 +578,7 @@ For Retrospective runs additionally:
 
 **Invoked by:** User directly — single entry ("write a blog entry", "update the project blog", "document this pivot") or full retrospective ("blog all the work to date", "catch the blog up", "write a retrospective series"); also after `adr` captures a major decision, after `design-snapshot` marks a significant milestone, or automatically as part of the `session-handoff` wrap checklist
 
-**Invokes:** [`adr`] — when a significant decision in the blog entry warrants a formal record; [`design-snapshot`] — when the entry marks a major milestone worth freezing as a formal state record; [`git-commit`] — to commit the entry (routes to `java-git-commit`, `custom-git-commit`, etc. per CLAUDE.md project type)
+**Invokes:** [`update-claude-md`] — on first entry ever in a project, to add the mandatory Writing Style Guide section to CLAUDE.md; [`adr`] — when a significant decision in the blog entry warrants a formal record; [`design-snapshot`] — when the entry marks a major milestone worth freezing as a formal state record; [`git-commit`] — to commit the entry (routes to `java-git-commit`, `custom-git-commit`, etc. per CLAUDE.md project type)
 
 **Feeds into:** `publish-blog` (personal skill, not in cc-praxis) — handles the publishing mechanics when entries are ready to go out. `write-blog` is the writing step; `publish-blog` is the delivery step (currently Jekyll, but the platform may change — only `publish-blog` needs to change, not the entries)
 
