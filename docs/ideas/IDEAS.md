@@ -5,6 +5,19 @@ Promote to an ADR when ready to decide; discard when no longer relevant.
 
 ---
 
+## 2026-04-06 — Periodically evolve the personal writing style guide
+
+**Priority:** low
+**Status:** active
+
+The personal guide (`blog-technical.md`) was built from a 577-post corpus spanning 2006–2017 — solo technical writing for the Drools/KIE community. The current writing context is different: collaborative work with Claude, a development diary format, and potentially a broader audience. Some rules carry forward perfectly; others may need revisiting for the new context. Worth doing a deliberate review periodically — comparing what the guide says against what's actually being written — and asking which rules still fit and which should evolve.
+
+**Context:** Arose from questioning the "no preamble" rule — which is solidly grounded in the corpus but may have legitimate exceptions in longer series or for broader audiences. The I/we/Claude register system was invented for this context, not derived from the corpus; other adaptations might similarly be worth making deliberately rather than discovered after the fact.
+
+**Promoted to:**
+
+---
+
 ## 2026-04-04 — Holistic project-memory architecture: indexed folders not flat files
 
 **Priority:** high
