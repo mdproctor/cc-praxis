@@ -140,8 +140,10 @@ to perform the duplicate check.
 ## Submission File Format
 
 ```
-~/claude/knowledge-garden/submissions/YYYY-MM-DD-<project>-<slug>.md
+~/claude/knowledge-garden/submissions/YYYY-MM-DD-<project>-GE-XXXX-<slug>.md
 ```
+
+The GE-ID is embedded in the filename for instant visibility. The `GE-XXXX` is assigned by the submitting Claude in CAPTURE Step 0 before the file is written.
 
 **Version policy for the Stack field:**
 - **Third-party libraries:** Always include version or range — `Quarkus 3.9.x`, `tmux 3.2+`, `GraalVM 25`. The gotcha may be fixed in a later version; future readers need to know if it applies to them.
@@ -313,7 +315,7 @@ duplicates and related entries.
 **Stack:** ...
 ```
 
-IDs are assigned by the merging Claude. Submissions do not include IDs.
+IDs are assigned by the submitting Claude in CAPTURE Step 0. Submissions carry their GE-ID in the filename (`GE-XXXX` segment) and in the `**Submission ID:**` header field. MERGE verifies the ID is not already in the garden index, then adds `**ID:** GE-XXXX` to the merged entry.
 
 **Revise entry** (solution, alternative, variant, update, or status change for an existing entry):
 
@@ -324,7 +326,8 @@ IDs are assigned by the merging Claude. Submissions do not include IDs.
 **Type:** revise
 **Revision kind:** solution | alternative | variant | update | resolved | deprecated
 **Target:** `<directory>/<file>.md` — `## Exact Entry Title`
-**Target ID:** GE-XXXX  *(optional — if known, takes precedence over path+title matching)*
+**Submission ID:** GE-XXXX  *(this submission's own ID — assigned in CAPTURE Step 0)*
+**Target ID:** GE-YYYY      *(the existing entry being revised — required for REVISE)*
 **Source project:** project-name (or "cross-project")
 **Session context:** One sentence on what was being worked on when this surfaced
 
@@ -354,8 +357,8 @@ IDs are assigned by the merging Claude. Submissions do not include IDs.
 | `resolved` | The library/tool fixed the bug — entry stays but notes the version |
 | `deprecated` | Feature removed or approach obsolete — entry stays with a warning |
 
-**Filename convention:** include "revise" in the slug so MERGE Claude can identify it immediately:
-`YYYY-MM-DD-<project>-revise-<entry-slug>.md`
+**Filename convention:** include "revise" in the slug so MERGE Claude can identify it immediately. Include the assigned GE-ID (the revision's own ID, not the target's):
+`YYYY-MM-DD-<project>-GE-XXXX-revise-<entry-slug>.md`
 
 **Garden Score for REVISE submissions:** score the revision itself, not the original entry. A solution to a previously-unsolved gotcha scores high on pain/impact (it makes an existing entry actionable). Use the same 5-dimension table.
 
@@ -425,6 +428,25 @@ This doesn't interrupt reading but survives in the file for future pruning decis
 
 ### CAPTURE (write a submission — default operation)
 
+**Step 0 — Assign GE-ID (before anything else)**
+
+Every submission needs an ID before it's written, so the submitter can track it.
+
+1. Read the current counter:
+   ```bash
+   grep "Last assigned ID" ~/claude/knowledge-garden/GARDEN.md
+   ```
+2. Increment by 1. Pad to 4 digits: GE-0001, GE-0042, GE-0100.
+3. Note the new ID — it goes in the submission filename and header.
+4. Update GARDEN.md immediately:
+   ```bash
+   # Update the counter line in GARDEN.md
+   # sed or direct edit: "Last assigned ID: GE-XXXX" → "Last assigned ID: GE-YYYY"
+   ```
+5. Stage the GARDEN.md change — it will be committed with the submission in Step 7.
+
+**Race condition note:** If two Claudes submit simultaneously, one git commit will conflict on GARDEN.md. The loser must rebase: re-read the counter, take the next ID, update their submission file and filename, and re-commit.
+
 **Step 1 — Classify, score, and filter**
 
 First, classify the type:
@@ -454,6 +476,20 @@ Use the score to decide how to proceed:
 If uncertain about the score, offer: "Worth adding to the garden? Would go under [category]
 as '[short title]' — it's a [gotcha / technique / undocumented]. I'd score it [N]/15."
 Confirm before proceeding.
+
+**Step 1b — Light duplicate check (index scan only)**
+
+Before drafting, do a quick scan for obvious conflicts:
+
+1. Extract the technology/stack from the entry being prepared
+2. Read GARDEN.md index — find entries in the same technology category
+3. Compare titles: if any existing entry title is very similar, flag it:
+   > "This looks similar to GE-XXXX [title] — is this a new angle or the same thing?"
+   - If same thing → stop; offer REVISE instead (use that GE-ID as Target ID)
+   - If different → proceed; note which IDs were checked (for CHECKED.md update in Step 7)
+4. Do NOT read garden detail files — index only. The merge Claude handles deeper checks.
+
+Record: which existing GE-IDs were scanned (even if no conflicts found).
 
 **Step 2 — Duplicate awareness check (context only, no reads)**
 
@@ -520,18 +556,31 @@ Wait for confirmation before writing.
 
 **Step 6 — Write the submission file**
 
+Filename includes the assigned GE-ID:
 ```bash
 mkdir -p ~/claude/knowledge-garden/submissions
-# write YYYY-MM-DD-<project>-<slug>.md
+# write YYYY-MM-DD-<project>-GE-XXXX-<slug>.md
+```
+
+Add the GE-ID to the submission header (after **Date:**):
+```
+**Submission ID:** GE-XXXX
+```
+
+For REVISE submissions, also include:
+```
+**Target ID:** GE-YYYY  *(the existing entry being revised)*
 ```
 
 **Step 7 — Commit**
 
 ```bash
 cd ~/claude/knowledge-garden
-git add submissions/
-git commit -m "submit(<project>): '<short title>'"
+git add submissions/ GARDEN.md  # GARDEN.md because counter was updated
+git commit -m "submit(<project>): GE-XXXX '<short title>'"
 ```
+
+Note: GARDEN.md is always staged with the submission because the counter was updated in Step 0.
 
 **Step 8 — Report back**
 
@@ -648,17 +697,18 @@ Wait for confirmation before writing.
 
 ```bash
 mkdir -p ~/claude/knowledge-garden/submissions
-# write YYYY-MM-DD-<project>-revise-<entry-slug>.md
+# write YYYY-MM-DD-<project>-GE-XXXX-revise-<entry-slug>.md
+# (GE-XXXX is this revision's own assigned ID, not the target's ID)
 ```
 
-Include "revise" in the filename so MERGE Claude identifies it immediately.
+Include "revise" in the filename so MERGE Claude identifies it immediately. The submission header must include both `**Submission ID:** GE-XXXX` (this revision) and `**Target ID:** GE-YYYY` (the existing entry being revised).
 
 **Step 5 — Commit**
 
 ```bash
 cd ~/claude/knowledge-garden
-git add submissions/
-git commit -m "submit(<project>): revise '<entry title>' — <what's new>"
+git add submissions/ GARDEN.md  # GARDEN.md because counter was updated
+git commit -m "submit(<project>): GE-XXXX revise '<entry title>' — <what's new>"
 ```
 
 **Step 6 — Report back**
@@ -773,20 +823,27 @@ Then classify against existing garden content:
 - **Duplicate** — identical to an existing entry; discard submission regardless of score
 - **Related** — overlaps with an existing entry; enrich or note the variant
 
-**Step 5b — Light duplicate check (new entries only)**
+**Step 5b — Medium duplicate check (section read)**
 
 For each submission classified as "New" in Step 5:
-1. Extract its technology/stack keywords
-2. Scan GARDEN.md index for existing entries in the same technology category
-3. For each candidate: compare title, symptom/description for semantic overlap
-4. If similar: present to user — "This looks similar to GE-XXXX [title] — duplicate, related, or distinct?"
-   - Duplicate → discard submission, log pair in CHECKED.md as `duplicate-discarded`
-   - Related → note cross-references to add at merge time, log as `related`
-   - Distinct → proceed as new, log as `distinct`
-5. Record every comparison made in CHECKED.md, regardless of outcome
+1. Extract technology/stack keywords from the submission
+2. Find same-category existing entries in GARDEN.md index
+3. For each candidate: read the first 30 lines of the entry (symptom + root cause section):
+   ```bash
+   grep -A 30 "## Entry Title" ~/claude/knowledge-garden/<file>.md
+   ```
+4. Compare: symptom description, root cause keywords, fix approach
+5. If similar: present to user — "GE-XXXX [new submission] looks similar to GE-YYYY [existing] — duplicate, related, or distinct?"
+   - **Duplicate** → discard submission; add to DISCARDED.md:
+     `| GE-XXXX | GE-YYYY | date | [brief reason] |`
+     Log to CHECKED.md as `duplicate-discarded`
+   - **Related** → note cross-references; log to CHECKED.md as `related`
+   - **Distinct** → proceed; log to CHECKED.md as `distinct`
+6. Log ALL comparisons made to CHECKED.md (even distinct ones)
 
-Pairs to add to CHECKED.md: `[submission-slug] × GE-XXXX | result | date`
-Note: submission slug is replaced by the assigned GE-ID once the entry is merged.
+Pairs: `GE-XXXX (submission) × GE-YYYY (existing) | result | date`
+
+Note: submission GE-IDs appear in CHECKED.md; after merge they remain as the garden entry ID.
 
 **Step 6 — Integrate new and related entries**
 
@@ -798,13 +855,11 @@ For new entries: append to the appropriate garden file. Then update GARDEN.md:
 | Technique | ✅ add | — | ✅ add under each matching label |
 | Undocumented | ✅ add | ✅ add (or new "Undocumented" category) | — |
 
-**Assign GE-ID:**
-1. Read `Last assigned ID` from GARDEN.md metadata header
-2. Assign the next sequential ID (GE-0001, GE-0002, etc.)
-3. Add `**ID:** GE-XXXX` to the entry header immediately after the `## Entry Title` heading
-4. Update GARDEN.md index: prefix the entry's index line with `GE-XXXX`
-5. Update GARDEN.md metadata: increment `Last assigned ID` and `Entries merged since last sweep`
-6. Update CHECKED.md: replace submission-slug references with the new GE-ID
+**Verify GE-ID:** Confirm the submission's GE-ID (from its filename and header) is not already present in the garden index. If it is (race condition), assign the next available ID and note the change.
+
+Add `**ID:** GE-XXXX` to the entry header immediately after the `## Entry Title` heading, then update GARDEN.md:
+- Index: prefix the entry's index line with `GE-XXXX`
+- Metadata: increment `Entries merged since last sweep` (counter was already updated at submission time)
 
 **Creating a new garden file:** Add the correct header on line 1:
 - `# <Technology> Gotchas` / `# <Technology> Techniques` / `# <Technology> Gotchas and Techniques`
@@ -1075,7 +1130,8 @@ flowchart TD
 | MERGE: By Symptom / Type updated for a technique (not a gotcha) | Wrong section for techniques | By Symptom / Type is for gotchas; techniques go in By Label |
 | Missing version for a 3rd party library | Future readers can't tell if the gotcha applies to them | Include version or range: `Quarkus 3.9.x`, `tmux 3.2+`; "all versions" only when verified |
 | Version included for own pre-1.0 project | Version is meaningless before first release | Omit until 1.0; add a "Version: 1.0+" note at that point |
-| Assigning IDs in submissions | IDs are assigned at merge time, not by submitters | Never add GE-XXXX to a submission file; let MERGE assign it |
+| Omitting GE-ID from submission filename or header | MERGE can't reconcile the submission with CHECKED.md or DISCARDED.md | Always assign GE-ID in CAPTURE Step 0; embed in filename and `**Submission ID:**` header |
+| Forgetting to commit GARDEN.md with the submission | Counter in GARDEN.md drifts; next submitter picks a duplicate ID | Stage both `submissions/` and `GARDEN.md` in Step 7 |
 | Not updating CHECKED.md during MERGE | Loses track of which pairs have been compared; DEDUPE re-checks unnecessarily | Every comparison made during light check must be logged |
 | Running DEDUPE across categories | Cross-category entries can't be duplicates; wastes context | Only compare within-category pairs |
 
@@ -1097,10 +1153,14 @@ REVISE is complete when:
 - ✅ Committed with `submit(<project>): revise '<title>' — <what's new>` format
 
 CAPTURE is complete when:
-- ✅ Submission file written to `~/claude/knowledge-garden/submissions/`
-- ✅ No garden files were read specifically for duplicate detection
+- ✅ GE-ID assigned and recorded in GARDEN.md counter before submission written
+- ✅ Filename includes GE-ID: `YYYY-MM-DD-<project>-GE-XXXX-<slug>.md`
+- ✅ Submission header includes `**Submission ID:** GE-XXXX`
+- ✅ Light duplicate check (index scan) performed; scanned IDs noted
+- ✅ No garden detail files were read specifically for duplicate detection
 - ✅ User confirmed the draft before writing
-- ✅ Committed with `submit(<project>): '<title>'` format
+- ✅ GARDEN.md committed alongside submission (counter update)
+- ✅ Committed with `submit(<project>): GE-XXXX '<title>'` format
 
 MERGE is complete when:
 - ✅ All submissions classified (new / duplicate / related)
@@ -1108,9 +1168,10 @@ MERGE is complete when:
 - ✅ Technique entries have `**Labels:**` field in the content file
 - ✅ GARDEN.md updated: By Technology always; By Symptom/Type for gotchas; By Label for techniques
 - ✅ New labels added to Tag Index if used
-- ✅ GE-IDs assigned to all new entries (header + index)
-- ✅ GARDEN.md metadata updated (last ID, entries_merged_since_sweep)
-- ✅ Light duplicate check run for all new entries; results logged in CHECKED.md
+- ✅ GE-IDs verified from submission filenames/headers; added as `**ID:**` in entry headers and index
+- ✅ GARDEN.md metadata updated: `Entries merged since last sweep` incremented
+- ✅ Medium duplicate check (section read) performed for all new entries; results logged in CHECKED.md
+- ✅ Discarded submissions recorded in DISCARDED.md with conflict GE-ID
 - ✅ DEDUPE offered if drift threshold exceeded
 - ✅ Processed submissions removed
 - ✅ Committed with `merge:` format
