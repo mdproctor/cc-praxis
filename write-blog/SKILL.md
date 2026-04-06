@@ -521,7 +521,7 @@ flowchart TD
 | Vague errors: "X didn't work" | Tells future readers nothing useful | Include exact error messages, commands, file paths |
 | Editing an earlier entry when beliefs change | Destroys the historical record | Write a new Correction entry that references the original |
 | Skipping Day Zero | Loses the initial vision; no baseline for what was believed before anything was tried | Write Day Zero before work begins; if writing retrospectively, write it first using git history to reconstruct the initial state honestly |
-| Using a "Next:" footer | Creates a template slot at the end of every entry; sounds like scaffolding, not writing | Integrate the forward-looking note as a natural sentence in the closing, or end on the last real point |
+| Using a "Next:" footer | Creates a template slot at the end of every entry; sounds like scaffolding, not writing | Integrate the forward-looking note as a natural sentence in the closing, or end on the last real point. **Series exception:** navigation links (← Previous / → Next) are added by `publish-blog` at publish time — not at write time |
 | Linking to ADRs that don't exist yet | Creates dead links | Create the ADR first, then reference it |
 | Replacing a thematic heading with a structural slot | Extracts character and leaves nothing — "The Pivots (There Were Several)" → "What we tried" is always a loss | Keep headings that already have personality; add structural labels only to bare slots |
 | Dropping a heading entirely when merging two sections | Buries the structure the reader was using; the content is still there but now unfindable | If you merge sections, check that the surviving heading still signals what the merged content is about |
