@@ -544,7 +544,7 @@ When you identify a problem and prepare a solution, STOP and consider:
 - `idea-log` — lightweight living log for undecided possibilities; park ideas before they evaporate, promote to ADR when ready
 - `write-blog` — living project diary; captures decisions, pivots, and discoveries in diary voice as they happen; never revised in hindsight
 - `garden` — cross-project library of hard-won bugs, gotchas, techniques, and undocumented behaviours stored in `~/claude/knowledge-garden/`; five workflows: CAPTURE, SWEEP, REVISE, MERGE, DEDUPE; submission model avoids expensive reads during capture
-- `session-handoff` — end-of-session HANDOVER.md generator; lazy references to garden, blog, design-snapshot, and CLAUDE.md rather than loading them; invokes garden sweep, write-blog, design-snapshot, and update-claude-md via user-confirmed wrap checklist
+- `session-handover` — end-of-session HANDOFF.md generator; lazy references to garden, blog, design-snapshot, and CLAUDE.md rather than loading them; invokes garden sweep, write-blog, design-snapshot, and update-claude-md via user-confirmed wrap checklist
 
 **TypeScript/Node.js skills:**
 - `ts-dev` — TypeScript development; strict mode, async patterns, error handling, testing

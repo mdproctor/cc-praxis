@@ -103,4 +103,4 @@ Once you've run the skills and seen the output:
 
 1. `CLAUDE.md` — project conventions, no-AI-attribution rule, skill architecture
 2. `docs/project-health.md` — full design spec for the health skill
-3. `docs/session-handoff.md` — this file
+3. `docs/session-handover.md` — this file

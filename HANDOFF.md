@@ -1,7 +1,7 @@
 # Handover — 2026-04-07
 
 **Head commit:** `22a31aa` — docs: add project blog entry 2026-04-07-mdp03-hortora-garden-grows-up
-**Previous handover:** `git show HEAD~1:HANDOVER.md` | diff: `git diff HEAD~1 HEAD -- HANDOVER.md`
+**Previous handover:** `git show HEAD~1:HANDOFF.md` | diff: `git diff HEAD~1 HEAD -- HANDOFF.md`
 
 ## What Changed This Session
 
@@ -39,4 +39,4 @@
 | Blog entry | `docs/blog/2026-04-07-mdp03-hortora-garden-grows-up.md` | `cat` |
 | Diagram HTML sources | `docs/visuals/garden-diagrams.html`, `docs/visuals/garden-small-visuals.html` | browser |
 | ADR-0011 (foundational pattern) | `docs/adr/0011-index-and-lazy-reference-pattern.md` | `cat` |
-| Previous handover | git history | `git show HEAD~1:HANDOVER.md` |
+| Previous handover | git history | `git show HEAD~1:HANDOFF.md` |

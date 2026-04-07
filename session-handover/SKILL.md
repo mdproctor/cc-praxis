@@ -1,20 +1,22 @@
 ---
-name: session-handoff
+name: session-handover
 description: >
   Use when ending a session and wanting to preserve context for resumption —
-  says "create a handoff", "end of session", "update the handover", or
-  "write a handoff". Generates a concise HANDOVER.md with lazy references
+  says "create a handover", "end of session", "update the handover", or
+  "write a handover". Generates a concise HANDOFF.md with lazy references
   to deeper context, not the context itself. NOT for design records (use
   design-snapshot) or project narrative (use write-blog).
 ---
 
-# Session Handoff
+# Session Handover
 
-Generates a concise `HANDOVER.md` — a pointer document that gives the next
+> **Terminology:** *handover* is the act (what you do at session end); *handoff* is the artifact (the `HANDOFF.md` file passed to the next session).
+
+Generates a concise `HANDOFF.md` — a pointer document that gives the next
 Claude session enough context to resume immediately. References are read on
 demand; the handover itself stays small. Git history is the archive.
 
-**Token budget:** HANDOVER.md should be readable in under 500 tokens. If it's
+**Token budget:** HANDOFF.md should be readable in under 500 tokens. If it's
 longer, trim — it has become a document, not a handover.
 
 ---
@@ -38,36 +40,36 @@ longer, trim — it has become a document, not a handover.
 ### 1. Write only deltas — reference the rest
 
 If something hasn't changed since the previous handover, **don't restate it**.
-Write `*Unchanged — retrieve with: `git show HEAD~1:HANDOVER.md`*` for that
+Write `*Unchanged — retrieve with: `git show HEAD~1:HANDOFF.md`*` for that
 section and move on. Only sections that actually changed get written in full.
 
 This keeps the current handover minimal. The git history holds everything else.
 
 ### 2. Git history is the archive
 
-HANDOVER.md is a single file, overwritten each session and **always committed**.
+HANDOFF.md is a single file, overwritten each session and **always committed**.
 Previous versions are free — they live in git. No separate archive directory
 needed.
 
 ```bash
 # How many handovers exist?
-git log --oneline -- HANDOVER.md
+git log --oneline -- HANDOFF.md
 
 # When was the last one written?
-git log -1 --format="%ar" -- HANDOVER.md
+git log -1 --format="%ar" -- HANDOFF.md
 
 # Read the previous handover (whole file)
-git show HEAD~1:HANDOVER.md
+git show HEAD~1:HANDOFF.md
 
 # What changed between the last two handovers?
-git diff HEAD~1 HEAD -- HANDOVER.md
+git diff HEAD~1 HEAD -- HANDOFF.md
 
 # Read just one section of a previous handover (surgical)
-git show HEAD~1:HANDOVER.md | grep -A 10 "## Open Questions"
+git show HEAD~1:HANDOFF.md | grep -A 10 "## Open Questions"
 
 # Find a handover from a specific date
-git log --before="2026-04-03" -1 --format="%H" -- HANDOVER.md \
-  | xargs -I{} git show {}:HANDOVER.md
+git log --before="2026-04-03" -1 --format="%H" -- HANDOFF.md \
+  | xargs -I{} git show {}:HANDOFF.md
 ```
 
 These commands are cheap — use them rather than loading full files when only
@@ -75,7 +77,7 @@ part of the historical context is needed.
 
 ### 3. Commit is required, not optional
 
-An uncommitted HANDOVER.md is invisible to git history — the archive doesn't
+An uncommitted HANDOFF.md is invisible to git history — the archive doesn't
 exist. Always commit. No exceptions.
 
 ### 4. Freshness check before reading
@@ -83,11 +85,11 @@ exist. Always commit. No exceptions.
 When starting a session, check how old the handover is before loading it:
 
 ```bash
-git log -1 --format="%ar" -- HANDOVER.md   # → "3 days ago"
+git log -1 --format="%ar" -- HANDOFF.md   # → "3 days ago"
 ```
 
 If it's more than a week old, flag it before using the context:
-> "HANDOVER.md is 9 days old — some context may be stale. Verify key
+> "HANDOFF.md is 9 days old — some context may be stale. Verify key
 > assumptions before building on it."
 
 The next session can then choose to load a more recent intermediate handover
@@ -138,13 +140,13 @@ After all checked items complete, continue to Step 1.
 ### Step 1 — Check previous handover (cheap)
 
 ```bash
-git log --oneline -3 -- HANDOVER.md
+git log --oneline -3 -- HANDOFF.md
 ```
 
 If a previous handover exists, get the diff to know what changed:
 
 ```bash
-git diff HEAD -- HANDOVER.md 2>/dev/null || git show HEAD:HANDOVER.md 2>/dev/null
+git diff HEAD -- HANDOFF.md 2>/dev/null || git show HEAD:HANDOFF.md 2>/dev/null
 ```
 
 This tells you what sections are unchanged — don't rewrite those. Work from
@@ -162,7 +164,7 @@ Do NOT read any project files to answer these. Work from conversation memory.
 
 ### Step 2b — Garden sweep (while context is still full)
 
-**The sweep is done by the handoff itself from conversation memory** —
+**The sweep is done by the handover itself from conversation memory** —
 not by invoking the garden skill and asking it to find things. The garden
 skill is only called once specific entries have been identified.
 
@@ -220,16 +222,16 @@ ls docs/adr/ | sort | tail -3                # recent ADRs
 
 Run `ls` only — do not open the files. CLAUDE.md is auto-loaded; omit it.
 
-### Step 5 — Write HANDOVER.md (delta-first)
+### Step 5 — Write HANDOFF.md (delta-first)
 
 Use the template and routing table in [handover-reference.md](handover-reference.md).
 
 For each section: has it changed since last handover?
 - **Changed** → write it in full
-- **Unchanged** → write `*Unchanged — `git show HEAD~1:HANDOVER.md`*`
+- **Unchanged** → write `*Unchanged — `git show HEAD~1:HANDOFF.md`*`
 - **Doesn't exist yet** (first handover) → write all sections in full
 
-Overwrite the previous HANDOVER.md completely.
+Overwrite the previous HANDOFF.md completely.
 
 ### Step 5b — Suggest and offer to rename the session
 
@@ -269,7 +271,7 @@ suggest the name and prompt at the right moment.
 ### Step 6 — Commit (required)
 
 ```bash
-git add HANDOVER.md
+git add HANDOFF.md
 git commit -m "docs: session handover YYYY-MM-DD"
 ```
 
@@ -292,20 +294,20 @@ flowchart TD
     WriteBlog[Invoke write-blog\nsingle-entry for this session]
     DesignSnap[Invoke design-snapshot\nfreeze current state]
     UpdateClaude[Invoke update-claude-md\nsync new conventions]
-    CheckHistory[git log --oneline -3\n-- HANDOVER.md]
+    CheckHistory[git log --oneline -3\n-- HANDOFF.md]
     HasPrevious{Previous\nhandover exists?}
-    GetDiff[git diff HEAD -- HANDOVER.md\nidentify unchanged sections]
+    GetDiff[git diff HEAD -- HANDOFF.md\nidentify unchanged sections]
     Recall[Recall from context:\nwhat changed, decisions,\nnext step — zero cost]
     GitStatus[git log --oneline -6\ngit status --short]
     BuildRefs[ls to locate file paths\ndo not open files]
-    Draft[Write HANDOVER.md:\nchanged sections in full,\nunchanged sections as references]
+    Draft[Write HANDOFF.md:\nchanged sections in full,\nunchanged sections as references]
     TokenCheck{Over 500 tokens?}
     Trim[Mark more sections\nas unchanged references]
     Confirm[Show to user]
     UserApproves{Approved?}
     Refine[Adjust]
-    Write[Write HANDOVER.md]
-    Commit[git add HANDOVER.md\ngit commit — required]
+    Write[Write HANDOFF.md]
+    Commit[git add HANDOFF.md\ngit commit — required]
     Done((Done))
 
     Trigger --> WrapChecklist
@@ -343,12 +345,12 @@ flowchart TD
 
 | Mistake | Why It's Wrong | Fix |
 |---------|----------------|-----|
-| Restating unchanged context verbatim | Wastes tokens; the previous handover already has it | Write `*Unchanged — git show HEAD~1:HANDOVER.md*` |
+| Restating unchanged context verbatim | Wastes tokens; the previous handover already has it | Write `*Unchanged — git show HEAD~1:HANDOFF.md*` |
 | Skipping the commit | Makes git history useless as an archive | Commit is mandatory, not optional |
-| Loading previous handover to check what's unchanged | Wastes tokens; use `git diff` instead | `git diff HEAD -- HANDOVER.md` shows only what changed |
+| Loading previous handover to check what's unchanged | Wastes tokens; use `git diff` instead | `git diff HEAD -- HANDOFF.md` shows only what changed |
 | Loading GARDEN.md detail files | Index is enough; details load on demand | Always reference GARDEN.md (index), never sub-files |
 | Copying CLAUDE.md content | Auto-loaded; pure duplication | Omit entirely |
-| Skipping the freshness check | Old handover misleads the next session | `git log -1 --format="%ar" -- HANDOVER.md` before using |
+| Skipping the freshness check | Old handover misleads the next session | `git log -1 --format="%ar" -- HANDOFF.md` before using |
 | Writing "continue work" as next step | Too vague to act on | Be specific — name the file, command, or section |
 
 ---
@@ -364,7 +366,7 @@ Handover is complete when:
 - ✅ design-snapshot invoked (if checked) — design state frozen
 - ✅ update-claude-md invoked (if checked) — CLAUDE.md synced
 - ✅ Session name offered — user was prompted to `/rename` or acknowledged the session already has a meaningful name
-- ✅ HANDOVER.md exists at project root
+- ✅ HANDOFF.md exists at project root
 - ✅ Readable in under 500 tokens
 - ✅ Unchanged sections reference git history, not repeated content
 - ✅ Immediate next step is specific enough to act on without asking
@@ -373,7 +375,7 @@ Handover is complete when:
 - ✅ User confirmed before writing
 - ✅ Committed to git (required — this is the archive mechanism)
 
-**The test:** Could a fresh Claude reading only CLAUDE.md and HANDOVER.md
+**The test:** Could a fresh Claude reading only CLAUDE.md and HANDOFF.md
 pick up the work in the next message, with git history available for any
 context marked as "unchanged"? If yes — done.
 
@@ -382,12 +384,12 @@ context marked as "unchanged"? If yes — done.
 ## Skill Chaining
 
 **Invoked by:** User directly at end of a session ("create a handover",
-"end of session", "write a handoff")
+"end of session", "write a handover")
 
 **Invokes:** [`garden`] — garden sweep (Step 2b) to submit any gotchas, techniques, or undocumented items before context is lost; [`write-blog`] — single-entry mode for this session's narrative (if checked); [`design-snapshot`] — to freeze current design state (if checked); [`update-claude-md`] — to sync any new conventions (if checked); `git commit` directly for the handover itself
 
 **Reads from (surgical, not upfront):**
-- `git diff HEAD -- HANDOVER.md` — what changed from last handover
+- `git diff HEAD -- HANDOFF.md` — what changed from last handover
 - `git log --oneline -6` — recent commits for orientation
 - `ls` on docs/ directories — locate paths without reading files
 - `~/claude/knowledge-garden/GARDEN.md` — only when including garden reference
