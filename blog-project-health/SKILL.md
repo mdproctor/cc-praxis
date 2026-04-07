@@ -30,17 +30,8 @@ auto-chaining here.
 
 ## Tier System
 
-Inherited from `project-health`:
-
-| Tier | What runs |
-|------|-----------|
-| 1 (`--commit`) | `validate_all.py --tier commit` only |
-| 2 (`--standard`) | Universal quality checks only |
-| 3 (`--prerelease`) | Universal + blog-specific quality checks |
-| 4 (`--deep`) | All of tier 3 + refinement questions |
-
+Inherited from `project-health` — see [check-categories.md](../project-health/check-categories.md#tier-system).
 Blog-specific categories (`blog-content`, `blog-structure`) run at tier 3+.
-Augmentations to universal categories apply at the same tier as the universal check.
 
 ---
 
@@ -159,11 +150,7 @@ Universal findings appear without a prefix. Blog-specific findings use `[blog]`:
 ✅ docs-sync, consistency, security, git
 ```
 
-Severity scale (same as `project-health`):
-- **CRITICAL** — correctness failure, should block release
-- **HIGH** — should fix before shipping
-- **MEDIUM** — worth fixing in next session
-- **LOW** — nice to fix, low urgency
+Severity scale: see [check-categories.md](../project-health/check-categories.md#severity-scale).
 
 ---
 

@@ -26,27 +26,7 @@ Then apply the Java/Quarkus-specific review patterns below.
 
 ## Workflow
 
-### Step 1 — Collect staged changes
-```bash
-git diff --staged
-git diff --staged --stat
-```
-If nothing is staged, stop and tell the user:
-> "Nothing is staged. Run `git add <files>` first."
-
-### Step 2 — Run the review checklist
-
-Work through each category below systematically. For every finding, assign a severity:
-
-| Severity | Meaning |
-|---|---|
-| 🔴 CRITICAL | Must be fixed before committing. Will block the commit. |
-| 🟡 WARNING | Should be addressed; advisory only, does not block commit. |
-| 🔵 NOTE | Minor observation or improvement suggestion. |
-
-### Step 3 — Present findings
-
-Group findings by severity, then by file. Use this format for each:
+Follow the `code-review-principles` workflow (Steps 1–4). Java-specific Step 3 example:
 
 ```
 🔴 CRITICAL — ClassName.java:42
@@ -58,23 +38,9 @@ Suggested fix:
   try (InputStream is = ...) { ... }
 ```
 
-After all findings, show a summary line:
-```
-Review complete: 2 CRITICAL, 1 WARNING, 3 NOTES
-```
+**Step 4:** re-run `/java-code-review` after fixes; hand off to `/java-git-commit` when clear. Do NOT hand off until the user confirms fixes are done.
 
-### Step 4 — Conclude
-
-**If CRITICAL findings exist:**
-> "🔴 There are CRITICAL issues that must be resolved before committing.
-> Fix them and re-run `/java-code-review`, or tell me what to fix and I'll
-> help you address them."
->
-> Do NOT hand off to java-git-commit until the user confirms fixes are done.
-
-**If no CRITICAL findings:**
-> "✅ No critical issues found. [N warnings / notes listed above.]
-> Ready to commit — run `/java-git-commit` or tell me to proceed."
+Step 2 uses the Java Review Checklist below.
 
 ---
 

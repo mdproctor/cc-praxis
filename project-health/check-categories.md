@@ -1,7 +1,32 @@
 # project-health — Universal Check Categories
 
 Full quality and refinement checklists for all 12 universal check categories.
-Referenced by `project-health/SKILL.md` Step 5.
+Referenced by `project-health/SKILL.md` Step 5 and all type-specific sub-skills.
+
+---
+
+## Tier System
+
+| Tier | What runs |
+|------|-----------|
+| 1 (`--commit`) | `validate_all.py --tier commit` only |
+| 2 (`--standard`) | Universal quality checks only |
+| 3 (`--prerelease`) | Universal + type-specific quality checks |
+| 4 (`--deep`) | All of tier 3 + refinement questions |
+
+Type-specific categories run at tier 3+. Augmentations to universal categories
+apply at the same tier as the universal check.
+
+---
+
+## Severity Scale
+
+| Severity | Meaning |
+|----------|---------|
+| **CRITICAL** | Correctness failure — should block release |
+| **HIGH** | Should fix before shipping |
+| **MEDIUM** | Worth fixing in next session |
+| **LOW** | Nice to fix, low urgency |
 
 ---
 

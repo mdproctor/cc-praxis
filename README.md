@@ -268,7 +268,7 @@ This collection follows a **layered architecture** where foundation skills provi
 | **design-snapshot** | Immutable dated design state record | (standalone) |
 | **idea-log** | Living log for undecided possibilities | (standalone) |
 | **write-blog** | Living project diary — decisions, pivots, and discoveries in the moment | (standalone) |
-| **knowledge-garden** | Cross-project library of hard-won bugs, gotchas, and unexpected behaviours | (standalone, writes to ~/claude/knowledge-garden/) |
+| **garden** | Cross-project library of hard-won bugs, gotchas, and unexpected behaviours | (standalone, writes to ~/claude/knowledge-garden/) |
 
 ### Layer 7: Health & Quality (8 skills)
 
@@ -391,7 +391,7 @@ Intelligent commit workflow for custom project types (working groups, research, 
 #### **update-claude-md**
 Maintains CLAUDE.md in sync with workflow and convention changes: build commands, testing patterns, naming conventions, repository-specific tools, and skill lists.
 
-**Features:** Common Pitfalls table · starter templates for skills and code repositories
+**Features:** Common Pitfalls table · starter templates for skills and code repositories · modular CLAUDE.md support (primary + linked modules)
 
 Invoked automatically by all commit skills (if CLAUDE.md exists), or independently. For architectural documentation see `java-update-design`.
 
@@ -657,9 +657,8 @@ Lightweight living log for undecided possibilities — a parking lot for "we sho
 - Duplicate detection before appending new ideas
 - Priority tagging (high/medium/low) with guidance
 - Status tracking (active/promoted/discarded)
-- Invoked by code review skills when reviews surface patterns worth parking
 
-**Triggers:** "log this idea", "park that thought", "add to idea log", "we should consider this someday", or when code review surfaces a possibility worth remembering.
+**Triggers:** "log this idea", "park that thought", "add to idea log", "we should consider this someday". Code review skills *mention* `/idea-log` as a pointer when a possibility surfaces — they do not invoke it automatically.
 
 #### **write-blog**
 Living project diary — captures decisions, pivots, and discoveries written in the moment, not in hindsight:
@@ -667,30 +666,33 @@ Living project diary — captures decisions, pivots, and discoveries written in 
 - Captures pivot moments explicitly: what was considered, what was rejected, what constraint forced the change
 - Diary voice (first person, present tense, honest about uncertainty) — not a polished article written after everything is done
 - Four entry types: Day Zero (initial vision before any code), Phase Update (milestone), Pivot (direction change), Correction (earlier belief proved wrong — never edits the original)
-- Each entry ends with a "Next:" teaser setting up the following entry
+- Two modes: single entry (invoked with context) or full retrospective sweep (invoked blank — scans git history, proposes phases, writes in sequence)
 
 **Features:**
 - Correction entries reference originals rather than revising them — the historical record is preserved
+- Mandatory writing rules loaded at draft time (not upfront) — retrospective workflow demand-loaded
 - Integrates with `adr` (significant decisions get formal records) and `design-snapshot` (milestones get state freezes)
-- Stored in `docs/blog/YYYY-MM-DD-<topic>.md`
+- Stored in `docs/blog/YYYY-MM-DD-NN-<topic>.md` (two-digit sequence number for same-day ordering)
 
-**Triggers:** "write a blog entry", "update the project blog", "log what we built today", "document this pivot", "add a diary entry", or at significant architectural decisions, pivots, or phase completions.
+**Triggers:** "write a blog entry", "update the project blog", "log what we built today", "document this pivot", "add a diary entry", or at significant architectural decisions, pivots, or phase completions. `/write-blog` alone triggers the full retrospective sweep.
 
-#### **knowledge-garden**
-Cross-project library of hard-won technical gotchas — stored in `~/claude/knowledge-garden/` (a git repo shared across all projects on this machine):
-- Captures bugs whose symptoms mislead about root cause, tools that contradict documentation, silent failures, and workarounds found after multiple failed approaches
-- Dual-indexed by technology AND by symptom type — find entries by what you're working on OR by what you're experiencing
-- Three operations: **CAPTURE** (add a new gotcha), **SEARCH** (retrieve relevant entries), **IMPORT** (batch import from project BUGS-AND-ODDITIES.md files)
-- Proactive trigger fires without user asking, at end of debugging sessions where something genuinely non-obvious was discovered
-- Strict quality filter: "would a skilled developer familiar with this technology still have spent significant time on this?"
+#### **garden**
+Cross-project library of hard-won technical knowledge — stored in `~/claude/knowledge-garden/` (a git repo shared across all projects on this machine). Three entry types: **gotchas** (bugs that silently fail, behaviours contradicting docs), **techniques** (non-obvious approaches a skilled developer wouldn't naturally reach for), and **undocumented** (features that exist and work but aren't in any docs).
+
+Five workflows:
+- **CAPTURE** — add a specific entry (assign GE-ID, score, draft, confirm, submit to `submissions/`, commit)
+- **SWEEP** — scan the session for all three entry types; propose scored candidates; never asks the user to re-explain
+- **REVISE** — enrich an existing entry with a solution, alternative, variant, or status change
+- **MERGE** — dedicated session to integrate submissions with duplicate detection and GARDEN.md index update
+- **DEDUPE** — full within-category duplicate sweep when drift threshold is exceeded
 
 **Features:**
-- Never deletes entries — adds "Resolved in: vX.Y" notes for fixed bugs
-- Commits every entry with `feat(<dir>): add '<title>'` to the knowledge-garden git repo
-- GARDEN.md index covers both technology and symptom-type dimensions with tag index
+- Submission model: write first, deduplicate later — no expensive garden reads during CAPTURE
+- Garden Score (1–15) gates every submission: non-obviousness, discoverability, breadth, pain/impact, longevity
+- GARDEN.md dual-indexed by technology, symptom type, and label cross-cuts (By Technology / By Symptom / By Label)
 - Distinct from `idea-log` (undecided possibilities), `adr` (formal decisions), `write-blog` (project narrative)
 
-**Triggers:** "add this to the knowledge garden", "log this bug", "future Claude should know this", "this took way too long", or proactively at end of non-obvious debugging sessions.
+**Triggers:** "add this to the garden", "garden sweep", "merge garden submissions", or proactively when something genuinely non-obvious surfaces during debugging.
 
 #### **issue-workflow**
 Full-lifecycle GitHub issue tracking across four phases:
@@ -894,8 +896,8 @@ Write or edit a post
 
 ### Idea → Decision → Documentation
 ```
-Code review or brainstorm surfaces a possibility
-  → idea-log (park it before it's forgotten, no commitment required)
+Code review surfaces a possibility (review mentions /idea-log as a pointer)
+  → /idea-log (user invokes to park it — no commitment required)
     → adr (promote when ready to decide — idea becomes a formal decision)
       → git-commit
         → update-claude-md (automatic)
@@ -1300,6 +1302,10 @@ Claude: [Uses git-commit]
 | `python-security-audit` | `git-commit` | manual | After security review complete |
 | `pip-dependency-update` | `adr` | manual | Major version jump or significant new package |
 | `pip-dependency-update` | `git-commit` | manual | After successful dependency updates |
+| `session-handoff` | `garden` | conditional | Garden sweep checked in wrap checklist (Step 2b) |
+| `session-handoff` | `write-blog` | conditional | Blog entry checked in wrap checklist |
+| `session-handoff` | `design-snapshot` | conditional | Design snapshot checked in wrap checklist |
+| `session-handoff` | `update-claude-md` | conditional | Convention sync checked in wrap checklist |
 
 ---
 ## License
@@ -1564,9 +1570,14 @@ See [QUALITY.md § Why Quality Matters](QUALITY.md#why-quality-matters) for comp
 ├── custom-git-commit/                   # User-configured commits with primary doc sync
 │   └── SKILL.md
 ├── update-claude-md/                    # CLAUDE.md workflow documentation sync
-│   └── SKILL.md
+│   ├── SKILL.md
+│   ├── starter-templates.md             # CLAUDE.md starter templates (skills + code repos)
+│   └── modular-handling.md              # Modular CLAUDE.md discovery, propose, and validate
 ├── java-update-design/                  # DESIGN.md architecture sync (Java projects)
-│   └── SKILL.md
+│   ├── SKILL.md
+│   ├── mapping-reference.md             # Code change → DESIGN.md section mapping table
+│   ├── starter-template.md              # DESIGN.md starter template for new Java projects
+│   └── modular-handling.md              # Modular DESIGN.md discovery, propose, and validate
 ├── update-primary-doc/                  # Generic primary document sync (custom projects)
 │   └── SKILL.md
 ├── code-review-principles/              # Universal code review principles

@@ -31,6 +31,8 @@ three kinds of entries:
 Stored at `~/claude/knowledge-garden/` so any Claude instance on this
 machine can read and contribute to it.
 
+**Proactive OFFER rule:** When conditions match the CSO description but the user didn't ask — offer in 2 sentences and wait for confirmation before engaging any workflow. The full CAPTURE/SWEEP/MERGE/DEDUPE workflows run only when the user responds YES or asks directly.
+
 **The bar for gotchas:** Would a skilled developer, familiar with the
 technology, still have spent significant time on this problem? If yes —
 it belongs.
@@ -139,251 +141,16 @@ to perform the duplicate check.
 
 ## Submission File Format
 
-```
-~/claude/knowledge-garden/submissions/YYYY-MM-DD-<project>-GE-XXXX-<slug>.md
-```
+Four entry types: **gotcha** (bug/silent failure), **technique** (non-obvious approach), **undocumented** (exists but not in docs), **revise** (enrichment for existing entry).
 
-The GE-ID is embedded in the filename for instant visibility. The `GE-XXXX` is assigned by the submitting Claude in CAPTURE Step 0 before the file is written.
+Filename: `YYYY-MM-DD-<project>-GE-XXXX-<slug>.md` — GE-ID embedded for instant visibility.
+Revise filename: include "revise" in slug — `YYYY-MM-DD-<project>-GE-XXXX-revise-<entry-slug>.md`
 
-**Version policy for the Stack field:**
-- **Third-party libraries:** Always include version or range — `Quarkus 3.9.x`, `tmux 3.2+`, `GraalVM 25`. The gotcha may be fixed in a later version; future readers need to know if it applies to them.
-- **"all versions"** — only use when you've verified the behaviour holds across versions, or when it's a fundamental language/protocol issue: `Java (all versions with lambda)`, `JEXL3 (all versions)`.
-- **Own pre-1.0 projects** — omit version entirely; it isn't meaningful until the first public release. Revisit when 1.0 ships.
+**Version policy:** Third-party libs always include version (`Quarkus 3.9.x`). "all versions" only when verified across versions. Own pre-1.0 projects: omit version.
 
-**Gotcha entry** (bug, silent failure, workaround):
+**For complete templates (gotcha, technique, undocumented, revise), scoring dimensions, and post-merge entry format — see [submission-formats.md](submission-formats.md).**
 
-```markdown
-# Garden Submission
-
-**Date:** YYYY-MM-DD
-**Type:** gotcha
-**Source project:** project-name (or "cross-project")
-**Session context:** One sentence on what was being worked on when this surfaced
-**Suggested target:** `<directory>/<file>.md` *(hint for merge Claude; not binding)*
-
----
-
-## [Short imperative title — describes the weird thing, not the fix]
-
-**Stack:** Technology, Library, Version — e.g. `Quarkus 3.9.x`, `tmux 3.2+`, `GraalVM 25`
-**Symptom:** What you observe — especially the misleading part. Quote exact
-error messages. "No error" is important context.
-**Context:** When/where this applies. What setup triggers it.
-
-### What was tried (didn't work)
-*(mandatory heading — do not inline or omit)*
-- tried X — result
-- tried Y — result
-
-### Root cause
-Why it happens. The underlying mechanism — WHY, not just WHAT.
-
-### Fix *(or "None known — workaround: [X]" if unsolved)*
-Code block or config. Be complete. Include what NOT to do alongside what works.
-If no fix exists yet, describe the best available workaround — the entry is still worth capturing.
-A REVISE submission can add a solution later.
-
-### Why this is non-obvious
-The insight. What makes this a gotcha? Why would a skilled developer be misled?
-
----
-
-## Garden Score
-
-| Dimension | Score (1–3) | Notes |
-|-----------|-------------|-------|
-| Non-obviousness | — | |
-| Discoverability | — | |
-| Breadth | — | |
-| Pain / Impact | — | |
-| Longevity | — | |
-| **Total** | **—/15** | |
-
-**Case for inclusion:** [why this belongs]
-**Case against inclusion:** [reservations, or "None identified"]
-```
-
-**Technique entry** (specific how-to, strategic approach, design philosophy, or pattern — all non-obvious positive knowledge):
-
-```markdown
-# Garden Submission
-
-**Date:** YYYY-MM-DD
-**Type:** technique
-**Source project:** project-name (or "cross-project")
-**Session context:** One sentence on what was being worked on when this surfaced
-**Suggested target:** `<directory>/<file>.md` *(hint for merge Claude; not binding)*
-**Labels:** `#label1` `#label2` *(cross-cutting tags; see Tag Index in GARDEN.md for existing ones)*
-
----
-
-## [Short active title — what you can do, not that it's clever]
-
-**Stack:** Technology, Library, Version — e.g. `Claude Code CLI`, `JUnit 5`, `Maven 3.x`; omit version for own pre-1.0 projects
-**What it achieves:** One sentence — the outcome this technique produces.
-**Context:** When/where this applies. What problem it solves.
-
-### The technique
-Code block or concrete description. Complete and runnable.
-
-### Why this is non-obvious
-What would most developers do instead? Why wouldn't they reach for this?
-What's the insight that makes it work?
-
-### When to use it
-Conditions where this applies. Any limitations or caveats.
-
----
-
-## Garden Score
-
-| Dimension | Score (1–3) | Notes |
-|-----------|-------------|-------|
-| Non-obviousness | — | |
-| Discoverability | — | |
-| Breadth | — | |
-| Pain / Impact | — | |
-| Longevity | — | |
-| **Total** | **—/15** | |
-
-**Case for inclusion:** [why this belongs]
-**Case against inclusion:** [reservations, or "None identified"]
-```
-
-**Choosing labels:** Pick tags that describe the *cross-cutting character* of the technique — `#strategy` for broad design philosophy, `#testing` for test patterns, `#ci-cd` for pipeline concerns, `#performance`, `#debugging`, or technology tags like `#tmux`, `#llm-testing`. Check the Tag Index in GARDEN.md first; reuse existing tags before inventing new ones.
-
-**Undocumented entry** (behaviour/feature/option not in official docs):
-
-```markdown
-# Garden Submission
-
-**Date:** YYYY-MM-DD
-**Type:** undocumented
-**Source project:** project-name (or "cross-project")
-**Session context:** One sentence on what was being worked on when this surfaced
-**Suggested target:** `<directory>/<file>.md` *(hint for merge Claude; not binding)*
-
----
-
-## [Short title — describes what exists, not that it's undocumented]
-
-**Stack:** Technology, Library, Version — e.g. `tmux 3.6`, `GraalVM 25`; version matters here as undocumented behaviour may appear/disappear across releases
-**What it is:** One sentence — the feature, behaviour, or option that exists.
-**How discovered:** Source code reading / trial and error / someone told me / commit history
-
-### Description
-Full description of what this does. Treat it as documentation that doesn't
-exist yet. Be precise about conditions, defaults, edge cases.
-
-### How to use it / where it appears
-Code block or concrete example. Show it working.
-
-### Why it's not obvious
-Why would someone not know this exists? Is it in the source but not the docs?
-Only mentioned in a GitHub issue? Only in an old commit message?
-
-### Caveats
-Any limitations, version constraints, or risks from relying on undocumented behaviour.
-
----
-
-## Garden Score
-
-| Dimension | Score (1–3) | Notes |
-|-----------|-------------|-------|
-| Non-obviousness | — | |
-| Discoverability | — | |
-| Breadth | — | |
-| Pain / Impact | — | |
-| Longevity | — | |
-| **Total** | **—/15** | |
-
-**Case for inclusion:** [why this belongs]
-**Case against inclusion:** [reservations, or "None identified"]
-```
-
-The **Suggested target** is a hint to the merge Claude — which garden file this
-likely belongs in. The merge Claude decides final placement after checking for
-duplicates and related entries.
-
-**Garden file entry format (after merge):** Merged entries in garden files include a GE-ID immediately after the entry heading:
-
-```markdown
-## Entry Title
-
-**ID:** GE-0001
-**Stack:** ...
-```
-
-IDs are assigned by the submitting Claude in CAPTURE Step 0. Submissions carry their GE-ID in the filename (`GE-XXXX` segment) and in the `**Submission ID:**` header field. MERGE verifies the ID is not already in the garden index, then adds `**ID:** GE-XXXX` to the merged entry.
-
-**Revise entry** (solution, alternative, variant, update, or status change for an existing entry):
-
-```markdown
-# Garden Revision Submission
-
-**Date:** YYYY-MM-DD
-**Type:** revise
-**Revision kind:** solution | alternative | variant | update | resolved | deprecated
-**Target:** `<directory>/<file>.md` — `## Exact Entry Title`
-**Submission ID:** GE-XXXX  *(this submission's own ID — assigned in CAPTURE Step 0)*
-**Target ID:** GE-YYYY      *(the existing entry being revised — required for REVISE)*
-**Source project:** project-name (or "cross-project")
-**Session context:** One sentence on what was being worked on when this surfaced
-
----
-
-## What this adds
-[1–2 sentences on what new knowledge this brings to the existing entry]
-
-## Content
-[The actual solution, alternative, update, or note — complete and runnable where code is involved]
-
-## Why it belongs with the existing entry
-[How it relates — is it a complete fix, an alternative approach, additional context?]
-
-## Trade-offs / caveats
-[Any limitations, constraints, or conditions under which this applies or doesn't]
-```
-
-**Revision kind guide:**
-
-| Kind | When to use |
-|------|------------|
-| `solution` | Gotcha had no fix / workaround only — now there's a real fix |
-| `alternative` | Entry has one solution — found a different approach with different trade-offs |
-| `variant` | Same pattern but different context, constraint, or technology |
-| `update` | Additional context, edge cases, or discovery that enriches the entry |
-| `resolved` | The library/tool fixed the bug — entry stays but notes the version |
-| `deprecated` | Feature removed or approach obsolete — entry stays with a warning |
-
-**Filename convention:** include "revise" in the slug so MERGE Claude can identify it immediately. Include the assigned GE-ID (the revision's own ID, not the target's):
-`YYYY-MM-DD-<project>-GE-XXXX-revise-<entry-slug>.md`
-
-**Garden Score for REVISE submissions:** score the revision itself, not the original entry. A solution to a previously-unsolved gotcha scores high on pain/impact (it makes an existing entry actionable). Use the same 5-dimension table.
-
----
-
-## Garden Score
-
-Every submission includes a score. The score serves three purposes:
-1. **Submitting Claude** — structured way to decide whether to offer the entry at all
-2. **Merging Claude** — consistent basis for include/relate/discard decisions
-3. **Future pruning** — preserved in garden files so borderline inclusions are revisitable
-
-### Scoring dimensions
-
-Rate each dimension 1–3:
-
-| Dimension | 1 | 2 | 3 |
-|-----------|---|---|---|
-| **Non-obviousness** | Somewhat surprising; findable with effort | Would mislead most experienced devs | Would stump even experts; deeply counterintuitive |
-| **Discoverability** | Buried in docs but findable | Source code / GitHub issues only | Trial and error; effectively invisible |
-| **Breadth** | Narrow edge case or rare setup | Common pattern; many users will hit this | Affects almost anyone using this technology |
-| **Pain / Impact** | Annoying but quickly diagnosed | Significant time loss; misleading symptoms | Silent failure, production risk, or data loss |
-| **Longevity** | May be fixed or changed soon | Stable API; unlikely to change near-term | Fundamental behaviour; essentially permanent |
-
-### Thresholds
+**Score thresholds** (use for CAPTURE Step 1 and SWEEP decisions):
 
 | Score | Decision |
 |-------|----------|
@@ -391,36 +158,6 @@ Rate each dimension 1–3:
 | 8–11 | **Include** — "case for" should outweigh "case against" |
 | 5–7 | **Borderline** — needs a compelling "case for"; "case against" may disqualify |
 | <5 | **Don't submit** — doesn't meet the bar |
-
-### Score block (add to every submission)
-
-```markdown
----
-
-## Garden Score
-
-| Dimension | Score (1–3) | Notes |
-|-----------|-------------|-------|
-| Non-obviousness | — | |
-| Discoverability | — | |
-| Breadth | — | |
-| Pain / Impact | — | |
-| Longevity | — | |
-| **Total** | **—/15** | |
-
-**Case for inclusion:** [1–2 sentences on why this belongs]
-**Case against inclusion:** [1–2 sentences on reservations — too narrow, version-specific, may be fixed soon, etc. Write "None identified" if genuinely no reservations.]
-```
-
-### Preservation in garden files
-
-After merging, append a compact metadata line at the end of each integrated entry:
-
-```
-*Score: 11/15 · Included because: [brief reason] · Reservation: [none / brief reason]*
-```
-
-This doesn't interrupt reading but survives in the file for future pruning decisions. Merging Claude fills it in from the submission's score block.
 
 ---
 
@@ -1196,9 +933,11 @@ relevant entry faster than searching the web or rereading conversation history.
 
 ## Skill Chaining
 
-**Invoked by:** `superpowers:systematic-debugging` — offered proactively when
-a debugging session reveals something non-obvious; user directly ("submit to
-the garden", "add this to the garden", "merge garden submissions")
+**Invoked by:** `session-handoff` — garden SWEEP is Step 2b of the wrap
+checklist, capturing session gotchas/techniques before context is lost;
+`superpowers:systematic-debugging` — offered proactively when a debugging
+session reveals something non-obvious; user directly ("submit to the garden",
+"add this to the garden", "merge garden submissions")
 
 **Invokes:** Nothing — handles its own git commits to `~/claude/knowledge-garden/`
 

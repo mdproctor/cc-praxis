@@ -204,14 +204,9 @@ retrospective dressed up as one:
 
 ## Workflow
 
-### Step 0 — Load writing rules (four layers, always in this order)
+### Step 0 — Orientation (three layers, always in this order)
 
-**Layer 1 — Mandatory rules (always, no exceptions)**
-
-Read `write-blog/defaults/mandatory-rules.md` in full. These rules apply to
-every entry regardless of author or project. They cannot be overridden.
-
-**Layer 2 — Scan CLAUDE.md for context**
+**Layer 1 — Scan CLAUDE.md for context**
 
 ```bash
 cat CLAUDE.md 2>/dev/null | head -80
@@ -224,7 +219,7 @@ Extract:
 
 Note both. They calibrate what to explain vs. what to assume throughout the entry.
 
-**Layer 3 — Load voice (one of two, never both)**
+**Layer 2 — Load voice (one of two, never both)**
 
 ```bash
 echo "$PERSONAL_WRITING_STYLES_PATH"
@@ -238,7 +233,7 @@ If not set → load `write-blog/defaults/common-voice.md`. This is the fallback 
 peer-to-peer tone, ~17 word sentences, direct, no AI filler. Functional but not
 personal — the author can create a personal guide at any time.
 
-**Layer 4 — Parse invocation-time overrides (highest priority)**
+**Layer 3 — Parse invocation-time overrides (highest priority)**
 
 If the user's invocation includes explicit audience, tone, or scope instructions —
 `/write-blog the auth system — writing for non-technical stakeholders` — those
@@ -248,7 +243,7 @@ Note what was overridden so the framing is transparent.
 
 ### Step 0b — Determine mode from invocation
 
-**Invoked via `/write-blog` with no argument** → go to RETROSPECTIVE workflow. Skip Steps 1–7.
+**Invoked via `/write-blog` with no argument** → load [retrospective-workflow.md](retrospective-workflow.md) and follow that workflow. Skip Steps 1–7 below.
 
 **Invoked via `/write-blog <context>`** → the provided text is the starting point for a single entry. Use it to propose the entry type and focus before asking anything:
 
@@ -320,9 +315,13 @@ Only ask for what's genuinely unclear:
 
 ### Step 4 — Draft with correct voice, tone, and style
 
-**This step is a gate. Do not generate any prose until the pre-draft classification below is complete.**
+**This step is a gate. Do not generate any prose until both parts below are complete.**
 
-**Pre-draft classification — required before writing a single sentence:**
+**Part A — Load mandatory rules:**
+
+Read `write-blog/defaults/mandatory-rules.md` in full. These rules apply to every entry regardless of author or project. They cannot be overridden. Do not draft until this file is loaded.
+
+**Part B — Pre-draft classification — required before writing a single sentence:**
 
 1. **Is Claude a participant in this entry?** If yes, for each section identify in advance: is this "I" (developer's perspective alone), "we" (Mark and Claude collaborating), or "Claude [verb]" (Claude acting distinctly — catching something, reporting back, going off-script, getting it wrong)?
 2. **Which moments are Claude-naming moments?** List them before drafting. These are the moments where Claude's specific behaviour is the story — not just that the work got done.
@@ -380,132 +379,7 @@ After writing:
 
 ## RETROSPECTIVE Workflow
 
-Use when the user says "blog all the work to date", "catch the blog up", "write a retrospective series", or "cover everything we've done". Scans git history, proposes a set of entries as a journey, lets the user confirm the selection, then writes them in sequence.
-
-### Step R1 — Scan git history for natural phases
-
-```bash
-git log --oneline --no-merges | head -60
-git log --format="%ad %s" --date=short | head -60
-```
-
-Look for natural breakpoints — clusters of related commits, date gaps, significant changes in theme (infrastructure → features → quality → UI), version tags, or explicit milestone commits. Group commits into candidate phases.
-
-### Step R2 — Check what's already been written
-
-```bash
-ls docs/blog/ 2>/dev/null | sort
-```
-
-Any phases already covered by existing entries are excluded from the proposed list.
-
-### Step R3 — Present the proposed entry list for selection
-
-Show each proposed phase as a numbered item with a `[x]` marker (all ticked by default), a date range, and a one-line description of what that phase covers:
-
-```
-Proposed blog entries — all selected by default.
-Type numbers to deselect (e.g. "2 4"), or press Enter to write all:
-
-[x] 1  2026-03-29        Day Zero: The First Nine Skills
-[x] 2  2026-03-31        Building the Infrastructure
-[x] 3  2026-04-02        Health, TypeScript, and Python
-[x] 4  2026-04-03        The Web Installer
-[x] 5  2026-04-04        The Methodology Family
-```
-
-Wait for the user's response before proceeding:
-- **Enter / "all"** → proceed with all ticked entries
-- **Numbers** → deselect those entries, show updated list, confirm again
-- **"none X"** → deselect entry X specifically
-
-Once confirmed, show the final selection and ask for a final go-ahead before writing anything.
-
-### Step R4 — Write entries in sequence
-
-For each confirmed entry, follow the full standard write-blog workflow (Steps 0–7):
-
-- Load the writing style guide (Step 0) — load once, apply to all entries
-- Determine the entry type — Day Zero for the first, Phase Update for subsequent, Pivot where direction changed
-- Gather the story from git history and commit messages for that phase
-- Draft with correct voice, style, and tone
-- Show the draft and confirm before writing to disk
-- Write to `docs/blog/YYYY-MM-DD-NN-<slug>.md` — sequence number determined at write time by counting existing same-day entries
-- Offer to commit each entry, or batch-commit at the end
-
-After each entry is confirmed, move to the next. Do not draft the next entry until the current one is written and committed.
-
-### Step R5 — Final summary
-
-After all selected entries are written:
-
-```
-Blog series complete:
-  ✅ 2026-03-29-01-day-zero.md
-  ✅ 2026-03-31-01-building-the-infrastructure.md
-  ✅ 2026-04-02-01-health-typescript-python.md
-
-All committed. Ready to publish via publish-blog when you're ready.
-```
-
-### RETROSPECTIVE Decision Flow
-
-```mermaid
-flowchart TD
-    Trigger((Retrospective triggered))
-    ScanGit[git log --oneline --no-merges\nidentify natural phase boundaries]
-    CheckExisting[ls docs/blog/\nexclude already-covered phases]
-    ProposeList[Present numbered selection list\nall ticked by default]
-    UserToggles{User toggles\nor confirms?}
-    FinalConfirm[Show final selection\nask for go-ahead]
-    LoadStyle[Load writing style guide\nonce — applies to all entries]
-    NextEntry[Take next confirmed entry]
-    GatherStory[Gather story from git commits\nfor that phase's date range]
-    DetermineType[Day Zero if first entry;\nPhase Update or Pivot for rest]
-    Draft[Draft with correct voice,\ntone, and style]
-    UserConfirms{User confirms?}
-    Refine[Refine based\non feedback]
-    Write[Write to docs/blog/]
-    CommitOffer[Offer to commit\nor batch at end]
-    MoreEntries{More confirmed\nentries remaining?}
-    Summary[Print final summary\nof all entries written]
-    Done((Done))
-
-    Trigger --> ScanGit
-    ScanGit --> CheckExisting
-    CheckExisting --> ProposeList
-    ProposeList --> UserToggles
-    UserToggles -->|toggles items| ProposeList
-    UserToggles -->|confirms| FinalConfirm
-    FinalConfirm --> LoadStyle
-    LoadStyle --> NextEntry
-    NextEntry --> GatherStory
-    GatherStory --> DetermineType
-    DetermineType --> Draft
-    Draft --> UserConfirms
-    UserConfirms -->|YES| Write
-    UserConfirms -->|adjust| Refine
-    Refine --> Draft
-    Write --> CommitOffer
-    CommitOffer --> MoreEntries
-    MoreEntries -->|yes| NextEntry
-    MoreEntries -->|no| Summary
-    Summary --> Done
-```
-
----
-
-### Phase identification heuristics
-
-When grouping commits into phases, look for:
-
-- **Date clustering** — commits bunched close together then a gap suggest a natural phase boundary
-- **Theme shifts** — commits about one feature area give way to another (infrastructure → UI → quality)
-- **Milestone markers** — version tags, "feat:" commits that name a significant capability, commits with "initial" or "first" in the message
-- **Volume changes** — a burst of commits on one topic followed by silence suggests a completed phase
-- **Existing ADRs or snapshots** — `git log -- docs/adr/ docs/design-snapshots/` shows when formal decisions were captured, which often coincides with phase boundaries
-
-When in doubt, propose more phases rather than fewer — the user can deselect. A phase should represent 2–5 days of work or a coherent body of work, not individual commits.
+See [retrospective-workflow.md](retrospective-workflow.md) — loaded by Step 0b when invoked blank. Contains Steps R1–R5, the decision flow, and phase identification heuristics.
 
 ---
 
@@ -514,7 +388,7 @@ When in doubt, propose more phases rather than fewer — the user can deselect. 
 ```mermaid
 flowchart TD
     Trigger((User triggers write-blog))
-    LoadRules[Step 0: Load writing rules\n1. mandatory-rules.md\n2. Scan CLAUDE.md\n3. Personal or common voice\n4. Invocation overrides]
+    LoadRules[Step 0: Orientation\n1. Scan CLAUDE.md\n2. Load voice\n3. Invocation overrides\nStep 4: Load mandatory-rules.md]
     EntryType{What type\nof entry?}
     DetermineVoice[Determine voice:\nI for solo,\nwe for collaborative]
     DayZero[Day Zero:\ngather initial vision\nand first approach]

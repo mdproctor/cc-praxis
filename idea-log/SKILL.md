@@ -3,10 +3,9 @@ name: idea-log
 description: >
   Use when user wants to park an idea for later — says "log this idea",
   "add to idea log", "park that thought", "we should consider this someday",
-  or "capture that for later". Also triggered when a code review, brainstorm,
-  or design discussion surfaces a possibility that's not ready to act on yet.
-  NOT for decisions already made (use adr), immutable state records (use
-  design-snapshot), or active implementation planning.
+  or "capture that for later". NOT for decisions already made (use adr),
+  immutable state records (use design-snapshot), or active implementation
+  planning.
 ---
 
 # Idea Log
@@ -259,7 +258,7 @@ Idea promotion is complete when:
 
 ## Skill Chaining
 
-**Invoked by:** [`java-code-review`], [`ts-code-review`], [`python-code-review`] — when a review surfaces a possibility worth parking; [`design-snapshot`] — when reviewing a snapshot surfaces ideas not yet decided; user directly ("log this idea", "park that thought")
+**Invoked by:** [`design-snapshot`] — when reviewing a snapshot surfaces ideas not yet decided; user directly ("log this idea", "park that thought"). Code review skills *mention* `/idea-log` as a pointer but do not invoke it automatically.
 
 **Invokes:** [`adr`] — when promoting an idea to a formal architectural decision; [`issue-workflow`] — when promoting an idea to implementation work (creates a tracked GitHub issue); [`git-commit`] — to commit IDEAS.md additions and status updates (routes to `java-git-commit`, `custom-git-commit`, etc. per CLAUDE.md project type)
 

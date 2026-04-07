@@ -33,18 +33,8 @@ then TypeScript-specific checks. Output is combined — identical to
 
 ## Tier System
 
-Inherited from `project-health`:
-
-| Tier | What runs |
-|------|-----------|
-| 1 (`--commit`) | `validate_all.py --tier commit` only |
-| 2 (`--standard`) | Universal quality checks only |
-| 3 (`--prerelease`) | Universal + TypeScript-specific quality checks |
-| 4 (`--deep`) | All of tier 3 + refinement questions |
-
-TypeScript-specific categories (`ts-types`, `ts-async`, `ts-build`,
-`ts-dependencies`, `ts-testing`) run at tier 3+.
-Augmentations to universal categories apply at the same tier as the universal check.
+Inherited from `project-health` — see [check-categories.md](../project-health/check-categories.md#tier-system).
+TypeScript-specific categories (`ts-types`, `ts-async`, `ts-build`, `ts-dependencies`, `ts-testing`) run at tier 3+.
 
 ---
 
@@ -213,11 +203,7 @@ Universal findings appear without a prefix. TypeScript-specific findings use `[t
 ✅ docs-sync, consistency, security, git, ts-dependencies, ts-testing
 ```
 
-Severity scale (same as `project-health`):
-- **CRITICAL** — correctness failure, should block release
-- **HIGH** — should fix before shipping
-- **MEDIUM** — worth fixing in next session
-- **LOW** — nice to fix, low urgency
+Severity scale: see [check-categories.md](../project-health/check-categories.md#severity-scale).
 
 ---
 

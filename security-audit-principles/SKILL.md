@@ -12,18 +12,6 @@ description: >
 Universal OWASP Top 10 vulnerability identification for server-side applications.
 Catch security issues before they reach production.
 
-## Why Security Audits Matter
-
-**Caught in review vs. caught in production:**
-- SQL injection found in review: 10-minute fix
-- SQL injection in production: data breach, regulatory fines, customer trust destroyed
-
-**What security audits prevent:**
-- **Injection attacks** allowing attackers to dump entire databases
-- **Unvalidated redirects** enabling phishing via trusted domains
-- **Mass assignment** letting users escalate privileges
-- **Hardcoded secrets** allowing token forgery
-
 ## Workflow
 
 ### Step 1 — Scope the audit
@@ -32,6 +20,8 @@ Determine what's being reviewed:
 - Entire application (initial security review)
 - Specific feature or PR (targeted review)
 - Security-critical subsystem (authentication, payment, PII handling)
+
+Ask user to clarify scope if unclear.
 
 ### Step 2 — Run the security checklist
 
@@ -45,25 +35,31 @@ Work through each OWASP category. For every finding, assign severity:
 
 ### Step 3 — Present findings
 
-Group by severity, then by OWASP category. Format:
+Group by severity, then by category. Include file path and line number in the header:
 
 ```
-🔴 CRITICAL — Injection
-[Description of vulnerability and attack vector]
+🔴 CRITICAL — path/to/file.ext:42
+SQL Injection: query built with string formatting allows arbitrary SQL
+execution. Attacker can dump the database or modify records.
 
 Suggested fix:
-[Concrete remediation]
+[Concrete remediation with code]
+```
+
+After all findings, show summary:
+```
+Security audit complete: N CRITICAL, N WARNINGS, N NOTES
 ```
 
 ### Step 4 — Conclude
 
 **If CRITICAL findings exist:**
-> "🔴 There are exploitable vulnerabilities that must be resolved before
-> deploying. Fix them and re-run the audit."
+> "🔴 There are CRITICAL security vulnerabilities that must be fixed before
+> deploying. I can help you address them, or walk you through the fixes."
 
 **If no CRITICAL findings:**
 > "✅ No critical vulnerabilities found. [N warnings / notes listed above.]
-> Security review complete."
+> Consider addressing warnings for defense-in-depth."
 
 ---
 

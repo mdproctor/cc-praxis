@@ -12,34 +12,19 @@ Universal principles for catching critical issues before they reach production,
 with focus on safety violations, concurrency bugs, and silent data corruption
 that compilers cannot detect.
 
-## Why Code Review Matters
-
-**Caught in review vs. caught in production:**
-- Resource leak found in review: 2-minute fix
-- Resource leak in production: 3-hour incident, emergency patch, postmortem
-
-**What code review prevents:**
-- **Deadlocks** between locks that would hang production under load
-- **Memory leaks** holding resources that would crash after multiple deployments
-- **Blocking operations** that would freeze concurrent requests during slowdowns
-- **Mock/real divergence** where tests pass but real integration fails
-
-**What code review is not:**
-- Not style police (formatters handle that)
-- Not architecture redesign (that's during design phase)
-- Not performance tuning (profilers do that better)
-
-**What code review is:**
-- Safety net for critical issues compilers can't detect
-- Second pair of eyes on concurrency correctness
-- Verification that tests actually test what they claim
-
 ## Workflow
 
 ### Step 1 — Collect changes
 
-Examine the code changes to be reviewed (staged commits, pull request diff, or
-specified files).
+```bash
+git diff --staged
+git diff --staged --stat
+```
+
+If nothing is staged, stop and tell the user:
+> "Nothing is staged. Run `git add <files>` first."
+
+Also accepts a pull request diff or specific files when passed directly.
 
 ### Step 2 — Run the review checklist
 
@@ -77,6 +62,8 @@ Review complete: X CRITICAL, Y WARNING, Z NOTES
 **If no CRITICAL findings:**
 > "✅ No critical issues found. [N warnings / notes listed above.]
 > Ready to proceed."
+
+If an undecided possibility surfaced during the review that's not ready to act on, mention `/idea-log` as a parking option — don't invoke it automatically.
 
 ---
 

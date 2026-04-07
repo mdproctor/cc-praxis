@@ -32,18 +32,8 @@ auto-chaining here.
 
 ## Tier System
 
-Inherited from `project-health`:
-
-| Tier | What runs |
-|------|-----------|
-| 1 (`--commit`) | `validate_all.py --tier commit` only |
-| 2 (`--standard`) | Universal quality checks only |
-| 3 (`--prerelease`) | Universal + Java-specific quality checks |
-| 4 (`--deep`) | All of tier 3 + refinement questions |
-
-Java-specific categories (`java-architecture`, `java-dependencies`,
-`java-code-quality`) run at tier 3+.
-Augmentations to universal categories apply at the same tier as the universal check.
+Inherited from `project-health` — see [check-categories.md](../project-health/check-categories.md#tier-system).
+Java-specific categories (`java-architecture`, `java-dependencies`, `java-code-quality`) run at tier 3+.
 
 ---
 
@@ -193,11 +183,7 @@ Universal findings appear without a prefix. Java-specific findings use `[java]`:
 ✅ docs-sync, consistency, security, git, java-architecture
 ```
 
-Severity scale (same as `project-health`):
-- **CRITICAL** — correctness failure, should block release
-- **HIGH** — should fix before shipping
-- **MEDIUM** — worth fixing in next session
-- **LOW** — nice to fix, low urgency
+Severity scale: see [check-categories.md](../project-health/check-categories.md#severity-scale).
 
 ---
 

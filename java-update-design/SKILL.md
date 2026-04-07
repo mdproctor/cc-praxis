@@ -67,45 +67,13 @@ ls docs/DESIGN.md 2>/dev/null || find . -name "DESIGN.md" | head -5
 - If not found → propose a starter structure (see **Starter Template** below),
   then stop and ask the user to confirm before creating it.
 
-### Step 1a: Discover document group
+### Step 1a: Check for modular structure
 
-**After locating DESIGN.md, discover modular structure:**
-
-```python
-from scripts.document_discovery import discover_document_group
-from pathlib import Path
-
-group = discover_document_group(Path("docs/DESIGN.md"))
-```
-
-**This discovers:**
-- Primary file: `docs/DESIGN.md`
-- Optional modules via:
-  - Markdown links: `[Architecture](docs/design/architecture.md)`
-  - Include directives: `<!-- include: components.md -->`
-  - Section references: `§ API Details in docs/design/api.md`
-  - Directory pattern: `docs/design/*.md` files
-
-**Cache behavior:**
-- First sync: Discovers modules, caches in `.doc-cache.json`
-- Subsequent syncs: Uses cache (fast path, <10ms)
-- Cache invalidation: Automatic on structure changes (new links, new files)
-
-**Result:**
-- Single-file DESIGN.md → `group.modules` is empty (backwards compatible)
-- Modular DESIGN.md → `group.modules` contains linked files
-
-**Continue with all files in the group (primary + modules).**
+Run `python scripts/document_discovery.py docs/DESIGN.md` (or use the API) to detect linked module files. **If modules exist**, switch to the [modular-handling.md](modular-handling.md) workflow for Steps 2, 5, and 6.
 
 ### Step 2: Read current content
 
-Read the full file so you understand the existing structure before proposing
-any changes.
-
-**If modular (group.modules not empty):**
-- Read DESIGN.md (primary file)
-- Read each module file
-- Understand how content is split across files
+Read the full DESIGN.md so you understand the existing structure before proposing changes.
 
 ### Step 3: Collect the changes to analyze
 
@@ -177,62 +145,10 @@ Format each proposed change as a clear before/after block:
 **Reason:** <one-sentence rationale>
 ```
 
-**For modular DESIGN.md (primary + modules):**
-
-Group proposals by file:
-
-```
-## Proposed docs/DESIGN.md updates
-
-### Section: Architecture
-**Replace:**
-> <existing text>
-
-**With:**
-> <new text>
-
-**Reason:** <rationale>
-
----
-
-## Proposed docs/design/architecture.md updates
-
-### Section: Component Overview
-**Replace:**
-> <existing text>
-
-**With:**
-> <new text>
-
-**Reason:** <rationale>
-
----
-
-## Proposed docs/design/api.md updates
-
-### Section: REST Endpoints
-**Replace:**
-> (new section)
-
-**With:**
-> ## New UserAPI Endpoints
-> - `POST /api/users` - Create user
-> - `GET /api/users/{id}` - Get user by ID
-
-**Reason:** New UserController added
-```
-
-**Routing logic:**
-- New @RestController → Update `docs/design/api.md` (if exists), else DESIGN.md § API
-- New @Entity → Update `docs/design/data-model.md` (if exists), else DESIGN.md § Data Model
-- New module → Update `docs/design/components.md` (if exists), else DESIGN.md § Components
-- Cross-cutting change → Update DESIGN.md (primary always has high-level architecture)
+**For modular DESIGN.md:** see [modular-handling.md](modular-handling.md) § Step 5.
 
 If adding a brand-new section, say "Add after `<Section Name>`:" and show the
-full new section.
-
-Group related changes. If there are many, summarize them as a numbered list at
-the top, then show each in detail below.
+full new section. Group related changes; summarize at top if many.
 
 ### Step 6: Confirm and apply
 
@@ -258,34 +174,7 @@ When the user confirms with YES (or a clear equivalent):
    - Print a brief summary of what was written, e.g. "✅ Updated sections: API, Data Model."
    - Document is ready for staging
 
-**For modular DESIGN.md (primary + modules):**
-1. Apply proposed changes to ALL affected files (primary + modules)
-2. **Validate entire document group:**
-   ```python
-   from scripts.validate_document import validate_document_group
-   from scripts.document_discovery import discover_document_group
-   from pathlib import Path
-
-   group = discover_document_group(Path("docs/DESIGN.md"))
-   issues = validate_document_group(group)
-   ```
-3. **If validation fails (CRITICAL issues):**
-   - Revert ALL modified files:
-     ```bash
-     git restore docs/DESIGN.md docs/design/architecture.md docs/design/api.md
-     ```
-   - Report CRITICAL issues to user
-   - Ask user to fix manually
-   - Stop (do not stage)
-4. **If validation succeeds or has only warnings:**
-   - Print summary: "✅ Updated files: DESIGN.md, docs/design/architecture.md, docs/design/api.md"
-   - All modified files ready for staging
-
-**Validation checks for modular groups:**
-- Link integrity: All `[links](file.md)` and `[links](file.md#section)` resolve
-- Completeness: No orphaned modules (unreferenced from primary)
-- No duplication: Substantial paragraphs not duplicated across files
-- Individual file validation: Each file passes single-file corruption checks
+**For modular DESIGN.md:** see [modular-handling.md](modular-handling.md) § Step 6.
 
 ---
 

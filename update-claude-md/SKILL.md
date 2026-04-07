@@ -46,48 +46,16 @@ ls CLAUDE.md 2>/dev/null || echo "No CLAUDE.md found"
 - If not found → check if this is the type of repo that needs one:
   - Skills repository? (has */SKILL.md files)
   - Complex build setup? (has build.gradle, pom.xml, package.json, etc.)
-  - If yes → propose creating starter CLAUDE.md, ask user to confirm
+  - If yes → propose creating starter CLAUDE.md from [starter-templates.md](starter-templates.md), ask user to confirm
   - If no → skip (repo may not need CLAUDE.md)
 
-### Step 1a: Discover document group
+### Step 1a: Check for modular structure
 
-**After locating CLAUDE.md, discover modular structure:**
-
-```python
-from scripts.document_discovery import discover_document_group
-from pathlib import Path
-
-group = discover_document_group(Path("CLAUDE.md"))
-```
-
-**This discovers:**
-- Primary file: `CLAUDE.md`
-- Optional modules via:
-  - Markdown links: `[Workflows](docs/workflows/ci.md)`
-  - Include directives: `<!-- include: patterns.md -->`
-  - Section references: `§ Testing in docs/workflows/testing.md`
-  - Directory pattern: `docs/workflows/*.md` files
-
-**Cache behavior:**
-- First sync: Discovers modules, caches in `.doc-cache.json`
-- Subsequent syncs: Uses cache (fast path, <10ms)
-- Cache invalidation: Automatic on structure changes (new links, new files)
-
-**Result:**
-- Single-file CLAUDE.md → `group.modules` is empty (backwards compatible)
-- Modular CLAUDE.md → `group.modules` contains linked files
-
-**Continue with all files in the group (primary + modules).**
+Run `python scripts/document_discovery.py CLAUDE.md` (or use the API) to detect linked module files. **If modules exist**, switch to the [modular-handling.md](modular-handling.md) workflow for Steps 2, 5, and 6. Otherwise continue below.
 
 ### Step 2: Read current content
 
-Read the full file so you understand the existing structure before proposing
-any changes.
-
-**If modular (group.modules not empty):**
-- Read CLAUDE.md (primary file)
-- Read each module file
-- Understand how content is split across files
+Read the full CLAUDE.md so you understand the existing structure before proposing changes.
 
 ### Step 3: Collect changes to analyze
 
@@ -185,56 +153,7 @@ Format each proposed change as a clear before/after block:
 **Reason:** <one-sentence rationale>
 ```
 
-**For modular CLAUDE.md (primary + modules):**
-
-Group proposals by file:
-
-```
-## Proposed CLAUDE.md updates
-
-### Section: Development Tools
-**Replace:**
-> <existing text>
-
-**With:**
-> <new text>
-
-**Reason:** <rationale>
-
----
-
-## Proposed docs/workflows/ci.md updates
-
-### Section: Build Pipeline
-**Replace:**
-> <existing text>
-
-**With:**
-> <new text>
-
-**Reason:** <rationale>
-
----
-
-## Proposed docs/workflows/testing.md updates
-
-### Section: Test Commands
-**Replace:**
-> (new section)
-
-**With:**
-> ## New Test Commands
-> - `npm test:integration` - Run integration tests
-> - `npm test:e2e` - Run end-to-end tests
-
-**Reason:** New testing infrastructure added
-```
-
-**Routing logic:**
-- New build commands → Update `docs/workflows/build.md` (if exists), else CLAUDE.md § Development Commands
-- New test patterns → Update `docs/workflows/testing.md` (if exists), else CLAUDE.md § Testing Patterns
-- New tools → Update `docs/workflows/tools.md` (if exists), else CLAUDE.md § Development Tools
-- Repository structure → Update CLAUDE.md (primary always has high-level structure)
+**For modular CLAUDE.md:** see [modular-handling.md](modular-handling.md) § Step 5.
 
 Group related changes. Show summary at top if many changes.
 
@@ -247,7 +166,6 @@ End every proposal with exactly:
 
 When user confirms YES:
 
-**For single-file CLAUDE.md:**
 1. Apply **only** the proposed changes
 2. **Validate the document:**
    ```bash
@@ -255,35 +173,12 @@ When user confirms YES:
    ```
 3. **If validation fails (exit code 1):**
    - Revert changes: `git restore CLAUDE.md`
-   - Report CRITICAL issues to user
-   - Ask user to fix manually
-   - Stop (do not stage)
+   - Report CRITICAL issues to user; ask user to fix manually; stop (do not stage)
 4. **If validation succeeds or has only warnings:**
    - Print brief summary: "✅ Updated sections: Build Commands, Testing"
    - Document is ready for staging
 
-**For modular CLAUDE.md (primary + modules):**
-1. Apply proposed changes to ALL affected files (primary + modules)
-2. **Validate entire document group:**
-   ```python
-   from scripts.validate_document import validate_document_group
-   from scripts.document_discovery import discover_document_group
-   from pathlib import Path
-
-   group = discover_document_group(Path("CLAUDE.md"))
-   issues = validate_document_group(group)
-   ```
-3. **If validation fails (CRITICAL issues):**
-   - Revert ALL modified files:
-     ```bash
-     git restore CLAUDE.md docs/workflows/ci.md docs/workflows/testing.md
-     ```
-   - Report CRITICAL issues to user
-   - Ask user to fix manually
-   - Stop (do not stage)
-4. **If validation succeeds or has only warnings:**
-   - Print summary: "✅ Updated files: CLAUDE.md, docs/workflows/ci.md, docs/workflows/testing.md"
-   - All modified files ready for staging
+**For modular CLAUDE.md:** see [modular-handling.md](modular-handling.md) § Step 6.
 
 **Validation checks for modular groups:**
 - Link integrity: All `[links](file.md)` and `[links](file.md#section)` resolve
@@ -340,89 +235,4 @@ CLAUDE.md update is complete when:
 
 **Can be invoked independently:** User can run `/update-claude-md` directly to sync CLAUDE.md without committing
 
-## Starter Template (Skills Repository)
-
-Use this when creating CLAUDE.md for a skills repository:
-
-```markdown
-# CLAUDE.md
-
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
-## Project Type
-
-**Type:** skills
-
-## Repository Purpose
-
-[Brief description of what this skills collection provides]
-
-## Skill Architecture
-
-### Frontmatter Requirements
-
-[YAML frontmatter structure and CSO rules]
-
-### Naming Conventions
-
-[Skill naming patterns - generic vs specific]
-
-### Skill Chaining
-
-[How skills reference each other]
-
-## Editing Skills
-
-[Guidelines for modifying skills]
-
-## Key Skills
-
-[List of important skills and their purposes]
-```
-
-## Starter Template (Code Repository)
-
-Use this when creating CLAUDE.md for a code repository:
-
-```markdown
-# CLAUDE.md
-
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
-## Project Type
-
-**Type:** [skills | java | blog | custom | generic]
-
-## Repository Purpose
-
-[What this project does]
-
-## Development Commands
-
-**Build:**
-```bash
-[build command]
-```
-
-**Test:**
-```bash
-[test command]
-```
-
-**Run:**
-```bash
-[run command]
-```
-
-## Testing Patterns
-
-[Testing framework, conventions, key patterns]
-
-## Code Organization
-
-[Package structure, module organization, naming conventions]
-
-## Configuration
-
-[Environment variables, config files, setup requirements]
-```
+**Starter templates:** see [starter-templates.md](starter-templates.md) — used when creating CLAUDE.md from scratch.

@@ -25,28 +25,7 @@ Then apply the Python-specific security audit patterns below.
 
 ## Workflow
 
-### Step 1 — Scope the audit
-
-Determine what's being reviewed:
-- Entire application (initial security review)
-- Specific feature or PR (targeted review)
-- Security-critical subsystem (authentication, payment, PII handling)
-
-Ask user to clarify scope if unclear.
-
-### Step 2 — Run the security checklist
-
-Work through each category below. For every finding, assign severity:
-
-| Severity | Meaning |
-|---|---|
-| 🔴 CRITICAL | Exploitable vulnerability, must fix before deploying |
-| 🟡 WARNING | Potential security issue, defense-in-depth concern |
-| 🔵 NOTE | Security best practice suggestion |
-
-### Step 3 — Present findings
-
-Group by severity, then by category. Use this format:
+Follow the `security-audit-principles` workflow (Steps 1–4). Python-specific Step 3 example:
 
 ```
 🔴 CRITICAL — views.py:42
@@ -58,16 +37,7 @@ Suggested fix:
   cursor.execute('SELECT * FROM users WHERE id = %s', (user_id,))
 ```
 
-After all findings, show summary:
-```
-Security audit complete: 1 CRITICAL, 3 WARNINGS, 2 NOTES
-```
-
-### Step 4 — Conclude
-
-**If CRITICAL findings exist:**
-> "🔴 There are CRITICAL security vulnerabilities that must be fixed before
-> deploying. I can help you address them, or walk you through the fixes."
+Step 2 uses the Python Security Checklist below in place of the generic OWASP categories.
 
 **If no CRITICAL findings:**
 > "✅ No critical vulnerabilities found. [N warnings / notes listed above.]

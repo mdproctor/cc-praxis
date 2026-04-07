@@ -31,47 +31,6 @@ Commit messages describe **WHAT changed and WHY**. Not who or what wrote them. T
 - Subject line: imperative mood, max 50 chars, no trailing period.
 - Never run `git commit` until the user has explicitly confirmed.
 
-## Commit Decision Flow
-
-```mermaid
-flowchart TD
-    Start((Start))
-    CLAUDE_md_exists_{CLAUDE.md exists?}
-    Interactive_setup[Interactive setup]
-    Type_declared_{Type declared?}
-    Route_to_skill_{Route to skill?}
-    Stop__Use_specialized_skill[Stop: Use specialized skill]
-    Staged_changes_{Staged changes?}
-    Stop__ask_user_to_stage[Stop: ask user to stage]
-    SKILL_md_files_{SKILL.md files?}
-    Review_skills[Review skills]
-    Generate_commit_message[Generate commit message]
-    Present_proposal[Present proposal]
-    User_confirms_{User confirms?}
-    Adjust_proposal[Adjust proposal]
-    Execute_git_commit[Execute git commit]
-    Done((Done))
-    Start --> CLAUDE_md_exists_
-    CLAUDE_md_exists_ -->|yes| Type_declared_
-    CLAUDE_md_exists_ -->|no| Interactive_setup
-    Type_declared_ -->|no| Interactive_setup
-    Type_declared_ -->|yes| Route_to_skill_
-    Interactive_setup --> Route_to_skill_
-    Route_to_skill_ -->|java/custom| Stop__Use_specialized_skill
-    Route_to_skill_ -->|skills/generic| Staged_changes_
-    Staged_changes_ -->|no| Stop__ask_user_to_stage
-    Staged_changes_ -->|yes| SKILL_md_files_
-    SKILL_md_files_ -->|yes| Review_skills
-    SKILL_md_files_ -->|no| Generate_commit_message
-    Review_skills --> Generate_commit_message
-    Generate_commit_message --> Present_proposal
-    Present_proposal --> User_confirms_
-    User_confirms_ -->|no| Adjust_proposal
-    Adjust_proposal --> Present_proposal
-    User_confirms_ -->|yes| Execute_git_commit
-    Execute_git_commit --> Done
-```
-
 ## Workflow
 
 ### Step 0 — Verify or Setup Project Type
