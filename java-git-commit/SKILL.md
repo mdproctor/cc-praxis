@@ -60,8 +60,11 @@ flowchart TD
     Adjust_proposal[Adjust proposal]
     Start --> Type__java_declared_
     Type__java_declared_ -->|no/wrong| Setup_CLAUDE_md
-    Type__java_declared_ -->|yes| Staged_changes_
-    Setup_CLAUDE_md --> Staged_changes_
+    Type__java_declared_ -->|yes| Work_Tracking_absent_
+    Setup_CLAUDE_md --> Work_Tracking_absent_
+    Work_Tracking_absent_{Work Tracking absent?} -->|yes| Offer_issue_tracking[Offer: Enable issue tracking?]
+    Work_Tracking_absent_ -->|no| Staged_changes_
+    Offer_issue_tracking --> Staged_changes_
     Staged_changes_ -->|no| Stop__ask_user_to_stage
     Staged_changes_ -->|yes| DESIGN_md_exists_
     DESIGN_md_exists_ -->|no| Error__Create_DESIGN_md_first
@@ -158,7 +161,30 @@ If 1: Update CLAUDE.md, stage, continue.
 If 2: Stop and tell user which skill to use.
 
 **If CLAUDE.md correctly declares type: java:**
-Continue to Step 1.
+Continue to Step 0b.
+
+---
+
+### Step 0b — Offer issue tracking (when absent)
+
+Check if CLAUDE.md already has Work Tracking configured:
+```bash
+grep -q "Issue tracking.*enabled" CLAUDE.md 2>/dev/null && echo "exists" || echo "absent"
+```
+
+**If absent**, ask:
+
+> **Enable GitHub issue tracking for this repo? (YES / n)**
+>
+> Enables automatic behaviours:
+> - Flag tasks that span multiple concerns and help break them into issues before starting
+> - Check staged changes for commit splits before committing
+> - All commits reference a GitHub issue, so release notes generate cleanly
+>
+> Default: **YES** — press Enter to enable, type **n** to skip.
+
+If **YES** or Enter → invoke the `issue-workflow` skill in Setup mode before continuing.
+If **n** → continue immediately. Do not ask again this session.
 
 ---
 

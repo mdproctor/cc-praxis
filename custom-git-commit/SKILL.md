@@ -92,7 +92,30 @@ If Sync Strategy missing:
 > **Sync Strategy:** bidirectional-consistency
 > ```
 
-If required fields present, continue to Step 1.
+If required fields present, continue to Step 0b.
+
+---
+
+### Step 0b — Offer issue tracking (when absent)
+
+Check if CLAUDE.md already has Work Tracking configured:
+```bash
+grep -q "Issue tracking.*enabled" CLAUDE.md 2>/dev/null && echo "exists" || echo "absent"
+```
+
+**If absent**, ask:
+
+> **Enable GitHub issue tracking for this repo? (YES / n)**
+>
+> Enables automatic behaviours:
+> - Flag tasks that span multiple concerns and help break them into issues before starting
+> - Check staged changes for commit splits before committing
+> - All commits reference a GitHub issue, so release notes generate cleanly
+>
+> Default: **YES** — press Enter to enable, type **n** to skip.
+
+If **YES** or Enter → invoke the `issue-workflow` skill in Setup mode before continuing.
+If **n** → continue immediately. Do not ask again this session.
 
 ---
 
@@ -273,7 +296,10 @@ flowchart TD
     Type__custom_declared_ -->|no| Stop__Use_git_commit
     Type__custom_declared_ -->|yes| Config_complete_
     Config_complete_ -->|no| Stop__Add_config
-    Config_complete_ -->|yes| Staged_changes_
+    Config_complete_ -->|yes| Work_Tracking_absent_
+    Work_Tracking_absent_{Work Tracking absent?} -->|yes| Offer_issue_tracking[Offer: Enable issue tracking?]
+    Work_Tracking_absent_ -->|no| Staged_changes_
+    Offer_issue_tracking --> Staged_changes_
     Staged_changes_ -->|no| Stop__ask_user_to_stage
     Staged_changes_ -->|yes| Primary_doc_exists_
     Primary_doc_exists_ -->|no| Stop__Create_primary_doc

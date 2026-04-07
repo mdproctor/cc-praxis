@@ -55,6 +55,29 @@ Use the body for an abstract or brief summary of what the post covers. Especiall
 
 ## Workflow
 
+### Step 0b — Offer issue tracking (when absent)
+
+Check if CLAUDE.md already has Work Tracking configured:
+```bash
+grep -q "Issue tracking.*enabled" CLAUDE.md 2>/dev/null && echo "exists" || echo "absent"
+```
+
+**If absent**, ask:
+
+> **Enable GitHub issue tracking for this repo? (YES / n)**
+>
+> Enables automatic behaviours:
+> - Flag tasks that span multiple concerns and help break them into issues before starting
+> - Check staged changes for commit splits before committing
+> - All commits reference a GitHub issue, so release notes generate cleanly
+>
+> Default: **YES** — press Enter to enable, type **n** to skip.
+
+If **YES** or Enter → invoke the `issue-workflow` skill in Setup mode before continuing.
+If **n** → continue immediately. Do not ask again this session.
+
+---
+
 ### Step 1 — Inspect staged changes
 
 ```bash
