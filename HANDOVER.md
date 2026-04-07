@@ -1,42 +1,42 @@
 # Handover — 2026-04-07
 
-**Head commit:** `410be6e` — docs: add project blog entry 2026-04-07-mdp02-issue-tracking-live
+**Head commit:** `22a31aa` — docs: add project blog entry 2026-04-07-mdp03-hortora-garden-grows-up
 **Previous handover:** `git show HEAD~1:HANDOVER.md` | diff: `git diff HEAD~1 HEAD -- HANDOVER.md`
 
 ## What Changed This Session
 
-- **Issue tracking bootstrapped for cc-praxis** — Phase 0+1 of `issue-workflow` complete; labels created, CLAUDE.md updated, epic #30 (Cut v1.0.1 release) created and closed
-- **Step 0b gap fixed** — `java-git-commit`, `blog-git-commit`, `custom-git-commit` now all include Step 0b; previously only `git-commit` offered the Work Tracking prompt
-- **Step 0b tested end-to-end** — remotecc and starcraft created on GitHub, Work Tracking configured on both via the full Phase 0 flow
-- **Garden merged** — 31 submissions integrated (GE-0042–GE-0073); 9 new files, 9 updated; GE-0053 3-way conflict resolved; last assigned ID: GE-0073
-- **ADR date auto-populate fixed** — one instruction added to `adr/SKILL.md` Step 3
-- **retro-issues.md retention defined** — skill now says commit as permanent audit trail, never delete
-- **retro-issues gap analysis** — 184 commits checked; 9 genuine gaps found (20 false positives from previous run); issues #37–#45 created and closed
-- **v1.0.1 tagged** — `gh release create v1.0.1 --generate-notes` from 45 closed issues
+- **Hortora designed** — complete vision document for the governed, federated knowledge garden; 3,300 lines, 10 embedded diagrams, committed at `696ed44`
+- **Name validated** — Hortora (hortus + -ora); three rounds of independent validation; Grok's pick Sylvara rejected (sylvara.ai is a live AI agency)
+- **Design spec covers:** v2 filesystem structure, 3-tier retrieval, three-level deduplication, quality lifecycle (Active→Suspected→Superseded→Retired), GitHub backend with CI, federation protocol (canonical/child/peer with augmentation + watch CI), 9-phase implementation roadmap, competitive landscape
+- **Garden submissions:** GE-0091 (validate_document.py false positive in fenced blocks), GE-0092 (Playwright .all() vs .nth() for multi-element screenshots)
+- **Design snapshot and blog entry** committed
 
 ## State Right Now
 
 - `main` clean, everything committed and pushed
-- Garden: drift counter at 31 (threshold: 10) — DEDUPE recommended before next merge session
-- Open issues: #36 (Design project memory architecture) — standalone, intentionally deferred
-- remotecc and starcraft: Work Tracking configured, GitHub remotes set up, no open issues yet
+- Garden: drift counter now at 33 (threshold 10) — DEDUPE overdue, run before next merge
+- Open issue: #36 (Design project memory architecture) — this session delivered the design; implementation not started
 
-## Immediate Next Step
+## Immediate Next Steps
 
-Implement #36 — project memory architecture per ADR-0011. Start with design-snapshot: add `docs/design-snapshots/INDEX.md` modelled on GARDEN.md's dual-index (by date + by topic). Then define the cross-tool meta-index format so session-handoff can reference garden/blog/snapshot by path rather than content. Design doc first, no file changes until design is confirmed.
+1. **Register now** — `hortora-org` GitHub org; `hortora.garden`, `hortora.dev`, `hortora.com` — window may be short
+2. **Phase 1** — migrate 78 garden entries to v2 structure; see Phase 1 Scope checklist in design spec
+3. **Create issues/epics** — `mdproctor/knowledge-garden` for platform work; `mdproctor/cc-praxis` for skill updates
 
-## Open Questions / Blockers
+## Open Questions
 
-- Garden DEDUPE overdue (31 entries since last sweep) — run before next garden merge session
-- remotecc and starcraft have no open issues yet — next session in those repos should run `issue-workflow` Phase 1
+- Open protocol vs. Claude-specific — must resolve before first public canonical garden launches
+- GitHub org name — `hortora` or `hortora-org`?
+- cc-praxis garden skill — thin stub pointing to hortora-engine, or full migration?
+- Phase 2 sequencing — GitHub backend immediately after Phase 1, or deepen Phase 1 first?
 
 ## References
 
 | Context | Where | Retrieve with |
 |---------|-------|---------------|
-| ADR-0011 | `docs/adr/0011-index-and-lazy-reference-pattern.md` | `cat` |
-| Design snapshot | `docs/design-snapshots/2026-04-07-issue-tracking-and-v1.0.1.md` | `cat` |
-| Blog entry | `docs/blog/2026-04-07-mdp02-issue-tracking-live.md` | `cat` |
-| retro-issues audit trail | `docs/retro-issues.md` | `cat` |
-| v1.0.1 release | github.com/mdproctor/cc-praxis/releases/tag/v1.0.1 | `gh release view v1.0.1` |
+| Design spec (complete) | `docs/superpowers/specs/2026-04-07-garden-rag-redesign-design.md` | `cat` |
+| Design snapshot | `docs/design-snapshots/2026-04-07-hortora-knowledge-garden-design.md` | `cat` |
+| Blog entry | `docs/blog/2026-04-07-mdp03-hortora-garden-grows-up.md` | `cat` |
+| Diagram HTML sources | `docs/visuals/garden-diagrams.html`, `docs/visuals/garden-small-visuals.html` | browser |
+| ADR-0011 (foundational pattern) | `docs/adr/0011-index-and-lazy-reference-pattern.md` | `cat` |
 | Previous handover | git history | `git show HEAD~1:HANDOVER.md` |
