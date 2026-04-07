@@ -40,6 +40,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Key Skills
 
 [List of important skills and their purposes]
+
+## Work Tracking
+
+**Issue tracking:** enabled
+**GitHub repo:** [owner/repo]
+**Changelog:** GitHub Releases (run `gh release create --generate-notes` at milestones)
+
+**Automatic behaviours (Claude follows these when this section is present):**
+- Before starting any significant task, check if it spans multiple concerns.
+  If it does, help break it into separate issues before beginning work.
+- When staging changes before a commit, check if they span multiple issues.
+  If they do, suggest splitting the commit using `git add -p`.
 ```
 
 ---
@@ -87,4 +99,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Configuration
 
 [Environment variables, config files, setup requirements]
+
+## Work Tracking
+
+**Issue tracking:** enabled
+**GitHub repo:** [owner/repo]
+**Changelog:** GitHub Releases (run `gh release create --generate-notes` at milestones)
+
+**Automatic behaviours (Claude follows these when this section is present):**
+- Before starting any significant task, check if it spans multiple concerns.
+  If it does, help break it into separate issues before beginning work.
+- When staging changes before a commit, check if they span multiple issues.
+  If they do, suggest splitting the commit using `git add -p`.
 ```

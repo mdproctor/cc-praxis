@@ -655,3 +655,15 @@ Exit codes: `0` = clean · `1` = CRITICAL (blocks commit) · `2` = WARNING (revi
 
 Local validation is optional but recommended — pre-commit validation runs automatically and is mandatory.
 
+
+## Work Tracking
+
+**Issue tracking:** enabled
+**GitHub repo:** mdproctor/cc-praxis
+**Changelog:** GitHub Releases (run `gh release create --generate-notes` at milestones)
+
+**Automatic behaviours (Claude follows these when this section is present):**
+- Before starting any significant task, check if it spans multiple concerns.
+  If it does, help break it into separate issues before beginning work.
+- When staging changes before a commit, check if they span multiple issues.
+  If they do, suggest splitting the commit using `git add -p`.

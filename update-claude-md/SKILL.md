@@ -113,7 +113,40 @@ Map changes to CLAUDE.md sections:
 
 **This check applies to ALL project types** (skills/java/blog/custom/generic).
 
-### Step 4b: Check for missing Writing Style Guide section
+### Step 4b: Check for missing Work Tracking section
+
+```bash
+grep -q "Issue tracking.*enabled" CLAUDE.md 2>/dev/null && echo "present" || echo "absent"
+```
+
+If absent, prompt:
+
+> **Enable GitHub issue tracking for this repo? (YES / n)**
+>
+> Adds automatic behaviours: flag cross-cutting tasks before starting, check staged changes for commit splits, and link every commit to a GitHub issue for clean release notes.
+>
+> Default: **YES** — press Enter to enable, type **n** to skip.
+
+If **YES** or Enter → propose adding to CLAUDE.md (include in the Step 5 proposal block):
+```markdown
+## Work Tracking
+
+**Issue tracking:** enabled
+**GitHub repo:** [owner/repo]
+**Changelog:** GitHub Releases (run `gh release create --generate-notes` at milestones)
+
+**Automatic behaviours (Claude follows these when this section is present):**
+- Before starting any significant task, check if it spans multiple concerns.
+  If it does, help break it into separate issues before beginning work.
+- When staging changes before a commit, check if they span multiple issues.
+  If they do, suggest splitting the commit using `git add -p`.
+```
+
+Fill `[owner/repo]` from `git remote get-url origin`. This is a one-time addition — once present, this check passes silently.
+
+If **n** → skip silently.
+
+### Step 4c: Check for missing Writing Style Guide section
 
 ```bash
 ls docs/blog/ 2>/dev/null | head -1
