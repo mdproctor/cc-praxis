@@ -251,8 +251,11 @@ Present to the user:
 >
 > Suggested name: **`<Suggested Name>`**
 >
-> Type `/rename <Suggested Name>` to apply it — or just `/rename` and Claude Code
-> will generate a name automatically from the conversation.
+> Type `/rename <Suggested Name>` to apply it.
+>
+> *(Tip: `/rename` with no arguments requires earlier conversation context to
+> auto-generate — at session end it says "no conversation context yet".
+> Always provide the name explicitly as shown above.)*
 
 Wait for the user to type `/rename` (or decline). Do not proceed with the
 handover commit until the naming step is resolved.
