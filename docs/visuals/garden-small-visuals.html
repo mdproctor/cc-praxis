@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Garden — Small Visuals</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: #f8f9fa; padding: 40px 32px;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .visual { background: white; border-radius: 16px; padding: 32px;
+            box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 8px 32px rgba(0,0,0,.06);
+            margin-bottom: 40px; }
+  code { font-family: 'SF Mono','Fira Code','Cascadia Code',monospace; }
+
+  /* ── 1. SCORE ZONES ─────────────────────────────────────────────── */
+  .score-bar { display: flex; border-radius: 10px; overflow: hidden;
+               height: 56px; margin: 16px 0; }
+  .score-zone { display: flex; align-items: center; justify-content: center;
+                flex-direction: column; font-size: 12px; font-weight: 700;
+                gap: 3px; }
+  .score-zone .range { font-size: 16px; font-weight: 800; }
+  .zone-skip     { background: #e5e7eb; color: #6b7280; flex: 4; }
+  .zone-border   { background: #fef3c7; color: #92400e; flex: 3; }
+  .zone-include  { background: #dbeafe; color: #1e40af; flex: 4; }
+  .zone-strong   { background: #dcfce7; color: #166534; flex: 4; }
+  .score-labels { display: flex; margin-top: 8px; }
+  .score-label { text-align: center; font-size: 11px; color: #6b7280; }
+  .score-title { font-size: 15px; font-weight: 700; color: #111827; margin-bottom: 4px; }
+  .score-sub   { font-size: 12px; color: #6b7280; margin-bottom: 16px; }
+
+  .score-dims { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+  .score-dim {
+    flex: 1; min-width: 120px;
+    background: #f9fafb; border-radius: 8px; padding: 10px 12px;
+    text-align: center;
+  }
+  .score-dim .icon { font-size: 20px; margin-bottom: 4px; }
+  .score-dim .name { font-size: 11px; font-weight: 700; color: #374151;
+                     text-transform: uppercase; letter-spacing: 0.06em; }
+  .score-dim .desc { font-size: 10.5px; color: #9ca3af; margin-top: 2px; line-height: 1.3; }
+
+  /* ── 2. ENTRY ANATOMY ───────────────────────────────────────────── */
+  .entry-card {
+    border: 1.5px solid #e5e7eb; border-radius: 12px;
+    overflow: hidden; font-size: 12.5px;
+  }
+  .entry-section {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 10px 16px; border-bottom: 1px solid #f3f4f6;
+  }
+  .entry-section:last-child { border-bottom: none; }
+  .entry-label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; min-width: 100px; flex-shrink: 0;
+    padding-top: 1px;
+  }
+  .entry-content { color: #374151; line-height: 1.5; flex: 1; }
+  .entry-content code { font-size: 11.5px; background: #f3f4f6;
+                         padding: 1px 5px; border-radius: 4px; }
+
+  .sec-fm    { background: #eff6ff; }
+  .sec-fm .entry-label { color: #2563eb; }
+  .sec-sym   { background: #fff7ed; }
+  .sec-sym .entry-label { color: #c2410c; }
+  .sec-tried { background: #fef9c3; }
+  .sec-tried .entry-label { color: #854d0e; }
+  .sec-cause { background: #f0fdf4; }
+  .sec-cause .entry-label { color: #16a34a; }
+  .sec-fix   { background: #f0fdf4; }
+  .sec-fix .entry-label { color: #15803d; }
+  .sec-why   { background: #faf5ff; }
+  .sec-why .entry-label { color: #7c3aed; }
+  .sec-score { background: #f8fafc; }
+  .sec-score .entry-label { color: #6b7280; }
+
+  /* ── 3. THREE LEVELS ────────────────────────────────────────────── */
+  .three-levels { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .level-box { border-radius: 12px; padding: 20px; text-align: center; }
+  .level-icon { font-size: 32px; margin-bottom: 10px; }
+  .level-name { font-size: 15px; font-weight: 800; margin-bottom: 4px; }
+  .level-cost { display: inline-block; font-size: 11px; font-weight: 700;
+                padding: 3px 10px; border-radius: 20px; margin-bottom: 12px; }
+  .level-ops  { font-size: 11.5px; line-height: 1.7; text-align: left; color: #374151; }
+  .level-ops li { list-style: none; padding: 0; }
+  .level-ops li::before { content: "✓ "; color: currentColor; opacity: 0.6; }
+
+  .lv-ci   { background: #eff6ff; }
+  .lv-ci .level-name { color: #1d4ed8; }
+  .lv-ci .level-cost { background: #dbeafe; color: #1e40af; }
+
+  .lv-ag   { background: #f0fdf4; }
+  .lv-ag .level-name { color: #15803d; }
+  .lv-ag .level-cost { background: #dcfce7; color: #166534; }
+
+  .lv-hu   { background: #faf5ff; }
+  .lv-hu .level-name { color: #7c3aed; }
+  .lv-hu .level-cost { background: #ede9fe; color: #6d28d9; }
+
+  /* ── 4. SUBMISSION PIPELINE ─────────────────────────────────────── */
+  .pipeline { display: flex; align-items: stretch; gap: 0; }
+  .pipe-step {
+    flex: 1; background: white; border: 1.5px solid #e5e7eb;
+    border-radius: 10px; padding: 16px 14px; text-align: center;
+  }
+  .pipe-arrow { display: flex; align-items: center; justify-content: center;
+                padding: 0 6px; font-size: 22px; color: #9ca3af;
+                flex-shrink: 0; }
+  .pipe-icon  { font-size: 26px; margin-bottom: 8px; }
+  .pipe-name  { font-size: 13px; font-weight: 700; color: #111827; margin-bottom: 4px; }
+  .pipe-desc  { font-size: 11px; color: #6b7280; line-height: 1.4; }
+  .pipe-tag   { display: inline-block; font-size: 10px; font-weight: 600;
+                padding: 2px 8px; border-radius: 12px; margin-top: 6px; }
+
+  .ps-session { border-color: #bfdbfe; background: #eff6ff; }
+  .ps-session .pipe-tag { background: #dbeafe; color: #1e40af; }
+
+  .ps-capture { border-color: #bbf7d0; background: #f0fdf4; }
+  .ps-capture .pipe-tag { background: #dcfce7; color: #166534; }
+
+  .ps-queue   { border-color: #fde68a; background: #fefce8; }
+  .ps-queue .pipe-tag { background: #fef3c7; color: #92400e; }
+
+  .ps-merge   { border-color: #c4b5fd; background: #faf5ff; }
+  .ps-merge .pipe-tag { background: #ede9fe; color: #6d28d9; }
+
+  .ps-garden  { border-color: #6ee7b7; background: #d1fae5; }
+  .ps-garden .pipe-tag { background: #a7f3d0; color: #065f46; }
+
+  /* ── 5. BEFORE / AFTER ──────────────────────────────────────────── */
+  .ba-grid { display: grid; grid-template-columns: 1fr 80px 1fr; gap: 0; align-items: center; }
+  .ba-side { border-radius: 12px; padding: 20px; }
+  .ba-before { background: #fef2f2; border: 1.5px solid #fecaca; }
+  .ba-after  { background: #f0fdf4; border: 1.5px solid #bbf7d0; }
+  .ba-label  { font-size: 11px; font-weight: 700; text-transform: uppercase;
+               letter-spacing: 0.1em; margin-bottom: 10px; }
+  .ba-before .ba-label { color: #dc2626; }
+  .ba-after  .ba-label { color: #16a34a; }
+  .ba-items  { font-size: 12.5px; line-height: 1.8; color: #374151; }
+  .ba-items li { list-style: none; padding: 0; }
+  .ba-before .ba-items li::before { content: "✗ "; color: #dc2626; }
+  .ba-after  .ba-items li::before { content: "✓ "; color: #16a34a; }
+  .ba-arrow { text-align: center; font-size: 32px; color: #9ca3af; }
+
+  /* ── 6. ENTRY TYPES ─────────────────────────────────────────────── */
+  .entry-types { display: flex; gap: 16px; }
+  .type-card { flex: 1; border-radius: 12px; padding: 20px; text-align: center; }
+  .type-icon  { font-size: 36px; margin-bottom: 10px; }
+  .type-name  { font-size: 16px; font-weight: 800; margin-bottom: 6px; }
+  .type-def   { font-size: 12.5px; line-height: 1.5; opacity: 0.85; }
+  .type-bar   { font-size: 10px; font-weight: 700; padding: 3px 10px;
+                border-radius: 20px; display: inline-block; margin-top: 10px;
+                text-transform: uppercase; letter-spacing: 0.08em; }
+
+  .tc-gotcha { background: #fff1f2; border: 1.5px solid #fecdd3; }
+  .tc-gotcha .type-name { color: #be123c; }
+  .tc-gotcha .type-bar  { background: #ffe4e6; color: #9f1239; }
+
+  .tc-tech   { background: #f0fdf4; border: 1.5px solid #bbf7d0; }
+  .tc-tech .type-name   { color: #15803d; }
+  .tc-tech .type-bar    { background: #dcfce7; color: #166534; }
+
+  .tc-undoc  { background: #eff6ff; border: 1.5px solid #bfdbfe; }
+  .tc-undoc .type-name  { color: #1d4ed8; }
+  .tc-undoc .type-bar   { background: #dbeafe; color: #1e40af; }
+
+  .visual-title { font-size: 15px; font-weight: 700; color: #111827; margin-bottom: 4px; }
+  .visual-sub   { font-size: 12px; color: #9ca3af; margin-bottom: 20px; }
+  .visual-num   { font-size: 11px; font-weight: 700; color: #d1d5db;
+                  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 1. ENTRY TYPES                                                  -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="visual" id="v1">
+  <div class="visual-num">Visual A</div>
+  <div class="visual-title">Three Entry Types</div>
+  <div class="visual-sub">The garden captures exactly these — nothing else</div>
+  <div class="entry-types">
+    <div class="type-card tc-gotcha">
+      <div class="type-icon">🐛</div>
+      <div class="type-name">Gotcha</div>
+      <div class="type-def">A bug that silently fails, a behaviour that contradicts the docs, a workaround that took hours and isn't discoverable anywhere.</div>
+      <div class="type-bar">symptom misleads</div>
+    </div>
+    <div class="type-card tc-tech">
+      <div class="type-icon">💡</div>
+      <div class="type-name">Technique</div>
+      <div class="type-def">A non-obvious approach that solved a problem elegantly. A skilled developer wouldn't naturally reach for it — but would immediately value it.</div>
+      <div class="type-bar">obvious approach is worse</div>
+    </div>
+    <div class="type-card tc-undoc">
+      <div class="type-icon">🔍</div>
+      <div class="type-name">Undocumented</div>
+      <div class="type-def">A behaviour, flag, or feature that exists and works — but is absent from any official documentation. Only discoverable via source code or word of mouth.</div>
+      <div class="type-bar">exists, but not written down</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 2. GARDEN SCORE                                                 -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="visual" id="v2">
+  <div class="visual-num">Visual B</div>
+  <div class="visual-title">The Garden Score</div>
+  <div class="visual-sub">Every candidate is scored before submission. Below 8 is never submitted.</div>
+
+  <div class="score-bar">
+    <div class="score-zone zone-skip"   style="flex:4"><span class="range">&lt; 5</span><span>Don't submit</span></div>
+    <div class="score-zone zone-border" style="flex:3"><span class="range">5–7</span><span>Borderline</span></div>
+    <div class="score-zone zone-include" style="flex:4"><span class="range">8–11</span><span>Include</span></div>
+    <div class="score-zone zone-strong" style="flex:4"><span class="range">12–15</span><span>Strong include</span></div>
+  </div>
+
+  <div class="score-dims">
+    <div class="score-dim">
+      <div class="icon">🎯</div>
+      <div class="name">Non-obviousness</div>
+      <div class="desc">Would a skilled developer be surprised?</div>
+    </div>
+    <div class="score-dim">
+      <div class="icon">🔭</div>
+      <div class="name">Discoverability</div>
+      <div class="desc">How hard to find otherwise?</div>
+    </div>
+    <div class="score-dim">
+      <div class="icon">🌐</div>
+      <div class="name">Breadth</div>
+      <div class="desc">How many developers would hit this?</div>
+    </div>
+    <div class="score-dim">
+      <div class="icon">💥</div>
+      <div class="name">Pain / Impact</div>
+      <div class="desc">How much time does it cost to hit?</div>
+    </div>
+    <div class="score-dim">
+      <div class="icon">⏳</div>
+      <div class="name">Longevity</div>
+      <div class="desc">Will this still be relevant in a year?</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 3. ENTRY ANATOMY                                                -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="visual" id="v3">
+  <div class="visual-num">Visual C</div>
+  <div class="visual-title">Anatomy of a Garden Entry</div>
+  <div class="visual-sub">Every section has a purpose — none is decoration</div>
+
+  <div class="entry-card">
+    <div class="entry-section sec-fm">
+      <span class="entry-label">Frontmatter</span>
+      <span class="entry-content">
+        <code>id, type, stack, labels, keywords, symptom, context, score, captured, verified</code>
+        — machine-readable metadata. The index and summary files are built from this. Never loaded without a prior keyword match.
+      </span>
+    </div>
+    <div class="entry-section sec-sym">
+      <span class="entry-label">Symptom</span>
+      <span class="entry-content">
+        What the developer <em>observes</em> — the misleading part. "No error is reported" is important context here.
+        This is what gets surfaced in the index for retrieval matching.
+      </span>
+    </div>
+    <div class="entry-section sec-tried">
+      <span class="entry-label">What was tried</span>
+      <span class="entry-content">
+        Bulleted list of failed approaches and their outcomes. This is the section that saves the next Claude from repeating the same dead ends.
+      </span>
+    </div>
+    <div class="entry-section sec-cause">
+      <span class="entry-label">Root cause</span>
+      <span class="entry-content">
+        What was <em>actually</em> happening — the mechanism, not just the outcome. Explains <strong>why</strong>, not just <strong>what</strong>.
+      </span>
+    </div>
+    <div class="entry-section sec-fix">
+      <span class="entry-label">Fix</span>
+      <span class="entry-content">
+        Actual code or config. Always specific. Always runnable. "Use X instead" is not a fix.
+      </span>
+    </div>
+    <div class="entry-section sec-why">
+      <span class="entry-label">Why non-obvious</span>
+      <span class="entry-content">
+        The insight. Why would a skilled developer be misled? What makes this a gotcha rather than just a bug?
+      </span>
+    </div>
+    <div class="entry-section sec-score">
+      <span class="entry-label">Score</span>
+      <span class="entry-content">
+        <code>Score: 13/15 · Included because: … · Reservation: none</code> — retained for future pruning decisions.
+      </span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 4. THREE OPERATION LEVELS                                       -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="visual" id="v4">
+  <div class="visual-num">Visual D</div>
+  <div class="visual-title">The Three Operation Levels</div>
+  <div class="visual-sub">Push every check as low as possible. If Python can do it, Claude shouldn't.</div>
+
+  <div class="three-levels">
+    <div class="level-box lv-ci">
+      <div class="level-icon">⚙️</div>
+      <div class="level-name">CI / Code</div>
+      <span class="level-cost">Zero tokens · Seconds</span>
+      <ul class="level-ops">
+        <li>YAML format validation</li>
+        <li>Controlled vocabulary check</li>
+        <li>Jaccard duplicate detection</li>
+        <li>Injection pattern scan</li>
+        <li>Score threshold routing</li>
+        <li>Index maintenance on merge</li>
+        <li>Summary file generation</li>
+        <li>Staleness detection (weekly)</li>
+      </ul>
+    </div>
+    <div class="level-box lv-ag">
+      <div class="level-icon">🤖</div>
+      <div class="level-name">Agent (Claude)</div>
+      <span class="level-cost">Tokens · Minutes</span>
+      <ul class="level-ops">
+        <li>Quality judgment (8–11 borderline)</li>
+        <li>Near-duplicate resolution</li>
+        <li>Semantic coherence review</li>
+        <li>Coverage gap identification</li>
+        <li>Keyword normalisation</li>
+        <li>Cross-reference proposals</li>
+      </ul>
+    </div>
+    <div class="level-box lv-hu">
+      <div class="level-icon">👤</div>
+      <div class="level-name">Human</div>
+      <span class="level-cost">Slow · Final word</span>
+      <ul class="level-ops">
+        <li>Fix section accuracy review</li>
+        <li>Sensitive content judgment</li>
+        <li>Entry retirement decisions</li>
+        <li>Quality policy changes</li>
+        <li>Ecosystem governance</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 5. SUBMISSION PIPELINE                                          -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="visual" id="v5">
+  <div class="visual-num">Visual E</div>
+  <div class="visual-title">The Submission Pipeline</div>
+  <div class="visual-sub">Write first, deduplicate later — the submitting Claude never loads garden files</div>
+
+  <div class="pipeline">
+    <div class="pipe-step ps-session">
+      <div class="pipe-icon">🔧</div>
+      <div class="pipe-name">Coding session</div>
+      <div class="pipe-desc">Non-obvious bug discovered. Multiple approaches tried.</div>
+      <div class="pipe-tag">The trigger</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step ps-capture">
+      <div class="pipe-icon">📝</div>
+      <div class="pipe-name">CAPTURE</div>
+      <div class="pipe-desc">Score it. Check the index (no body reads). Draft the entry. Confirm with user.</div>
+      <div class="pipe-tag">Light L1 check</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step ps-queue">
+      <div class="pipe-icon">📬</div>
+      <div class="pipe-name">submissions/</div>
+      <div class="pipe-desc">Pending queue. Self-contained submission file. GARDEN.md counter updated.</div>
+      <div class="pipe-tag">Write-first</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step ps-merge">
+      <div class="pipe-icon">🔀</div>
+      <div class="pipe-name">MERGE</div>
+      <div class="pipe-desc">Dedicated session. Full L2 duplicate check. Index maintenance. CHECKED.md updated.</div>
+      <div class="pipe-tag">Deep check</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step ps-garden">
+      <div class="pipe-icon">🌿</div>
+      <div class="pipe-name">Garden</div>
+      <div class="pipe-desc">Entry file, summary, domain index row, label files — all updated atomically.</div>
+      <div class="pipe-tag">Live</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 6. BEFORE / AFTER: RETRIEVAL                                    -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="visual" id="v6">
+  <div class="visual-num">Visual F</div>
+  <div class="visual-title">Before & After: Retrieval</div>
+  <div class="visual-sub">The v1 retrieval model vs. the v2 indexed approach</div>
+
+  <div class="ba-grid">
+    <div class="ba-side ba-before">
+      <div class="ba-label">v1 — Before</div>
+      <ul class="ba-items">
+        <li>Read GARDEN.md (entire index, all titles)</li>
+        <li>Load the full domain file (all entries in it)</li>
+        <li>Grep within the file for the right entry</li>
+        <li>All entries in a domain load as overhead</li>
+        <li>Cost grows with garden size</li>
+        <li>Title-only matching — no keywords, no symptom</li>
+      </ul>
+    </div>
+    <div class="ba-arrow">→</div>
+    <div class="ba-side ba-after">
+      <div class="ba-label">v2 — After</div>
+      <ul class="ba-items">
+        <li>Read <code>_index/global.md</code> (~80 tokens)</li>
+        <li>Grep domain INDEX.md for keywords + symptom</li>
+        <li>Load exactly the matching entry by path</li>
+        <li>No other entries touch the context window</li>
+        <li>Cost is bounded regardless of garden size</li>
+        <li>Keyword + symptom matching — semantically rich</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

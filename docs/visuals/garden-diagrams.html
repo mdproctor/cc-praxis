@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Knowledge Garden — Visual Architecture</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: #f8f9fa;
+    color: #1a1a2e;
+    padding: 48px 32px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  h1 { font-size: 14px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+       color: #6b7280; margin-bottom: 48px; }
+
+  .diagram { background: white; border-radius: 16px; padding: 40px;
+             box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 8px 32px rgba(0,0,0,.06);
+             margin-bottom: 56px; }
+
+  .diagram-title { font-size: 20px; font-weight: 700; color: #111827; margin-bottom: 6px; }
+  .diagram-sub   { font-size: 14px; color: #6b7280; margin-bottom: 36px; }
+
+  /* ── DIAGRAM 1: Ecosystem Layers ──────────────────────────────── */
+  .layers { display: flex; flex-direction: column; gap: 8px; }
+
+  .layer {
+    border-radius: 12px; padding: 20px 24px;
+    display: flex; align-items: flex-start; gap: 18px;
+  }
+  .layer-icon { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
+  .layer-body { flex: 1; }
+  .layer-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+                 text-transform: uppercase; margin-bottom: 4px; }
+  .layer-name  { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+  .layer-desc  { font-size: 13.5px; line-height: 1.6; }
+  .layer-repos { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .repo-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 600; padding: 4px 12px;
+    border-radius: 20px; font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+
+  .layer-1 { background: #eff6ff; }
+  .layer-1 .layer-label { color: #2563eb; }
+  .layer-1 .repo-tag { background: #dbeafe; color: #1d4ed8; }
+
+  .layer-2 { background: #f0fdf4; }
+  .layer-2 .layer-label { color: #16a34a; }
+  .layer-2 .repo-tag { background: #dcfce7; color: #15803d; }
+
+  .layer-3 { background: #faf5ff; }
+  .layer-3 .layer-label { color: #7c3aed; }
+  .layer-3 .repo-tag { background: #ede9fe; color: #6d28d9; }
+
+  .layer-4 { background: #fff7ed; }
+  .layer-4 .layer-label { color: #c2410c; }
+  .layer-4 .repo-tag { background: #ffedd5; color: #9a3412; }
+
+  .arrow-down {
+    text-align: center; font-size: 22px; color: #d1d5db; line-height: 1;
+    margin: 0 auto;
+  }
+
+  /* ── DIAGRAM 2: Retrieval Algorithm ──────────────────────────── */
+  .retrieval {
+    display: flex; flex-direction: column; align-items: center; gap: 0;
+  }
+
+  .decision-start {
+    background: #1e293b; color: white;
+    border-radius: 50px; padding: 14px 32px;
+    font-size: 15px; font-weight: 600; text-align: center;
+  }
+
+  .decision-row { display: flex; gap: 24px; align-items: flex-start;
+                  width: 100%; margin-top: 0; }
+
+  .decision-branch { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0; }
+
+  .branch-connector {
+    width: 2px; height: 32px; background: #e5e7eb;
+    flex-shrink: 0;
+  }
+  .branch-connector-h {
+    height: 2px; background: #e5e7eb; margin: 16px 0;
+    flex-shrink: 0;
+  }
+
+  .question-node {
+    border: 2px solid #e5e7eb; border-radius: 10px;
+    padding: 14px 20px; background: #f9fafb;
+    text-align: center; font-size: 13.5px; font-weight: 600;
+    color: #374151; width: 100%;
+  }
+
+  .answer-yes { font-size: 11px; font-weight: 700; color: #16a34a;
+                text-transform: uppercase; letter-spacing: 0.08em;
+                margin: 6px 0 2px; }
+  .answer-no  { font-size: 11px; font-weight: 700; color: #dc2626;
+                text-transform: uppercase; letter-spacing: 0.08em;
+                margin: 6px 0 2px; }
+
+  .tier-box {
+    border-radius: 12px; padding: 16px 20px;
+    font-size: 13px; line-height: 1.5; width: 100%;
+    text-align: left;
+  }
+  .tier-box strong { display: block; font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .tier-box .cost {
+    display: inline-block; margin-top: 8px;
+    font-size: 11px; font-weight: 600; padding: 3px 10px;
+    border-radius: 20px; letter-spacing: 0.05em;
+  }
+
+  .tier-1 { background: #eff6ff; border: 1.5px solid #bfdbfe; }
+  .tier-1 strong { color: #1d4ed8; }
+  .tier-1 .cost { background: #dbeafe; color: #1e40af; }
+
+  .tier-2 { background: #f0fdf4; border: 1.5px solid #bbf7d0; }
+  .tier-2 strong { color: #15803d; }
+  .tier-2 .cost { background: #dcfce7; color: #166534; }
+
+  .tier-3 { background: #fff7ed; border: 1.5px solid #fed7aa; }
+  .tier-3 strong { color: #c2410c; }
+  .tier-3 .cost { background: #ffedd5; color: #9a3412; }
+
+  .retrieval-full {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;
+    width: 100%; margin-top: 32px;
+  }
+
+  .ret-step { text-align: center; }
+  .ret-q { font-size: 13px; font-weight: 600; color: #374151;
+           background: #f3f4f6; border-radius: 8px; padding: 10px 14px;
+           margin-bottom: 8px; }
+  .ret-arrow { font-size: 20px; color: #9ca3af; margin-bottom: 8px; }
+
+  /* ── DIAGRAM 3: Federation ────────────────────────────────────── */
+  .federation-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    position: relative;
+  }
+
+  .fed-row { display: flex; justify-content: center; gap: 16px; margin-bottom: 0; }
+
+  .fed-node {
+    border-radius: 12px; padding: 16px 20px;
+    text-align: center; min-width: 160px;
+    flex-shrink: 0;
+  }
+  .fed-node .node-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+                           text-transform: uppercase; margin-bottom: 4px; }
+  .fed-node .node-name  { font-size: 14px; font-weight: 700; }
+  .fed-node .node-id    { font-size: 11px; font-family: 'SF Mono','Fira Code',monospace;
+                           margin-top: 4px; opacity: 0.7; }
+  .fed-node .node-desc  { font-size: 11px; margin-top: 6px; opacity: 0.8; line-height: 1.4; }
+
+  .fed-canonical  { background: #1e293b; color: white; }
+  .fed-canonical .node-label { color: #94a3b8; }
+
+  .fed-peer       { background: #eff6ff; border: 2px dashed #93c5fd; }
+  .fed-peer .node-label { color: #3b82f6; }
+
+  .fed-child      { background: #f0fdf4; border: 2px solid #86efac; }
+  .fed-child .node-label { color: #16a34a; }
+
+  .fed-private    { background: #faf5ff; border: 2px dashed #c4b5fd; }
+  .fed-private .node-label { color: #7c3aed; }
+
+  .fed-connector-v {
+    display: flex; justify-content: center;
+    height: 32px; align-items: center;
+  }
+  .fed-connector-v::before {
+    content: ''; width: 2px; height: 100%;
+    background: #e5e7eb;
+  }
+
+  .fed-connector-row {
+    display: flex; justify-content: center; align-items: center;
+    gap: 0; height: 32px; position: relative;
+  }
+  .fed-h-line {
+    height: 2px; background: #e5e7eb;
+  }
+
+  .fed-legend { display: flex; gap: 24px; margin-top: 28px; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #6b7280; }
+  .legend-swatch { width: 32px; height: 14px; border-radius: 4px; flex-shrink: 0; }
+  .legend-solid  { border: 2px solid #86efac; background: #f0fdf4; }
+  .legend-dashed-blue { border: 2px dashed #93c5fd; background: #eff6ff; }
+  .legend-dashed-purple { border: 2px dashed #c4b5fd; background: #faf5ff; }
+  .legend-dark   { background: #1e293b; }
+
+  /* ── DIAGRAM 4: Entry Lifecycle ──────────────────────────────── */
+  .lifecycle { display: flex; align-items: center; gap: 0; flex-wrap: wrap;
+               justify-content: center; }
+  .lc-state {
+    border-radius: 10px; padding: 16px 20px; text-align: center;
+    min-width: 130px; flex-shrink: 0;
+  }
+  .lc-state .st-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+                          text-transform: uppercase; margin-bottom: 6px; }
+  .lc-state .st-name  { font-size: 15px; font-weight: 700; }
+  .lc-state .st-desc  { font-size: 11px; margin-top: 6px; line-height: 1.4; opacity: 0.85; }
+
+  .lc-arrow { font-size: 22px; color: #d1d5db; padding: 0 8px; flex-shrink: 0; }
+
+  .st-known-gap  { background: #fefce8; border: 2px dashed #fde047; }
+  .st-known-gap .st-label { color: #854d0e; }
+  .st-known-gap .st-name  { color: #713f12; }
+
+  .st-active     { background: #f0fdf4; border: 2px solid #86efac; }
+  .st-active .st-label { color: #166534; }
+  .st-active .st-name  { color: #15803d; }
+
+  .st-suspected  { background: #fff7ed; border: 2px solid #fed7aa; }
+  .st-suspected .st-label { color: #9a3412; }
+  .st-suspected .st-name  { color: #c2410c; }
+
+  .st-superseded { background: #eff6ff; border: 2px solid #bfdbfe; }
+  .st-superseded .st-label { color: #1e40af; }
+  .st-superseded .st-name  { color: #1d4ed8; }
+
+  .st-retired    { background: #f3f4f6; border: 2px solid #d1d5db; }
+  .st-retired .st-label { color: #6b7280; }
+  .st-retired .st-name  { color: #374151; }
+
+  .lifecycle-triggers { margin-top: 24px; display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                        gap: 12px; }
+  .trigger-item { background: #f9fafb; border-radius: 8px; padding: 12px 16px;
+                  font-size: 12.5px; line-height: 1.5; }
+  .trigger-item strong { display: block; font-size: 11px; font-weight: 700;
+                          text-transform: uppercase; letter-spacing: 0.08em;
+                          color: #6b7280; margin-bottom: 4px; }
+
+  /* ── Page header ──────────────────────────────────────────────── */
+  .page-header { margin-bottom: 56px; }
+  .page-header h1 { font-size: 30px; font-weight: 800; color: #111827;
+                    letter-spacing: -0.02em; margin-bottom: 8px;
+                    text-transform: none; }
+  .page-header p  { font-size: 16px; color: #6b7280; }
+
+  .diagram-number { font-size: 11px; font-weight: 700; color: #9ca3af;
+                    letter-spacing: 0.1em; text-transform: uppercase;
+                    margin-bottom: 6px; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>Knowledge Garden — Architecture</h1>
+  <p>Visual reference for the design specification</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- DIAGRAM 1: ECOSYSTEM LAYERS                                     -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="diagram">
+  <div class="diagram-number">Diagram 1</div>
+  <div class="diagram-title">The Garden Ecosystem</div>
+  <div class="diagram-sub">Three layers — from open protocol to community knowledge to private extension</div>
+
+  <div class="layers">
+
+    <div class="layer layer-1">
+      <div class="layer-icon">📐</div>
+      <div class="layer-body">
+        <div class="layer-label">Layer 1 · Foundation</div>
+        <div class="layer-name">The Protocol</div>
+        <div class="layer-desc">An open specification for structured AI knowledge — entry format, index structure, federation rules, quality lifecycle. Tool-agnostic: any AI assistant can implement it.</div>
+        <div class="layer-repos">
+          <span class="repo-tag">📄 garden-spec</span>
+          <span class="repo-tag">SCHEMA.md format</span>
+          <span class="repo-tag">Federation protocol</span>
+          <span class="repo-tag">SchemaVer convention</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow-down">↓</div>
+
+    <div class="layer layer-2">
+      <div class="layer-icon">⚙️</div>
+      <div class="layer-body">
+        <div class="layer-label">Layer 2 · Reference Implementation</div>
+        <div class="layer-name">The Engine</div>
+        <div class="layer-desc">The platform that runs gardens: validation, CI/CD automation, index maintenance, staleness detection, federation tooling, web app, MCP server. Implements the spec.</div>
+        <div class="layer-repos">
+          <span class="repo-tag">🔧 garden-engine</span>
+          <span class="repo-tag">validate_garden.py</span>
+          <span class="repo-tag">GitHub Actions</span>
+          <span class="repo-tag">MCP server</span>
+          <span class="repo-tag">Obsidian plugin</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow-down">↓</div>
+
+    <div class="layer layer-3">
+      <div class="layer-icon">🌿</div>
+      <div class="layer-body">
+        <div class="layer-label">Layer 3 · Community Knowledge</div>
+        <div class="layer-name">Canonical Domain Gardens</div>
+        <div class="layer-desc">Community-curated gardens per technology domain — quality-gated, peer-reviewed, governed. The shared knowledge layer that any team can build on.</div>
+        <div class="layer-repos">
+          <span class="repo-tag">🔧 tools-garden (GE-)</span>
+          <span class="repo-tag">☕ jvm-garden (JE-)</span>
+          <span class="repo-tag">🐍 python-garden (PE-)</span>
+          <span class="repo-tag">🌐 frontend-garden (FE-)</span>
+          <span class="repo-tag">⚙️ systems-garden (SE-)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow-down">↓</div>
+
+    <div class="layer layer-4">
+      <div class="layer-icon">🔒</div>
+      <div class="layer-body">
+        <div class="layer-label">Layer 4 · Private Extension</div>
+        <div class="layer-name">Child &amp; Peer Gardens</div>
+        <div class="layer-desc">Teams extend the canonical gardens privately. Private entries fill gaps. Private augmentations add context to public entries. Watch CI monitors upstream for incoming duplicates. The parent never knows the child exists.</div>
+        <div class="layer-repos">
+          <span class="repo-tag">🏢 enterprise/private-garden</span>
+          <span class="repo-tag">👤 you/knowledge-garden</span>
+          <span class="repo-tag">🔬 research-org/garden</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- DIAGRAM 2: 3-TIER RETRIEVAL                                     -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="diagram">
+  <div class="diagram-number">Diagram 2</div>
+  <div class="diagram-title">How Retrieval Works</div>
+  <div class="diagram-sub">Bounded token cost at every tier — no vector database required</div>
+
+  <div class="retrieval-full">
+
+    <div class="tier-box tier-1">
+      <strong>Tier 1 — Technology Known</strong>
+      "This is a Quarkus CDI problem"
+      <br><br>
+      Read <code>_index/global.md</code><br>
+      → Find domain row<br>
+      → Grep <code>quarkus/INDEX.md</code> for keywords<br>
+      → Load matching entry by path
+      <br>
+      <span class="cost">~1,000–1,500 tokens</span>
+    </div>
+
+    <div class="tier-box tier-2">
+      <strong>Tier 2 — Symptom Known</strong>
+      "Silent failure, no error visible"
+      <br><br>
+      Read <code>labels/INDEX.md</code><br>
+      → Find symptom label<br>
+      → Load label file → candidate list<br>
+      → Load matching entries by path
+      <br>
+      <span class="cost">~800–1,400 tokens</span>
+    </div>
+
+    <div class="tier-box tier-3">
+      <strong>Tier 3 — Unknown</strong>
+      "No idea what's causing this"
+      <br><br>
+      Glob <code>_summaries/</code> → read all<br>
+      (100 tokens × N entries)<br>
+      → Identify best matches<br>
+      → Load 2–4 full entries by path
+      <br>
+      <span class="cost">Bounded regardless of garden size</span>
+    </div>
+
+  </div>
+
+  <div style="margin-top: 32px; padding: 20px; background: #f8fafc; border-radius: 10px; border-left: 4px solid #3b82f6;">
+    <strong style="font-size: 14px; color: #1e40af;">The key principle:</strong>
+    <span style="font-size: 13.5px; color: #374151; margin-left: 8px;">
+      The file is the retrieval unit. Every entry is individually addressable by path.
+      No grep-within-file. No bulk loading. The index narrows; the path delivers.
+    </span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- DIAGRAM 3: FEDERATION TOPOLOGY                                  -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="diagram">
+  <div class="diagram-number">Diagram 3</div>
+  <div class="diagram-title">Federation Topology</div>
+  <div class="diagram-sub">Knowledge flows down; contributions flow up; peers share without hierarchy</div>
+
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 0;">
+
+    <!-- Canonical -->
+    <div class="fed-node fed-canonical" style="width: 280px;">
+      <div class="node-label">Canonical</div>
+      <div class="node-name">community/jvm-garden</div>
+      <div class="node-id">Prefix: GE-</div>
+      <div class="node-desc">Root authority. Quality-gated. Public.</div>
+    </div>
+
+    <!-- Peer line -->
+    <div style="display: flex; align-items: center; gap: 0; margin: 0;">
+      <div style="display: flex; flex-direction: column; align-items: flex-end; width: 200px;">
+        <div style="height: 32px; width: 2px; background: #e5e7eb; margin-right: 0; align-self: flex-end; margin-right: 140px;"></div>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: flex-start; width: 200px;">
+        <div style="height: 32px; width: 2px; background: #e5e7eb; margin-left: 140px;"></div>
+      </div>
+    </div>
+
+    <!-- Child row -->
+    <div style="display: flex; gap: 24px; align-items: flex-start; justify-content: center;">
+
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 0;">
+        <div class="fed-node fed-child" style="width: 200px;">
+          <div class="node-label">Child → Parent</div>
+          <div class="node-name">enterprise-a/garden</div>
+          <div class="node-id">Prefix: PE-</div>
+          <div class="node-desc">Strict non-duplication. Contributes back.</div>
+        </div>
+        <!-- Sub-child -->
+        <div style="width: 2px; height: 28px; background: #e5e7eb;"></div>
+        <div class="fed-node fed-private" style="width: 200px;">
+          <div class="node-label">Child (private)</div>
+          <div class="node-name">team-x/garden</div>
+          <div class="node-id">Prefix: TE-</div>
+          <div class="node-desc">Parent unaware. Augments. Watches.</div>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding-top: 60px;">
+        <div style="font-size: 12px; color: #9ca3af; font-weight: 600; padding: 6px 12px; background: #f9fafb; border-radius: 6px; border: 1px dashed #d1d5db;">↔ peer</div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 0; margin-top: 0;">
+        <div class="fed-node fed-peer" style="width: 200px; margin-top: 0;">
+          <div class="node-label">Peer ↔ Peer</div>
+          <div class="node-name">research-org/garden</div>
+          <div class="node-id">Prefix: RE-</div>
+          <div class="node-desc">Equals. Overlaps acceptable. Cross-refs encouraged.</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="fed-legend">
+    <div class="legend-item"><div class="legend-swatch legend-dark"></div>Canonical — root authority</div>
+    <div class="legend-item"><div class="legend-swatch legend-solid"></div>Child — non-duplication contract</div>
+    <div class="legend-item"><div class="legend-swatch legend-dashed-blue"></div>Peer — overlaps acceptable</div>
+    <div class="legend-item"><div class="legend-swatch legend-dashed-purple"></div>Private child — parent unaware</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- DIAGRAM 4: ENTRY LIFECYCLE                                      -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="diagram">
+  <div class="diagram-number">Diagram 4</div>
+  <div class="diagram-title">Entry Lifecycle</div>
+  <div class="diagram-sub">Quality degrades over time — the lifecycle makes that explicit rather than hiding it</div>
+
+  <div class="lifecycle">
+    <div class="lc-state st-known-gap">
+      <div class="st-label">Placeholder</div>
+      <div class="st-name">Known Gap</div>
+      <div class="st-desc">Problem is known, fix is not yet captured</div>
+    </div>
+    <div class="lc-arrow">→</div>
+    <div class="lc-state st-active">
+      <div class="st-label">Default</div>
+      <div class="st-name">Active</div>
+      <div class="st-desc">Verified current. Findable. Trusted.</div>
+    </div>
+    <div class="lc-arrow">→</div>
+    <div class="lc-state st-suspected">
+      <div class="st-label">CI-triggered</div>
+      <div class="st-name">Suspected</div>
+      <div class="st-desc">Past staleness threshold. Still visible, with caveat.</div>
+    </div>
+    <div class="lc-arrow">→</div>
+    <div class="lc-state st-superseded">
+      <div class="st-label">Library updated</div>
+      <div class="st-name">Superseded</div>
+      <div class="st-desc">Better approach exists. Retained with pointer.</div>
+    </div>
+    <div class="lc-arrow">→</div>
+    <div class="lc-state st-retired">
+      <div class="st-label">Obsolete</div>
+      <div class="st-name">Retired</div>
+      <div class="st-desc">Not returned by retrieval. Preserved in git history.</div>
+    </div>
+  </div>
+
+  <div class="lifecycle-triggers">
+    <div class="trigger-item">
+      <strong>Suspected trigger</strong>
+      CI weekly scan: <code>verified</code> date + <code>staleness_threshold</code> &lt; today. Automatic, zero tokens.
+    </div>
+    <div class="trigger-item">
+      <strong>Superseded trigger</strong>
+      Library releases a fix for the gotcha, or a better pattern is found. REVISE submission.
+    </div>
+    <div class="trigger-item">
+      <strong>Retired trigger</strong>
+      Technology is obsolete. Human decision after Agent coverage review flags it.
+    </div>
+    <div class="trigger-item">
+      <strong>Key principle</strong>
+      Entries are almost never deleted — git history is the archive. Lifecycle transitions are annotations, not deletions.
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
