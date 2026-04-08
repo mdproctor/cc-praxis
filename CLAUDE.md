@@ -420,7 +420,7 @@ The `issue-workflow` skill handles setup of this configuration and the pre-commi
 ### Skill edits always go to this project first
 
 **NEVER write skill edits directly to `~/.claude/skills/`.** Always edit in this
-repository (`~/claude/skills/`), then run `sync-local` to propagate. This keeps
+repository (`~/claude/cc-praxis/`), then run `sync-local` to propagate. This keeps
 git history, validation, and marketplace metadata in sync.
 
 ### When Adding a Skill to a Bundle (or Changing Bundles)
