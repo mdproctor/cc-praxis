@@ -417,24 +417,6 @@ If a project's CLAUDE.md contains `## Work Tracking` with `Issue tracking: enabl
 
 The `issue-workflow` skill handles setup of this configuration and the pre-commit analysis.
 
-### Epic and Issue Structure — Capability Area, Not Timing
-
-**Organise epics and child issues by what is being done and which system area it
-touches — never by when it will be done.**
-
-A well-named issue ("Data Store layer — PropagatingDataStore, subscription pattern")
-remains meaningful long after the work ships. A phase-named issue ("Phase 2 —
-foundation work") becomes meaningless immediately.
-
-Phases are acceptable as a *secondary* form of categorisation within an issue —
-as acceptance-criteria checkboxes or an ordered task list — when a single issue
-has natural internal sequencing. But phases must never be the primary organising
-principle of the issue hierarchy.
-
-When a concern is architecturally distinct from the sub-epic it would otherwise
-fall under, promote it to its own sibling sub-epic rather than burying it as a
-child issue.
-
 ### Skill edits always go to this project first
 
 **NEVER write skill edits directly to `~/.claude/skills/`.** Always edit in this
