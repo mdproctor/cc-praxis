@@ -1,42 +1,44 @@
-# Handover — 2026-04-07
+# Handover — 2026-04-09
 
-**Head commit:** `22a31aa` — docs: add project blog entry 2026-04-07-mdp03-hortora-garden-grows-up
+**Head commit:** `7e68bd3` — docs: log idea — marketplace aggregation for external skill repos
 **Previous handover:** `git show HEAD~1:HANDOFF.md` | diff: `git diff HEAD~1 HEAD -- HANDOFF.md`
 
 ## What Changed This Session
 
-- **Hortora designed** — complete vision document for the governed, federated knowledge garden; 3,300 lines, 10 embedded diagrams, committed at `696ed44`
-- **Name validated** — Hortora (hortus + -ora); three rounds of independent validation; Grok's pick Sylvara rejected (sylvara.ai is a live AI agency)
-- **Design spec covers:** v2 filesystem structure, 3-tier retrieval, three-level deduplication, quality lifecycle (Active→Suspected→Superseded→Retired), GitHub backend with CI, federation protocol (canonical/child/peer with augmentation + watch CI), 9-phase implementation roadmap, competitive landscape
-- **Garden submissions:** GE-0091 (validate_document.py false positive in fenced blocks), GE-0092 (Playwright .all() vs .nth() for multi-element screenshots)
-- **Design snapshot and blog entry** committed
+- **Hortora decommissioned from cc-praxis** — blog posts, design docs, ADR, images removed (all confirmed in `Hortora/spec` first); issue #47 closed
+- **Garden DEDUPE** — 100 pairs checked, 18 related, 82 distinct, drift counter reset; cross-refs added to rename-refactoring.md, tmux.md, playwright.md, cdi.md, profiles.md
+- **GARDEN.md deleted** — was always empty since v1→v2 migration; superseded by Hortora
+- **git-commit skill** — added Step 3b: squash check for consecutive same-type unpushed commits
+- **Marketplace aggregation idea** logged — `docs/ideas/IDEAS.md`
+- **Repo renamed** — `~/claude/skills` → `~/claude/cc-praxis`; CLAUDE.md updated; project memory migrated; `settings.local.json` paths updated via sed
+- **Hortora org sorted** — `soredium`, `spec`, `hortora.github.io` all local+GitHub; `spec` pushed for first time; `Hortora/spec/HANDOFF.md` written as Hortora entry point
+- **Hortora/soredium issues** — #1 (scaffold), #2 epic (forage+harvest), #3 (marketplace), #4 (forage skill), #5 (harvest skill)
+- **GE-0124 submitted** — `settings.local.json` stale paths on project rename
 
 ## State Right Now
 
-- `main` clean, everything committed and pushed
-- Garden: drift counter now at 33 (threshold 10) — DEDUPE overdue, run before next merge
-- Open issue: #36 (Design project memory architecture) — this session delivered the design; implementation not started
+- `cc-praxis` main clean, pushed, no open issues
+- `knowledge-garden`: 11 submissions pending (unmerged), GARDEN.md gone
+- `hortora/spec`: pushed, HANDOFF.md at root — start Hortora Claude here
+- `hortora/soredium`: scaffold only, issues #1–#5 open
+- `hortora/hortora.github.io`: live, complete, no work needed
 
 ## Immediate Next Steps
 
-1. **Register now** — `hortora-org` GitHub org; `hortora.garden`, `hortora.dev`, `hortora.com` — window may be short
-2. **Phase 1** — migrate 78 garden entries to v2 structure; see Phase 1 Scope checklist in design spec
-3. **Create issues/epics** — `mdproctor/knowledge-garden` for platform work; `mdproctor/cc-praxis` for skill updates
+1. **New topic (not yet started)** — coworker collaboration model and separating CLAUDE.md from project repos into workspace repos
+2. **Hortora work** — open Claude in `~/claude/hortora/spec/`, read HANDOFF.md, begin soredium #3
+3. **Knowledge garden** — merge 11 pending submissions when convenient
 
 ## Open Questions
 
-- Open protocol vs. Claude-specific — must resolve before first public canonical garden launches
-- GitHub org name — `hortora` or `hortora-org`?
-- cc-praxis garden skill — thin stub pointing to hortora-engine, or full migration?
-- Phase 2 sequencing — GitHub backend immediately after Phase 1, or deepen Phase 1 first?
+- Coworker collaboration + CLAUDE.md workspace separation (next topic)
+- cc-praxis marketplace aggregation of soredium — idea logged, not decided
 
 ## References
 
-| Context | Where | Retrieve with |
-|---------|-------|---------------|
-| Design spec (complete) | `docs/superpowers/specs/2026-04-07-garden-rag-redesign-design.md` | `cat` |
-| Design snapshot | `docs/design-snapshots/2026-04-07-hortora-knowledge-garden-design.md` | `cat` |
-| Blog entry | `docs/blog/2026-04-07-mdp03-hortora-garden-grows-up.md` | `cat` |
-| Diagram HTML sources | `docs/visuals/garden-diagrams.html`, `docs/visuals/garden-small-visuals.html` | browser |
-| ADR-0011 (foundational pattern) | `docs/adr/0011-index-and-lazy-reference-pattern.md` | `cat` |
-| Previous handover | git history | `git show HEAD~1:HANDOFF.md` |
+| Context | Where |
+|---------|-------|
+| Hortora full context | `~/claude/hortora/spec/HANDOFF.md` |
+| Marketplace aggregation idea | `docs/ideas/IDEAS.md` |
+| Latest blog | `docs/blog/2026-04-08-mdp01-words-matter-then-gardens-grow.md` |
+| Knowledge garden submissions | `~/claude/knowledge-garden/submissions/` (11 pending) |
