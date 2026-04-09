@@ -187,6 +187,21 @@ A previous part may be revised to link forward once the next part is published.
 
 ---
 
+## Factual Accuracy
+
+Diary entries must reflect what actually happened, not a dramatised version of it.
+
+**Never fabricate or inflate:**
+- Timeframes ("weeks" when it was days, "months" when it was weeks)
+- Scale ("dozens of files" when it was three)
+- Difficulty ("fought with X for hours" when it was one attempt)
+
+If the actual facts feel underwhelming, write them accurately anyway. A reader who later checks git history and finds the timeline doesn't match will lose trust in everything else the entry says. The accurate version is always the defensible one — the only one that survives contact with evidence.
+
+**Verify before writing:** any duration, count, or magnitude claim should be checkable against `git log`, file diffs, or session context. If you can't verify it, either qualify it as an estimate ("roughly a day", "several files") or leave it out.
+
+---
+
 ## Pre-Draft Gate
 
 Before generating any prose, answer these questions. Do not draft until complete.
@@ -200,3 +215,8 @@ Before generating any prose, answer these questions. Do not draft until complete
 - Has the voice layer (common or personal) been loaded?
 - After drafting, verify each "What to Avoid" item before presenting.
 - Do not show a draft that fails the style guide — fix first.
+
+**Factual accuracy check:**
+- Does the draft make any claims about duration, count, or magnitude?
+- If yes: verify each one against git log, file diffs, or session context before presenting.
+- If unverifiable: qualify as an estimate or remove.
