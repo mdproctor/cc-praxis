@@ -192,14 +192,47 @@ retrospective dressed up as one:
 - Exact file paths: `scripts/validation/validate_web_app.py`
 - What was tried before the fix, and why each attempt failed
 - Numbers: "48 false positives," "17 validators," "six days"
-- Code snippets even in day-zero posts if they clarify scope
+- Code blocks for the interesting parts — not just references to code, actual code; readers should feel the texture of the work
 - The moment something surprised you
+- Illustrations: small images (found via web search or AI-generated) to give posts visual rhythm and break up dense prose
+- Screenshots for any UI work — **mandatory**; clip to the relevant component or area to avoid excessive scroll
 
 **Avoid:**
 - Smooth narratives with no failed attempts
 - "We decided to use X" without saying what else was considered
 - "This was complex" without saying *specifically* what was complex
 - Vague future commitment: "we'll address this later"
+- Describing a UI without showing it — words cannot substitute for a screenshot
+
+---
+
+## Visual Elements
+
+Visual content makes posts readable and credible. Three kinds:
+
+**Code blocks** — show the actual code that matters. Not a summary, not a reference
+to a file — the real snippet. If the logic is interesting, show it. Short is better;
+extract the 5–10 lines that tell the story.
+
+**Illustrations** — small images that give the post visual rhythm. Sources:
+- Web search for a relevant diagram, photo, or graphic (`WebSearch` + `WebFetch`)
+- AI-generated illustration for the specific concept (note source in alt text)
+
+Save to `blog/images/<YYYY-MM-DD-slug-description>.png` and reference as:
+```markdown
+![alt text describing the image](images/YYYY-MM-DD-slug-description.png)
+```
+
+One illustration per major section is enough. Don't illustrate for its own sake —
+only when a visual genuinely adds something the prose doesn't.
+
+**Screenshots** — mandatory for any UI work. Rules:
+- Clip to the relevant component or area — full-page screenshots create scroll and lose focus
+- If multiple states matter (before/after, hover, error), include both clipped side by side or sequentially
+- The user provides the screenshot file; save to `blog/images/` alongside the entry
+- Reference with descriptive alt text: `![The skill chain graph showing bidirectional links](images/...)` not `![screenshot]`
+
+**If a section covers UI work and has no screenshot, the entry is incomplete.**
 
 ---
 
@@ -469,6 +502,9 @@ flowchart TD
 | Replacing a thematic heading with a structural slot | Extracts character and leaves nothing — "The Pivots (There Were Several)" → "What we tried" is always a loss | Keep headings that already have personality; add structural labels only to bare slots |
 | Dropping a heading entirely when merging two sections | Buries the structure the reader was using; the content is still there but now unfindable | If you merge sections, check that the surviving heading still signals what the merged content is about |
 | Bare structural H2 as a container when H3s carry all the character | "What we tried" says nothing — the H3s do all the work, but H3s are invisible to a scanner | The H2 must carry meaning too; make it thematic or use a dual heading |
+| Writing about UI work with no screenshot | Words describe what a screenshot shows instantly; readers can't evaluate design from prose | Include at least one clipped screenshot of the relevant component — mandatory for UI entries |
+| Full-page screenshot when one component is the subject | Creates scroll, buries the focus, makes readers hunt for the relevant part | Clip to the area that matters; if the whole page is relevant, show it full then annotate |
+| Omitting code when the implementation detail is the story | Readers get the conclusion without the texture; loses the "feel of the work" | Include the actual snippet — 5–10 lines that show the interesting part |
 
 ---
 
@@ -500,8 +536,10 @@ Entry is complete when:
 - ✅ All required sections filled — no TBDs; "What Changed" may be omitted only if nothing pivoted
 - ✅ No "Next:" footer — any forward-looking note integrated naturally or entry ends on the last real point
 - ✅ Specific details: error messages, file paths, failed attempts documented
+- ✅ Code blocks present where implementation detail is part of the story
+- ✅ If entry covers UI work: at least one screenshot present, clipped to the relevant area, saved to `blog/images/`
 - ✅ User confirmed the draft before it was written
-- ✅ File committed to git
+- ✅ File committed to git (including any images in `blog/images/`)
 
 For Correction entries additionally:
 - ✅ Original entry NOT edited
