@@ -104,7 +104,7 @@ regardless of whether the project directory or git repo exists.
 
 ```bash
 BASE=~/claude/<privacy>/<project>
-mkdir -p "$BASE/snapshots" "$BASE/adr" "$BASE/blog" "$BASE/specs" "$BASE/plans"
+mkdir -p "$BASE/snapshots" "$BASE/adr" "$BASE/blog" "$BASE/specs" "$BASE/plans" "$BASE/design"
 ```
 
 ### Step 3 — Create INDEX.md in multi-file folders
@@ -132,7 +132,25 @@ cat > "$BASE/blog/INDEX.md" << 'EOF'
 EOF
 ```
 
-(`specs/` and `plans/` need no INDEX.md — superpowers manages them directly.)
+(`specs/`, `plans/`, and `design/` need no INDEX.md — superpowers and design skills manage them directly.)
+
+### Step 3b — Copy project DESIGN.md into workspace (if it exists)
+
+```bash
+if [ -f "<project-path>/DESIGN.md" ]; then
+  cp "<project-path>/DESIGN.md" "$BASE/design/DESIGN.md"
+  echo "Copied project DESIGN.md to workspace/design/DESIGN.md"
+else
+  cat > "$BASE/design/DESIGN.md" << 'EOF'
+# Design
+
+*Design document for this project. Updated during the epic; merged back to
+the project at epic close. Git history records every change — no separate
+delta files needed.*
+EOF
+  echo "Created design/DESIGN.md stub (project has no DESIGN.md yet)"
+fi
+```
 
 ### Step 4 — Create HANDOVER.md and IDEAS.md stubs
 
@@ -173,6 +191,7 @@ Run \`add-dir <absolute-path-to-project>\` before any other work.
 | handover | \`HANDOVER.md\` |
 | idea-log | \`IDEAS.md\` |
 | design-snapshot | \`snapshots/\` |
+| java-update-design / update-primary-doc | \`design/DESIGN.md\` |
 | adr | \`adr/\` |
 | write-blog | \`blog/\` |
 
@@ -711,10 +730,59 @@ Verify:
 
 ---
 
+## Task 10b: Update `java-update-design` and `update-primary-doc` paths
+
+**Files:**
+- Modify: `java-update-design/SKILL.md`
+- Modify: `update-primary-doc/SKILL.md`
+
+Both skills currently write to the project's `DESIGN.md` directly. In the
+workspace model they write to `design/DESIGN.md` in the workspace (CWD).
+At epic close, Claude merges workspace `design/DESIGN.md` back into the
+project's `DESIGN.md` — one merge of two documents, user-confirmed.
+
+- [ ] **Step 1: Update `java-update-design` to write to `design/DESIGN.md`**
+
+Change every reference from project-root `DESIGN.md` to `design/DESIGN.md`.
+Add a note: "At epic close, ask Claude to merge `design/DESIGN.md` into the
+project's `DESIGN.md`."
+
+- [ ] **Step 2: Update `update-primary-doc` similarly**
+
+The primary doc path comes from CLAUDE.md Sync Rules. Redirect writes to
+`design/DESIGN.md` during the epic; note the epic-close merge step.
+
+- [ ] **Step 3: Validate and commit**
+
+```bash
+python3 scripts/validate_all.py --tier commit
+git add java-update-design/SKILL.md update-primary-doc/SKILL.md
+git commit -m "feat(design): write to workspace design/DESIGN.md instead of project root"
+```
+
+---
+
+## Migration Task (Separate Session)
+
+Existing projects have design artifacts in `docs/` in the project repo. When
+`workspace-init` runs on an existing project, offer to migrate them:
+
+| Artifact | From | To |
+|----------|------|----|
+| Design snapshots | `docs/design-snapshots/` | workspace `snapshots/` |
+| ADRs | `docs/adr/` | workspace `adr/` |
+| Blog entries | `docs/blog/` | workspace `blog/` |
+| Ideas | `docs/ideas/IDEAS.md` | workspace `IDEAS.md` |
+| Specs | `docs/superpowers/specs/` | workspace `specs/` |
+| Plans | `docs/superpowers/plans/` | workspace `plans/` |
+
+`workspace-init` after git init: detect existing `docs/` artifacts and offer:
+"Found existing design artifacts in `docs/`. Migrate them to the workspace? (YES / no)"
+
+---
+
 ## Out of Scope (This Plan)
 
-- Migration of existing cc-praxis artifacts from `docs/` to workspace
-- `design/` folder — blocked on issue-scoping question
 - Garden path changes — deferred
 - Parent `~/claude/` workspace git repo setup — deferred
 - Epic-close workflow skill — deferred

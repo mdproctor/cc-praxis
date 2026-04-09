@@ -47,7 +47,8 @@ a project. Project repos only receive finished, deliberate output.**
       snapshots/                 ← design snapshots + INDEX.md (auto-pruned, max 10)
       adr/                       ← ADRs + INDEX.md
       blog/                      ← blog entries + INDEX.md
-      design/                    ← DEFERRED (format unresolved)
+      design/
+        DESIGN.md                ← single living design doc; git is the delta history
     drools/
   public/
     cc-praxis/                   ← PUBLIC WORKSPACE (if project is public)
@@ -132,6 +133,7 @@ Run `add-dir /absolute/path/to/project` before any other work.
 | handover | `HANDOVER.md` |
 | idea-log | `IDEAS.md` |
 | design-snapshot | `snapshots/` |
+| java-update-design / update-primary-doc | `design/DESIGN.md` |
 | adr | `adr/` |
 | write-blog | `blog/` |
 
@@ -143,6 +145,36 @@ Run `add-dir /absolute/path/to/project` before any other work.
 
 New skills that support path overrides get a new row in the table and a new
 directory. `workspace-init` is the living registry of where things go.
+
+---
+
+## Design Document Lifecycle (`design/DESIGN.md`)
+
+`design/DESIGN.md` is a single living working copy of the project's design
+document. **Git is the delta** — individual changes are not stored as separate
+files; every commit is implicitly a delta. Same principle as `HANDOVER.md`.
+
+**Lifecycle:**
+
+1. **`workspace-init`** — copies the project's `DESIGN.md` into
+   `workspace/design/DESIGN.md` as the starting point. If the project has no
+   `DESIGN.md`, creates an empty stub.
+2. **During the epic** — `java-update-design`, `update-primary-doc`, and any
+   design-producing skill write to `workspace/design/DESIGN.md`. The project's
+   `DESIGN.md` is untouched during active development.
+3. **Epic close** — Claude merges `workspace/design/DESIGN.md` back into the
+   project's `DESIGN.md`. This is a single merge of two documents — Claude reads
+   both and produces a coherent current-state document, resolving any
+   contradictions. Explicit, user-confirmed, not automatic.
+
+**Why one file:** Multiple delta files would require a complex ordered merge at
+epic close. One file with git history gives the same audit trail at zero merge
+complexity. `git log -- design/DESIGN.md` shows every change; the file itself
+always reflects current intent.
+
+**Migration:** Existing projects with design artifacts scattered in `docs/`
+(design-snapshots, ADRs, DESIGN.md) need systematic migration to workspace.
+See migration task in the implementation plan.
 
 ---
 
@@ -239,7 +271,7 @@ When snapshot count exceeds configurable limit (default: 10):
 
 | Topic | Status |
 |-------|--------|
-| `design/` folder format | Deferred — single delta vs per-issue files unresolved |
+| `design/` folder format | ✅ Resolved — single `DESIGN.md`, git is the delta |
 | Git worktrees | Deferred — document convention (branch workspace with project), enforcement via hook is future work |
 | `GARDEN.md` → `INDEX.md` rename | Deferred |
 | Garden merge trigger | Deferred |
@@ -249,7 +281,24 @@ When snapshot count exceeds configurable limit (default: 10):
 
 ## Out of Scope (This Iteration)
 
-- Automated design doc merge tooling — handled by asking Claude directly
 - Agent Teams integration for parent Claude
-- `design/` folder
-- Epic-close workflow skill
+- Epic-close workflow skill (though the design lifecycle section describes the merge)
+
+## Migration (Separate Task)
+
+Existing projects have design artifacts in `docs/` within the project repo.
+These need systematic migration to workspace directories:
+
+| Artifact | Current location | Workspace location |
+|----------|-----------------|-------------------|
+| Design snapshots | `docs/design-snapshots/` | `snapshots/` |
+| ADRs | `docs/adr/` | `adr/` |
+| Blog entries | `docs/blog/` | `blog/` |
+| Ideas | `docs/ideas/IDEAS.md` | `IDEAS.md` |
+| Specs | `docs/superpowers/specs/` | `specs/` |
+| Plans | `docs/superpowers/plans/` | `plans/` |
+| DESIGN.md | project root | `design/DESIGN.md` (working copy) |
+
+Migration is per-project, run once when `workspace-init` is first run on an
+existing project. `workspace-init` should detect existing `docs/` artifacts
+and offer to migrate them.
