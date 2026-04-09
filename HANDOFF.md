@@ -1,44 +1,42 @@
 # Handover — 2026-04-09
 
-**Head commit:** `7e68bd3` — docs: log idea — marketplace aggregation for external skill repos
-**Previous handover:** `git show HEAD~1:HANDOFF.md` | diff: `git diff HEAD~1 HEAD -- HANDOFF.md`
+**Branch:** main
+**Head:** 5adcf70
 
-## What Changed This Session
+---
 
-- **Hortora decommissioned from cc-praxis** — blog posts, design docs, ADR, images removed (all confirmed in `Hortora/spec` first); issue #47 closed
-- **Garden DEDUPE** — 100 pairs checked, 18 related, 82 distinct, drift counter reset; cross-refs added to rename-refactoring.md, tmux.md, playwright.md, cdi.md, profiles.md
-- **GARDEN.md deleted** — was always empty since v1→v2 migration; superseded by Hortora
-- **git-commit skill** — added Step 3b: squash check for consecutive same-type unpushed commits
-- **Marketplace aggregation idea** logged — `docs/ideas/IDEAS.md`
-- **Repo renamed** — `~/claude/skills` → `~/claude/cc-praxis`; CLAUDE.md updated; project memory migrated; `settings.local.json` paths updated via sed
-- **Hortora org sorted** — `soredium`, `spec`, `hortora.github.io` all local+GitHub; `spec` pushed for first time; `Hortora/spec/HANDOFF.md` written as Hortora entry point
-- **Hortora/soredium issues** — #1 (scaffold), #2 epic (forage+harvest), #3 (marketplace), #4 (forage skill), #5 (harvest skill)
-- **GE-0124 submitted** — `settings.local.json` stale paths on project rename
+## What Happened This Session
 
-## State Right Now
+Heavy session — two major threads:
 
-- `cc-praxis` main clean, pushed, no open issues
-- `knowledge-garden`: 11 submissions pending (unmerged), GARDEN.md gone
-- `hortora/spec`: pushed, HANDOFF.md at root — start Hortora Claude here
-- `hortora/soredium`: scaffold only, issues #1–#5 open
-- `hortora/hortora.github.io`: live, complete, no work needed
+**1. Workspace model (design-complete, not implemented)**
+Brainstormed from scratch (reading `claude/identify-non-coding-docs-vkAAd` branch from a prior Claude), designed, attacked with a full critique, resolved all nine critique problems, finalized architecture. Key decisions: workspace is CWD, CLAUDE.md is a gitignored symlink via `.git/info/exclude`, `design/DESIGN.md` is a single living file (git is the delta). Full spec, critique, and implementation plan on main. Garden entry GE-0159 submitted for the symlink technique.
 
-## Immediate Next Steps
+**2. Tier-3 health check (all actionable findings resolved)**
+`garden` 951→402 lines, `write-blog` 568→452 lines, `issue-workflow` 572→533 lines. Python skills documented in README. `handover` rename cross-references fixed. Validator false positives for frozen docs fixed. Factual accuracy rule added to `write-blog/defaults/mandatory-rules.md`.
 
-1. **New topic (not yet started)** — coworker collaboration model and separating CLAUDE.md from project repos into workspace repos
-2. **Hortora work** — open Claude in `~/claude/hortora/spec/`, read HANDOFF.md, begin soredium #3
-3. **Knowledge garden** — merge 11 pending submissions when convenient
+Also: `session-handover` → `handover` rename completed at session start.
 
-## Open Questions
+---
 
-- Coworker collaboration + CLAUDE.md workspace separation (next topic)
-- cc-praxis marketplace aggregation of soredium — idea logged, not decided
+## Immediate Next Step
+
+Execute the workspace model implementation plan:
+`docs/superpowers/plans/2026-04-09-workspace-model.md`
+
+**Start with Task 1 (`workspace-init` skill)** — but first verify empirically that Claude Code follows a CLAUDE.md symlink for session initialisation (file access via symlinks is confirmed; CLAUDE.md auto-loading via symlink is assumed but untested).
+
+Also: delete remote branch `claude/identify-non-coding-docs-vkAAd`.
+
+---
 
 ## References
 
 | Context | Where |
 |---------|-------|
-| Hortora full context | `~/claude/hortora/spec/HANDOFF.md` |
-| Marketplace aggregation idea | `docs/ideas/IDEAS.md` |
-| Latest blog | `docs/blog/2026-04-08-mdp01-words-matter-then-gardens-grow.md` |
-| Knowledge garden submissions | `~/claude/knowledge-garden/submissions/` (11 pending) |
+| Workspace design spec | `docs/superpowers/specs/2026-04-09-workspace-model-design.md` |
+| Workspace critique (resolved) | `docs/superpowers/specs/2026-04-09-workspace-model-critique.md` |
+| Implementation plan | `docs/superpowers/plans/2026-04-09-workspace-model.md` |
+| Design snapshot | `docs/design-snapshots/2026-04-09-workspace-model.md` |
+| Blog entry | `docs/blog/2026-04-09-mdp01-where-claude-lives-now.md` |
+| Previous handover | `git show HEAD~1:HANDOFF.md` |
