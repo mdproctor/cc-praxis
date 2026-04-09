@@ -38,10 +38,10 @@ Read only what the task requires. Use git show / grep for surgical reads.
 
 | Context | Where | Retrieve with |
 |---------|-------|---------------|
-| Design state | `docs/design-snapshots/<latest>.md` | `cat` that file |
-| Project narrative | `docs/write-blog/<latest>.md` | `cat` that file |
+| Design state | `snapshots/<latest>.md` | `cat` that file |
+| Project narrative | `blog/<latest>.md` | `cat` that file |
 | Technical gotchas | `~/claude/knowledge-garden/GARDEN.md` | index only; detail on demand |
-| Open ideas | `docs/ideas/IDEAS.md` | `cat` that file |
+| Open ideas | `IDEAS.md` | `cat` that file |
 | Previous handover | git history | `git show HEAD~1:HANDOFF.md` |
 | Specific section of prev | git history | `git show HEAD~1:HANDOFF.md \| grep -A 10 "## Section"` |
 

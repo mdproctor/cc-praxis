@@ -34,7 +34,7 @@ to any point in a project's evolution.
 ### Step 1 — Check for existing snapshots on this topic
 
 ```bash
-ls docs/design-snapshots/ 2>/dev/null | grep -i "<topic-keyword>"
+ls snapshots/ 2>/dev/null | grep -i "<topic-keyword>"
 ```
 
 **If existing snapshots found for this topic:**
@@ -56,7 +56,7 @@ Wait for user response before continuing.
 Read in this order to reconstruct design state:
 
 1. Any existing snapshot on this topic (from Step 1)
-2. `docs/adr/` — all ADRs, note which are relevant to this topic
+2. `adr/` — all ADRs, note which are relevant to this topic
 3. `DESIGN.md` or `docs/DESIGN.md` if it exists
 4. `CLAUDE.md` for conventions and project type
 5. Any spec or plan files mentioned in conversation
@@ -81,17 +81,23 @@ Wait for explicit YES or feedback. Iterate on feedback before writing.
 ### Step 4 — Write to disk
 
 ```
-docs/design-snapshots/YYYY-MM-DD-<kebab-case-topic>.md
+snapshots/YYYY-MM-DD-<kebab-case-topic>.md
 ```
 
-- Create `docs/design-snapshots/` if it doesn't exist
 - Use today's date from system clock
 - Topic slug: lowercase, hyphen-separated, ≤30 chars, no articles
 
-```bash
-mkdir -p docs/design-snapshots
-# write snapshot file
-```
+After writing the snapshot file:
+
+1. Append a row to `snapshots/INDEX.md`:
+   ```
+   | [YYYY-MM-DD-topic.md](YYYY-MM-DD-topic.md) | YYYY-MM-DD | <one-line summary> |
+   ```
+
+2. **Auto-pruning:** Count `.md` files in `snapshots/` (excluding `INDEX.md`). If
+   count exceeds 10 (or the limit declared in workspace CLAUDE.md), delete the
+   oldest file and remove its row from `INDEX.md`. Each snapshot references its
+   predecessor via git history — no deletion of that chain.
 
 ### Step 5 — Update superseded snapshot (if applicable)
 
@@ -152,7 +158,7 @@ flowchart TD
     Draft[Draft snapshot]
     UserApproves{User confirms?}
     Refine[Refine based\non feedback]
-    Write[Write to\ndocs/design-snapshots/]
+    Write[Write to\nsnapshots/]
     UpdateOld[Update old snapshot\nSuperseded by field]
     MissingADRs{Decisions without\nADRs?}
     OfferADRs[Offer to create\nmissing ADRs]
@@ -282,7 +288,7 @@ a draft.
 
 Snapshot is complete when:
 
-- ✅ File exists at `docs/design-snapshots/YYYY-MM-DD-<topic>.md`
+- ✅ File exists at `snapshots/YYYY-MM-DD-<topic>.md`
 - ✅ All sections filled — no TBDs, no blanks, no "N/A" without explanation
 - ✅ "Where We're Going" has at least one open question
 - ✅ Relevant ADRs linked in the Linked ADRs table

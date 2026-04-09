@@ -11,7 +11,7 @@ description: >
 
 You are an expert at capturing architectural decisions clearly and concisely
 using the MADR (Markdown Any Decision Records) format. ADRs live in
-`docs/adr/` alongside `DESIGN.md`.
+`adr/` alongside `DESIGN.md`.
 
 ## Core Rules
 
@@ -28,7 +28,7 @@ using the MADR (Markdown Any Decision Records) format. ADRs live in
 ### Step 1 — Check existing ADRs
 
 ```bash
-ls docs/adr/ 2>/dev/null || echo "No ADRs yet"
+ls adr/ 2>/dev/null || echo "No ADRs yet"
 ```
 
 Determine the next sequence number. If no ADRs exist, start at `0001`.
@@ -110,16 +110,19 @@ Chosen option: **Option X**, because <brief rationale>.
 
 Show the full ADR draft and the target filename, then ask:
 > "Does this look good? Reply **YES** to write it to
-> `docs/adr/NNNN-<title>.md`, or tell me what to adjust."
+> `adr/NNNN-<title>.md`, or tell me what to adjust."
 
 ---
 
 ### Step 5 — Write and confirm
 
 Only after explicit YES:
-1. Create `docs/adr/` if it doesn't exist
-2. Write the file
-3. Confirm: "✅ Written to `docs/adr/NNNN-<title>.md`"
+1. Write the file to `adr/NNNN-<title>.md`
+2. Append a row to `adr/INDEX.md`:
+   ```
+   | NNNN | [Title](NNNN-title.md) | Accepted | YYYY-MM-DD |
+   ```
+3. Confirm: "✅ Written to `adr/NNNN-<title>.md`"
 
 ### Step 6 — Suggest an ADR when appropriate
 
@@ -198,7 +201,7 @@ When superseding an ADR:
 ADR creation is complete when:
 
 - ✅ User has confirmed ADR content with **YES**
-- ✅ ADR written to `docs/adr/NNNN-title.md`
+- ✅ ADR written to `adr/NNNN-title.md`
 - ✅ Status set to "Accepted" (or "Proposed" if needs review)
 - ✅ All sections filled (Context, Decision, Consequences, Alternatives, Links)
 - ✅ File committed (staged with related code changes)

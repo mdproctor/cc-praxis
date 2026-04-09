@@ -37,7 +37,7 @@ discarded as the project evolves.
 ## File Location
 
 ```
-docs/ideas/IDEAS.md
+IDEAS.md
 ```
 
 A single flat file. All ideas live here regardless of topic. Keep it short
@@ -84,14 +84,14 @@ When the user wants to log an idea:
 
 2. **Check if a similar idea already exists:**
    ```bash
-   grep -i "<keyword>" docs/ideas/IDEAS.md 2>/dev/null
+   grep -i "<keyword>" IDEAS.md 2>/dev/null
    ```
    If a near-duplicate exists, ask: add as new entry or merge into existing?
 
 3. **Draft the entry** using the format above. Use today's date.
    Present the draft — do NOT write until the user confirms or says "looks good".
 
-4. **Append to IDEAS.md** (create `docs/ideas/` if needed).
+4. **Append to IDEAS.md**.
    New ideas go at the TOP of the file, below any header.
 
 5. **Offer to commit:**
@@ -208,7 +208,7 @@ flowchart TD
 
 ## IDEAS.md File Header
 
-When creating `docs/ideas/IDEAS.md` for the first time, use this header:
+When IDEAS.md doesn't exist yet (non-workspace setup), use this header:
 
 ```markdown
 # Idea Log
@@ -241,7 +241,7 @@ Then add entries below the `---` separator.
 
 Idea capture is complete when:
 
-- ✅ Entry written to `docs/ideas/IDEAS.md` (created if needed)
+- ✅ Entry written to `IDEAS.md`
 - ✅ Entry has date, title, priority, status, description, and context
 - ✅ Duplicate check performed before writing
 - ✅ User confirmed the draft before it was written

@@ -215,9 +215,9 @@ git status --short          # any uncommitted state
 ### Step 4 — Build the references table (locate, don't read)
 
 ```bash
-ls docs/design-snapshots/ | sort | tail -1   # latest snapshot path
-ls docs/write-blog/ | sort | tail -1       # latest blog entry path
-ls docs/adr/ | sort | tail -3                # recent ADRs
+ls snapshots/ | sort | tail -1   # latest snapshot path
+ls blog/ | sort | tail -1        # latest blog entry path
+ls adr/ | sort | tail -3         # recent ADRs
 ```
 
 Run `ls` only — do not open the files. CLAUDE.md is auto-loaded; omit it.
@@ -391,7 +391,7 @@ context marked as "unchanged"? If yes — done.
 **Reads from (surgical, not upfront):**
 - `git diff HEAD -- HANDOFF.md` — what changed from last handover
 - `git log --oneline -6` — recent commits for orientation
-- `ls` on docs/ directories — locate paths without reading files
+- `ls` on workspace directories — locate paths without reading files
 - `~/claude/knowledge-garden/GARDEN.md` — only when including garden reference
 
 **Complements:**

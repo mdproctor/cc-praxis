@@ -82,7 +82,7 @@ Match tone to the phase — see **[entry-template.md](entry-template.md)** for t
 ## File Location
 
 ```
-docs/blog/YYYY-MM-DD-<initials>NN-phase-title.md
+blog/YYYY-MM-DD-<initials>NN-phase-title.md
 ```
 
 One file per entry. `<initials>` is the author's 2–4 letter identifier (e.g. `mdp`), read from `~/.claude/settings.json` § `initials`. `NN` is a two-digit per-author sequence number starting at `01`. Kebab-case title, ≤30 chars (no "the", "a", "an").
@@ -205,14 +205,14 @@ Confirm the framing, then continue with Step 1.
 This runs before drafting anything — not after. It is a gate, not an offer.
 
 ```bash
-# Check if docs/blog/ already exists
-ls docs/blog/ 2>/dev/null
+# Check if blog/ already exists
+ls blog/ 2>/dev/null
 
 # Check if CLAUDE.md already has the pointer
 grep -l "blog-technical\|writing style guide" CLAUDE.md 2>/dev/null
 ```
 
-**If `docs/blog/` exists but the pointer is missing** (or this is the very first entry and `docs/blog/` is about to be created):
+**If `blog/` exists but the pointer is missing** (or this is the very first entry and `blog/` is about to be created):
 1. Propose adding the Writing Style Guide section to CLAUDE.md
 2. Get user confirmation
 3. Apply the change via `update-claude-md`
@@ -239,7 +239,7 @@ sentence.
 ### Step 2 — Check existing entries
 
 ```bash
-ls docs/blog/ 2>/dev/null | sort
+ls blog/ 2>/dev/null | sort
 ```
 
 For all types except Day Zero: read the most recent entry to understand
@@ -300,9 +300,8 @@ Wait for explicit YES or feedback. Iterate on feedback before writing.
 ### Step 6 — Write to disk
 
 ```bash
-mkdir -p docs/blog
 # determine per-author sequence number (initials resolved in Step 0 Layer 4)
-ls docs/blog/YYYY-MM-DD-<initials>*.md 2>/dev/null | wc -l  # count this author's same-day entries
+ls blog/YYYY-MM-DD-<initials>*.md 2>/dev/null | wc -l  # count this author's same-day entries
 # NN = count + 1, zero-padded to 2 digits (01, 02, ...)
 # write entry file
 ```
@@ -310,6 +309,11 @@ ls docs/blog/YYYY-MM-DD-<initials>*.md 2>/dev/null | wc -l  # count this author'
 File name: `YYYY-MM-DD-<initials>NN-<kebab-case-title>.md` — today's date, author initials, two-digit per-author sequence number, topic slug ≤30 chars.
 
 Count only this author's same-day entries (filter by initials) — other authors' entries don't affect the sequence. First entry of the day is `<initials>01`, second `<initials>02`.
+
+After writing the entry file, append a row to `blog/INDEX.md`:
+```
+| [YYYY-MM-DD-initials-title.md](YYYY-MM-DD-initials-title.md) | YYYY-MM-DD | <one-line summary> |
+```
 
 ### Step 7 — Offer related actions
 
@@ -347,7 +351,7 @@ flowchart TD
     FixVoice[Fix: change to I or we]
     UserConfirms{User confirms?}
     Refine[Refine based\non feedback]
-    Write[Write to\ndocs/blog/]
+    Write[Write to\nblog/]
     OfferADR{Significant\ndecision made?}
     OfferSnapshot{Major design\nmilestone?}
     Commit[Commit via git-commit]
@@ -414,7 +418,7 @@ Run the five checks in **[heading-checks.md](heading-checks.md)** before committ
 
 Entry is complete when:
 
-- ✅ File exists at `docs/blog/YYYY-MM-DD-<initials>NN-<title>.md` with correct initials and per-author sequence number
+- ✅ File exists at `blog/YYYY-MM-DD-<initials>NN-<title>.md` with correct initials and per-author sequence number
 - ✅ Voice is correct: "I" for developer perspective, "we" for collaboration, no third-person protagonist
 - ✅ Headings: thematic headings were kept or enhanced — none were replaced with bare structural slots
 - ✅ All required sections filled — no TBDs; "What Changed" may be omitted only if nothing pivoted
