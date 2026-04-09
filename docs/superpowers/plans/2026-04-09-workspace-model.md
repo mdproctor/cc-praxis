@@ -66,10 +66,29 @@ After running, open Claude in the workspace directory and add the project via
 ### Step 1 — Gather inputs
 
 Ask the user for:
-1. **Project name** — used as the directory name (e.g. `cc-praxis`)
+1. **Project name** — used as the workspace directory name (e.g. `cc-praxis`)
 2. **Privacy** — `private` or `public`
-3. **Absolute path to project repo** — e.g. `/Users/you/projects/cc-praxis`
-4. **GitHub remote URL** — for the workspace repo (create a new empty GitHub repo first)
+3. **Absolute path to project** — where the project lives or will live (e.g. `/Users/you/projects/cc-praxis`)
+4. **GitHub remote URL** for the workspace repo — optional; skip if not ready yet
+
+Then check the project path:
+
+```bash
+if [ -d "<project-path>" ]; then
+  echo "Project directory exists"
+  if [ -d "<project-path>/.git" ]; then
+    echo "Git repo: yes"
+  else
+    echo "Git repo: no (that's fine — workspace-init doesn't require one)"
+  fi
+else
+  echo "Project directory does not exist yet — recording intended path"
+fi
+```
+
+Tell the user what was found and confirm before proceeding. The workspace can
+be created regardless of whether the project directory or git repo exists yet —
+the path in workspace CLAUDE.md is just a pointer.
 
 ### Step 2 — Create directory structure
 
@@ -156,14 +175,29 @@ EOF
 
 ### Step 7 — Initialise git and push
 
+Always init git (the workspace is always a git repo):
+
 ```bash
 cd "$BASE"
 git init
 git add .
 git commit -m "init: workspace for <project>"
+```
+
+If the user provided a GitHub remote URL:
+
+```bash
 git remote add origin <github-remote-url>
 git push -u origin main
 ```
+
+If no remote URL was provided, tell the user:
+
+> Remote not configured. When ready, run:
+> ```bash
+> git remote add origin <your-github-url>
+> git push -u origin main
+> ```
 
 ### Step 8 — Confirm
 
