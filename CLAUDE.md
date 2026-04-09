@@ -512,7 +512,21 @@ When you identify a problem and prepare a solution, STOP and consider:
 
 **See:** ADR-0001: Documentation Completeness Must Be Universal, Not Project-Specific
 
+## Workspace Model
+
+Skills write methodology artifacts to a companion workspace, not the project repo.
+Full design: `docs/superpowers/specs/2026-04-09-workspace-model-design.md`
+
+- Claude opens in the workspace (`~/claude/private/<project>/`)
+- Project added automatically via `add-dir` (instructed by workspace CLAUDE.md)
+- Run `/workspace-init` once per project to create the workspace
+
 ## Key Skills
+
+**Workspace:**
+- `workspace-init` — one-time setup; creates `~/claude/private/<project>/` or
+  `~/claude/public/<project>/` with routing CLAUDE.md, gitignored project symlink
+  via `.git/info/exclude`, and all subdirectories
 
 **Generic foundation skills** (not invoked directly, referenced via Prerequisites):
 - `code-review-principles` — universal code review checklist (extended by `java-code-review`)

@@ -704,11 +704,12 @@
         <p class="overview-desc">Entry point for all commit workflows. Reads the project type from CLAUDE.md and routes to the appropriate specialised commit skill — java-git-commit for Java, blog-git-commit for blogs, custom-git-commit for custom projects. Handles interactive setup if no project type is declared.</p>
         <div class="overview-meta">
           <div class="overview-meta-item"><strong>Not invoked directly</strong> — loaded via Prerequisites by language-specific skills</div>
-          <div class="overview-meta-item"><strong>Chains to:</strong> <span class="overview-tag link" onclick="scrollToSkill('blog-git-commit')">blog-git-commit</span> <span class="overview-tag link" onclick="scrollToSkill('issue-workflow')">issue-workflow</span> <span class="overview-tag link" onclick="scrollToSkill('python-code-review')">python-code-review</span> <span class="overview-tag link" onclick="scrollToSkill('ts-code-review')">ts-code-review</span> <span class="overview-tag link" onclick="scrollToSkill('update-claude-md')">update-claude-md</span></div>
+          <div class="overview-meta-item"><strong>Chains to:</strong> <span class="overview-tag link" onclick="scrollToSkill('blog-git-commit')">blog-git-commit</span> <span class="overview-tag link" onclick="scrollToSkill('python-code-review')">python-code-review</span> <span class="overview-tag link" onclick="scrollToSkill('ts-code-review')">ts-code-review</span> <span class="overview-tag link" onclick="scrollToSkill('update-claude-md')">update-claude-md</span></div>
           <div class="overview-meta-item"><strong>Invoked by:</strong> <span class="overview-tag link" onclick="scrollToSkill('adr')">adr</span> <span class="overview-tag link" onclick="scrollToSkill('design-snapshot')">design-snapshot</span> <span class="overview-tag link" onclick="scrollToSkill('idea-log')">idea-log</span> <span class="overview-tag link" onclick="scrollToSkill('python-code-review')">python-code-review</span> <span class="overview-tag link" onclick="scrollToSkill('ts-code-review')">ts-code-review</span> <span class="overview-tag link" onclick="scrollToSkill('write-blog')">write-blog</span></div>
           <div class="overview-meta-item"><strong>Extended by:</strong> <span class="overview-tag link" onclick="scrollToSkill('custom-git-commit')">custom-git-commit</span> <span class="overview-tag link" onclick="scrollToSkill('java-git-commit')">java-git-commit</span></div>
         </div>
       </div>
+
 
 
 
@@ -737,9 +738,10 @@
         <div class="overview-meta">
           <div class="overview-meta-item"><strong>Triggers:</strong> ** User can run `/update-claude-md` directly to sync CLAUDE.md without committing</div>
           <div class="overview-meta-item"><strong>Chains to:</strong> <span class="overview-tag link" onclick="scrollToSkill('java-update-design')">java-update-design</span></div>
-          <div class="overview-meta-item"><strong>Invoked by:</strong> <span class="overview-tag link" onclick="scrollToSkill('blog-git-commit')">blog-git-commit</span> <span class="overview-tag link" onclick="scrollToSkill('custom-git-commit')">custom-git-commit</span> <span class="overview-tag link" onclick="scrollToSkill('git-commit')">git-commit</span> <span class="overview-tag link" onclick="scrollToSkill('java-git-commit')">java-git-commit</span></div>
+          <div class="overview-meta-item"><strong>Invoked by:</strong> <span class="overview-tag link" onclick="scrollToSkill('blog-git-commit')">blog-git-commit</span> <span class="overview-tag link" onclick="scrollToSkill('custom-git-commit')">custom-git-commit</span> <span class="overview-tag link" onclick="scrollToSkill('git-commit')">git-commit</span> <span class="overview-tag link" onclick="scrollToSkill('handover')">handover</span> <span class="overview-tag link" onclick="scrollToSkill('java-git-commit')">java-git-commit</span> <span class="overview-tag link" onclick="scrollToSkill('write-blog')">write-blog</span></div>
         </div>
       </div>
+
 
 
 
@@ -771,6 +773,7 @@
           <div class="overview-meta-item"><strong>Invoked by:</strong> <span class="overview-tag link" onclick="scrollToSkill('design-snapshot')">design-snapshot</span> <span class="overview-tag link" onclick="scrollToSkill('idea-log')">idea-log</span> <span class="overview-tag link" onclick="scrollToSkill('java-update-design')">java-update-design</span> <span class="overview-tag link" onclick="scrollToSkill('maven-dependency-update')">maven-dependency-update</span> <span class="overview-tag link" onclick="scrollToSkill('write-blog')">write-blog</span></div>
         </div>
       </div>
+
 
 
 
@@ -823,6 +826,7 @@
 
 
 
+
       <div class="overview-skill" id="ov-project-refine">
         <div class="overview-skill-header">
           <div class="skill-name-col"><div class="skill-name">project-refine</div><div class="skill-version">v1.0.0</div></div>
@@ -833,6 +837,7 @@
 
         </div>
       </div>
+
 
 
 
@@ -949,6 +954,7 @@
 
 
 
+
       <div class="overview-skill" id="ov-security-audit-principles">
         <div class="overview-skill-header">
           <div class="skill-name-col"><div class="skill-name">security-audit-principles</div><div class="skill-version">v1.0.0</div></div>
@@ -960,6 +966,7 @@
           <div class="overview-meta-item"><strong>Extended by:</strong> <span class="overview-tag link" onclick="scrollToSkill('java-security-audit')">java-security-audit</span> <span class="overview-tag link" onclick="scrollToSkill('python-security-audit')">python-security-audit</span> <span class="overview-tag link" onclick="scrollToSkill('ts-security-audit')">ts-security-audit</span></div>
         </div>
       </div>
+
 
 
 
@@ -1011,6 +1018,7 @@
 
 
 
+
       <div class="overview-skill" id="ov-observability-principles">
         <div class="overview-skill-header">
           <div class="skill-name-col"><div class="skill-name">observability-principles</div><div class="skill-version">v1.0.0</div></div>
@@ -1022,6 +1030,7 @@
           <div class="overview-meta-item"><strong>Extended by:</strong> <span class="overview-tag link" onclick="scrollToSkill('quarkus-observability')">quarkus-observability</span></div>
         </div>
       </div>
+
 
 
 
@@ -1203,6 +1212,7 @@
 
 
 
+
       <div class="overview-skill" id="ov-java-code-review">
         <div class="overview-skill-header">
           <div class="skill-name-col"><div class="skill-name installed">java-code-review</div><div class="skill-version">v1.0.0</div></div>
@@ -1211,11 +1221,12 @@
         <p class="overview-desc">Pre-commit code review for Java/Quarkus — resource leaks, event loop blocking, concurrency violations, reproducibility, performance in hot paths, and testing coverage. Extends code-review-principles with Quarkus/Vert.x specific checks and ❌/✅ code examples.</p>
         <div class="overview-meta">
           <div class="overview-meta-item"><strong>Triggers:</strong> ** User says "review my code", "check my changes", or explicitly invokes /java-code-review</div>
-          <div class="overview-meta-item"><strong>Chains to:</strong> <span class="overview-tag link" onclick="scrollToSkill('idea-log')">idea-log</span> <span class="overview-tag link" onclick="scrollToSkill('java-git-commit')">java-git-commit</span> <span class="overview-tag link" onclick="scrollToSkill('java-security-audit')">java-security-audit</span></div>
+          <div class="overview-meta-item"><strong>Chains to:</strong> <span class="overview-tag link" onclick="scrollToSkill('java-git-commit')">java-git-commit</span> <span class="overview-tag link" onclick="scrollToSkill('java-security-audit')">java-security-audit</span></div>
           <div class="overview-meta-item"><strong>Invoked by:</strong> <span class="overview-tag link" onclick="scrollToSkill('java-dev')">java-dev</span> <span class="overview-tag link" onclick="scrollToSkill('java-git-commit')">java-git-commit</span> <span class="overview-tag link" onclick="scrollToSkill('quarkus-flow-dev')">quarkus-flow-dev</span> <span class="overview-tag link" onclick="scrollToSkill('quarkus-flow-testing')">quarkus-flow-testing</span></div>
           <div class="overview-meta-item"><strong>Builds on:</strong> <span class="overview-tag link" onclick="scrollToSkill('code-review-principles')">code-review-principles</span> <span class="overview-tag link" onclick="scrollToSkill('java-dev')">java-dev</span></div>
         </div>
       </div>
+
 
 
 
@@ -1247,6 +1258,7 @@
           <div class="overview-meta-item"><strong>Builds on:</strong> <span class="overview-tag link" onclick="scrollToSkill('java-dev')">java-dev</span> <span class="overview-tag link" onclick="scrollToSkill('security-audit-principles')">security-audit-principles</span></div>
         </div>
       </div>
+
 
 
 
@@ -1298,6 +1310,7 @@
 
 
 
+
       <div class="overview-skill" id="ov-maven-dependency-update">
         <div class="overview-skill-header">
           <div class="skill-name-col"><div class="skill-name installed">maven-dependency-update</div><div class="skill-version">v1.0.0</div></div>
@@ -1311,6 +1324,7 @@
           <div class="overview-meta-item"><strong>Builds on:</strong> <span class="overview-tag link" onclick="scrollToSkill('dependency-management-principles')">dependency-management-principles</span></div>
         </div>
       </div>
+
 
 
 
@@ -1362,6 +1376,7 @@
 
 
 
+
       <div class="overview-skill" id="ov-quarkus-flow-dev">
         <div class="overview-skill-header">
           <div class="skill-name-col"><div class="skill-name">quarkus-flow-dev</div><div class="skill-version">v1.0.0</div></div>
@@ -1375,6 +1390,7 @@
           <div class="overview-meta-item"><strong>Extended by:</strong> <span class="overview-tag link" onclick="scrollToSkill('quarkus-flow-testing')">quarkus-flow-testing</span></div>
         </div>
       </div>
+
 
 
 
@@ -1426,6 +1442,7 @@
 
 
 
+
       <div class="overview-skill" id="ov-quarkus-observability">
         <div class="overview-skill-header">
           <div class="skill-name-col"><div class="skill-name">quarkus-observability</div><div class="skill-version">v1.0.0</div></div>
@@ -1458,6 +1475,7 @@
 
 
 
+
       <div class="overview-skill" id="ov-java-project-health">
         <div class="overview-skill-header">
           <div class="skill-name-col"><div class="skill-name">java-project-health</div><div class="skill-version">v1.0.0</div></div>
@@ -1470,6 +1488,7 @@
           <div class="overview-meta-item"><strong>Builds on:</strong> <span class="overview-tag link" onclick="scrollToSkill('project-health')">project-health</span></div>
         </div>
       </div>
+
 
 
 
@@ -1600,6 +1619,7 @@
 
 
 
+
       <div class="overview-skill" id="ov-ts-code-review">
         <div class="overview-skill-header">
           <div class="skill-name-col"><div class="skill-name installed">ts-code-review</div><div class="skill-version">v1.0.0</div></div>
@@ -1608,11 +1628,12 @@
         <p class="overview-desc">Pre-commit code review for TypeScript — type safety (no any, no unsafe assertions), async correctness (unawaited promises, missing error handling), and test quality. Severity-graded CRITICAL/WARNING/NOTE with a Mermaid decision flow. Extends code-review-principles.</p>
         <div class="overview-meta">
           <div class="overview-meta-item"><strong>Triggers:</strong> ** User says "review my code", "check my changes", or explicitly invokes /ts-code-review</div>
-          <div class="overview-meta-item"><strong>Chains to:</strong> <span class="overview-tag link" onclick="scrollToSkill('git-commit')">git-commit</span> <span class="overview-tag link" onclick="scrollToSkill('idea-log')">idea-log</span> <span class="overview-tag link" onclick="scrollToSkill('ts-security-audit')">ts-security-audit</span></div>
+          <div class="overview-meta-item"><strong>Chains to:</strong> <span class="overview-tag link" onclick="scrollToSkill('git-commit')">git-commit</span> <span class="overview-tag link" onclick="scrollToSkill('ts-security-audit')">ts-security-audit</span></div>
           <div class="overview-meta-item"><strong>Invoked by:</strong> <span class="overview-tag link" onclick="scrollToSkill('git-commit')">git-commit</span> <span class="overview-tag link" onclick="scrollToSkill('ts-dev')">ts-dev</span></div>
           <div class="overview-meta-item"><strong>Builds on:</strong> <span class="overview-tag link" onclick="scrollToSkill('code-review-principles')">code-review-principles</span> <span class="overview-tag link" onclick="scrollToSkill('ts-dev')">ts-dev</span></div>
         </div>
       </div>
+
 
 
 
@@ -1663,6 +1684,7 @@
 
 
 
+
       <div class="overview-skill" id="ov-npm-dependency-update">
         <div class="overview-skill-header">
           <div class="skill-name-col"><div class="skill-name installed">npm-dependency-update</div><div class="skill-version">v1.0.0</div></div>
@@ -1674,6 +1696,7 @@
           <div class="overview-meta-item"><strong>Builds on:</strong> <span class="overview-tag link" onclick="scrollToSkill('dependency-management-principles')">dependency-management-principles</span></div>
         </div>
       </div>
+
 
 
 
@@ -1705,6 +1728,7 @@
           <div class="overview-meta-item"><strong>Builds on:</strong> <span class="overview-tag link" onclick="scrollToSkill('project-health')">project-health</span></div>
         </div>
       </div>
+
 
 
 
@@ -1830,6 +1854,7 @@
 
 
 
+
       <div class="overview-skill" id="ov-python-code-review">
         <div class="overview-skill-header">
           <div class="skill-name-col"><div class="skill-name">python-code-review</div><div class="skill-version">v1.0.0</div></div>
@@ -1838,11 +1863,12 @@
         <p class="overview-desc">Python code review — type safety (missing hints, bare Any), bare except clauses, unawaited coroutines, blocking event loop. Severity-graded CRITICAL/WARNING/NOTE.</p>
         <div class="overview-meta">
           <div class="overview-meta-item"><strong>Triggers:</strong> ** User says "review my code", "check my changes", or explicitly invokes /python-code-review</div>
-          <div class="overview-meta-item"><strong>Chains to:</strong> <span class="overview-tag link" onclick="scrollToSkill('git-commit')">git-commit</span> <span class="overview-tag link" onclick="scrollToSkill('idea-log')">idea-log</span> <span class="overview-tag link" onclick="scrollToSkill('python-security-audit')">python-security-audit</span></div>
+          <div class="overview-meta-item"><strong>Chains to:</strong> <span class="overview-tag link" onclick="scrollToSkill('git-commit')">git-commit</span> <span class="overview-tag link" onclick="scrollToSkill('python-security-audit')">python-security-audit</span></div>
           <div class="overview-meta-item"><strong>Invoked by:</strong> <span class="overview-tag link" onclick="scrollToSkill('git-commit')">git-commit</span> <span class="overview-tag link" onclick="scrollToSkill('python-dev')">python-dev</span></div>
           <div class="overview-meta-item"><strong>Builds on:</strong> <span class="overview-tag link" onclick="scrollToSkill('code-review-principles')">code-review-principles</span> <span class="overview-tag link" onclick="scrollToSkill('python-dev')">python-dev</span></div>
         </div>
       </div>
+
 
 
 
@@ -1895,6 +1921,7 @@
 
 
 
+
       <div class="overview-skill" id="ov-pip-dependency-update">
         <div class="overview-skill-header">
           <div class="skill-name-col"><div class="skill-name">pip-dependency-update</div><div class="skill-version">v1.0.0</div></div>
@@ -1906,6 +1933,7 @@
           <div class="overview-meta-item"><strong>Builds on:</strong> <span class="overview-tag link" onclick="scrollToSkill('dependency-management-principles')">dependency-management-principles</span></div>
         </div>
       </div>
+
 
 
 
@@ -1938,6 +1966,7 @@
           <div class="overview-meta-item"><strong>Builds on:</strong> <span class="overview-tag link" onclick="scrollToSkill('project-health')">project-health</span></div>
         </div>
       </div>
+
 
 
 
@@ -2124,9 +2153,10 @@
         </div>
         <p class="overview-desc">GitHub issue tracking with cross-cutting detection. Setup mode configures Work Tracking in CLAUDE.md and creates standard labels. Task intake detects when a request spans multiple concerns. Pre-commit analysis guides through git add -p splitting. Release management via gh release create --generate-notes.</p>
         <div class="overview-meta">
-          <div class="overview-meta-item"><strong>Invoked by:</strong> <span class="overview-tag link" onclick="scrollToSkill('git-commit')">git-commit</span> <span class="overview-tag link" onclick="scrollToSkill('idea-log')">idea-log</span></div>
+          <div class="overview-meta-item"><strong>Invoked by:</strong> <span class="overview-tag link" onclick="scrollToSkill('idea-log')">idea-log</span></div>
         </div>
       </div>
+
 
 
 
@@ -2157,6 +2187,7 @@
           <div class="overview-meta-item"><strong>Invoked by:</strong> <span class="overview-tag link" onclick="scrollToSkill('git-commit')">git-commit</span></div>
         </div>
       </div>
+
 
 
 
@@ -2208,6 +2239,7 @@
 
 
 
+
       <div class="overview-skill" id="ov-update-primary-doc">
         <div class="overview-skill-header">
           <div class="skill-name-col"><div class="skill-name">update-primary-doc</div><div class="skill-version">v1.0.0</div></div>
@@ -2220,6 +2252,7 @@
           <div class="overview-meta-item"><strong>Extended by:</strong> <span class="overview-tag link" onclick="scrollToSkill('java-update-design')">java-update-design</span></div>
         </div>
       </div>
+
 
 
 
@@ -2270,6 +2303,7 @@
 
 
 
+
       <div class="overview-skill" id="ov-blog-project-health">
         <div class="overview-skill-header">
           <div class="skill-name-col"><div class="skill-name">blog-project-health</div><div class="skill-version">v1.0.0</div></div>
@@ -2282,6 +2316,7 @@
           <div class="overview-meta-item"><strong>Builds on:</strong> <span class="overview-tag link" onclick="scrollToSkill('project-health')">project-health</span></div>
         </div>
       </div>
+
 
 
 
@@ -2332,6 +2367,7 @@
 
 
 
+
       <div class="overview-skill" id="ov-install-skills">
         <div class="overview-skill-header">
           <div class="skill-name-col"><div class="skill-name">install-skills</div><div class="skill-version">v1.0.0</div></div>
@@ -2342,6 +2378,7 @@
 
         </div>
       </div>
+
 
 
 
@@ -2385,6 +2422,7 @@
 
 
 
+
       <div class="overview-skill" id="ov-design-snapshot">
         <div class="overview-skill-header">
           <div class="skill-name-col"><div class="skill-name">design-snapshot</div><div class="skill-version">v1.0.0</div></div>
@@ -2393,9 +2431,10 @@
         <p class="overview-desc">Immutable, dated record of design state — where the project is, how it got here, and where it's going. Unlike DESIGN.md (a living document), snapshots never change after they're committed. Links to ADRs rather than duplicating them. Prompts for missing ADRs after writing.</p>
         <div class="overview-meta">
           <div class="overview-meta-item"><strong>Chains to:</strong> <span class="overview-tag link" onclick="scrollToSkill('adr')">adr</span> <span class="overview-tag link" onclick="scrollToSkill('custom-git-commit')">custom-git-commit</span> <span class="overview-tag link" onclick="scrollToSkill('git-commit')">git-commit</span> <span class="overview-tag link" onclick="scrollToSkill('idea-log')">idea-log</span> <span class="overview-tag link" onclick="scrollToSkill('java-git-commit')">java-git-commit</span> <span class="overview-tag link" onclick="scrollToSkill('write-blog')">write-blog</span></div>
-          <div class="overview-meta-item"><strong>Invoked by:</strong> <span class="overview-tag link" onclick="scrollToSkill('write-blog')">write-blog</span></div>
+          <div class="overview-meta-item"><strong>Invoked by:</strong> <span class="overview-tag link" onclick="scrollToSkill('handover')">handover</span> <span class="overview-tag link" onclick="scrollToSkill('write-blog')">write-blog</span></div>
         </div>
       </div>
+
 
 
 
@@ -2416,9 +2455,10 @@
         <p class="overview-desc">Lightweight living log for undecided possibilities — park ideas worth remembering before they evaporate. Capture, review, promote to ADR or task, or discard. Different from ADRs (decisions made) and design snapshots (state frozen): the idea log holds maybes.</p>
         <div class="overview-meta">
           <div class="overview-meta-item"><strong>Chains to:</strong> <span class="overview-tag link" onclick="scrollToSkill('adr')">adr</span> <span class="overview-tag link" onclick="scrollToSkill('custom-git-commit')">custom-git-commit</span> <span class="overview-tag link" onclick="scrollToSkill('git-commit')">git-commit</span> <span class="overview-tag link" onclick="scrollToSkill('issue-workflow')">issue-workflow</span> <span class="overview-tag link" onclick="scrollToSkill('java-git-commit')">java-git-commit</span></div>
-          <div class="overview-meta-item"><strong>Invoked by:</strong> <span class="overview-tag link" onclick="scrollToSkill('design-snapshot')">design-snapshot</span> <span class="overview-tag link" onclick="scrollToSkill('java-code-review')">java-code-review</span> <span class="overview-tag link" onclick="scrollToSkill('python-code-review')">python-code-review</span> <span class="overview-tag link" onclick="scrollToSkill('ts-code-review')">ts-code-review</span></div>
+          <div class="overview-meta-item"><strong>Invoked by:</strong> <span class="overview-tag link" onclick="scrollToSkill('design-snapshot')">design-snapshot</span></div>
         </div>
       </div>
+
 
 
 
@@ -2435,10 +2475,11 @@
         </div>
         <p class="overview-desc">Living project diary — captures decisions, pivots, and discoveries in the moment with honest diary voice. Preserves what was believed at the time, including aspirations that later changed. Not a polished retrospective: if the plan changed, the blog shows both the original and the change.</p>
         <div class="overview-meta">
-          <div class="overview-meta-item"><strong>Chains to:</strong> <span class="overview-tag link" onclick="scrollToSkill('adr')">adr</span> <span class="overview-tag link" onclick="scrollToSkill('custom-git-commit')">custom-git-commit</span> <span class="overview-tag link" onclick="scrollToSkill('design-snapshot')">design-snapshot</span> <span class="overview-tag link" onclick="scrollToSkill('git-commit')">git-commit</span> <span class="overview-tag link" onclick="scrollToSkill('java-git-commit')">java-git-commit</span></div>
-          <div class="overview-meta-item"><strong>Invoked by:</strong> <span class="overview-tag link" onclick="scrollToSkill('adr')">adr</span> <span class="overview-tag link" onclick="scrollToSkill('design-snapshot')">design-snapshot</span></div>
+          <div class="overview-meta-item"><strong>Chains to:</strong> <span class="overview-tag link" onclick="scrollToSkill('adr')">adr</span> <span class="overview-tag link" onclick="scrollToSkill('custom-git-commit')">custom-git-commit</span> <span class="overview-tag link" onclick="scrollToSkill('design-snapshot')">design-snapshot</span> <span class="overview-tag link" onclick="scrollToSkill('git-commit')">git-commit</span> <span class="overview-tag link" onclick="scrollToSkill('java-git-commit')">java-git-commit</span> <span class="overview-tag link" onclick="scrollToSkill('update-claude-md')">update-claude-md</span></div>
+          <div class="overview-meta-item"><strong>Invoked by:</strong> <span class="overview-tag link" onclick="scrollToSkill('adr')">adr</span> <span class="overview-tag link" onclick="scrollToSkill('design-snapshot')">design-snapshot</span> <span class="overview-tag link" onclick="scrollToSkill('handover')">handover</span></div>
         </div>
       </div>
+
 
 
 
@@ -2463,6 +2504,7 @@
 
 
 
+
       <div class="overview-skill" id="ov-garden">
         <div class="overview-skill-header">
           <div class="skill-name-col"><div class="skill-name">garden</div><div class="skill-version">v1.0.0</div></div>
@@ -2470,21 +2512,42 @@
         </div>
         <p class="overview-desc">Cross-project library of hard-won technical gotchas — bugs that silently fail, behaviours that contradict documentation, workarounds that took hours to find. Stored in ~/claude/knowledge-garden/ and shared across all projects on this machine. Dual-indexed by technology and by symptom type.</p>
         <div class="overview-meta">
-
+          <div class="overview-meta-item"><strong>Invoked by:</strong> <span class="overview-tag link" onclick="scrollToSkill('handover')">handover</span></div>
         </div>
       </div>
 
 
 
 
-      <div class="overview-skill" id="ov-session-handoff">
+
+      <div class="overview-skill" id="ov-handover">
         <div class="overview-skill-header">
-          <div class="skill-name-col"><div class="skill-name">session-handoff</div><div class="skill-version">v1.0.0</div></div>
+          <div class="skill-name-col"><div class="skill-name">handover</div><div class="skill-version">v1.0.0</div></div>
           <span class="role-pill role-sync">Sync</span><span class="not-installed-badge">Not installed</span>
         </div>
         <p class="overview-desc">Generates a concise HANDOVER.md at session end so the next Claude session can resume immediately. Uses lazy references — pointers to design snapshots, project blog, and knowledge garden rather than loading their content. Stays under 500 tokens by design.</p>
         <div class="overview-meta">
+          <div class="overview-meta-item"><strong>Chains to:</strong> <span class="overview-tag link" onclick="scrollToSkill('design-snapshot')">design-snapshot</span> <span class="overview-tag link" onclick="scrollToSkill('garden')">garden</span> <span class="overview-tag link" onclick="scrollToSkill('update-claude-md')">update-claude-md</span> <span class="overview-tag link" onclick="scrollToSkill('write-blog')">write-blog</span></div>
+        </div>
+      </div>
 
+      <div class="overview-skill" id="ov-workspace-init">
+        <div class="overview-skill-header">
+          <div class="skill-name-col"><div class="skill-name">workspace-init</div><div class="skill-version">v1.0.0</div></div>
+          <span class="role-pill role-setup">Setup</span><span class="not-installed-badge">Not installed</span>
+        </div>
+        <p class="overview-desc">One-time workspace setup — creates ~/claude/private/&lt;project&gt;/ with routing CLAUDE.md, gitignored project symlink via .git/info/exclude, and full directory structure for snapshots, ADRs, blog, and specs.</p>
+        <div class="overview-meta">
+        </div>
+      </div>
+
+      <div class="overview-skill" id="ov-retro-issues">
+        <div class="overview-skill-header">
+          <div class="skill-name-col"><div class="skill-name">retro-issues</div><div class="skill-version">v1.0.0</div></div>
+          <span class="role-pill role-issue">Issues</span><span class="not-installed-badge">Not installed</span>
+        </div>
+        <p class="overview-desc">On-demand retrospective mapping of git history to GitHub epics and issues — analyses git log, ADRs, blog entries, and design docs; proposes structure in docs/retro-issues.md for review before creating anything on GitHub.</p>
+        <div class="overview-meta">
         </div>
       </div>
 
@@ -2583,13 +2646,14 @@
     'custom-git-commit': {parents:['adr', 'design-snapshot', 'idea-log', 'write-blog'],children:['update-claude-md', 'update-primary-doc']},
     'custom-project-health': {parents:['project-health'],children:[]},
     'dependency-management-principles': {parents:[],children:[]},
-    'design-snapshot': {parents:['write-blog'],children:['adr', 'custom-git-commit', 'git-commit', 'idea-log', 'java-git-commit', 'write-blog']},
-    'garden': {parents:[],children:[]},
-    'git-commit': {parents:['adr', 'design-snapshot', 'idea-log', 'python-code-review', 'ts-code-review', 'write-blog'],children:['blog-git-commit', 'issue-workflow', 'python-code-review', 'ts-code-review', 'update-claude-md']},
-    'idea-log': {parents:['design-snapshot', 'java-code-review', 'python-code-review', 'ts-code-review'],children:['adr', 'custom-git-commit', 'git-commit', 'issue-workflow', 'java-git-commit']},
+    'design-snapshot': {parents:['handover', 'write-blog'],children:['adr', 'custom-git-commit', 'git-commit', 'idea-log', 'java-git-commit', 'write-blog']},
+    'garden': {parents:['handover'],children:[]},
+    'git-commit': {parents:['adr', 'design-snapshot', 'idea-log', 'python-code-review', 'ts-code-review', 'write-blog'],children:['blog-git-commit', 'python-code-review', 'ts-code-review', 'update-claude-md']},
+    'handover': {parents:[],children:['design-snapshot', 'garden', 'update-claude-md', 'write-blog']},
+    'idea-log': {parents:['design-snapshot'],children:['adr', 'custom-git-commit', 'git-commit', 'issue-workflow', 'java-git-commit']},
     'install-skills': {parents:[],children:[]},
-    'issue-workflow': {parents:['git-commit', 'idea-log'],children:[]},
-    'java-code-review': {parents:['java-dev', 'java-git-commit', 'quarkus-flow-dev', 'quarkus-flow-testing'],children:['idea-log', 'java-git-commit', 'java-security-audit']},
+    'issue-workflow': {parents:['idea-log'],children:[]},
+    'java-code-review': {parents:['java-dev', 'java-git-commit', 'quarkus-flow-dev', 'quarkus-flow-testing'],children:['java-git-commit', 'java-security-audit']},
     'java-dev': {parents:[],children:['java-code-review', 'quarkus-observability']},
     'java-git-commit': {parents:['adr', 'design-snapshot', 'idea-log', 'java-code-review', 'maven-dependency-update', 'quarkus-flow-dev', 'quarkus-flow-testing', 'quarkus-observability', 'write-blog'],children:['java-code-review', 'java-update-design', 'update-claude-md']},
     'java-project-health': {parents:['project-health'],children:[]},
@@ -2601,24 +2665,25 @@
     'pip-dependency-update': {parents:[],children:[]},
     'project-health': {parents:[],children:['blog-project-health', 'custom-project-health', 'java-project-health', 'python-project-health', 'skills-project-health', 'ts-project-health']},
     'project-refine': {parents:[],children:[]},
-    'python-code-review': {parents:['git-commit', 'python-dev'],children:['git-commit', 'idea-log', 'python-security-audit']},
+    'python-code-review': {parents:['git-commit', 'python-dev'],children:['git-commit', 'python-security-audit']},
     'python-dev': {parents:[],children:['python-code-review']},
     'python-project-health': {parents:['project-health'],children:[]},
     'python-security-audit': {parents:['python-code-review'],children:[]},
     'quarkus-flow-dev': {parents:[],children:['java-code-review', 'java-git-commit', 'quarkus-flow-testing', 'quarkus-observability']},
     'quarkus-flow-testing': {parents:['quarkus-flow-dev'],children:['java-code-review', 'java-git-commit']},
     'quarkus-observability': {parents:['java-dev', 'quarkus-flow-dev'],children:['java-git-commit', 'maven-dependency-update']},
+    'retro-issues': {parents:[],children:[]},
     'security-audit-principles': {parents:[],children:[]},
-    'session-handoff': {parents:[],children:[]},
     'skills-project-health': {parents:['project-health'],children:[]},
-    'ts-code-review': {parents:['git-commit', 'ts-dev'],children:['git-commit', 'idea-log', 'ts-security-audit']},
+    'ts-code-review': {parents:['git-commit', 'ts-dev'],children:['git-commit', 'ts-security-audit']},
     'ts-dev': {parents:[],children:['ts-code-review']},
     'ts-project-health': {parents:['project-health'],children:[]},
     'ts-security-audit': {parents:['ts-code-review'],children:[]},
     'uninstall-skills': {parents:[],children:[]},
-    'update-claude-md': {parents:['blog-git-commit', 'custom-git-commit', 'git-commit', 'java-git-commit'],children:['java-update-design']},
+    'update-claude-md': {parents:['blog-git-commit', 'custom-git-commit', 'git-commit', 'handover', 'java-git-commit', 'write-blog'],children:['java-update-design']},
     'update-primary-doc': {parents:['custom-git-commit'],children:[]},
-    'write-blog': {parents:['adr', 'design-snapshot'],children:['adr', 'custom-git-commit', 'design-snapshot', 'git-commit', 'java-git-commit']},
+    'workspace-init': {parents:[],children:[]},
+    'write-blog': {parents:['adr', 'design-snapshot', 'handover'],children:['adr', 'custom-git-commit', 'design-snapshot', 'git-commit', 'java-git-commit', 'update-claude-md']},
   };
 
   // ── Inline chain row ──

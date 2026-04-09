@@ -45,6 +45,7 @@ ALL_SKILLS = {
     'python-dev', 'python-code-review', 'python-security-audit',
     'pip-dependency-update', 'python-project-health', 'design-snapshot',
     'idea-log', 'write-blog', 'cc-praxis-ui', 'garden', 'handover',
+    'workspace-init', 'retro-issues',
 }
 
 KNOWN_NON_SKILL_TERMS = {

@@ -356,7 +356,7 @@ Python-specific health checks extending the universal project-health skill:
 
 #### **cc-praxis-ui**
 Visual skill manager — a local web app for browsing, installing, updating, and uninstalling skills:
-- Browse all 46 skills by bundle with descriptions and chaining relationships
+- Browse all 47 skills by bundle with descriptions and chaining relationships
 - Live install state: see what's installed, what's outdated, and what's available
 - Install or uninstall individual skills or whole bundles with accurate counts
 - Auto Execute mode runs commands directly; Manual mode shows commands to copy-paste
@@ -365,6 +365,16 @@ Visual skill manager — a local web app for browsing, installing, updating, and
 **Launch:** `/cc-praxis-ui` inside Claude Code, or `cc-praxis` in a terminal (added to PATH on plugin install).
 
 **Server:** `python3 scripts/web_installer.py [--port PORT] [--no-browser]`
+
+#### **workspace-init**
+One-time workspace setup per project per machine:
+- Creates `~/claude/private/<project>/` (or `public/`) with full directory structure
+- Writes routing CLAUDE.md with `add-dir` session-start instruction and artifact locations table
+- Creates gitignored CLAUDE.md symlink in the project via `.git/info/exclude` (never touches tracked `.gitignore`)
+- Initialises a git repo for the workspace; optionally pushes to a remote
+- Detects and offers to migrate existing `docs/` artifacts to the workspace
+
+**Triggers:** "init workspace", "set up workspace", "create workspace for <project>", `/workspace-init`.
 
 #### **install-skills**
 One-time bootstrap wizard for new environments:

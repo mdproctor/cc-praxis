@@ -1,6 +1,6 @@
 {
   "name": "cc-praxis",
-  "description": "Professional development skills for Claude Code \u2014 deep Java/Quarkus support plus universal principles for any project",
+  "description": "Professional development skills for Claude Code — deep Java/Quarkus support plus universal principles for any project",
   "owner": {
     "name": "Mark Proctor",
     "url": "https://github.com/mdproctor"
@@ -303,43 +303,49 @@
     {
       "name": "project-health",
       "source": "./project-health",
-      "description": "Universal project health checks \u2014 correctness, consistency, and compliance across all project types",
+      "description": "Universal project health checks — correctness, consistency, and compliance across all project types",
       "version": "1.0.0-SNAPSHOT"
     },
     {
       "name": "project-refine",
       "source": "./project-refine",
-      "description": "Improvement opportunities across docs and code \u2014 structure, deduplication, and bloat reduction",
+      "description": "Improvement opportunities across docs and code — structure, deduplication, and bloat reduction",
       "version": "1.0.0-SNAPSHOT"
     },
     {
       "name": "skills-project-health",
       "source": "./skills-project-health",
-      "description": "Health checks for Claude Code skill collection repositories \u2014 extends project-health with skills-specific checks",
+      "description": "Health checks for Claude Code skill collection repositories — extends project-health with skills-specific checks",
       "version": "1.0.0-SNAPSHOT"
     },
     {
       "name": "java-project-health",
       "source": "./java-project-health",
-      "description": "Health checks for Java/Maven/Gradle projects \u2014 extends project-health with Java-specific checks",
+      "description": "Health checks for Java/Maven/Gradle projects — extends project-health with Java-specific checks",
       "version": "1.0.0-SNAPSHOT"
     },
     {
       "name": "blog-project-health",
       "source": "./blog-project-health",
-      "description": "Health checks for GitHub Pages/Jekyll blogs \u2014 extends project-health with blog-specific checks",
+      "description": "Health checks for GitHub Pages/Jekyll blogs — extends project-health with blog-specific checks",
       "version": "1.0.0-SNAPSHOT"
     },
     {
       "name": "custom-project-health",
       "source": "./custom-project-health",
-      "description": "Health checks for custom projects \u2014 extends project-health with sync-rules and project-currency checks",
+      "description": "Health checks for custom projects — extends project-health with sync-rules and project-currency checks",
       "version": "1.0.0-SNAPSHOT"
     },
     {
       "name": "retro-issues",
       "source": "./retro-issues",
-      "description": "One-off retrospective mapping of git history to GitHub epics and issues \u2014 analyses git log, ADRs, blog entries, and design docs; proposes structure for review before creating anything",
+      "description": "One-off retrospective mapping of git history to GitHub epics and issues — analyses git log, ADRs, blog entries, and design docs; proposes structure for review before creating anything",
+      "version": "1.0.0-SNAPSHOT"
+    },
+    {
+      "name": "workspace-init",
+      "source": "./workspace-init",
+      "description": "One-time workspace setup — creates ~/claude/private/<project>/ with routing CLAUDE.md, gitignored project symlink, and full directory structure",
       "version": "1.0.0-SNAPSHOT"
     }
   ]
