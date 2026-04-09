@@ -5,6 +5,19 @@ Promote to an ADR when ready to decide; discard when no longer relevant.
 
 ---
 
+## 2026-04-09 — Marketplace aggregation: cc-praxis pulls in external marketplaces
+
+**Priority:** medium
+**Status:** active
+
+The cc-praxis install-skills wizard could support referencing one or more external marketplaces (e.g. `hortora/soredium`) in addition to its own. Users installing from cc-praxis would see skills from all aggregated marketplaces in a single menu, without needing to know the external repo exists. Each external marketplace remains independently installable for users who find it directly.
+
+**Context:** Arose when planning the migration of the garden skill to `hortora/soredium`. Hortora wants its own standalone marketplace; cc-praxis users shouldn't lose access. Marketplace aggregation would solve both without duplication — hortora maintains its own skills, cc-praxis just points at it. Would require changes to `install-skills`, `uninstall-skills`, and `marketplace.json` format.
+
+**Promoted to:**
+
+---
+
 ## 2026-04-06 — Periodically evolve the personal writing style guide
 
 **Priority:** low
