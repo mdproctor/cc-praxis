@@ -158,6 +158,31 @@ A git repo for cross-workspace operations:
 
 ---
 
+## Session-Start Hook
+
+The existing `check_project_setup.sh` hook is extended to cover workspace setup.
+Hook checks run in order and stop at the first actionable item. Each check fires
+**once** — after setup, it goes quiet permanently.
+
+```
+1. In a git repo?                     → if not, exit silently
+2. CLAUDE.md + project type?          → if missing, prompt to create (existing behaviour)
+3. HANDOVER.md found?                 → "Read your session handover? (y/n)"
+                                         if >7 days old, flag as potentially stale
+4. Workspace configured?              → if not, offer /workspace-init
+5. Workspace branch ≠ project branch? → warn, suggest switching
+6. Work Tracking in CLAUDE.md?        → if missing, suggest /issue-workflow (existing behaviour)
+```
+
+**Pattern:** Hook = one-time setup nudge. Ongoing behaviour = CLAUDE.md instructions
+(always auto-loaded). Once configured, the hook goes quiet; CLAUDE.md drives
+the session behaviour.
+
+**Harvesting is excluded** — garden submissions are merged in a dedicated Claude
+session with full context budget, not surfaced at project session start.
+
+---
+
 ## Co-Worker Model
 
 Each workspace is a git repo backed by GitHub (private or public):
