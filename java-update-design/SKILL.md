@@ -17,7 +17,7 @@ concise. Your job is to detect architectural drift and propose updates.
 
 This skill is invoked by `java-git-commit` when:
 - CLAUDE.md declares `type: java`
-- docs/DESIGN.md exists (or is being created)
+- design/DESIGN.md exists (or is being created)
 - Staged changes may affect architecture
 
 **Do NOT use this skill for:**
@@ -32,7 +32,7 @@ This skill is invoked by `java-git-commit` when:
 - **update-primary-doc**: Generic document sync patterns (read path, match files, propose updates, validate)
 
 **Java-specific additions:**
-- Hardcoded Primary Document: `docs/DESIGN.md`
+- Hardcoded Primary Document: `design/DESIGN.md`
 - Hardcoded architecture mappings:
   - New @Entity → Update "Domain Model" section
   - New @Service/@Repository → Update "Services" or "Data Access" section
@@ -42,8 +42,10 @@ This skill is invoked by `java-git-commit` when:
 ## Core Rules
 
 - **Only operates in type: java repositories** — other project types use different documentation patterns
-- DESIGN.md lives at `docs/DESIGN.md` relative to the project root. Never
-  move or rename it.
+- DESIGN.md lives at `design/DESIGN.md` in the workspace (CWD). In the workspace
+  model, the project is accessed via `add-dir`.
+- **Epic close:** When the epic completes, merge workspace `design/DESIGN.md`
+  back into the project's `DESIGN.md` (user-confirmed, one manual merge step).
 - **Never apply changes without explicit user confirmation** (a plain "YES" or
   equivalent). If in doubt, ask.
 - Focus only on **architectural impact**: new/removed components, changed
@@ -59,17 +61,17 @@ This skill is invoked by `java-git-commit` when:
 
 ```bash
 # Check standard location first
-ls docs/DESIGN.md 2>/dev/null || find . -name "DESIGN.md" | head -5
+ls design/DESIGN.md 2>/dev/null || find . -name "DESIGN.md" | head -5
 ```
 
-- If found at `docs/DESIGN.md` → proceed.
+- If found at `design/DESIGN.md` → proceed.
 - If found elsewhere → note the path, continue (but flag the non-standard location).
 - If not found → propose a starter structure (see **Starter Template** below),
   then stop and ask the user to confirm before creating it.
 
 ### Step 1a: Check for modular structure
 
-Run `python scripts/document_discovery.py docs/DESIGN.md` (or use the API) to detect linked module files. **If modules exist**, switch to the [modular-handling.md](modular-handling.md) workflow for Steps 2, 5, and 6.
+Run `python scripts/document_discovery.py design/DESIGN.md` (or use the API) to detect linked module files. **If modules exist**, switch to the [modular-handling.md](modular-handling.md) workflow for Steps 2, 5, and 6.
 
 ### Step 2: Read current content
 
@@ -163,10 +165,10 @@ When the user confirms with YES (or a clear equivalent):
 1. Apply **only** the proposed changes — no extras.
 2. **Validate the document:**
    ```bash
-   python scripts/validate_document.py docs/DESIGN.md
+   python scripts/validate_document.py design/DESIGN.md
    ```
 3. **If validation fails (exit code 1):**
-   - Revert changes: `git restore docs/DESIGN.md`
+   - Revert changes: `git restore design/DESIGN.md`
    - Report CRITICAL issues to user
    - Ask user to fix manually
    - Stop (do not stage)
@@ -201,7 +203,7 @@ Avoid these mistakes when updating DESIGN.md:
 After applying updates, run:
 
 ```bash
-python scripts/validation/validate_doc_structure.py docs/DESIGN.md
+python scripts/validation/validate_doc_structure.py design/DESIGN.md
 ```
 
 **If exit code 1 (nudge recommended):**
@@ -237,11 +239,11 @@ Then update CLAUDE.md:
 
 DESIGN.md update is complete when:
 
-- ✅ docs/DESIGN.md located and read
+- ✅ design/DESIGN.md located and read
 - ✅ Architectural changes identified from staged diff
 - ✅ Proposed updates formatted as before/after blocks
 - ✅ User confirmed with explicit **YES**
-- ✅ Changes applied to docs/DESIGN.md
+- ✅ Changes applied to design/DESIGN.md
 - ✅ **Document validation passed** (no CRITICAL corruption)
 - ✅ File ready for staging (or user confirmed no changes needed)
 
