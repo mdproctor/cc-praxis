@@ -62,7 +62,7 @@ apply at the same tier as the universal check.
 - [ ] Severity levels (CRITICAL/WARNING/NOTE) used consistently
 - [ ] Terminology consistent throughout (e.g. "invoke" not mixed with "call")
 - [ ] Same concept named the same way across all audience levels
-- [ ] Structural names consistent — component name, command name, generated files, and supporting files all use the same term for the same concept (e.g. a skill named `session-handover` that generates `HANDOFF.md` is consistent; one named `session-handoff` generating `HANDOVER.md` is not)
+- [ ] Structural names consistent — component name, command name, generated files, and supporting files all use the same term for the same concept (e.g. a skill named `handover` that generates `HANDOFF.md` is consistent; one named `handoff` generating `HANDOVER.md` is not)
 
 **Refinement (tier 4 only)**
 - [ ] Scattered terminology that could be unified in a glossary?

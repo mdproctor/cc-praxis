@@ -229,8 +229,8 @@
       "version": "1.0.0-SNAPSHOT"
     },
     {
-      "name": "session-handover",
-      "source": "./session-handover",
+      "name": "handover",
+      "source": "./handover",
       "description": "Generates a concise HANDOFF.md at session end — lazy references to design snapshots, project blog, and knowledge garden rather than loading them",
       "version": "1.0.0-SNAPSHOT"
     },

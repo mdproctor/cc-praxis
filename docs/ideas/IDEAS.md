@@ -37,7 +37,7 @@ The personal guide (`blog-technical.md`) was built from a 577-post corpus spanni
 **Status:** active
 
 The cc-praxis methodology family (design-snapshot, project-blog, knowledge-garden,
-idea-log, adr, session-handover, CLAUDE.md) has grown organically but lacks a
+idea-log, adr, handover, CLAUDE.md) has grown organically but lacks a
 coherent cross-tool indexing strategy. Two specific improvements worth exploring:
 
 1. **design-snapshot as a categorised folder** — instead of flat dated files,
@@ -48,11 +48,11 @@ coherent cross-tool indexing strategy. Two specific improvements worth exploring
 
 2. **Cross-tool findability** — each tool currently indexes only its own
    content. A light meta-index (or agreed naming conventions) would let
-   session-handover point to the right snapshot, blog entry, or garden section
+   handover point to the right snapshot, blog entry, or garden section
    without loading any of them. The lazy-reference principle from
-   session-handover should propagate to how all tools reference each other.
+   handover should propagate to how all tools reference each other.
 
-**Context:** Surfaced while designing session-handover — the skill needs to
+**Context:** Surfaced while designing handover — the skill needs to
 reference design-snapshot, project-blog, and knowledge-garden without loading
 them. The knowledge-garden's GARDEN.md dual-index (by technology + by symptom
 type) proved that this pattern works. design-snapshot has no equivalent index,

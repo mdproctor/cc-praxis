@@ -31,7 +31,7 @@ ALL_SKILLS = {
     'custom-project-health', 'install-skills', 'uninstall-skills',
     'python-dev', 'python-code-review', 'python-security-audit',
     'pip-dependency-update', 'python-project-health', 'design-snapshot',
-    'idea-log', 'write-blog', 'cc-praxis-ui', 'garden', 'session-handover',
+    'idea-log', 'write-blog', 'cc-praxis-ui', 'garden', 'handover',
 }
 
 # Ground truth extracted from all SKILL.md files.
@@ -71,7 +71,7 @@ CHAINING_TRUTH = {
     'quarkus-flow-testing': {'chains_to': ['java-code-review', 'java-git-commit'], 'invoked_by': ['quarkus-flow-dev'], 'builds_on': ['java-dev', 'quarkus-flow-dev'], 'extended_by': []},
     'quarkus-observability': {'chains_to': ['java-git-commit', 'maven-dependency-update'], 'invoked_by': ['java-dev', 'quarkus-flow-dev'], 'builds_on': ['observability-principles'], 'extended_by': []},
     'security-audit-principles': {'chains_to': [], 'invoked_by': [], 'builds_on': [], 'extended_by': ['java-security-audit', 'python-security-audit', 'ts-security-audit']},
-    'session-handover': {'chains_to': [], 'invoked_by': [], 'builds_on': [], 'extended_by': []},
+    'handover': {'chains_to': [], 'invoked_by': [], 'builds_on': [], 'extended_by': []},
     'skills-project-health': {'chains_to': [], 'invoked_by': ['project-health'], 'builds_on': ['project-health'], 'extended_by': []},
     'ts-code-review': {'chains_to': ['git-commit', 'idea-log', 'ts-security-audit'], 'invoked_by': ['git-commit', 'ts-dev'], 'builds_on': ['code-review-principles', 'ts-dev'], 'extended_by': []},
     'ts-dev': {'chains_to': ['ts-code-review'], 'invoked_by': [], 'builds_on': [], 'extended_by': ['ts-code-review', 'ts-security-audit']},

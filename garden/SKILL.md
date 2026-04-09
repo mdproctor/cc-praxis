@@ -933,7 +933,7 @@ relevant entry faster than searching the web or rereading conversation history.
 
 ## Skill Chaining
 
-**Invoked by:** `session-handover` — garden SWEEP is Step 2b of the wrap
+**Invoked by:** `handover` — garden SWEEP is Step 2b of the wrap
 checklist, capturing session gotchas/techniques before context is lost;
 `superpowers:systematic-debugging` — offered proactively when a debugging
 session reveals something non-obvious; user directly ("submit to the garden",

@@ -1302,10 +1302,10 @@ Claude: [Uses git-commit]
 | `python-security-audit` | `git-commit` | manual | After security review complete |
 | `pip-dependency-update` | `adr` | manual | Major version jump or significant new package |
 | `pip-dependency-update` | `git-commit` | manual | After successful dependency updates |
-| `session-handover` | `garden` | conditional | Garden sweep checked in wrap checklist (Step 2b) |
-| `session-handover` | `write-blog` | conditional | Blog entry checked in wrap checklist |
-| `session-handover` | `design-snapshot` | conditional | Design snapshot checked in wrap checklist |
-| `session-handover` | `update-claude-md` | conditional | Convention sync checked in wrap checklist |
+| `handover` | `garden` | conditional | Garden sweep checked in wrap checklist (Step 2b) |
+| `handover` | `write-blog` | conditional | Blog entry checked in wrap checklist |
+| `handover` | `design-snapshot` | conditional | Design snapshot checked in wrap checklist |
+| `handover` | `update-claude-md` | conditional | Convention sync checked in wrap checklist |
 
 ---
 ## License

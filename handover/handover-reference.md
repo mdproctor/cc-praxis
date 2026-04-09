@@ -1,6 +1,6 @@
 # HANDOFF.md Reference
 
-Used by `session-handover` Step 5 (write HANDOFF.md) and by the next session
+Used by `handover` Step 5 (write HANDOFF.md) and by the next session
 when resuming work. Contains the template, routing table, and git read patterns.
 
 ---

@@ -1,5 +1,5 @@
 ---
-name: session-handover
+name: handover
 description: >
   Use when ending a session and wanting to preserve context for resumption —
   says "create a handover", "end of session", "update the handover", or
