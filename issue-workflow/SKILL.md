@@ -362,37 +362,17 @@ before coding begins) automatically belong to the active epic. No confirmation n
 add them to the Scope checklist directly.
 
 **Ad-hoc issues** (discovered during implementation) require placement assessment.
-Before creating, determine where the issue belongs:
+Check in this order — stop at the first match:
 
-```mermaid
-flowchart TD
-    Discovered((Ad-hoc issue discovered))
-    ActiveEpic_{Active epic exists?}
-    FitsActive_{Fits within active epic Definition of Done?}
-    OtherEpics_{Other open epics exist?}
-    FitsOther_{Fits another open epic?}
-    SuggestActive[Suggest: add to active epic]
-    SuggestOther[Suggest: add to that epic]
-    SuggestStandalone[Suggest: standalone issue]
-    UserConfirms([User confirms or redirects])
-    Create[Create issue with confirmed placement]
+| Active epic? | Fits its DoD? | Other open epic fits? | Suggest |
+|---|---|---|---|
+| Yes | Yes | — | active epic |
+| Yes | No | Yes | that epic |
+| Yes | No | No | standalone |
+| No | — | Yes | that epic |
+| No | — | No | standalone |
 
-    Discovered --> ActiveEpic_
-    ActiveEpic_ -->|yes| FitsActive_
-    ActiveEpic_ -->|no| OtherEpics_
-    FitsActive_ -->|yes| SuggestActive
-    FitsActive_ -->|no| OtherEpics_
-    OtherEpics_ -->|yes| FitsOther_
-    OtherEpics_ -->|no| SuggestStandalone
-    FitsOther_ -->|yes| SuggestOther
-    FitsOther_ -->|no| SuggestStandalone
-    SuggestActive --> UserConfirms
-    SuggestOther --> UserConfirms
-    SuggestStandalone --> UserConfirms
-    UserConfirms --> Create
-```
-
-Always surface the suggestion with reasoning before creating:
+Always confirm with the user before creating — never place silently:
 
 > I've found {bug/task/enhancement}: "{title}".
 >
@@ -490,26 +470,6 @@ If YES: proceed without a footer. If anything else: return to issue selection.
 
 ---
 
-## What Makes a Great Issue Description
-
-| Field | Good | Bad |
-|-------|------|-----|
-| Title | Verb-first, specific outcome | Vague noun / plan reference |
-| Context | Names parent epic + sibling dependencies | Absent |
-| What | Outcome-focused, leaves room for judgment | Prescriptive line-by-line |
-| Acceptance criteria | Testable, covers edge cases | "It works" |
-| Notes | Pitfalls, relevant files named | Empty |
-
-## Issue Granularity
-
-| Too coarse | Right | Too fine |
-|------------|-------|---------|
-| "Add terminal renderer" — weeks, can't close cleanly | "Bundle xterm.js as a resource in the .app" — days, single deliverable | "Add one line to bundle.sh" — a commit, not an issue |
-
-One issue = one thing that can be independently released or reverted.
-
----
-
 ## Common Pitfalls
 
 | Mistake | Why It's Wrong | Fix |
@@ -520,6 +480,7 @@ One issue = one thing that can be independently released or reverted.
 | One giant issue | Can never be closed cleanly | One issue = one independently releasable/revertable thing |
 | Epic with no Definition of Done | No way to know when it's complete | Write the observable end state before creating children |
 | Issue per commit | Issues represent outcomes, commits are steps | Multiple commits can and should close one issue |
+| Issue too coarse ("Add terminal renderer") | Can never be closed cleanly; weeks of work | One issue = one independently releasable/revertable thing — days, not weeks |
 | Vague title — "fix stuff" | GitHub generates release notes from titles | Outcome-first: "Fix X when Y", "Add Z to W" |
 | Wrong label | Wrong changelog section | `bug` = broken thing fixed, `enhancement` = new capability |
 | Silently committing without an issue | User didn't make a deliberate choice | Always prompt for an issue; only skip after explicit "yes, skip it" confirmation |
