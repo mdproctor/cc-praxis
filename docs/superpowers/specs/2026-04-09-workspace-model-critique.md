@@ -2,206 +2,182 @@
 
 **Date:** 2026-04-09
 **Related spec:** `2026-04-09-workspace-model-design.md`
-**Status:** Pre-implementation review — unresolved concerns, do not implement until addressed
+**Status:** All major concerns resolved — see resolution notes per problem
 
 ---
 
 ## Summary
 
-The design solves "methodology artifacts pollute the project repo" by making the
-workspace the primary Claude working directory. This fights against Claude Code's
-fundamental assumption that CWD is the project. The result is friction at every
-layer: git, CLAUDE.md loading, skills, and session startup.
+The original design made the workspace the CWD but kept project as the place to
+open Claude — then tried the reverse. Both had problems. The resolved design:
+
+- **CWD = workspace** (all skills write here universally, including third-party)
+- **CLAUDE.md symlink** in project (gitignored via `.git/info/exclude`)
+- **`add-dir` instruction** in workspace CLAUDE.md (session-start, not manual)
+- **`workspace-init`** generates the routing CLAUDE.md that wires everything up
 
 ---
 
-## Problem 1: The "Always Open In Workspace" Invariant Is Unenforceable
+## Problem 1 — "Always Open In Workspace" Is Unenforceable
 
-The entire model collapses the moment anyone opens Claude in the project directory
-instead of the workspace. That will happen constantly:
+**Original concern:** No enforcement, IDE integration fights you, muscle memory
+fights you. One wrong open = drift.
 
-- **IDE integration fights you**: VS Code and JetBrains Claude extensions launch
-  in the project directory. You'd have to consciously override this every session.
-- **Muscle memory fights you**: Developers `cd project && claude`. That's years
-  of habit the model requires you to break permanently.
-- **No enforcement**: Nothing stops you. No hook, no warning, no guard. Open in
-  the wrong place once, write a handover, and artifacts are now in two locations.
+**Resolution:** The CLAUDE.md symlink in the project means opening in the project
+directory is a safe fallback — you still get full project config. It's not ideal
+(skills write to project CWD) but it doesn't cause silent drift of methodology
+artifacts because the workspace CLAUDE.md's routing table is what redirects
+output. If someone opens in the project regularly they'll notice things aren't
+going to the workspace; the symlink doesn't make the wrong behavior invisible.
 
-One person on a team does this wrong once — everything is inconsistent.
+The discipline is still preferred, but the failure mode is visible and recoverable.
 
----
-
-## Problem 2: The Project's CLAUDE.md Is No Longer Auto-Loaded
-
-**This is the biggest issue and the design doesn't address it.**
-
-Claude Code auto-loads CLAUDE.md from the working directory. If Claude opens in
-the workspace, it loads the **workspace** CLAUDE.md — not the project's. The
-project CLAUDE.md contains:
-
-- Project type (`type: java`, `type: skills`) — skills route on this
-- Build commands (`mvn compile`, `python3 -m pytest`)
-- Commit conventions, work tracking configuration
-- All project-specific behavioural rules
-
-All of it invisible to Claude unless explicitly loaded. Every skill that reads
-project type breaks silently.
-
-**Options, all bad:**
-- Duplicate project type info in workspace CLAUDE.md — two copies that drift
-- Reference the project CLAUDE.md from the workspace one — no `@import`
-  mechanism exists; Claude would have to explicitly read it every session
-- Load both manually — more per-session overhead
+**Status:** ✅ Substantially mitigated
 
 ---
 
-## Problem 3: `add-dir` Is Manual, Every Session
+## Problem 2 — Project CLAUDE.md Not Auto-Loaded
 
-`add-dir` does not persist across sessions. Every single session:
+**Original concern:** CWD = workspace → workspace CLAUDE.md loads, not project's.
+Project type, build commands, conventions all invisible.
 
-1. Open Claude in workspace
-2. Manually type `add-dir /path/to/project`
-3. Then start working
+**Resolution:** The workspace CLAUDE.md IS the project CLAUDE.md — same file via
+symlink. It contains all project config (type, build commands, conventions) AND
+workspace routing config. One file, two access paths.
 
-CLAUDE.md provides context, it cannot issue commands. A session-start hook could
-theoretically automate this, but that's complex additional infrastructure to set
-up and maintain per project. This is recurring friction on every session for the
-lifetime of the project.
+**Status:** ✅ Solved
 
 ---
 
-## Problem 4: Every Git Command In Every Skill Breaks
+## Problem 3 — `add-dir` Every Session
 
-Skills currently do `git log`, `git status`, `git add`, `git commit` — all
-CWD-relative. If CWD is the workspace, those operate on the workspace git repo,
-not the project.
+**Original concern:** `add-dir` doesn't persist, requires manual typing every
+session.
 
-To commit code to the project, every skill now needs something like:
+**Resolution:** Workspace CLAUDE.md contains a `## Session Start` section:
 
-```bash
-PROJECT=$(grep "Project repo:" CLAUDE.md | cut -d' ' -f3)
-git -C "$PROJECT" add src/Foo.java
-git -C "$PROJECT" commit -m "feat: ..."
+```markdown
+## Session Start
+Run `add-dir /absolute/path/to/project` before any other work.
 ```
 
-Instead of `git add && git commit`. Every skill, every git operation, permanently
-more complex. Every skill also needs to know whether it's operating on the
-workspace repo or the project repo — a distinction that currently does not exist
-and would need to be threaded through all of them.
+Claude reads CLAUDE.md on open and follows it. Effectively automatic.
+
+**Status:** ✅ Solved
 
 ---
 
-## Problem 5: Two Git Repos, Constant Cognitive Split
+## Problem 4 — Every Git Command In Every Skill Breaks
 
-Currently: one repo, one `git log`, one history, one branch.
+**Original concern:** If CWD = workspace, `git log`, `git add`, `git commit`
+operate on the workspace repo, not the project.
 
-After: two repos. Every time something is unclear:
-- Is the uncommitted change in the workspace or the project?
-- Which `git log` do I look at for context?
-- Which branch am I actually on in each repo?
+**Resolution:** Skills that do code git operations use the project path from
+CLAUDE.md. This is a real change to skills — they need to qualify project git
+commands. However, this is limited to skills that do coding git work
+(`git-commit`, `java-git-commit`, etc.). Methodology skills (handover,
+idea-log, adr, etc.) commit to the workspace, which IS the CWD — no change
+needed for those.
 
-The branch-mirror convention ("workspace branch mirrors project branch") is
-purely a manual convention. Forget to switch the workspace branch once and
-handovers and snapshots are on the wrong branch — silently, with no warning.
+The coding-focused skills need to read the project path from CLAUDE.md for
+git operations. This is explicit rather than implicit, which is arguably clearer.
 
----
-
-## Problem 6: The Design Conflates Two Separate Concerns
-
-"Claude opens in the workspace" bundles together:
-
-1. **Where methodology artifacts are stored** — the problem being solved
-2. **Where Claude does its primary work** — not a problem that needed changing
-
-These don't have to be the same thing. The original symlink approach kept them
-separate: project is CWD, workspace accessible via `workspace/` symlink.
-
-The discomfort with the symlink was: "what if someone opens Claude in the project
-without the workspace context?" But that's the same discipline problem as "what
-if someone opens Claude in the project instead of the workspace?" The invariant
-you need to enforce is **identical in both models** — but the symlink model
-doesn't break git, doesn't break CLAUDE.md auto-loading, and doesn't require
-`add-dir` every session.
+**Status:** ⚠️ Partially resolved — coding skills need project-path-aware git
+commands. Contained to git-commit family, not all skills.
 
 ---
 
-## Problem 7: Git Worktrees Are Not Addressed
+## Problem 5 — Two Git Repos, Cognitive Split
 
-Claude Code supports git worktrees for parallel development. If you create a
-worktree on the project (`git worktree add ../project-feat ../feat`), do you
-also create a matching worktree on the workspace? If not, the workspace is on
-the wrong branch for that work. If yes, that's another manual step every time
-you create a worktree — a convention with no enforcement and easy to forget.
+**Original concern:** Two repos, two `git log`, two branch states, easy to
+lose track of which is which.
 
----
+**Resolution:** Workspace commits are deliberate — skills explicitly commit to
+workspace. Project commits are normal CWD operations. The split is real but
+intentional. Branch mirroring is a documented convention; enforcement via hook
+is deferred.
 
-## Problem 8: The Parent `~/claude/` Repo Cannot See Child History
-
-Child project workspaces are their own git repos inside `~/claude/private/` and
-`~/claude/public/`. A parent git repo at `~/claude/` would see those as untracked
-nested repos. Git does not handle nested repos without submodules (explicitly
-rejected). The parent repo would need to `.gitignore` all child workspace
-directories.
-
-Result: the parent's git history contains only cross-workspace artifacts. "Seeing
-all projects" means filesystem access only — not git access. Weaker than it sounds.
+**Status:** ⚠️ Accepted — managed complexity, not eliminated
 
 ---
 
-## Problem 9: Quick Tasks Become Expensive
+## Problem 6 — Design Conflates Two Separate Concerns
 
-Currently: `cd project && claude "quick question"` — done in one step.
+**Original concern:** "Claude opens in workspace" bundled WHERE Claude works
+with WHERE artifacts are stored.
 
-After: navigate to workspace → open Claude → `add-dir project` → ask question.
-Three steps of overhead for the most common lightweight use case. The model is
-designed for long epic-scoped sessions and penalises every quick interaction.
+**Resolution:** The symlink approach separates them cleanly. Workspace is
+artifact storage. Project is accessible via add-dir. Workspace CLAUDE.md is
+the routing config that connects them. Concerns are separated.
 
----
-
-## The Underlying Flaw
-
-The design solves "artifacts in the wrong place" by changing **where Claude
-opens**. But Claude Code is built assuming the project is the working directory.
-Everything — CLAUDE.md loading, git operations, skill path logic — assumes CWD
-is the project. Fighting that assumption creates friction at every layer rather
-than solving one problem cleanly.
+**Status:** ✅ Solved
 
 ---
 
-## Alternative Worth Considering
+## Problem 7 — Git Worktrees Not Addressed
 
-Keep CWD as the project. Solve the artifact location problem at the **path
-level**, not the working directory level:
+**Original concern:** Project worktrees don't automatically get matching
+workspace branches.
 
-- Project `CLAUDE.md` declares `workspace: ~/claude/private/cc-praxis/`
-- Skills that write methodology artifacts check for this config and write there
-  instead of `docs/`
-- If no workspace configured, fall back to current `docs/` behaviour (backwards
-  compatible)
-- Claude reads project CLAUDE.md automatically — no broken assumptions
-- Git operations stay simple — one repo is CWD
-- `add-dir ~/claude/private/cc-praxis/` gives workspace read/write access when
-  needed, or skills write directly to the absolute path
-- The "always open in workspace" discipline disappears entirely — you just open
-  in the project as normal
+**Resolution:** Documented as a manual convention — when creating a project
+worktree, also branch the workspace. A post-checkout hook that warns about
+branch mismatch is future work.
 
-This solves the original problem (artifacts out of project repo) without
-inverting the fundamental CWD assumption that everything else is built on.
-
-**Trade-off:** Skills become path-aware (they check CLAUDE.md for workspace
-config). But this is less complexity than making all git operations project-aware,
-which the current design requires.
+**Status:** 🔜 Deferred — convention documented, hook enforcement future work
 
 ---
 
-## Open Questions Before Proceeding
+## Problem 8 — Parent `~/claude/` Repo Can't See Child History
 
-1. Does `add-dir` cause Claude to auto-load CLAUDE.md from the added directory?
-   If yes, Problem 2 is partially mitigated.
-2. Is there a session-start hook mechanism that could auto-run `add-dir`? If yes,
-   Problem 3 is mitigated.
-3. Can the "always open in workspace" discipline be enforced via a hook that
-   detects when Claude opens in a project dir that has a known workspace and
-   warns the user?
-4. Is the alternative (workspace path in project CLAUDE.md, skills write there)
-   sufficient to solve the original problem without the CWD inversion?
+**Original concern:** Nested git repos, parent can't track child commits without
+submodules (rejected).
+
+**Resolution:** By design. Parent lists `private/` and `public/` by filesystem,
+discovers workspaces, reads their files directly. Parent's own commits are
+cross-workspace artifacts only. This is the intended model, not a defect.
+
+**Status:** ✅ By design
+
+---
+
+## Problem 9 — Quick Tasks Are Expensive
+
+**Original concern:** Quick `cd project && claude` becomes
+navigate-to-workspace → open → add-dir → ask.
+
+**Resolution:** The CLAUDE.md symlink means `cd project && claude` still works
+and loads full project config. For quick tasks where you don't need workspace
+artifacts, this is fine. For sessions where you'll write artifacts, opening in
+the workspace is preferred but the CLAUDE.md symlink makes the project a
+viable entry point.
+
+**Status:** ✅ Substantially mitigated
+
+---
+
+## The Third-Party Skill Problem (New — Key Insight)
+
+**Concern surfaced during analysis:** Third-party skills (superpowers brainstorming,
+writing-plans, any future skill) write to CWD-relative paths. If CWD = project,
+they pollute the project repo. Only skills that explicitly support path overrides
+can be redirected via CLAUDE.md — we can't guarantee future skills have this.
+
+**Resolution:** CWD = workspace means ALL skills write to workspace by default,
+universally, regardless of whether they support path overrides. This is the
+strongest argument for workspace-as-CWD and the reason the "project-as-CWD with
+overrides" approach was rejected.
+
+Superpowers skills additionally support CLAUDE.md path overrides as
+belt-and-suspenders. Future third-party skills that don't support overrides
+still land correctly because CWD is the workspace.
+
+**Status:** ✅ Solved — this is the primary reason CWD = workspace
+
+---
+
+## Remaining Open Issue
+
+**Git-commit family of skills** need to qualify project git operations with the
+project path from CLAUDE.md. This is real implementation work and a genuine
+change to how those skills operate. Contained to coding-workflow skills, not
+methodology skills. Acceptable for first iteration.
