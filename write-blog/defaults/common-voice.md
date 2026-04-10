@@ -57,6 +57,8 @@ Precise, not rounded.
 - "Future work will determine" — distance from uncertainty, not honest engagement
 - Starting consecutive sentences with "This" or "It"
 - Superlatives without evidence: "the best", "the most powerful"
+- Theatrical stakes: "everything hung by a thread", "the moment everything changed", "this broke everything" — unless clearly a joke
+- Melodramatic emotional reactions: "I was devastated", "finally, relief" — keep emotional register measured
 
 ---
 

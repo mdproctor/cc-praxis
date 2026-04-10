@@ -196,6 +196,8 @@ Diary entries must reflect what actually happened, not a dramatised version of i
 - Scale ("dozens of files" when it was three)
 - Difficulty ("fought with X for hours" when it was one attempt)
 
+**Avoid theatrical dramatisation.** The diary voice is direct and honest, not heightened. Don't write as if the stakes were higher than they were. "Everything hung by a thread" when it was a debugging session, "the moment everything changed" when it was a routine decision — these raise the temperature unnecessarily and read as performance. The exception is intentional self-deprecating humour, where the exaggeration is obviously the joke.
+
 If the actual facts feel underwhelming, write them accurately anyway. A reader who later checks git history and finds the timeline doesn't match will lose trust in everything else the entry says. The accurate version is always the defensible one — the only one that survives contact with evidence.
 
 **Verify before writing:** any duration, count, or magnitude claim should be checkable against `git log`, file diffs, or session context. If you can't verify it, either qualify it as an estimate ("roughly a day", "several files") or leave it out.
