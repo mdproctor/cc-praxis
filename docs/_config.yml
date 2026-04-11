@@ -16,7 +16,6 @@ plugins:
 exclude:
   - Gemfile
   - Gemfile.lock
-  - "*.md"
 
 defaults:
   - scope:
