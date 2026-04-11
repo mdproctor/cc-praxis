@@ -1,0 +1,33 @@
+---
+layout: default
+title: "Diary"
+permalink: /blog/
+---
+<style>
+  .blog-wrap { max-width: 720px; margin: 0 auto; padding: 3rem 2rem 4rem; }
+  .blog-title { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 700; color: #111827; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+  .blog-sub { font-size: 0.9rem; color: #6b7280; margin-bottom: 3rem; }
+  .entry { display: grid; grid-template-columns: 100px 1fr; gap: 1.5rem; padding: 1.5rem 0; border-bottom: 1px solid #e5e7eb; text-decoration: none; color: inherit; transition: opacity 0.15s; }
+  .entry:first-of-type { border-top: 1px solid #e5e7eb; }
+  .entry:hover { opacity: 0.7; }
+  .entry-date { font-size: 11px; font-weight: 600; color: #9ca3af; letter-spacing: 0.04em; padding-top: 0.2rem; }
+  .entry-title { font-size: 1rem; font-weight: 600; color: #111827; margin-bottom: 0.25rem; line-height: 1.35; }
+  .entry-excerpt { font-size: 0.85rem; color: #6b7280; line-height: 1.6; }
+  .entry-type { display: inline-block; font-size: 10px; font-weight: 600; color: #4f46e5; background: #eef2ff; padding: 1px 6px; border-radius: 3px; margin-top: 0.25rem; }
+</style>
+
+<div class="blog-wrap">
+  <h1 class="blog-title">Development Diary</h1>
+  <p class="blog-sub">{{ site.posts.size }} entries — decisions, pivots, and discoveries as they happen.</p>
+
+  {% for post in site.posts %}
+  <a class="entry" href="{{ post.url | relative_url }}">
+    <div class="entry-date">{{ post.date | date: "%b %-d\n%Y" }}</div>
+    <div>
+      <div class="entry-title">{{ post.title }}</div>
+      {% if post.excerpt %}<p class="entry-excerpt">{{ post.excerpt | strip_html | truncate: 160 }}</p>{% endif %}
+      {% if post.type %}<span class="entry-type">{{ post.type }}</span>{% endif %}
+    </div>
+  </a>
+  {% endfor %}
+</div>

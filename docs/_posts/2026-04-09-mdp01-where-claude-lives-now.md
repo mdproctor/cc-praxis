@@ -1,3 +1,9 @@
+---
+layout: post
+title: "cc-praxis — Where Claude Lives Now"
+date: 2026-04-09
+type: phase-update
+---
 # cc-praxis — Where Claude Lives Now
 
 **Date:** 2026-04-09

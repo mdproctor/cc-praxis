@@ -312,6 +312,12 @@ Some skills in this repository are **developer-only** — they require a cloned 
 
 **Quality check:** During deep analysis, verify no third-party skills are documented anywhere. *This is part of the `consistency` category in `project-health`.*
 
+## Blog
+
+**Blog directory:** `docs/_posts/`
+
+Blog posts are Jekyll posts published at `mdproctor.github.io/cc-praxis/blog/`. Each post needs frontmatter: `layout: post`, `title`, `date`, `type`.
+
 ## Writing Style Guide — Mandatory for Blog Content
 
 **The writing style guide at `~/claude-workspace/writing-styles/blog-technical.md` is mandatory for all blog and diary entries. It is not a soft suggestion.**

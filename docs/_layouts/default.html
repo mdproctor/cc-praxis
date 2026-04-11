@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} — {% endif %}cc-praxis</title>
+  <meta name="description" content="{{ page.description | default: site.description | strip_html | normalize_whitespace | truncate: 160 }}">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f3f4f6; color: #111827; font-size: 15px; line-height: 1.6; min-height: 100vh; }
+    .site-header { background: #1e1b4b; color: white; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; }
+    .site-header a.logo { color: white; text-decoration: none; font-size: 17px; font-weight: 700; letter-spacing: -0.02em; }
+    .site-header a.logo span { color: #a5b4fc; font-weight: 400; }
+    .header-nav { display: flex; gap: 1.5rem; align-items: center; }
+    .header-nav a { color: rgba(255,255,255,0.75); font-size: 13px; font-weight: 500; text-decoration: none; transition: color 0.15s; }
+    .header-nav a:hover { color: white; }
+    .header-nav a.active { color: #a5b4fc; }
+    .site-footer { border-top: 1px solid #e5e7eb; padding: 1.5rem 2rem; text-align: center; font-size: 12px; color: #9ca3af; margin-top: 4rem; }
+    .site-footer a { color: #6b7280; text-decoration: none; }
+    .site-footer a:hover { color: #4f46e5; }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <a class="logo" href="{{ '/' | relative_url }}">cc<span>-praxis</span></a>
+    <nav class="header-nav">
+      <a href="{{ '/blog/' | relative_url }}" {% if page.layout == 'post' or page.url contains '/blog/' %}class="active"{% endif %}>Diary</a>
+      <a href="https://github.com/mdproctor/cc-praxis" target="_blank">GitHub ↗</a>
+    </nav>
+  </header>
+
+  {{ content }}
+
+  <footer class="site-footer">
+    <a href="{{ '/' | relative_url }}">cc-praxis</a> · <a href="{{ '/blog/' | relative_url }}">diary</a> · <a href="https://github.com/mdproctor/cc-praxis" target="_blank">github</a>
+  </footer>
+
+</body>
+</html>

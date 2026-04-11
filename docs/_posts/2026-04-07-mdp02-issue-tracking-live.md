@@ -1,3 +1,9 @@
+---
+layout: post
+title: "cc-praxis — The Gap We Found While Testing What We Built"
+date: 2026-04-07
+type: phase-update
+---
 # cc-praxis — The Gap We Found While Testing What We Built
 
 **Date:** 2026-04-07

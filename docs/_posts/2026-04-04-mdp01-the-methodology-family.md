@@ -1,3 +1,9 @@
+---
+layout: post
+title: "cc-praxis — The Methodology Family"
+date: 2026-04-04
+type: phase-update
+---
 # cc-praxis — The Methodology Family
 
 **Date:** 2026-04-04

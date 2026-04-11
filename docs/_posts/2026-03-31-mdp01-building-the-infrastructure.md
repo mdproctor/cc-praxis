@@ -1,3 +1,9 @@
+---
+layout: post
+title: "cc-praxis — Building the Infrastructure"
+date: 2026-03-31
+type: phase-update
+---
 # cc-praxis — Building the Infrastructure
 
 **Date:** 2026-03-31

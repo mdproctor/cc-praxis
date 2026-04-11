@@ -1,3 +1,9 @@
+---
+layout: post
+title: "cc-praxis — Health, TypeScript, and Python"
+date: 2026-04-02
+type: phase-update
+---
 # cc-praxis — Health, TypeScript, and Python
 
 **Date:** 2026-04-02

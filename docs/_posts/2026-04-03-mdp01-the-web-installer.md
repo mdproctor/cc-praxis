@@ -1,3 +1,9 @@
+---
+layout: post
+title: "cc-praxis — The Web Installer"
+date: 2026-04-03
+type: phase-update
+---
 # cc-praxis — The Web Installer
 
 **Date:** 2026-04-03

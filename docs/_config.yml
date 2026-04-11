@@ -1,0 +1,26 @@
+title: cc-praxis
+description: "Claude Code skills for Java, Python, TypeScript and more."
+baseurl: "/cc-praxis"
+url: "https://mdproctor.github.io"
+author: Mark Proctor
+
+permalink: /blog/:year/:month/:day/:title/
+
+markdown: kramdown
+kramdown:
+  input: GFM
+
+plugins:
+  - jekyll-feed
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - "*.md"
+
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: post
