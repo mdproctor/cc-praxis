@@ -569,9 +569,7 @@ Full design: `docs/superpowers/specs/2026-04-09-workspace-model-design.md`
 - `design-snapshot` — immutable dated record of design state; links to ADRs rather than duplicating them
 - `idea-log` — lightweight living log for undecided possibilities; park ideas before they evaporate, promote to ADR when ready
 - `write-blog` — living project diary; captures decisions, pivots, and discoveries in diary voice as they happen; never revised in hindsight
-- `forage` — session-time garden operations (CAPTURE, SWEEP, SEARCH, REVISE); queues submissions to `~/.hortora/garden/submissions/` without touching the live garden; installed from Hortora/soredium marketplace
-- `harvest` — dedicated maintenance garden operations (MERGE, DEDUPE); integrates queued submissions into the live garden at `~/.hortora/garden/`; run in a separate session, not during project work
-- `handover` — end-of-session HANDOFF.md generator; lazy references to garden, blog, design-snapshot, and CLAUDE.md rather than loading them; invokes forage SWEEP, write-blog, design-snapshot, and update-claude-md via user-confirmed wrap checklist
+- `handover` — end-of-session HANDOFF.md generator; lazy references to blog, design-snapshot, and CLAUDE.md rather than loading them; invokes write-blog, design-snapshot, and update-claude-md via user-confirmed wrap checklist
 
 **TypeScript/Node.js skills:**
 - `ts-dev` — TypeScript development; strict mode, async patterns, error handling, testing

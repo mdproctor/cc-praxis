@@ -1,6 +1,6 @@
 {
   "name": "cc-praxis",
-  "description": "Professional development skills for Claude Code — deep Java/Quarkus support plus universal principles for any project",
+  "description": "Professional development skills for Claude Code \u2014 deep Java/Quarkus support plus universal principles for any project",
   "owner": {
     "name": "Mark Proctor",
     "url": "https://github.com/mdproctor"
@@ -75,7 +75,7 @@
     {
       "name": "cc-praxis-ui",
       "source": "./cc-praxis-ui",
-      "description": "Launch the cc-praxis skill manager UI — browse, install, update, and uninstall skills",
+      "description": "Launch the cc-praxis skill manager UI \u2014 browse, install, update, and uninstall skills",
       "version": "1.0.0"
     },
     {
@@ -213,49 +213,43 @@
     {
       "name": "design-snapshot",
       "source": "./design-snapshot",
-      "description": "Immutable dated record of design state — where we are, how we got here, where we're going",
+      "description": "Immutable dated record of design state \u2014 where we are, how we got here, where we're going",
       "version": "1.0.0-SNAPSHOT"
     },
     {
       "name": "write-blog",
       "source": "./write-blog",
-      "description": "Living project diary — captures decisions, pivots, and discoveries in the moment with honest diary voice, not polished retrospectives",
-      "version": "1.0.0-SNAPSHOT"
-    },
-    {
-      "name": "garden",
-      "source": "./garden",
-      "description": "Cross-project library of hard-won technical gotchas — bugs, silent failures, and workarounds stored in ~/claude/knowledge-garden/ for any future session to reuse",
+      "description": "Living project diary \u2014 captures decisions, pivots, and discoveries in the moment with honest diary voice, not polished retrospectives",
       "version": "1.0.0-SNAPSHOT"
     },
     {
       "name": "handover",
       "source": "./handover",
-      "description": "Generates a concise HANDOFF.md at session end — lazy references to design snapshots, project blog, and knowledge garden rather than loading them",
+      "description": "Generates a concise HANDOFF.md at session end \u2014 lazy references to design snapshots, project blog, and knowledge garden rather than loading them",
       "version": "1.0.0-SNAPSHOT"
     },
     {
       "name": "idea-log",
       "source": "./idea-log",
-      "description": "Lightweight living log for undecided possibilities — capture, review, promote, and discard ideas",
+      "description": "Lightweight living log for undecided possibilities \u2014 capture, review, promote, and discard ideas",
       "version": "1.0.0-SNAPSHOT"
     },
     {
       "name": "ts-dev",
       "source": "./ts-dev",
-      "description": "TypeScript development workflow — strict mode, async patterns, error handling, testing",
+      "description": "TypeScript development workflow \u2014 strict mode, async patterns, error handling, testing",
       "version": "1.0.0-SNAPSHOT"
     },
     {
       "name": "ts-code-review",
       "source": "./ts-code-review",
-      "description": "TypeScript code review extending code-review-principles — type safety, async correctness",
+      "description": "TypeScript code review extending code-review-principles \u2014 type safety, async correctness",
       "version": "1.0.0-SNAPSHOT"
     },
     {
       "name": "ts-security-audit",
       "source": "./ts-security-audit",
-      "description": "TypeScript/Node.js OWASP Top 10 security audit — injection, auth, SSRF, prototype pollution",
+      "description": "TypeScript/Node.js OWASP Top 10 security audit \u2014 injection, auth, SSRF, prototype pollution",
       "version": "1.0.0-SNAPSHOT"
     },
     {
@@ -267,25 +261,25 @@
     {
       "name": "ts-project-health",
       "source": "./ts-project-health",
-      "description": "Health checks for TypeScript/Node.js projects — extends project-health with TS-specific checks",
+      "description": "Health checks for TypeScript/Node.js projects \u2014 extends project-health with TS-specific checks",
       "version": "1.0.0-SNAPSHOT"
     },
     {
       "name": "python-dev",
       "source": "./python-dev",
-      "description": "Python development workflow — type hints, async patterns, safety, testing with pytest",
+      "description": "Python development workflow \u2014 type hints, async patterns, safety, testing with pytest",
       "version": "1.0.0-SNAPSHOT"
     },
     {
       "name": "python-code-review",
       "source": "./python-code-review",
-      "description": "Python code review extending code-review-principles — type safety, async correctness, safety",
+      "description": "Python code review extending code-review-principles \u2014 type safety, async correctness, safety",
       "version": "1.0.0-SNAPSHOT"
     },
     {
       "name": "python-security-audit",
       "source": "./python-security-audit",
-      "description": "Python OWASP Top 10 security audit — injection, pickle deserialization, secrets, SSRF",
+      "description": "Python OWASP Top 10 security audit \u2014 injection, pickle deserialization, secrets, SSRF",
       "version": "1.0.0-SNAPSHOT"
     },
     {
@@ -297,55 +291,55 @@
     {
       "name": "python-project-health",
       "source": "./python-project-health",
-      "description": "Health checks for Python projects — extends project-health with Python-specific checks",
+      "description": "Health checks for Python projects \u2014 extends project-health with Python-specific checks",
       "version": "1.0.0-SNAPSHOT"
     },
     {
       "name": "project-health",
       "source": "./project-health",
-      "description": "Universal project health checks — correctness, consistency, and compliance across all project types",
+      "description": "Universal project health checks \u2014 correctness, consistency, and compliance across all project types",
       "version": "1.0.0-SNAPSHOT"
     },
     {
       "name": "project-refine",
       "source": "./project-refine",
-      "description": "Improvement opportunities across docs and code — structure, deduplication, and bloat reduction",
+      "description": "Improvement opportunities across docs and code \u2014 structure, deduplication, and bloat reduction",
       "version": "1.0.0-SNAPSHOT"
     },
     {
       "name": "skills-project-health",
       "source": "./skills-project-health",
-      "description": "Health checks for Claude Code skill collection repositories — extends project-health with skills-specific checks",
+      "description": "Health checks for Claude Code skill collection repositories \u2014 extends project-health with skills-specific checks",
       "version": "1.0.0-SNAPSHOT"
     },
     {
       "name": "java-project-health",
       "source": "./java-project-health",
-      "description": "Health checks for Java/Maven/Gradle projects — extends project-health with Java-specific checks",
+      "description": "Health checks for Java/Maven/Gradle projects \u2014 extends project-health with Java-specific checks",
       "version": "1.0.0-SNAPSHOT"
     },
     {
       "name": "blog-project-health",
       "source": "./blog-project-health",
-      "description": "Health checks for GitHub Pages/Jekyll blogs — extends project-health with blog-specific checks",
+      "description": "Health checks for GitHub Pages/Jekyll blogs \u2014 extends project-health with blog-specific checks",
       "version": "1.0.0-SNAPSHOT"
     },
     {
       "name": "custom-project-health",
       "source": "./custom-project-health",
-      "description": "Health checks for custom projects — extends project-health with sync-rules and project-currency checks",
+      "description": "Health checks for custom projects \u2014 extends project-health with sync-rules and project-currency checks",
       "version": "1.0.0-SNAPSHOT"
     },
     {
       "name": "retro-issues",
       "source": "./retro-issues",
-      "description": "One-off retrospective mapping of git history to GitHub epics and issues — analyses git log, ADRs, blog entries, and design docs; proposes structure for review before creating anything",
+      "description": "One-off retrospective mapping of git history to GitHub epics and issues \u2014 analyses git log, ADRs, blog entries, and design docs; proposes structure for review before creating anything",
       "version": "1.0.0-SNAPSHOT"
     },
     {
       "name": "workspace-init",
       "source": "./workspace-init",
-      "description": "One-time workspace setup — creates ~/claude/private/<project>/ with routing CLAUDE.md, gitignored project symlink, and full directory structure",
+      "description": "One-time workspace setup \u2014 creates ~/claude/private/<project>/ with routing CLAUDE.md, gitignored project symlink, and full directory structure",
       "version": "1.0.0-SNAPSHOT"
     }
   ]
