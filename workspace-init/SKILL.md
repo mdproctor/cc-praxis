@@ -116,8 +116,12 @@ EOF
 
 ### Step 5 — Create workspace CLAUDE.md (routing hub)
 
-```bash
-cat > "$BASE/CLAUDE.md" << EOF
+Draft the base CLAUDE.md content, then **show it to the user and ask for
+acceptance before writing**. Never write CLAUDE.md without confirmation.
+
+Draft:
+
+```
 # <project> Workspace
 
 **Project repo:** <absolute-path-to-project>
@@ -125,38 +129,69 @@ cat > "$BASE/CLAUDE.md" << EOF
 
 ## Session Start
 
-Run \`add-dir <absolute-path-to-project>\` before any other work.
+Run `add-dir <absolute-path-to-project>` before any other work.
 
 ## Artifact Locations
 
 | Skill | Writes to |
 |-------|-----------|
-| brainstorming (specs) | \`specs/\` |
-| writing-plans (plans) | \`plans/\` |
-| handover | \`HANDOVER.md\` |
-| idea-log | \`IDEAS.md\` |
-| design-snapshot | \`snapshots/\` |
-| java-update-design / update-primary-doc | \`design/DESIGN.md\` |
-| adr | \`adr/\` |
-| write-blog | \`blog/\` |
+| brainstorming (specs) | `specs/` |
+| writing-plans (plans) | `plans/` |
+| handover | `HANDOVER.md` |
+| idea-log | `IDEAS.md` |
+| design-snapshot | `snapshots/` |
+| java-update-design / update-primary-doc | `design/DESIGN.md` |
+| adr | `adr/` |
+| write-blog | `blog/` |
 
 ## Structure
 
-- \`HANDOVER.md\` — session handover (single file, overwritten each session)
-- \`IDEAS.md\` — idea log (single file)
-- \`specs/\` — brainstorming / design specs (superpowers output)
-- \`plans/\` — implementation plans (superpowers output)
-- \`snapshots/\` — design snapshots with INDEX.md (auto-pruned, max 10)
-- \`adr/\` — architecture decision records with INDEX.md
-- \`blog/\` — project diary entries with INDEX.md
+- `HANDOVER.md` — session handover (single file, overwritten each session)
+- `IDEAS.md` — idea log (single file)
+- `specs/` — brainstorming / design specs (superpowers output)
+- `plans/` — implementation plans (superpowers output)
+- `snapshots/` — design snapshots with INDEX.md (auto-pruned, max 10)
+- `adr/` — architecture decision records with INDEX.md
+- `blog/` — project diary entries with INDEX.md
 
 ## Rules
 
 - All methodology artifacts go here, not in the project repo
 - Promotion to project repo is always explicit — never automatic
 - Workspace branches mirror project branches — switch both together
-EOF
 ```
+
+Present to the user:
+> "Here is the proposed workspace CLAUDE.md. Accept, or tell me what to change:
+> (YES / edit)"
+
+Apply the accepted or tailored version. Only write the file once confirmed.
+
+### Step 5b — Offer optional CLAUDE.md additions
+
+After the base CLAUDE.md is confirmed, offer each optional addition
+individually. Show the proposed content, ask for acceptance or tailoring.
+Never add anything without confirmation.
+
+**Option 1 — Proactive handover on context pressure:**
+
+> "Add proactive handover suggestion? When the conversation gets long, Claude
+> will suggest writing a handover before context is lost.
+>
+> Proposed addition to workspace CLAUDE.md:
+> ```
+> ## Context Management
+>
+> If the conversation is getting very long or you notice context pressure,
+> proactively suggest writing a handover before continuing.
+> ```
+> (YES / no / edit)"
+
+If accepted (or tailored), append to workspace CLAUDE.md.
+
+**Pattern for future options:** add new options here following the same
+show-and-confirm pattern. Each option is independent — accepting one does
+not imply accepting others.
 
 ### Step 6 — Handle CLAUDE.md in project
 
