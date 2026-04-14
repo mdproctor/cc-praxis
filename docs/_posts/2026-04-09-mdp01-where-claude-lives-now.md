@@ -3,6 +3,9 @@ layout: post
 title: "cc-praxis — Where Claude Lives Now"
 date: 2026-04-09
 type: phase-update
+entry_type: note
+subtype: diary
+projects: ["cc-praxis"]
 ---
 # cc-praxis — Where Claude Lives Now
 

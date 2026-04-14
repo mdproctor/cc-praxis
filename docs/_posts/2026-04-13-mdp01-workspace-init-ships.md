@@ -3,6 +3,9 @@ layout: post
 title: "cc-praxis — workspace-init Ships"
 date: 2026-04-13
 type: phase-update
+entry_type: note
+subtype: diary
+projects: ["cc-praxis"]
 ---
 # cc-praxis — workspace-init Ships
 

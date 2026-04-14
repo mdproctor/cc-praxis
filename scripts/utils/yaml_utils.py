@@ -1,13 +1,14 @@
 """YAML parsing utilities for skill frontmatter."""
 
 import re
+import yaml
 from pathlib import Path
 from typing import Optional, Dict, Tuple
 
 
 def extract_frontmatter(file_path: Path) -> Tuple[Optional[Dict], Optional[str], int]:
     """
-    Extract YAML frontmatter from a SKILL.md file.
+    Extract YAML frontmatter from a SKILL.md or blog entry file.
 
     Returns:
         (frontmatter_dict, error_message, end_line_number)
@@ -29,43 +30,15 @@ def extract_frontmatter(file_path: Path) -> Tuple[Optional[Dict], Optional[str],
         end_line = content[:end_pos].count('\n')
         frontmatter_text = content[4:end_pos]
 
-        # Parse YAML manually (simple parser for our limited use case)
-        frontmatter = {}
-        current_key = None
-        current_value = []
-
-        for line in frontmatter_text.split('\n'):
-            # Skip empty lines
-            if not line.strip():
-                continue
-
-            # Check for key: value line
-            if ':' in line and not line.startswith(' '):
-                # Save previous key if exists
-                if current_key:
-                    frontmatter[current_key] = '\n'.join(current_value).strip()
-
-                # Parse new key
-                key, value = line.split(':', 1)
-                current_key = key.strip()
-                value = value.strip()
-
-                # Handle multi-line indicator '>'
-                if value == '>':
-                    current_value = []
-                else:
-                    current_value = [value] if value else []
-
-            # Multi-line value continuation
-            elif line.startswith(' ') and current_key:
-                current_value.append(line.strip())
-
-        # Save last key
-        if current_key:
-            frontmatter[current_key] = '\n'.join(current_value).strip()
+        # Parse YAML using PyYAML for proper type handling
+        frontmatter = yaml.safe_load(frontmatter_text)
+        if not isinstance(frontmatter, dict):
+            return None, "Frontmatter did not parse to a dictionary", 0
 
         return frontmatter, None, end_line
 
+    except yaml.YAMLError as e:
+        return None, f"YAML parsing error: {str(e)}", 0
     except Exception as e:
         return None, f"Error parsing file: {str(e)}", 0
 

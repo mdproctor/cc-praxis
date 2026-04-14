@@ -3,6 +3,9 @@ layout: post
 title: "cc-praxis — Building the Infrastructure"
 date: 2026-03-31
 type: phase-update
+entry_type: note
+subtype: diary
+projects: ["cc-praxis"]
 ---
 # cc-praxis — Building the Infrastructure
 

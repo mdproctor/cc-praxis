@@ -3,6 +3,9 @@ layout: post
 title: "cc-praxis — Teaching the Garden to Remember Itself"
 date: 2026-04-06
 type: phase-update
+entry_type: note
+subtype: diary
+projects: ["cc-praxis"]
 ---
 # cc-praxis — Teaching the Garden to Remember Itself
 

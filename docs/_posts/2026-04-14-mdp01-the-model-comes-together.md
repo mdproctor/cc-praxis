@@ -3,6 +3,9 @@ layout: post
 title: "cc-praxis — The Model Comes Together"
 date: 2026-04-14
 type: phase-update
+entry_type: note
+subtype: diary
+projects: ["cc-praxis"]
 ---
 # cc-praxis — The Model Comes Together
 

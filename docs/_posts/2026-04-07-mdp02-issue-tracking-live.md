@@ -3,6 +3,9 @@ layout: post
 title: "cc-praxis — The Gap We Found While Testing What We Built"
 date: 2026-04-07
 type: phase-update
+entry_type: note
+subtype: diary
+projects: ["cc-praxis"]
 ---
 # cc-praxis — The Gap We Found While Testing What We Built
 

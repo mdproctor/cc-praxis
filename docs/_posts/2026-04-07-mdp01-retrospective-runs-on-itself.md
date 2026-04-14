@@ -3,6 +3,9 @@ layout: post
 title: "cc-praxis — The Retrospective Runs on Itself"
 date: 2026-04-07
 type: phase-update
+entry_type: note
+subtype: diary
+projects: ["cc-praxis"]
 ---
 # cc-praxis — The Retrospective Runs on Itself
 

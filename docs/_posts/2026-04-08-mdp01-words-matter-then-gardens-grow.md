@@ -3,6 +3,9 @@ layout: post
 title: "cc-praxis — Words Matter, Then Gardens Grow"
 date: 2026-04-08
 type: phase-update
+entry_type: note
+subtype: diary
+projects: ["cc-praxis"]
 ---
 # cc-praxis — Words Matter, Then Gardens Grow
 

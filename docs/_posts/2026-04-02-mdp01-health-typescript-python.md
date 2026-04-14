@@ -3,6 +3,9 @@ layout: post
 title: "cc-praxis — Health, TypeScript, and Python"
 date: 2026-04-02
 type: phase-update
+entry_type: note
+subtype: diary
+projects: ["cc-praxis"]
 ---
 # cc-praxis — Health, TypeScript, and Python
 

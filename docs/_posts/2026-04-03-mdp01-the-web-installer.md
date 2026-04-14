@@ -3,6 +3,9 @@ layout: post
 title: "cc-praxis — The Web Installer"
 date: 2026-04-03
 type: phase-update
+entry_type: note
+subtype: diary
+projects: ["cc-praxis"]
 ---
 # cc-praxis — The Web Installer
 
