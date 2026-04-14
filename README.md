@@ -1388,7 +1388,7 @@ Claude: [Uses git-commit]
 
 ## Skill Chaining Reference
 
-**Invocation types:** `auto` = always happens without user input · `conditional` = happens when a condition is met · `manual` = user explicitly requests it
+**Invocation types:** `auto` = always happens without user input · `conditional` = happens when a condition is met · `manual` = user explicitly requests it · `prereq` = loaded as foundation before the skill runs
 
 | From Skill | To Skill | Type | Condition / When |
 |------------|----------|------|-----------------|
@@ -1439,6 +1439,30 @@ Claude: [Uses git-commit]
 | `handover` | `design-snapshot` | conditional | Design snapshot checked in wrap checklist |
 | `handover` | `update-claude-md` | conditional | Convention sync checked in wrap checklist |
 | `write-blog` | `publish-blog` | manual | User wants to push entries to external platforms |
+| `idea-log` | `adr` | manual | Promoting an idea to a formal architectural decision |
+| `idea-log` | `issue-workflow` | manual | Promoting an idea to tracked implementation work |
+| `idea-log` | `git-commit` | manual | Committing IDEAS.md additions and status updates |
+| `design-snapshot` | `idea-log` | conditional | Reviewing a snapshot surfaces undecided ideas |
+| `epic-start` | `brainstorming` | conditional | User accepts brainstorm offer at end of epic-start |
+| `project-health` | `skills-project-health` | auto | type: skills detected in CLAUDE.md (tier 3+) |
+| `project-health` | `java-project-health` | auto | type: java detected in CLAUDE.md (tier 3+) |
+| `project-health` | `blog-project-health` | auto | type: blog detected in CLAUDE.md (tier 3+) |
+| `project-health` | `custom-project-health` | auto | type: custom detected in CLAUDE.md (tier 3+) |
+| `project-health` | `ts-project-health` | conditional | TypeScript project detected (tier 3+) |
+| `project-health` | `python-project-health` | conditional | Python project detected (tier 3+) |
+| `java-code-review` | `code-review-principles` | prereq | Universal review checklist loaded as foundation |
+| `ts-code-review` | `code-review-principles` | prereq | Universal review checklist loaded as foundation |
+| `python-code-review` | `code-review-principles` | prereq | Universal review checklist loaded as foundation |
+| `java-security-audit` | `security-audit-principles` | prereq | Universal OWASP Top 10 loaded as foundation |
+| `ts-security-audit` | `security-audit-principles` | prereq | Universal OWASP Top 10 loaded as foundation |
+| `python-security-audit` | `security-audit-principles` | prereq | Universal OWASP Top 10 loaded as foundation |
+| `maven-dependency-update` | `dependency-management-principles` | prereq | Universal BOM patterns loaded as foundation |
+| `npm-dependency-update` | `dependency-management-principles` | prereq | Universal BOM patterns loaded as foundation |
+| `pip-dependency-update` | `dependency-management-principles` | prereq | Universal BOM patterns loaded as foundation |
+| `quarkus-observability` | `observability-principles` | prereq | Universal logging/tracing/metrics loaded as foundation |
+| `quarkus-flow-dev` | `java-dev` | prereq | Java safety and concurrency rules loaded as foundation |
+| `quarkus-flow-testing` | `java-dev` | prereq | Java testing patterns loaded as foundation |
+| `quarkus-flow-testing` | `quarkus-flow-dev` | prereq | Quarkus Flow workflow patterns loaded as foundation |
 
 ---
 ## License
