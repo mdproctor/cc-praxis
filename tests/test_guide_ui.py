@@ -105,12 +105,12 @@ class TestGuideScrollBehavior(unittest.TestCase):
         self.assertIn('Getting Started', title)
 
     def test_sidebar_renders_twelve_steps(self):
-        steps = self.page.query_selector_all('.guide-step')
+        steps = self.page.query_selector_all('#sidebar-java .guide-step')
         self.assertEqual(len(steps), SECTION_COUNT,
                          f'Expected {SECTION_COUNT} sidebar steps')
 
     def test_first_step_active_on_load(self):
-        first_step = self.page.query_selector('[data-step="1"]')
+        first_step = self.page.query_selector('#sidebar-java [data-step="1"]')
         self.assertIsNotNone(first_step)
         classes = first_step.get_attribute('class')
         self.assertIn('active', classes,
@@ -124,12 +124,12 @@ class TestGuideScrollBehavior(unittest.TestCase):
                         f'Progress bar should have non-zero width, got: {width!r}')
 
     def test_twelve_prompt_blocks_visible(self):
-        blocks = self.page.query_selector_all('.prompt-block')
+        blocks = self.page.query_selector_all('#pane-java .prompt-block')
         self.assertEqual(len(blocks), SECTION_COUNT,
                          f'Expected {SECTION_COUNT} prompt blocks, found {len(blocks)}')
 
     def test_ten_install_callouts_visible(self):
-        callouts = self.page.query_selector_all('.install-callout')
+        callouts = self.page.query_selector_all('#pane-java .install-callout')
         self.assertEqual(len(callouts), 10,
                          f'Expected 10 install callouts, found {len(callouts)}')
 
@@ -137,35 +137,35 @@ class TestGuideScrollBehavior(unittest.TestCase):
 
     def test_scroll_to_section_3_activates_step_3(self):
         self.page.evaluate(
-            "document.querySelector('#section-3').scrollIntoView({behavior: 'instant'})"
+            "document.querySelector('#java-section-3').scrollIntoView({behavior: 'instant'})"
         )
         self.page.wait_for_timeout(500)
 
-        step3 = self.page.query_selector('[data-step="3"]')
+        step3 = self.page.query_selector('#sidebar-java [data-step="3"]')
         classes = step3.get_attribute('class')
         self.assertIn('active', classes,
                       'Step 3 should be active after scrolling to section 3')
 
     def test_scroll_to_section_3_marks_steps_1_2_done(self):
         self.page.evaluate(
-            "document.querySelector('#section-3').scrollIntoView({behavior: 'instant'})"
+            "document.querySelector('#java-section-3').scrollIntoView({behavior: 'instant'})"
         )
         self.page.wait_for_timeout(500)
 
         for step_n in (1, 2):
-            step = self.page.query_selector(f'[data-step="{step_n}"]')
+            step = self.page.query_selector(f'#sidebar-java [data-step="{step_n}"]')
             classes = step.get_attribute('class')
             self.assertIn('done', classes,
                           f'Step {step_n} should be "done" after scrolling past it')
 
     def test_scroll_to_section_3_shows_checkmarks_on_done_steps(self):
         self.page.evaluate(
-            "document.querySelector('#section-3').scrollIntoView({behavior: 'instant'})"
+            "document.querySelector('#java-section-3').scrollIntoView({behavior: 'instant'})"
         )
         self.page.wait_for_timeout(500)
 
         for step_n in (1, 2):
-            circle = self.page.query_selector(f'[data-step="{step_n}"] .guide-step-circle')
+            circle = self.page.query_selector(f'#sidebar-java [data-step="{step_n}"] .guide-step-circle')
             text = circle.inner_text().strip()
             self.assertEqual(text, '✓',
                              f'Done step {step_n} circle should show ✓, got {text!r}')
@@ -175,7 +175,7 @@ class TestGuideScrollBehavior(unittest.TestCase):
             "parseFloat(document.getElementById('guide-progress').style.width) || 0"
         )
         self.page.evaluate(
-            "document.querySelector('#section-3').scrollIntoView({behavior: 'instant'})"
+            "document.querySelector('#java-section-3').scrollIntoView({behavior: 'instant'})"
         )
         self.page.wait_for_timeout(500)
 
@@ -189,29 +189,29 @@ class TestGuideScrollBehavior(unittest.TestCase):
 
     def test_scroll_to_section_12_activates_step_12(self):
         self.page.evaluate(
-            "document.querySelector('#section-12').scrollIntoView({behavior: 'instant'})"
+            "document.querySelector('#java-section-12').scrollIntoView({behavior: 'instant'})"
         )
         self.page.wait_for_timeout(600)
 
-        step12 = self.page.query_selector('[data-step="12"]')
+        step12 = self.page.query_selector('#sidebar-java [data-step="12"]')
         classes = step12.get_attribute('class')
         self.assertIn('active', classes, 'Step 12 should be active at last section')
 
     def test_scroll_to_section_12_marks_prior_steps_done(self):
         self.page.evaluate(
-            "document.querySelector('#section-12').scrollIntoView({behavior: 'instant'})"
+            "document.querySelector('#java-section-12').scrollIntoView({behavior: 'instant'})"
         )
         self.page.wait_for_timeout(600)
 
         for step_n in range(1, 12):
-            step = self.page.query_selector(f'[data-step="{step_n}"]')
+            step = self.page.query_selector(f'#sidebar-java [data-step="{step_n}"]')
             classes = step.get_attribute('class')
             self.assertIn('done', classes,
                           f'Step {step_n} should be done when at section 12')
 
     def test_progress_bar_near_full_at_last_section(self):
         self.page.evaluate(
-            "document.querySelector('#section-12').scrollIntoView({behavior: 'instant'})"
+            "document.querySelector('#java-section-12').scrollIntoView({behavior: 'instant'})"
         )
         self.page.wait_for_timeout(600)
 
@@ -224,13 +224,13 @@ class TestGuideScrollBehavior(unittest.TestCase):
     # ── Happy path: sidebar nav click ────────────────────────────────────────
 
     def test_clicking_step_5_scrolls_to_section_5(self):
-        step5 = self.page.query_selector('[data-step="5"]')
+        step5 = self.page.query_selector('#sidebar-java [data-step="5"]')
         step5.click()
         self.page.wait_for_timeout(600)
 
         is_visible = self.page.evaluate("""
             () => {
-                const el = document.querySelector('#section-5');
+                const el = document.querySelector('#java-section-5');
                 const rect = el.getBoundingClientRect();
                 return rect.top < window.innerHeight && rect.bottom > 0;
             }
@@ -241,25 +241,25 @@ class TestGuideScrollBehavior(unittest.TestCase):
     # ── Happy path: content visibility ───────────────────────────────────────
 
     def test_all_what_it_does_boxes_visible(self):
-        boxes = self.page.query_selector_all('.what-it-does')
+        boxes = self.page.query_selector_all('#pane-java .what-it-does')
         self.assertEqual(len(boxes), SECTION_COUNT)
         for i, box in enumerate(boxes, 1):
             self.assertTrue(box.is_visible(),
                             f'What-it-does box {i} should be visible')
 
     def test_preamble_visible(self):
-        preamble = self.page.query_selector('.guide-intro, .guide-preamble')
+        preamble = self.page.query_selector('#pane-java .guide-intro, #pane-java .guide-preamble')
         self.assertIsNotNone(preamble, 'Prerequisites preamble must exist')
         self.assertTrue(preamble.is_visible())
 
     def test_step_1_subtitle_visible_on_load(self):
-        sub = self.page.query_selector('[data-step="1"] .guide-step-sub')
+        sub = self.page.query_selector('#sidebar-java [data-step="1"] .guide-step-sub')
         self.assertIsNotNone(sub, 'Step 1 must have a subtitle element')
         self.assertTrue(sub.is_visible(),
                         'Step 1 subtitle should be visible on load (step 1 is active)')
 
     def test_step_2_subtitle_hidden_on_load(self):
-        sub = self.page.query_selector('[data-step="2"] .guide-step-sub')
+        sub = self.page.query_selector('#sidebar-java [data-step="2"] .guide-step-sub')
         self.assertIsNotNone(sub, 'Step 2 must have a subtitle element')
         self.assertFalse(sub.is_visible(),
                          'Step 2 subtitle should be hidden on load (not active)')
