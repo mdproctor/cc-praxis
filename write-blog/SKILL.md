@@ -322,10 +322,18 @@ File name: `YYYY-MM-DD-<initials>NN-<kebab-case-title>.md` — today's date, aut
 
 Count only this author's same-day entries (filter by initials) — other authors' entries don't affect the sequence. First entry of the day is `<initials>01`, second `<initials>02`.
 
-After writing the entry file, append a row to `<BLOG_DIR>/INDEX.md`:
-```
-| [YYYY-MM-DD-initials-title.md](YYYY-MM-DD-initials-title.md) | YYYY-MM-DD | <one-line summary> |
-```
+After writing the entry file, update `<BLOG_DIR>/INDEX.md`:
+- If `<BLOG_DIR>/INDEX.md` doesn't exist yet, create it with:
+  ```markdown
+  # Blog Index
+
+  | File | Date | Title |
+  |------|------|-------|
+  ```
+- Append a row:
+  ```
+  | [YYYY-MM-DD-initialsNN-title.md](YYYY-MM-DD-initialsNN-title.md) | YYYY-MM-DD | <one-line summary> |
+  ```
 
 ### Step 7 — Offer related actions
 
