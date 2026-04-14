@@ -144,7 +144,31 @@ Run `add-dir <absolute-path-to-project>` before any other work.
 - All methodology artifacts go here, not in the project repo
 - Promotion to project repo is always explicit — never automatic
 - Workspace branches mirror project branches — switch both together
+
+## Routing
+
+Per-artifact routing destinations (optional). If absent, all artifacts route to the project repo.
+
+| Artifact   | Destination |
+|------------|-------------|
+| adr        | project     |
+| blog       | project     |
+| design     | project     |
+| snapshots  | project     |
+
+Valid destinations: `project` · `workspace` · `alternative ~/path/to/repo/`
+
+To set a global default across all workspaces, add to `~/.claude/CLAUDE.md`:
+\`\`\`markdown
+## Routing
+**Default destination:** workspace
+\`\`\`
+Global valid values: `workspace` or `project` only (no alternative at global level).
 ```
+
+> **Note:** `epic-start` reads the routing config at branch creation time. If `design → workspace`,
+> it records the workspace/main HEAD SHA as the design baseline instead of the project HEAD SHA.
+> Configure routing before starting your first epic.
 
 Present to the user:
 > "Here is the proposed workspace CLAUDE.md. Accept, or tell me what to change:
