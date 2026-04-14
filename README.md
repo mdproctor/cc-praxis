@@ -1650,7 +1650,7 @@ See [QUALITY.md § Why Quality Matters](QUALITY.md#why-quality-matters) for comp
 │       ├── validate_links.py           # External link reachability [PUSH]
 │       ├── validate_examples.py        # Code example correctness [PUSH]
 │       └── validate_python_quality.py  # mypy, flake8, bandit [CI]
-├── tests/                               # Test suite (788 tests)
+├── tests/                               # Test suite (1016 tests)
 │   ├── test_claude_skill.py            # Tests for scripts/claude-skill
 │   ├── test_mockup_chaining.py         # Skill chaining ground truth (CHAINING_TRUTH)
 │   ├── test_chain_data_drift.py        # CHAIN JS in index.html vs CHAINING_TRUTH
