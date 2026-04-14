@@ -26,6 +26,7 @@
   <header class="site-header">
     <a class="logo" href="{{ '/' | relative_url }}">cc<span>-praxis</span></a>
     <nav class="header-nav">
+      <a href="{{ '/articles/' | relative_url }}" {% if page.url contains '/articles/' %}class="active"{% endif %}>Articles</a>
       <a href="{{ '/blog/' | relative_url }}" {% if page.layout == 'post' or page.url contains '/blog/' %}class="active"{% endif %}>Diary</a>
       <a href="https://github.com/mdproctor/cc-praxis" target="_blank">GitHub ↗</a>
     </nav>

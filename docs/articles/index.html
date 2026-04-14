@@ -1,7 +1,7 @@
 ---
 layout: default
-title: "Diary"
-permalink: /blog/
+title: "Articles"
+permalink: /articles/
 ---
 <style>
   .blog-wrap { max-width: 720px; margin: 0 auto; padding: 3rem 2rem 4rem; }
@@ -13,21 +13,31 @@ permalink: /blog/
   .entry-date { font-size: 11px; font-weight: 600; color: #9ca3af; letter-spacing: 0.04em; padding-top: 0.2rem; }
   .entry-title { font-size: 1rem; font-weight: 600; color: #111827; margin-bottom: 0.25rem; line-height: 1.35; }
   .entry-excerpt { font-size: 0.85rem; color: #6b7280; line-height: 1.6; }
-  .entry-type { display: inline-block; font-size: 10px; font-weight: 600; color: #4f46e5; background: #eef2ff; padding: 1px 6px; border-radius: 3px; margin-top: 0.25rem; }
+  .entry-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.4rem; }
+  .entry-tag { font-size: 10px; font-weight: 600; color: #4f46e5; background: #eef2ff; padding: 1px 6px; border-radius: 3px; }
+  .empty-state { padding: 3rem 0; color: #9ca3af; font-size: 0.9rem; }
 </style>
 
 <div class="blog-wrap">
-  <h1 class="blog-title">Development Diary</h1>
-  <p class="blog-sub">{{ site.posts.size }} entries — decisions, pivots, and discoveries as they happen.</p>
+  <h1 class="blog-title">Articles</h1>
+  <p class="blog-sub">Topic-driven posts — standalone reads on tools, techniques, and decisions.</p>
 
-  {% for post in site.posts %}
-  {% if post.subtype == 'diary' %}
+  {% assign articles = site.posts | where: "entry_type", "article" %}
+  {% if articles.size == 0 %}
+  <p class="empty-state">No articles yet — watch this space.</p>
+  {% endif %}
+  {% for post in articles %}
+  {% if post.entry_type == 'article' %}
   <a class="entry" href="{{ post.url | relative_url }}">
     <div class="entry-date">{{ post.date | date: "%b %-d\n%Y" }}</div>
     <div>
       <div class="entry-title">{{ post.title }}</div>
       {% if post.excerpt %}<p class="entry-excerpt">{{ post.excerpt | strip_html | truncate: 160 }}</p>{% endif %}
-      {% if post.type %}<span class="entry-type">{{ post.type }}</span>{% endif %}
+      {% if post.tags and post.tags.size > 0 %}
+      <div class="entry-tags">
+        {% for tag in post.tags %}<span class="entry-tag">{{ tag }}</span>{% endfor %}
+      </div>
+      {% endif %}
     </div>
   </a>
   {% endif %}
