@@ -701,7 +701,7 @@ Creates and manages Architecture Decision Records (ADRs) in MADR format:
 - Sequential numbering and lifecycle management
 - Captures context, alternatives, and tradeoffs
 - Append-only with supersession tracking
-- Stored in `docs/adr/`
+- Stored in `adr/` (workspace)
 
 **Features:**
 - Common Pitfalls table (8 ADR anti-patterns)
@@ -720,7 +720,7 @@ Creates immutable, dated records of design state:
 **Features:**
 - Supersession tracking (older snapshot gets "Superseded by" link)
 - Draft + confirm workflow — user approval required before writing
-- Stored in `docs/design-snapshots/YYYY-MM-DD-<topic>.md`
+- Stored in `snapshots/YYYY-MM-DD-<topic>.md` (workspace)
 
 **Triggers:** "create a design snapshot", "snapshot where we are", "document our progress", "in case we need to go back", significant pivot points.
 
