@@ -70,18 +70,14 @@ Find the step that reads `design/DESIGN.md` and does discovery. Replace the loca
 ls design/JOURNAL.md 2>/dev/null || echo "not found"
 ```
 
-- If found → proceed; this is the design journal for the current epic.
-- If not found → this session is not on an epic branch, or epic-start was not run.
-  Prompt: "No design/JOURNAL.md found. Create one? (y/n)"
-  If yes:
-  ```bash
-  mkdir -p design
-  echo "# Design Journal — $(git branch --show-current)" > design/JOURNAL.md
-  ```
-  If no → skip design documentation this session.
+- If found → **workspace mode**: proceed with journal entry workflow below.
+- If not found → **direct mode**: no workspace configured, or not on an epic branch.
+  Fall back to the existing DESIGN.md sync workflow (unchanged — update the
+  project `DESIGN.md` directly as before). Do not prompt; do not create JOURNAL.md.
+  `epic-start` is responsible for creating it.
 
-Read `design/JOURNAL.md` to understand which sections have already been journalled
-during this epic before adding a new entry.
+In workspace mode: read `design/JOURNAL.md` to understand which sections have
+already been journalled during this epic before adding or updating an entry.
 ```
 
 - [ ] **Step 4: Replace the "write/update DESIGN.md" step with a "write journal entry" step**
