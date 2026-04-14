@@ -118,10 +118,18 @@ Show the full ADR draft and the target filename, then ask:
 
 Only after explicit YES:
 1. Write the file to `adr/NNNN-<title>.md`
-2. Append a row to `adr/INDEX.md`:
-   ```
-   | NNNN | [Title](NNNN-title.md) | Accepted | YYYY-MM-DD |
-   ```
+2. Update `adr/INDEX.md`:
+   - If `adr/INDEX.md` doesn't exist yet, create it with:
+     ```markdown
+     # ADR Index
+
+     | ID | Title | Status | Date |
+     |----|-------|--------|------|
+     ```
+   - Append a row:
+     ```
+     | NNNN | [Title](NNNN-title.md) | Accepted | YYYY-MM-DD |
+     ```
 3. Confirm: "✅ Written to `adr/NNNN-<title>.md`"
 
 ### Step 6 — Suggest an ADR when appropriate
