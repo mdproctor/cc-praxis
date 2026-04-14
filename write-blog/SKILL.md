@@ -236,6 +236,28 @@ grep -l "blog-technical\|writing style guide" CLAUDE.md 2>/dev/null
 
 ### Step 1 — Confirm entry type and voice
 
+**Part A — Article or note?**
+
+Ask (or infer from context if obvious):
+
+```
+Article or note?
+
+  [A] Article — topic-driven, standalone
+  [N] Note / diary — session narrative  (default: N)
+
+Projects: [<project-name from CLAUDE.md>]   ← confirm or extend
+Tags (optional):
+```
+
+Set frontmatter from the response:
+- `entry_type: article` or `entry_type: note`
+- `subtype: diary` (if note — the only subtype currently; omit for articles)
+- `projects: [...]` — pre-populate from the project's `Name:` field in CLAUDE.md; user may extend
+- `tags: [...]` — if provided; omit field entirely if no tags given
+
+**Part B — Narrative type (notes only; skip for articles)**
+
 If invoked via `/write-blog <context>`, the type was already proposed in Step 0b — confirm or adjust here, don't ask again from scratch.
 
 If type is still undetermined, infer from context:
@@ -243,6 +265,8 @@ If type is still undetermined, infer from context:
 - Phase milestone or significant work? → **Phase Update**
 - Direction changing? → **Pivot**
 - Earlier entry proved wrong? → **Correction**
+
+**Part C — Voice**
 
 Also determine: is this primarily solo exploration (use "I") or collaborative
 work (use "we")? Both can appear in the same entry — use whichever fits each
@@ -319,6 +343,20 @@ ls <BLOG_DIR>/YYYY-MM-DD-<initials>*.md 2>/dev/null | wc -l  # count this author
 ```
 
 File name: `YYYY-MM-DD-<initials>NN-<kebab-case-title>.md` — today's date, author initials, two-digit per-author sequence number, topic slug ≤30 chars.
+
+Frontmatter fields to include:
+```yaml
+---
+layout: post
+title: "<title>"
+date: YYYY-MM-DD
+type: <day-zero|phase-update|pivot|correction>   # omit for articles
+entry_type: <article|note>
+subtype: diary                                    # omit for articles
+projects: [<project>, ...]
+tags: [<tag>, ...]                               # omit if empty
+---
+```
 
 Count only this author's same-day entries (filter by initials) — other authors' entries don't affect the sequence. First entry of the day is `<initials>01`, second `<initials>02`.
 
@@ -439,6 +477,9 @@ Run the five checks in **[heading-checks.md](heading-checks.md)** before committ
 Entry is complete when:
 
 - ✅ File exists at `<BLOG_DIR>/YYYY-MM-DD-<initials>NN-<title>.md` with correct initials and per-author sequence number
+- ✅ `entry_type` present in frontmatter (`article` or `note`)
+- ✅ `projects` non-empty list in frontmatter
+- ✅ `subtype: diary` present for note entries; omitted for articles
 - ✅ Voice is correct: "I" for developer perspective, "we" for collaboration, no third-person protagonist
 - ✅ Headings: thematic headings were kept or enhanced — none were replaced with bare structural slots
 - ✅ All required sections filled — no TBDs; "What Changed" may be omitted only if nothing pivoted
