@@ -1298,9 +1298,387 @@ title: Getting Started with cc-praxis
   </main>
 </div>
 
-<!-- Python pane (hidden) -->
+<!-- Python pane (hidden by default) -->
 <div class="guide-pane" id="pane-python" style="display:none">
-  <div style="padding:3rem;color:#6b7280;font-size:14px;">Python guide — coming soon in this task's follow-up.</div>
+
+  <aside class="guide-sidebar" id="sidebar-python">
+    <h3>Getting Started</h3>
+    <a class="guide-step" data-step="1" href="#py-section-1">
+      <span class="guide-step-circle">1</span>
+      <span class="guide-step-title">CLAUDE.md Setup</span>
+      <span class="guide-step-sub">Your configuration hub</span>
+    </a>
+    <a class="guide-step" data-step="2" href="#py-section-2">
+      <span class="guide-step-circle">2</span>
+      <span class="guide-step-title">Workspace Setup</span>
+      <span class="guide-step-sub">Separate code from methodology</span>
+    </a>
+    <a class="guide-step" data-step="3" href="#py-section-3">
+      <span class="guide-step-circle">3</span>
+      <span class="guide-step-title">Python Development</span>
+      <span class="guide-step-sub">Type hints and async patterns</span>
+    </a>
+    <a class="guide-step" data-step="4" href="#py-section-4">
+      <span class="guide-step-circle">4</span>
+      <span class="guide-step-title">Code Review</span>
+      <span class="guide-step-sub">Catches problems early</span>
+    </a>
+    <a class="guide-step" data-step="5" href="#py-section-5">
+      <span class="guide-step-circle">5</span>
+      <span class="guide-step-title">Smart Commits</span>
+      <span class="guide-step-sub">Issue linking built in</span>
+    </a>
+    <a class="guide-step" data-step="6" href="#py-section-6">
+      <span class="guide-step-circle">6</span>
+      <span class="guide-step-title">Brainstorming</span>
+      <span class="guide-step-sub">Design before code</span>
+    </a>
+    <a class="guide-step" data-step="7" href="#py-section-7">
+      <span class="guide-step-circle">7</span>
+      <span class="guide-step-title">Ideas &amp; Decisions</span>
+      <span class="guide-step-sub">Park and record</span>
+    </a>
+    <a class="guide-step" data-step="8" href="#py-section-8">
+      <span class="guide-step-circle">8</span>
+      <span class="guide-step-title">Issues &amp; Epics</span>
+      <span class="guide-step-sub">Automatic tracking</span>
+    </a>
+    <a class="guide-step" data-step="9" href="#py-section-9">
+      <span class="guide-step-circle">9</span>
+      <span class="guide-step-title">Design Snapshots</span>
+      <span class="guide-step-sub">Immutable save points</span>
+    </a>
+    <a class="guide-step" data-step="10" href="#py-section-10">
+      <span class="guide-step-circle">10</span>
+      <span class="guide-step-title">Closing an Epic</span>
+      <span class="guide-step-sub">Merge, route, close</span>
+    </a>
+    <a class="guide-step" data-step="11" href="#py-section-11">
+      <span class="guide-step-circle">11</span>
+      <span class="guide-step-title">Session Handover</span>
+      <span class="guide-step-sub">Resume in one message</span>
+    </a>
+    <a class="guide-step" data-step="12" href="#py-section-12">
+      <span class="guide-step-circle">12</span>
+      <span class="guide-step-title">Project Diary</span>
+      <span class="guide-step-sub">Honest in-the-moment writing</span>
+    </a>
+  </aside>
+
+  <main class="guide-content">
+    <div class="guide-progress-bar"><div id="guide-progress-py" class="guide-progress-fill"></div></div>
+
+    <div class="guide-intro">
+      <h1>Getting Started — Python</h1>
+      <p>A 12-step walkthrough from CLAUDE.md setup through Python development, code review, smart commits, brainstorming, and session handover. Each section shows what a skill does, how to install it, and a prompt to try immediately.</p>
+    </div>
+
+    <section class="guide-section" id="py-section-1" data-section="1">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <div>
+          <h2>CLAUDE.md Setup</h2>
+          <span class="section-tag">Setup — no install needed</span>
+        </div>
+      </div>
+      <div class="what-it-does" data-guide="wid">
+        <strong>What this does</strong>
+        Creates the file that every cc-praxis skill reads first. Sets your GitHub repo and work tracking preferences. Without it, skills can't link issues or configure the right workflows.
+      </div>
+      <p>If your project doesn't have a CLAUDE.md yet, ask Claude to create one. Open Claude Code in your project root and say:</p>
+      <div class="prompt-label">Prompt to try</div>
+      <div class="prompt-block" data-guide="pb">Set up a CLAUDE.md for my Python project tracked on GitHub at owner/repo. Enable issue tracking.</div>
+      <p>The key field is <code>GitHub repo: owner/repo</code> — this enables automatic issue linking in commits:</p>
+      <div class="code-block"><pre><span class="c"># CLAUDE.md</span>
+<span class="k">GitHub repo:</span> <span class="v">owner/repo</span>
+
+<span class="c">## Work Tracking</span>
+<span class="k">Issue tracking:</span> <span class="v">enabled</span>
+<span class="k">GitHub repo:</span> <span class="v">owner/repo</span></pre></div>
+      <div class="section-next" data-guide="sn">Next: <a href="#py-section-2">Workspace Setup →</a></div>
+    </section>
+
+    <section class="guide-section" id="py-section-2" data-section="2">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <div>
+          <h2>Workspace Setup</h2>
+          <span class="section-tag">Setup — no install needed</span>
+        </div>
+      </div>
+      <div class="what-it-does" data-guide="wid">
+        <strong>What this does</strong>
+        Creates a companion git repo that stores ADRs, design snapshots, and session handovers — keeping your project repo focused on code.
+      </div>
+      <p>Optional but recommended. Without a workspace, ADRs and HANDOFF.md land in your project repo. Run <code>/workspace-init</code> once to create a separate home for methodology artifacts.</p>
+      <p>Routing is configured in the workspace CLAUDE.md: <code>project</code> · <code>workspace</code> · <code>alternative ~/path/</code>. Configure before starting your first epic.</p>
+      <div class="prompt-label">Prompt to try</div>
+      <div class="prompt-block" data-guide="pb">/workspace-init</div>
+      <div class="section-next" data-guide="sn">Next: <a href="#py-section-3">Python Development →</a></div>
+    </section>
+
+    <section class="guide-section" id="py-section-3" data-section="3">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <div>
+          <h2>Python Development</h2>
+          <span class="section-tag">Skill: python-dev</span>
+        </div>
+      </div>
+      <div class="what-it-does" data-guide="wid">
+        <strong>What this does</strong>
+        Loads development rules for professional Python: PEP 484 type hints, async/await patterns, safe third-party library usage, and testing with pytest. Triggers automatically when editing <code>.py</code> files.
+      </div>
+      <div class="install-callout" data-guide="ic">
+        <div>
+          <strong>Install this skill</strong>
+          <code>scripts/claude-skill install python-dev</code>
+        </div>
+      </div>
+      <p>Key rules enforced:</p>
+      <ul>
+        <li><strong>Annotate all public functions</strong> — parameters and return types required</li>
+        <li><strong>Never use bare <code>except:</code></strong> — always catch specific exception types</li>
+        <li><strong>Use <code>pathlib</code> over <code>os.path</code></strong> for file operations</li>
+        <li><strong>Avoid mutable default arguments</strong> — use <code>None</code> as sentinel, create inside function</li>
+        <li><strong>Prefer <code>dataclasses</code> or Pydantic</strong> for structured data over plain dicts</li>
+      </ul>
+      <div class="prompt-label">Prompt to try</div>
+      <div class="prompt-block" data-guide="pb">Implement a FastAPI endpoint to fetch orders by customer ID with proper error handling.</div>
+      <div class="section-next" data-guide="sn">Next: <a href="#py-section-4">Code Review →</a></div>
+    </section>
+
+    <section class="guide-section" id="py-section-4" data-section="4">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <div>
+          <h2>Code Review</h2>
+          <span class="section-tag">Skill: python-code-review</span>
+        </div>
+      </div>
+      <div class="what-it-does" data-guide="wid">
+        <strong>What this does</strong>
+        Reviews staged changes for Python-specific issues: bare excepts silencing errors, missing type annotations, pickle/eval injection risks, mutable default arguments, and missing pytest coverage. Triggers automatically before <code>/git-commit</code> if no review has been done this session.
+      </div>
+      <div class="install-callout" data-guide="ic">
+        <div>
+          <strong>Install this skill</strong>
+          <code>scripts/claude-skill install python-code-review</code>
+        </div>
+      </div>
+      <p>Auth, payment, or PII code automatically escalates to <code>python-security-audit</code> for a full OWASP check including deserialization risks, SQL injection, and path traversal. Findings come as CRITICAL (blocks), WARNING, or NOTE.</p>
+      <div class="prompt-label">Prompt to try</div>
+      <div class="prompt-block" data-guide="pb">Review my changes. &nbsp;or&nbsp; /python-code-review</div>
+      <div class="section-next" data-guide="sn">Next: <a href="#py-section-5">Smart Commits →</a></div>
+    </section>
+
+    <section class="guide-section" id="py-section-5" data-section="5">
+      <div class="section-header">
+        <div class="section-num">5</div>
+        <div>
+          <h2>Smart Commits</h2>
+          <span class="section-tag">Skill: git-commit</span>
+        </div>
+      </div>
+      <div class="what-it-does" data-guide="wid">
+        <strong>What this does</strong>
+        Routes commits through code review (if not done this session), writes a conventional commit message, and links the active GitHub issue automatically with <code>Refs #N</code>.
+      </div>
+      <div class="install-callout" data-guide="ic">
+        <div>
+          <strong>Install this skill</strong>
+          <code>scripts/claude-skill install git-commit</code>
+        </div>
+      </div>
+      <p>Use <code>/git-commit</code> instead of plain <code>git commit</code>. Standard conventional commit types:</p>
+      <div class="code-block"><pre><span class="v">feat:</span>     add order validation endpoint
+<span class="v">fix:</span>      handle None customer_id in find_by_customer
+<span class="v">refactor:</span> extract validation into OrderValidator class
+<span class="v">test:</span>     add edge cases for None customer handling
+<span class="v">chore:</span>    bump fastapi to 0.110.0</pre></div>
+      <p>For pip/poetry package updates use <code>pip-dependency-update</code> — it audits, bumps, and commits in one workflow.</p>
+      <div class="prompt-label">Prompt to try</div>
+      <div class="prompt-block" data-guide="pb">/git-commit</div>
+      <div class="section-next" data-guide="sn">Next: <a href="#py-section-6">Brainstorming →</a></div>
+    </section>
+
+    <section class="guide-section" id="py-section-6" data-section="6">
+      <div class="section-header">
+        <div class="section-num">6</div>
+        <div>
+          <h2>Brainstorming</h2>
+          <span class="section-tag">Skill: superpowers:brainstorming</span>
+        </div>
+      </div>
+      <div class="what-it-does" data-guide="wid">
+        <strong>What this does</strong>
+        Guides a structured design conversation producing a written spec, then a step-by-step TDD implementation plan. No code is written until the spec is explicitly approved.
+      </div>
+      <div class="install-callout" data-guide="ic">
+        <div>
+          <strong>Install this skill</strong>
+          <code>/plugin install superpowers</code> (includes brainstorming)
+        </div>
+      </div>
+      <p>The hard gate: Claude will not write implementation code until you approve the spec. The flow: context → clarifying questions → 2–3 approaches with trade-offs → design sections → spec → implementation plan → TDD execution.</p>
+      <div class="prompt-label">Prompt to try</div>
+      <div class="prompt-block" data-guide="pb">Let's brainstorm the order validation feature. I want idempotent validation with retry logic.</div>
+      <div class="section-next" data-guide="sn">Next: <a href="#py-section-7">Ideas &amp; Decisions →</a></div>
+    </section>
+
+    <section class="guide-section" id="py-section-7" data-section="7">
+      <div class="section-header">
+        <div class="section-num">7</div>
+        <div>
+          <h2>Ideas &amp; Decisions</h2>
+          <span class="section-tag">Skills: idea-log + adr</span>
+        </div>
+      </div>
+      <div class="what-it-does" data-guide="wid">
+        <strong>What this does</strong>
+        Two skills at different decision readiness levels. <code>idea-log</code> parks possibilities before they're decided. <code>adr</code> records the decision once made — immutably, with a status lifecycle.
+      </div>
+      <div class="install-callout" data-guide="ic">
+        <div>
+          <strong>Install these skills</strong>
+          <code>scripts/claude-skill install idea-log adr</code>
+        </div>
+      </div>
+      <p><strong>idea-log</strong> maintains <code>IDEAS.md</code> with statuses active/promoted/discarded. Ideas older than 90 days are flagged. <strong>adr</strong> is append-only — if a decision is superseded, create a new ADR and mark the old one <code>Superseded by ADR-NNNN</code>.</p>
+      <div class="prompt-label">Prompt to try</div>
+      <div class="prompt-block" data-guide="pb">Log this idea: use Redis for rate limiting — not decided yet. &nbsp;/&nbsp; Create an ADR for choosing SQLAlchemy over raw SQL.</div>
+      <div class="section-next" data-guide="sn">Next: <a href="#py-section-8">Issues &amp; Epics →</a></div>
+    </section>
+
+    <section class="guide-section" id="py-section-8" data-section="8">
+      <div class="section-header">
+        <div class="section-num">8</div>
+        <div>
+          <h2>Issues &amp; Epics</h2>
+          <span class="section-tag">Skill: issue-workflow</span>
+        </div>
+      </div>
+      <div class="what-it-does" data-guide="wid">
+        <strong>What this does</strong>
+        Wires GitHub issue tracking into every session. Phase 0 is one-time setup. After that, Phases 1–3 fire automatically: before writing code, at session start, and before each commit.
+      </div>
+      <div class="install-callout" data-guide="ic">
+        <div>
+          <strong>Install this skill</strong>
+          <code>scripts/claude-skill install issue-workflow</code>
+        </div>
+      </div>
+      <p>Run Phase 0 once with <code>/issue-workflow</code>. After that: Phase 1 creates epics from brainstorming specs; Phase 2 checks for an active issue before writing code; Phase 3 verifies issue linkage before each commit.</p>
+      <div class="prompt-label">Prompt to try</div>
+      <div class="prompt-block" data-guide="pb">/issue-workflow</div>
+      <div class="section-next" data-guide="sn">Next: <a href="#py-section-9">Design Snapshots →</a></div>
+    </section>
+
+    <section class="guide-section" id="py-section-9" data-section="9">
+      <div class="section-header">
+        <div class="section-num">9</div>
+        <div>
+          <h2>Design Snapshots</h2>
+          <span class="section-tag">Skill: design-snapshot</span>
+        </div>
+      </div>
+      <div class="what-it-does" data-guide="wid">
+        <strong>What this does</strong>
+        Creates an immutable dated record of where the design stands at a specific moment. Unlike a living design doc, a snapshot is never edited after creation. Use it before a major pivot or at the end of a phase.
+      </div>
+      <div class="install-callout" data-guide="ic">
+        <div>
+          <strong>Install this skill</strong>
+          <code>scripts/claude-skill install design-snapshot</code>
+        </div>
+      </div>
+      <p>Each snapshot covers five sections: Where We Are, How We Got Here, Where We're Going, Open Questions, and Linked ADRs. Snapshots are auto-pruned to 10 most recent. If the design moves on, create a new snapshot — never edit an existing one.</p>
+      <div class="prompt-label">Prompt to try</div>
+      <div class="prompt-block" data-guide="pb">Take a design snapshot before we refactor the data access layer.</div>
+      <div class="section-next" data-guide="sn">Next: <a href="#py-section-10">Closing an Epic →</a></div>
+    </section>
+
+    <section class="guide-section" id="py-section-10" data-section="10">
+      <div class="section-header">
+        <div class="section-num">10</div>
+        <div>
+          <h2>Closing an Epic</h2>
+          <span class="section-tag">Skill: epic-close</span>
+        </div>
+      </div>
+      <div class="what-it-does" data-guide="wid">
+        <strong>What this does</strong>
+        Closes the epic branch: routes ADRs and snapshots per your routing config, posts specs to the GitHub issue, closes it, and cleans up branches. Shows a full plan before executing anything.
+      </div>
+      <div class="install-callout" data-guide="ic">
+        <div>
+          <strong>Install this skill</strong>
+          <code>scripts/claude-skill install epic-close</code>
+        </div>
+      </div>
+      <p>Before doing anything, <code>/epic-close</code> shows the routing plan and waits for confirmation. For Python projects there is no DESIGN.md merge — epic-close routes ADRs and snapshots, posts specs to the GitHub issue, closes it, and offers to delete both branches.</p>
+      <div class="prompt-label">Prompt to try</div>
+      <div class="prompt-block" data-guide="pb">/epic-close</div>
+      <div class="section-next" data-guide="sn">Next: <a href="#py-section-11">Session Handover →</a></div>
+    </section>
+
+    <section class="guide-section" id="py-section-11" data-section="11">
+      <div class="section-header">
+        <div class="section-num">11</div>
+        <div>
+          <h2>Session Handover</h2>
+          <span class="section-tag">Skill: handover</span>
+        </div>
+      </div>
+      <div class="what-it-does" data-guide="wid">
+        <strong>What this does</strong>
+        Produces a committed <code>HANDOFF.md</code> — under 500 tokens — giving the next Claude session enough context to resume immediately. Git history is the archive; HANDOFF.md is just the delta.
+      </div>
+      <div class="install-callout" data-guide="ic">
+        <div>
+          <strong>Install this skill</strong>
+          <code>scripts/claude-skill install handover</code>
+        </div>
+      </div>
+      <p>The wrap checklist before writing the handover: write-blog (capture session diary), update-claude-md (sync conventions), and forage sweep (check session memory for gotchas, techniques, and undocumented behaviors). HANDOFF.md uses a delta-first principle — unchanged sections reference git history rather than repeating content.</p>
+      <div class="prompt-label">Prompt to try</div>
+      <div class="prompt-block" data-guide="pb">Create a handover. &nbsp;or&nbsp; /handover</div>
+      <div class="section-next" data-guide="sn">Next: <a href="#py-section-12">Project Diary →</a></div>
+    </section>
+
+    <section class="guide-section" id="py-section-12" data-section="12">
+      <div class="section-header">
+        <div class="section-num">12</div>
+        <div>
+          <h2>Project Diary</h2>
+          <span class="section-tag">Skill: write-blog</span>
+        </div>
+      </div>
+      <div class="what-it-does" data-guide="wid">
+        <strong>What this does</strong>
+        Writes diary entries in your personal voice — capturing what was believed at the time, failed attempts, and mid-build pivots. Entries are never edited; corrections become new entries.
+      </div>
+      <div class="install-callout" data-guide="ic">
+        <div>
+          <strong>Install this skill</strong>
+          <code>scripts/claude-skill install write-blog</code>
+        </div>
+      </div>
+      <p>Voice is configured from <code>$PERSONAL_WRITING_STYLES_PATH</code> or a bundled fallback. Entry metadata drives filtering: <code>entry_type: article | note</code>, <code>projects</code>, <code>tags</code>. The site shows diary entries at <code>/blog/</code> and articles at <code>/articles/</code>.</p>
+      <p>What good diary voice looks like — honest, specific, includes the failed first attempt:</p>
+      <div class="code-block"><pre><span class="v">The first attempt used a simple dict for idempotency keys.</span>
+<span class="v">It worked in tests. In production the dict grew without bound</span>
+<span class="v">and after 72 hours the process hit the memory limit. We switched</span>
+<span class="v">to TTL-based Redis keys. Obvious in hindsight. The dict felt</span>
+<span class="v">clean at the time because the load tests never ran long enough.</span></pre></div>
+      <div class="prompt-label">Prompt to try</div>
+      <div class="prompt-block" data-guide="pb">Write a blog entry for today's session — we implemented order validation with idempotent retry logic.</div>
+      <div class="section-next" data-guide="sn" style="border-top:2px solid #4f46e5;padding-top:1.5rem;margin-top:2rem;">
+        <span style="font-size:13px;color:#4f46e5;font-weight:700;">&#x2713; You've covered the full Python workflow. Install skills as you need them.</span>
+      </div>
+    </section>
+
+  </main>
 </div>
 
 <script>

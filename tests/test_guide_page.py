@@ -230,6 +230,51 @@ class TestTypescriptTab(unittest.TestCase):
         self.assertEqual(count, 10, f'TypeScript tab needs 10 install callouts, found {count}')
 
 
+class TestPythonTab(unittest.TestCase):
+    """Integration: Python tab has correct content."""
+
+    def setUp(self):
+        self.content = load_guide()
+
+    def _py_content(self):
+        start = self.content.index('id="pane-python"')
+        return self.content[start:]
+
+    def test_py_pane_has_twelve_sections(self):
+        import re
+        count = len(re.findall(r'id="py-section-\d+"', self.content))
+        self.assertEqual(count, 12, f'Python tab needs 12 sections, found {count}')
+
+    def test_py_sidebar_has_id(self):
+        self.assertIn('id="sidebar-python"', self.content)
+
+    def test_py_specific_skills_mentioned(self):
+        py = self._py_content()
+        for skill in ('python-dev', 'python-code-review', 'pip-dependency-update'):
+            self.assertIn(skill, py, f'Python tab must mention {skill}')
+
+    def test_py_commit_uses_git_commit_not_java(self):
+        py = self._py_content()
+        self.assertNotIn('java-git-commit', py,
+                         'Python pane must not reference java-git-commit')
+        self.assertIn('git-commit', py)
+
+    def test_py_section9_has_design_snapshot_not_journal(self):
+        py = self._py_content()
+        self.assertIn('design-snapshot', py)
+        self.assertNotIn('java-update-design', py)
+
+    def test_py_has_twelve_prompt_blocks(self):
+        py = self._py_content()
+        count = py.count('prompt-block')
+        self.assertEqual(count, 12, f'Python tab needs 12 prompt blocks, found {count}')
+
+    def test_py_has_ten_install_callouts(self):
+        py = self._py_content()
+        count = py.count('install-callout')
+        self.assertEqual(count, 10, f'Python tab needs 10 install callouts, found {count}')
+
+
 class TestTabStructure(unittest.TestCase):
     """Integration: guide has three language tabs."""
 
