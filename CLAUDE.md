@@ -347,7 +347,7 @@ python3 scripts/web_installer.py          # opens http://localhost:8765
 # Regenerate web app data after chaining changes
 python3 scripts/generate_web_app_data.py
 
-# Run all tests (295 tests; ~90s including Playwright UI tests)
+# Run all tests (433 tests; ~2m including Playwright UI tests)
 python3 -m pytest tests/ -v
 
 # Run commit-tier validators
@@ -369,6 +369,7 @@ python3 scripts/validation/validate_doc_structure.py CLAUDE.md
 **After editing any skill:** run `sync-local` so `~/.claude/skills/` has the latest version.
 **After adding a new skill:** run `generate_commands.py` AND add to `marketplace.json` plugins list.
 **After chaining changes:** run `generate_web_app_data.py` to sync `docs/index.html` CHAIN data.
+**Worktrees for feature development:** use `.worktrees/` (gitignored). Create with `git worktree add .worktrees/<name> -b <branch>`. Always use `--force` when removing after subagent use.
 
 ## How Claude Code Loads Skills
 
