@@ -533,6 +533,8 @@ Full design: `docs/superpowers/specs/2026-04-09-workspace-model-design.md`
 - `workspace-init` — one-time setup; creates `~/claude/private/<project>/` or
   `~/claude/public/<project>/` with routing CLAUDE.md, gitignored project symlink
   via `.git/info/exclude`, and all subdirectories
+- `epic-start` — one-time per epic; creates project + workspace branches, scaffolds `design/JOURNAL.md` with SHA baseline, links or creates GitHub issue, optionally invokes brainstorming
+- `epic-close` — closes an epic; routes artifacts per `## Routing` config, merges `design/JOURNAL.md` into project `DESIGN.md`, posts specs to GitHub issue, handles branch cleanup
 
 **Generic foundation skills** (not invoked directly, referenced via Prerequisites):
 - `code-review-principles` — universal code review checklist (extended by `java-code-review`)

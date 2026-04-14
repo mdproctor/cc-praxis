@@ -376,6 +376,27 @@ One-time workspace setup per project per machine:
 
 **Triggers:** "init workspace", "set up workspace", "create workspace for <project>", `/workspace-init`.
 
+#### **epic-start**
+One-time setup per epic — run once at the start of each epic:
+- Creates a matching branch in the project repo and a local workspace branch
+- Scaffolds `design/JOURNAL.md` with a SHA baseline from the project branch
+- Links to an existing GitHub issue or creates a new one
+- Writes `design/.meta` with epic name, branch, and issue number for `epic-close`
+- Optionally invokes brainstorming to kick off planning
+
+**Triggers:** "start epic", "begin epic", "create epic branch", `/epic-start`.
+
+#### **epic-close**
+Closes the current epic — run at the end of each epic:
+- Reads `design/.meta` (created by `epic-start`) for branch and issue metadata
+- Routes artifacts per `## Routing` config in workspace CLAUDE.md
+- Merges `design/JOURNAL.md` into the project `DESIGN.md`
+- Posts accumulated specs to the linked GitHub issue
+- Handles branch cleanup: merge project branch or open PR, delete workspace branch
+- Supports approve-all or step-by-step confirmation modes
+
+**Triggers:** "close epic", "finish epic", "wrap up epic", `/epic-close`.
+
 #### **install-skills**
 One-time bootstrap wizard for new environments:
 - Configures session-start hook (automatic CLAUDE.md detection on new repos)
