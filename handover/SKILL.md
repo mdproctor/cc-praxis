@@ -393,7 +393,7 @@ context marked as "unchanged"? If yes — done.
 **Invoked by:** User directly at end of a session ("create a handover",
 "end of session", "write a handover")
 
-**Invokes:** [`forage`] — forage sweep (Step 2b) to submit any gotchas, techniques, or undocumented items before context is lost; [`write-blog`] — single-entry mode for this session's narrative (if checked); [`design-snapshot`] — to freeze current design state (if checked); [`update-claude-md`] — to sync any new conventions (if checked); [`journal-entry`] — to write missing JOURNAL.md entries on epic branches (if checked); `git commit` directly for the handover itself
+**Invokes:** [`forage`] — forage sweep (Step 2b) to submit any gotchas, techniques, or undocumented items before context is lost; [`write-blog`] — single-entry mode for this session's narrative (if checked); [`design-snapshot`] — to freeze current design state (if checked); [`update-claude-md`] — to sync any new conventions (if checked); journal entry (inline action, not a separate skill) — writes missing `design/JOURNAL.md` entries on epic branches (if checked); `git commit` directly for the handover itself
 
 **Reads from (surgical, not upfront):**
 - `git diff HEAD -- HANDOFF.md` — what changed from last handover

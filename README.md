@@ -356,7 +356,7 @@ Python-specific health checks extending the universal project-health skill:
 
 #### **cc-praxis-ui**
 Visual skill manager — a local web app for browsing, installing, updating, and uninstalling skills:
-- Browse all 47 skills by bundle with descriptions and chaining relationships
+- Browse all 48 skills by bundle with descriptions and chaining relationships
 - Live install state: see what's installed, what's outdated, and what's available
 - Install or uninstall individual skills or whole bundles with accurate counts
 - Auto Execute mode runs commands directly; Manual mode shows commands to copy-paste
@@ -1633,7 +1633,7 @@ See [QUALITY.md § Why Quality Matters](QUALITY.md#why-quality-matters) for comp
 │       ├── validate_behavior.py        # Behavioral consistency [PUSH]
 │       ├── validate_readme_sync.py     # README/CLAUDE sync [PUSH]
 │       └── validate_python_quality.py  # mypy, flake8, bandit [CI]
-├── tests/                               # Test suite (295 tests)
+├── tests/                               # Test suite (446 tests)
 │   ├── test_claude_skill.py            # Tests for scripts/claude-skill
 │   ├── test_mockup_chaining.py         # Skill chaining ground truth (CHAINING_TRUTH)
 │   ├── test_chain_data_drift.py        # CHAIN JS in index.html vs CHAINING_TRUTH

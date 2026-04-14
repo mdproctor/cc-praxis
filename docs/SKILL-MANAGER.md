@@ -1,6 +1,6 @@
 # cc-praxis Skill Manager — User Guide
 
-The skill manager is a web interface for browsing, installing, and managing cc-praxis skills. It gives you a visual overview of all 43 skills, shows what's installed on your machine, and lets you install or remove skills with one click.
+The skill manager is a web interface for browsing, installing, and managing cc-praxis skills. It gives you a visual overview of all 48 skills, shows what's installed on your machine, and lets you install or remove skills with one click.
 
 ---
 
@@ -41,7 +41,7 @@ If you visit the skill manager on GitHub Pages, the **Install** tab is hidden. Y
 | Tab | Purpose |
 |-----|---------|
 | **About** | Overview — what cc-praxis does, how skills work, which languages are supported |
-| **Browse** | Explore all 43 skills with descriptions and the interactive chain graph |
+| **Browse** | Explore all 48 skills with descriptions and the interactive chain graph |
 | **Install** | See what's installed on your machine and manage it |
 
 When you switch to the Install tab, the execution mode controls appear on the right:
@@ -56,7 +56,7 @@ The About tab is where new users start. It explains the value proposition, shows
 
 ![The About tab hero section showing the main headline, three value pillars, and the collection stats](images/about-hero.png)
 
-The stats bar — 43 skills, 5 bundles, 3 languages, 17 validators, 295 tests — reflects the real state of the collection. These numbers update when the collection grows.
+The stats bar — 48 skills, 5 bundles, 3 languages, 18 validators, 446 tests — reflects the real state of the collection. These numbers update when the collection grows.
 
 At the bottom, the CTA offers two paths:
 

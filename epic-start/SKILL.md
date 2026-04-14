@@ -1,9 +1,9 @@
 ---
 name: epic-start
 description: >
-  Use when starting a new epic — user says "start epic", "begin epic",
-  "create epic branch", or invokes /epic-start. NOT for day-to-day
-  work — one-time per epic.
+  Use when the user wants to begin a new development epic — says "begin
+  epic", "new epic", or "create epic branch". One-time setup only; not
+  for day-to-day work within an epic.
 ---
 
 # Epic Start

@@ -347,7 +347,7 @@ python3 scripts/web_installer.py          # opens http://localhost:8765
 # Regenerate web app data after chaining changes
 python3 scripts/generate_web_app_data.py
 
-# Run all tests (433 tests; ~2m including Playwright UI tests)
+# Run all tests (446 tests; ~2m including Playwright UI tests)
 python3 -m pytest tests/ -v
 
 # Run commit-tier validators

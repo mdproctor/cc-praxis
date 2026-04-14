@@ -27,7 +27,7 @@ structured `§Section` anchors for three-way merge at close. SHA baseline record
 - INDEX.md maintenance in `adr`, `design-snapshot`, `write-blog`
 - Issue #49 closed
 
-**433 tests passing. 48 skills synced.**
+**446 tests passing. 48 skills synced.**
 
 ---
 

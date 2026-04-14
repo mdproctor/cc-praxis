@@ -2,13 +2,11 @@
 name: write-blog
 description: >
   Use when the user wants to capture a project's evolving story. Invoked blank
-  (/write-blog) it runs a retrospective sweep: git history scanned, phases
-  proposed for selection, entries produced in sequence. Invoked with context
-  (/write-blog the web installer phase) it drafts a single entry from that
-  starting point. Also triggered by "write a blog entry", "log what we built
-  today", "document this pivot", or "blog all the work to date". NOT for
-  individual formal decisions (use adr) or frozen design state (use
-  design-snapshot).
+  (/write-blog) it runs a retrospective sweep of git history. Invoked with
+  context it drafts a single entry. Also triggered by "write a blog entry",
+  "log what we built today", "document this pivot", or "blog all the work to
+  date". NOT for individual formal decisions (use adr) or frozen design state
+  (use design-snapshot).
 ---
 
 # Project Blog
