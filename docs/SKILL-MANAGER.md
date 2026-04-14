@@ -211,7 +211,7 @@ Once loaded, the sync bar gives you an at-a-glance summary:
 
 ![The Install tab sync bar showing 16 of 43 installed with an outdated warning and Install/Uninstall buttons](images/install-sync-bar.png)
 
-- **X of 43 installed** — skills present in `~/.claude/skills/`
+- **X of 48 installed** — skills present in `~/.claude/skills/`
 - **⚠️ N outdated** — installed skills behind the latest release (only appears when applicable)
 - **Update** — brings all installed skills to their latest versions
 - **Install** — adds everything not yet installed
