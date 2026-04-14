@@ -1,0 +1,914 @@
+---
+layout: default
+permalink: /guide/
+title: Getting Started with cc-praxis
+---
+
+<style>
+  /* Progress bar */
+  .guide-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: #e5e7eb;
+    z-index: 200;
+  }
+  .guide-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: #4f46e5;
+    transition: width 0.2s ease;
+  }
+
+  /* Layout */
+  .guide-wrap {
+    display: flex;
+    align-items: flex-start;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    gap: 2rem;
+  }
+
+  /* Sidebar */
+  .guide-sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    width: 220px;
+    flex-shrink: 0;
+    padding: 1rem 0;
+  }
+  .guide-sidebar h3 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #9ca3af;
+    margin-bottom: 0.75rem;
+    padding: 0 0.5rem;
+  }
+  .guide-step {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.35rem 0.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s;
+    text-decoration: none;
+    color: #6b7280;
+    font-size: 13px;
+    line-height: 1.3;
+  }
+  .guide-step:hover { background: #f3f4f6; color: #111827; }
+  .guide-step .step-num {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #e5e7eb;
+    color: #9ca3af;
+    font-size: 11px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s, color 0.15s;
+  }
+  .guide-step.active { color: #4f46e5; font-weight: 600; }
+  .guide-step.active .step-num { background: #4f46e5; color: white; }
+  .guide-step.done { color: #6b7280; }
+  .guide-step.done .step-num { background: #10b981; color: white; }
+
+  /* Content */
+  .guide-content {
+    flex: 1;
+    min-width: 0;
+  }
+  .guide-intro {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: 1px solid #e5e7eb;
+  }
+  .guide-intro h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #1e1b4b;
+    margin-bottom: 0.5rem;
+  }
+  .guide-intro p {
+    color: #6b7280;
+    font-size: 15px;
+    max-width: 640px;
+  }
+
+  /* Sections */
+  .guide-section {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    scroll-margin-top: 1rem;
+  }
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+  .section-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #1e1b4b;
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .section-header h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1e1b4b;
+    margin: 0;
+  }
+  .section-header .section-tag {
+    font-size: 11px;
+    font-weight: 600;
+    background: #f3f4f6;
+    color: #6b7280;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-top: 4px;
+    display: inline-block;
+  }
+  .guide-section p {
+    color: #374151;
+    margin-bottom: 0.75rem;
+    line-height: 1.7;
+  }
+  .guide-section ul, .guide-section ol {
+    padding-left: 1.25rem;
+    margin-bottom: 0.75rem;
+    color: #374151;
+  }
+  .guide-section li { margin-bottom: 0.25rem; line-height: 1.6; }
+  .guide-section code {
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-size: 13px;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+    color: #4f46e5;
+  }
+
+  /* Info box (data-guide="wid") */
+  [data-guide="wid"] {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+    font-size: 13px;
+    color: #1e40af;
+  }
+  [data-guide="wid"] strong {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #3b82f6;
+    margin-bottom: 0.35rem;
+  }
+
+  /* Install callout (data-guide="ic") */
+  [data-guide="ic"] {
+    background: #1e1b4b;
+    border-radius: 8px;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    font-size: 13px;
+    color: #a5b4fc;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  [data-guide="ic"] strong {
+    color: #e0e7ff;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: block;
+    margin-bottom: 2px;
+  }
+  [data-guide="ic"] code {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 12px;
+    color: #c7d2fe;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  }
+
+  /* Prompt block (data-guide="pb") */
+  [data-guide="pb"] {
+    background: #0f172a;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+    font-size: 13px;
+    color: #e2e8f0;
+    line-height: 1.6;
+    white-space: pre-wrap;
+  }
+  .prompt-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #64748b;
+    margin-bottom: 0.5rem;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  /* Section footer (data-guide="sn") */
+  [data-guide="sn"] {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f3f4f6;
+    font-size: 13px;
+    color: #6b7280;
+  }
+  [data-guide="sn"] a {
+    color: #4f46e5;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  [data-guide="sn"] a:hover { text-decoration: underline; }
+
+  /* Completion */
+  .guide-complete {
+    background: linear-gradient(135deg, #1e1b4b, #312e81);
+    border-radius: 12px;
+    padding: 2rem;
+    color: white;
+    text-align: center;
+  }
+  .guide-complete h3 { font-size: 20px; margin-bottom: 0.5rem; }
+  .guide-complete p { color: #c7d2fe; margin-bottom: 1rem; }
+  .guide-complete a {
+    display: inline-block;
+    background: #4f46e5;
+    color: white;
+    padding: 0.5rem 1.25rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .guide-sidebar { display: none; }
+    .guide-wrap { padding: 1rem; }
+  }
+</style>
+
+<div class="guide-progress-bar">
+  <div id="guide-progress-fill" class="guide-progress-fill"></div>
+</div>
+
+<div class="guide-wrap">
+
+  <!-- Sidebar -->
+  <aside class="guide-sidebar">
+    <h3>Getting Started</h3>
+    <a class="guide-step" data-step="1" href="#section-1">
+      <span class="step-num">1</span> CLAUDE.md Setup
+    </a>
+    <a class="guide-step" data-step="2" href="#section-2">
+      <span class="step-num">2</span> Workspace Setup
+    </a>
+    <a class="guide-step" data-step="3" href="#section-3">
+      <span class="step-num">3</span> Java Development
+    </a>
+    <a class="guide-step" data-step="4" href="#section-4">
+      <span class="step-num">4</span> Code Review
+    </a>
+    <a class="guide-step" data-step="5" href="#section-5">
+      <span class="step-num">5</span> Smart Commits
+    </a>
+    <a class="guide-step" data-step="6" href="#section-6">
+      <span class="step-num">6</span> Brainstorming
+    </a>
+    <a class="guide-step" data-step="7" href="#section-7">
+      <span class="step-num">7</span> Ideas
+    </a>
+    <a class="guide-step" data-step="8" href="#section-8">
+      <span class="step-num">8</span> Issues
+    </a>
+    <a class="guide-step" data-step="9" href="#section-9">
+      <span class="step-num">9</span> Design Documentation
+    </a>
+    <a class="guide-step" data-step="10" href="#section-10">
+      <span class="step-num">10</span> Closing an Epic
+    </a>
+    <a class="guide-step" data-step="11" href="#section-11">
+      <span class="step-num">11</span> Session Handover
+    </a>
+    <a class="guide-step" data-step="12" href="#section-12">
+      <span class="step-num">12</span> Project Diary
+    </a>
+  </aside>
+
+  <!-- Main content -->
+  <main class="guide-content">
+
+    <div class="guide-intro">
+      <h1>Getting Started with cc-praxis</h1>
+      <p>A 12-step walkthrough covering everything from initial CLAUDE.md setup through daily Java development, code review, smart commits, brainstorming, and session handover. Each section shows what a skill does, how to install it, and a prompt to try immediately.</p>
+    </div>
+
+    <!-- Section 1: CLAUDE.md Setup -->
+    <section class="guide-section" id="section-1" data-section="1">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <div>
+          <h2>CLAUDE.md Setup</h2>
+          <span class="section-tag">Setup — no install needed</span>
+        </div>
+      </div>
+
+      <div class="what-it-does" data-guide="wid">
+        <strong>What this does</strong>
+        CLAUDE.md is read automatically by Claude at the start of every session. It tells Claude your project type, GitHub repository, and which optional behaviours to enable. Without it, Claude has no project context and falls back to generic defaults.
+      </div>
+
+      <p>Place <code>CLAUDE.md</code> at your repository root. Claude reads it automatically — no command or plugin installation required. At minimum, set three fields:</p>
+
+      <ul>
+        <li><code>type: java</code> — routes commit, review, and health workflows to Java-specific skills</li>
+        <li><code>GitHub repo: owner/repo</code> — enables issue linkage in commits and <code>gh</code> commands</li>
+        <li><code>## Work Tracking / Issue tracking: enabled</code> — activates automatic issue creation before code is written</li>
+      </ul>
+
+      <p>Additional fields you can add: <code>Main branch: main</code>, build commands under <code>## Build</code>, and custom instructions under <code>## Custom</code>. These feed into the git-commit skill's automated checks.</p>
+
+      <p>A minimal Java project CLAUDE.md looks like this:</p>
+
+      <pre style="background:#0f172a;border-radius:8px;padding:1rem;font-size:13px;color:#e2e8f0;margin-bottom:1rem;overflow-x:auto"><code class="language-markdown">## Project
+
+**type:** java
+**GitHub repo:** acme/orders-service
+**Main branch:** main
+
+## Work Tracking
+
+**Issue tracking:** enabled</code></pre>
+
+      <p>Once this file exists, every <code>/java-git-commit</code> run reads it to enforce issue linkage, choose the right review workflow, and sync DESIGN.md if you are on an epic branch.</p>
+
+      <div class="prompt-label">Prompt to try</div>
+      <div class="prompt-block" data-guide="pb">Set up a CLAUDE.md for my Java project. It's a Quarkus REST API tracked on GitHub at owner/repo.</div>
+
+      <div class="section-next" data-guide="sn">
+        Next: <a href="#section-2">Workspace Setup →</a>
+      </div>
+    </section>
+
+    <!-- Section 2: Workspace Setup -->
+    <section class="guide-section" id="section-2" data-section="2">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <div>
+          <h2>Workspace Setup</h2>
+          <span class="section-tag">Setup — no install needed</span>
+        </div>
+      </div>
+
+      <div class="what-it-does" data-guide="wid">
+        <strong>What this does</strong>
+        The workspace is a companion git repository that stores methodology artifacts — design journals, ADRs, snapshots, ideas, specs, and handoff notes — separately from the project repo. It keeps AI-generated working documents out of your main codebase history.
+      </div>
+
+      <p>cc-praxis supports three workspace modes:</p>
+
+      <ul>
+        <li><strong>Project-only</strong> — no workspace; all artifacts stay inside the project repo</li>
+        <li><strong>Project + workspace</strong> — companion repo at <code>~/claude/private/&lt;project&gt;/</code> for private working documents</li>
+        <li><strong>Alternative path</strong> — you specify a custom path for teams with shared drives or existing structures</li>
+      </ul>
+
+      <p>A workspace created by <code>/workspace-init</code> contains these directories:</p>
+
+      <ul>
+        <li><code>adr/</code> — Architecture Decision Records</li>
+        <li><code>snapshots/</code> — immutable design snapshots (auto-pruned to 10)</li>
+        <li><code>blog/</code> — project diary entries before they are published</li>
+        <li><code>specs/</code> — brainstorming specs and planning documents</li>
+        <li><code>design/JOURNAL.md</code> — append-only journal auto-written by <code>java-git-commit</code> on epic branches</li>
+        <li><code>HANDOFF.md</code> — current session handover document</li>
+      </ul>
+
+      <p>Routing is configured once in the workspace CLAUDE.md with three keywords: <code>project</code> · <code>workspace</code> · <code>alternative ~/path/</code>. Skills read this at runtime to decide where artifacts land.</p>
+
+      <div class="prompt-label">Prompt to try</div>
+      <div class="prompt-block" data-guide="pb">/workspace-init</div>
+
+      <div class="section-next" data-guide="sn">
+        Next: <a href="#section-3">Java Development →</a>
+      </div>
+    </section>
+
+    <!-- Section 3: Java Development -->
+    <section class="guide-section" id="section-3" data-section="3">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <div>
+          <h2>Java Development</h2>
+          <span class="section-tag">Skill: java-dev</span>
+        </div>
+      </div>
+
+      <div class="what-it-does" data-guide="wid">
+        <strong>What this does</strong>
+        java-dev applies a priority ordering when writing Java code: Safety first (try-with-resources, null checks, validation), then Concurrency (thread ownership documented, no shared mutable state), then Performance, then Code Quality. It also knows Quarkus-specific patterns for CDI, REST endpoints, and Panache.
+      </div>
+
+      <div class="install-callout" data-guide="ic">
+        <div>
+          <strong>Install this skill</strong>
+          <code>/install-skills</code> → select <code>java-dev</code>
+        </div>
+      </div>
+
+      <p>The priority order matters: a fast implementation with a resource leak is worse than a slower one without. java-dev enforces this by checking safety before suggesting optimisations.</p>
+
+      <p>Key patterns it applies:</p>
+
+      <ul>
+        <li><strong>try-with-resources</strong> for every closeable (streams, connections, PreparedStatements)</li>
+        <li><strong>Thread ownership comments</strong> on any field accessed from multiple threads</li>
+        <li><strong>Quarkus CDI</strong> — <code>@ApplicationScoped</code> beans are singletons; document if state is intentional</li>
+        <li><strong>Panache</strong> — prefer <code>find("field", value)</code> over raw HQL for simple queries</li>
+        <li><strong>RESTEasy Reactive</strong> — return <code>Uni&lt;Response&gt;</code> not <code>Response</code> from reactive endpoints</li>
+      </ul>
+
+      <p>When called on a Quarkus REST endpoint, java-dev scaffolds the full slice: resource class, service, repository, and a passing <code>@QuarkusTest</code> integration test.</p>
+
+      <div class="prompt-label">Prompt to try</div>
+      <div class="prompt-block" data-guide="pb">Implement a Quarkus REST endpoint to fetch orders by customer ID, with proper error handling.</div>
+
+      <div class="section-next" data-guide="sn">
+        Next: <a href="#section-4">Code Review →</a>
+      </div>
+    </section>
+
+    <!-- Section 4: Code Review -->
+    <section class="guide-section" id="section-4" data-section="4">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <div>
+          <h2>Code Review</h2>
+          <span class="section-tag">Skill: java-code-review</span>
+        </div>
+      </div>
+
+      <div class="what-it-does" data-guide="wid">
+        <strong>What this does</strong>
+        java-code-review inspects staged changes across three tiers — CRITICAL (blocks commit), WARNING (should fix), and NOTE (consider). It also detects auth, payment, or PII code and escalates automatically to java-security-audit for an OWASP Top 10 pass.
+      </div>
+
+      <div class="install-callout" data-guide="ic">
+        <div>
+          <strong>Install this skill</strong>
+          <code>/install-skills</code> → select <code>java-code-review</code>
+        </div>
+      </div>
+
+      <p>java-code-review runs automatically before <code>/java-git-commit</code> if no review has been done in the current session. You can also invoke it directly at any point.</p>
+
+      <p>What the three tiers mean:</p>
+
+      <ul>
+        <li><strong>CRITICAL</strong> — the commit is blocked until fixed. Examples: resource leak, unchecked exception swallowed, SQL injection risk, secrets in code.</li>
+        <li><strong>WARNING</strong> — should be fixed before merging but won't block the current commit.</li>
+        <li><strong>NOTE</strong> — suggestions for readability, naming, or minor quality improvements.</li>
+      </ul>
+
+      <p>When security-sensitive code is found (anything touching authentication, authorisation, payments, or personally identifiable information), the skill offers to chain to <code>java-security-audit</code> for a dedicated OWASP pass before the commit proceeds.</p>
+
+      <div class="prompt-label">Prompt to try</div>
+      <div class="prompt-block" data-guide="pb">Review my changes.</div>
+
+      <div class="section-next" data-guide="sn">
+        Next: <a href="#section-5">Smart Commits →</a>
+      </div>
+    </section>
+
+    <!-- Section 5: Smart Commits -->
+    <section class="guide-section" id="section-5" data-section="5">
+      <div class="section-header">
+        <div class="section-num">5</div>
+        <div>
+          <h2>Smart Commits</h2>
+          <span class="section-tag">Skill: java-git-commit</span>
+        </div>
+      </div>
+
+      <div class="what-it-does" data-guide="wid">
+        <strong>What this does</strong>
+        java-git-commit is the single entry point for all commits in a Java project. It auto-runs code review if none has been done, syncs DESIGN.md via java-update-design, appends to design/JOURNAL.md on epic branches, enforces issue linkage, and writes the commit message with the correct Java scope prefix.
+      </div>
+
+      <div class="install-callout" data-guide="ic">
+        <div>
+          <strong>Install this skill</strong>
+          <code>/install-skills</code> → select <code>java-git-commit</code>
+        </div>
+      </div>
+
+      <p>Always use <code>/java-git-commit</code> instead of plain <code>git commit</code>. Plain commits bypass the review, design sync, and issue linkage checks.</p>
+
+      <p>Java commit scopes the skill recognises and enforces:</p>
+
+      <ul>
+        <li><code>rest</code> — REST resources and DTOs</li>
+        <li><code>service</code> — business logic and service classes</li>
+        <li><code>repository</code> — Panache repositories and data access</li>
+        <li><code>migration</code> — Flyway or Liquibase database migrations</li>
+        <li><code>config</code> — application.properties and configuration</li>
+        <li><code>test</code> — unit and integration tests</li>
+      </ul>
+
+      <p>On an epic branch, the skill writes a journal entry to <code>design/JOURNAL.md</code> using <code>§SectionName</code> anchors rather than committing directly to DESIGN.md. DESIGN.md is only updated when the epic closes.</p>
+
+      <div class="prompt-label">Prompt to try</div>
+      <div class="prompt-block" data-guide="pb">/java-git-commit</div>
+
+      <div class="section-next" data-guide="sn">
+        Next: <a href="#section-6">Brainstorming →</a>
+      </div>
+    </section>
+
+    <!-- Section 6: Brainstorming -->
+    <section class="guide-section" id="section-6" data-section="6">
+      <div class="section-header">
+        <div class="section-num">6</div>
+        <div>
+          <h2>Brainstorming</h2>
+          <span class="section-tag">Skill: superpowers:brainstorming (via /install-skills)</span>
+        </div>
+      </div>
+
+      <div class="what-it-does" data-guide="wid">
+        <strong>What this does</strong>
+        brainstorming enforces a hard gate: no code is written until a spec is explicitly approved. The session moves through context gathering, clarifying questions, alternative approaches, design discussion, spec writing, and finally an implementation plan — in that order.
+      </div>
+
+      <div class="install-callout" data-guide="ic">
+        <div>
+          <strong>Install this skill</strong>
+          <code>/install-skills</code> → select <code>superpowers:brainstorming</code>
+        </div>
+      </div>
+
+      <p>The six-phase flow:</p>
+
+      <ol>
+        <li><strong>Context</strong> — Claude reads CLAUDE.md, DESIGN.md, and relevant code to understand the current state</li>
+        <li><strong>Questions</strong> — asks clarifying questions before proposing anything</li>
+        <li><strong>Approaches</strong> — presents multiple design options with tradeoffs</li>
+        <li><strong>Design</strong> — develops the chosen approach in depth</li>
+        <li><strong>Spec</strong> — writes a formal spec document to <code>specs/</code></li>
+        <li><strong>Plan</strong> — produces a phased implementation plan ready for <code>/java-git-commit</code> to execute</li>
+      </ol>
+
+      <p>The hard gate at phase 5 means Claude will not write implementation code until you explicitly approve the spec. This prevents the common failure mode of starting implementation before the design is clear.</p>
+
+      <div class="prompt-label">Prompt to try</div>
+      <div class="prompt-block" data-guide="pb">Let's brainstorm the order validation feature.</div>
+
+      <div class="section-next" data-guide="sn">
+        Next: <a href="#section-7">Ideas &amp; Decisions →</a>
+      </div>
+    </section>
+
+    <!-- Section 7: Ideas & Decisions -->
+    <section class="guide-section" id="section-7" data-section="7">
+      <div class="section-header">
+        <div class="section-num">7</div>
+        <div>
+          <h2>Ideas</h2>
+          <span class="section-tag">Skills: idea-log, adr</span>
+        </div>
+      </div>
+
+      <div class="what-it-does" data-guide="wid">
+        <strong>What this does</strong>
+        idea-log maintains a living IDEAS.md for undecided possibilities — ideas that are interesting but not yet ready for a formal decision. adr records decisions that have been made, in append-only MADR format with status progression. Together they prevent good ideas from evaporating and keep decisions traceable.
+      </div>
+
+      <div class="install-callout" data-guide="ic">
+        <div>
+          <strong>Install this skill</strong>
+          <code>/install-skills</code> → select <code>idea-log</code> and <code>adr</code>
+        </div>
+      </div>
+
+      <p><strong>idea-log</strong> uses three statuses:</p>
+
+      <ul>
+        <li><code>active</code> — worth revisiting; no decision yet</li>
+        <li><code>promoted</code> — became an ADR, spec, or GitHub issue</li>
+        <li><code>discarded</code> — explicitly ruled out with a reason</li>
+      </ul>
+
+      <p>Entries older than 90 days without a status change are flagged as stale. This keeps IDEAS.md from becoming a graveyard.</p>
+
+      <p><strong>ADRs</strong> are append-only in MADR format. Once accepted, the decision record is never edited — only superseded by a later ADR. Statuses progress: Proposed → Accepted → Deprecated → Superseded.</p>
+
+      <div class="prompt-label">Prompt to try</div>
+      <div class="prompt-block" data-guide="pb">Log this idea: cache order lookups in Redis to reduce database load on peak traffic.</div>
+
+      <div class="section-next" data-guide="sn">
+        Next: <a href="#section-8">Issues &amp; Epics →</a>
+      </div>
+    </section>
+
+    <!-- Section 8: Issues & Epics -->
+    <section class="guide-section" id="section-8" data-section="8">
+      <div class="section-header">
+        <div class="section-num">8</div>
+        <div>
+          <h2>Issues</h2>
+          <span class="section-tag">Skill: issue-workflow</span>
+        </div>
+      </div>
+
+      <div class="what-it-does" data-guide="wid">
+        <strong>What this does</strong>
+        issue-workflow provides full-lifecycle GitHub issue tracking in three automatic phases: before code begins it creates an epic and child issues from a spec; before writing any code it checks for an active issue; and before every commit it verifies issue linkage and detects commits that span multiple issues.
+      </div>
+
+      <div class="install-callout" data-guide="ic">
+        <div>
+          <strong>Install this skill</strong>
+          <code>/install-skills</code> → select <code>issue-workflow</code>
+        </div>
+      </div>
+
+      <p>Run <code>/issue-workflow</code> once (Phase 0) to configure labels, milestones, and the CLAUDE.md <code>Issue tracking: enabled</code> flag. After that, Phases 1–3 run automatically:</p>
+
+      <ul>
+        <li><strong>Phase 1</strong> — when you say "implement", "start coding", or "execute the plan", Claude creates a GitHub epic and child issues <em>before writing any code</em></li>
+        <li><strong>Phase 2</strong> — before writing any code, Claude checks that an active issue exists. If not, it drafts one and checks whether it belongs to an existing epic</li>
+        <li><strong>Phase 3</strong> — at commit time, Claude confirms issue linkage (<code>Refs #N</code> or <code>Closes #N</code>) and suggests splitting if staged changes span multiple concerns</li>
+      </ul>
+
+      <p>All commits reference an issue. If you explicitly want to skip issue linkage for a specific commit, say so — Claude will confirm once before proceeding.</p>
+
+      <div class="prompt-label">Prompt to try</div>
+      <div class="prompt-block" data-guide="pb">/issue-workflow</div>
+
+      <div class="section-next" data-guide="sn">
+        Next: <a href="#section-9">Design Documentation →</a>
+      </div>
+    </section>
+
+    <!-- Section 9: Design Documentation -->
+    <section class="guide-section" id="section-9" data-section="9">
+      <div class="section-header">
+        <div class="section-num">9</div>
+        <div>
+          <h2>Design Documentation</h2>
+          <span class="section-tag">Skills: java-update-design, design-snapshot</span>
+        </div>
+      </div>
+
+      <div class="what-it-does" data-guide="wid">
+        <strong>What this does</strong>
+        java-update-design keeps DESIGN.md in sync with code changes after each commit. design-snapshot creates an immutable dated record of the current design state — useful before a major refactor or architecture change. Snapshots are auto-pruned to keep the 10 most recent.
+      </div>
+
+      <div class="install-callout" data-guide="ic">
+        <div>
+          <strong>Install this skill</strong>
+          <code>/install-skills</code> → select <code>java-update-design</code> and <code>design-snapshot</code>
+        </div>
+      </div>
+
+      <p><strong>JOURNAL.md</strong> is created by <code>/epic-start</code> and auto-appended by <code>/java-git-commit</code> on every commit during an epic. It uses <code>§SectionName</code> anchors that match DESIGN.md section headings, so the three-way merge at epic close can route journal entries to the correct sections of DESIGN.md.</p>
+
+      <p><strong>Snapshots</strong> have five standard sections: Summary, Architecture, Data Model, Open Questions, and Next Steps. They are immutable — once written, never edited. The 10-snapshot limit keeps the <code>snapshots/</code> directory manageable without manual cleanup.</p>
+
+      <p>Use a snapshot before any change that is hard to reverse: repository layer refactors, schema migrations, switching frameworks, or changing public API contracts.</p>
+
+      <div class="prompt-label">Prompt to try</div>
+      <div class="prompt-block" data-guide="pb">Take a design snapshot before we change the repository layer architecture.</div>
+
+      <div class="section-next" data-guide="sn">
+        Next: <a href="#section-10">Closing an Epic →</a>
+      </div>
+    </section>
+
+    <!-- Section 10: Closing an Epic -->
+    <section class="guide-section" id="section-10" data-section="10">
+      <div class="section-header">
+        <div class="section-num">10</div>
+        <div>
+          <h2>Closing an Epic</h2>
+          <span class="section-tag">Skill: epic-close</span>
+        </div>
+      </div>
+
+      <div class="what-it-does" data-guide="wid">
+        <strong>What this does</strong>
+        epic-close merges the design journal back into DESIGN.md, posts specs and decisions to the GitHub issue, closes the issue, and deletes the epic and workspace branches. It always shows a routing plan and waits for confirmation before touching anything.
+      </div>
+
+      <div class="install-callout" data-guide="ic">
+        <div>
+          <strong>Install this skill</strong>
+          <code>/install-skills</code> → select <code>epic-close</code>
+        </div>
+      </div>
+
+      <p>The three-way merge that <code>/epic-close</code> performs:</p>
+
+      <ol>
+        <li><strong>Baseline SHA</strong> — captured by <code>/epic-start</code> when the epic began, so Claude knows exactly what state DESIGN.md was in</li>
+        <li><strong>Current DESIGN.md</strong> — may have received direct edits during the epic</li>
+        <li><strong>JOURNAL.md entries</strong> — routed by <code>§SectionName</code> anchor into the matching DESIGN.md section</li>
+      </ol>
+
+      <p>After merging, <code>/epic-close</code> posts all specs from <code>specs/</code> and ADRs created during the epic to the GitHub issue as comments, then closes the issue. It then offers to delete the epic branch and the workspace's companion branch.</p>
+
+      <p>Run it only when the epic is truly complete — it is not reversible once branches are deleted and the issue is closed.</p>
+
+      <div class="prompt-label">Prompt to try</div>
+      <div class="prompt-block" data-guide="pb">/epic-close</div>
+
+      <div class="section-next" data-guide="sn">
+        Next: <a href="#section-11">Session Handover →</a>
+      </div>
+    </section>
+
+    <!-- Section 11: Session Handover -->
+    <section class="guide-section" id="section-11" data-section="11">
+      <div class="section-header">
+        <div class="section-num">11</div>
+        <div>
+          <h2>Session Handover</h2>
+          <span class="section-tag">Skill: handover</span>
+        </div>
+      </div>
+
+      <div class="what-it-does" data-guide="wid">
+        <strong>What this does</strong>
+        handover generates HANDOFF.md at the end of a session — a concise delta-first document that lets the next Claude session resume with full context in under two minutes. It references blog entries, design snapshots, and CLAUDE.md lazily rather than copying their content.
+      </div>
+
+      <div class="install-callout" data-guide="ic">
+        <div>
+          <strong>Install this skill</strong>
+          <code>/install-skills</code> → select <code>handover</code>
+        </div>
+      </div>
+
+      <p>The wrap checklist <code>/handover</code> executes:</p>
+
+      <ul>
+        <li><strong>write-blog</strong> — captures today's narrative in the project diary</li>
+        <li><strong>update-claude-md</strong> — syncs any new conventions or commands discovered this session</li>
+        <li><strong>forage sweep</strong> — scans the session for gotchas, non-obvious techniques, and undocumented behaviours to preserve in the technical garden</li>
+      </ul>
+
+      <p>HANDOFF.md is delta-first: unchanged sections carry a git reference rather than full content, keeping the file short. The freshness check at the start of any session is: <code>git log -1 --format="%ar" -- HANDOFF.md</code>. If it is more than a day old, treat it as stale and run a new handover before starting work.</p>
+
+      <p>The forage sweep is the most valuable part for long-running projects — it captures the tacit knowledge that doesn't make it into commit messages or design docs.</p>
+
+      <div class="prompt-label">Prompt to try</div>
+      <div class="prompt-block" data-guide="pb">Create a handover.</div>
+
+      <div class="section-next" data-guide="sn">
+        Next: <a href="#section-12">Project Diary →</a>
+      </div>
+    </section>
+
+    <!-- Section 12: Project Diary -->
+    <section class="guide-section" id="section-12" data-section="12">
+      <div class="section-header">
+        <div class="section-num">12</div>
+        <div>
+          <h2>Project Diary</h2>
+          <span class="section-tag">Skill: write-blog</span>
+        </div>
+      </div>
+
+      <div class="what-it-does" data-guide="wid">
+        <strong>What this does</strong>
+        write-blog captures the evolving story of a project in diary voice — the decisions made, the wrong turns taken, the realisations that changed the direction. Entries are published to /blog/ (diary) or /articles/ (articles). The skill reads a personal writing style guide to match your voice.
+      </div>
+
+      <div class="install-callout" data-guide="ic">
+        <div>
+          <strong>Install this skill</strong>
+          <code>/install-skills</code> → select <code>write-blog</code>
+        </div>
+      </div>
+
+      <p>Entry metadata uses two fields: <code>entry_type: article | note</code> and <code>subtype: diary</code>. Diary entries route to <code>/blog/</code>; articles route to <code>/articles/</code>.</p>
+
+      <p>The skill reads a writing style guide from <code>$PERSONAL_WRITING_STYLES_PATH</code> if set, or falls back to a bundled default. The guide controls vocabulary, register, heading style, and what to avoid — so entries written by Claude match your actual voice rather than sounding generic.</p>
+
+      <p>What good diary voice looks like — an honest account of a session:</p>
+
+      <blockquote style="border-left:3px solid #e5e7eb;padding:0.75rem 1rem;color:#6b7280;font-style:italic;margin:1rem 0;font-size:14px;line-height:1.7">
+        Started confident. The migration looked straightforward — just move the query from the service to a dedicated repository class. Forty minutes later I was staring at a Panache query that returned the right rows in the test database and wrong ones in production, and the only difference I could find was the Hibernate dialect version. Took another hour to realise the column name mapping was case-sensitive in one and not the other. Not a fun bug. But now we have a regression test for it, and the repository layer is cleaner for the trouble.
+      </blockquote>
+
+      <p>Run <code>/write-blog</code> with no arguments to do a retrospective sweep of git history and draft multiple entries. Run it with context ("write a blog entry for today's session") to draft a single entry for the current session.</p>
+
+      <div class="prompt-label">Prompt to try</div>
+      <div class="prompt-block" data-guide="pb">Write a blog entry for today's session.</div>
+
+      <div class="guide-complete">
+        <h3>You're all set</h3>
+        <p>You've covered the full cc-praxis workflow — from CLAUDE.md through to project diary. Start with CLAUDE.md setup and workspace init, then install the skills that match your current work.</p>
+        <a href="https://github.com/mdproctor/cc-praxis">View on GitHub ↗</a>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+(function () {
+  var sections = document.querySelectorAll('.guide-section');
+  var steps = document.querySelectorAll('.guide-step');
+  var progressFill = document.getElementById('guide-progress-fill');
+
+  if (!sections.length || !steps.length) return;
+
+  function setActive(index) {
+    steps.forEach(function (step, i) {
+      step.classList.remove('active', 'done');
+      if (i === index) {
+        step.classList.add('active');
+      } else if (i < index) {
+        step.classList.add('done');
+      }
+    });
+    if (progressFill) {
+      progressFill.style.width = ((index + 1) / sections.length * 100) + '%';
+    }
+  }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        var sectionEl = entry.target;
+        var n = parseInt(sectionEl.getAttribute('data-section'), 10);
+        if (!isNaN(n)) {
+          setActive(n - 1);
+        }
+      }
+    });
+  }, {
+    threshold: 0.25,
+    rootMargin: '-10% 0px -60% 0px'
+  });
+
+  sections.forEach(function (section) {
+    observer.observe(section);
+  });
+
+  // Sidebar smooth scroll
+  steps.forEach(function (step) {
+    step.addEventListener('click', function (e) {
+      var href = step.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        e.preventDefault();
+        var target = document.querySelector(href);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    });
+  });
+})();
+</script>
