@@ -315,3 +315,49 @@ class TestTabStructure(unittest.TestCase):
         py_pane = re.search(r'id="pane-python"[^>]*>', self.content)
         self.assertIsNotNone(py_pane)
         self.assertIn('display:none', py_pane.group(0))
+
+
+import json as _json
+MARKETPLACE_PATH = REPO_ROOT / '.claude-plugin' / 'marketplace.json'
+
+
+class TestQuickStartBundles(unittest.TestCase):
+    """Unit: marketplace.json has quick-start bundles for each language."""
+
+    def setUp(self):
+        with open(MARKETPLACE_PATH) as f:
+            self.data = _json.load(f)
+        self.bundles = {b['name']: b for b in self.data['bundles']}
+        self.all_skills = {p['name'] for p in self.data['plugins']}
+
+    def test_quick_start_java_exists(self):
+        self.assertIn('quick-start-java', self.bundles)
+
+    def test_quick_start_typescript_exists(self):
+        self.assertIn('quick-start-typescript', self.bundles)
+
+    def test_quick_start_python_exists(self):
+        self.assertIn('quick-start-python', self.bundles)
+
+    def test_quick_start_java_skills(self):
+        skills = self.bundles['quick-start-java']['skills']
+        for skill in ('java-dev', 'java-code-review', 'java-git-commit'):
+            self.assertIn(skill, skills)
+
+    def test_quick_start_typescript_skills(self):
+        skills = self.bundles['quick-start-typescript']['skills']
+        for skill in ('ts-dev', 'ts-code-review', 'git-commit'):
+            self.assertIn(skill, skills)
+
+    def test_quick_start_python_skills(self):
+        skills = self.bundles['quick-start-python']['skills']
+        for skill in ('python-dev', 'python-code-review', 'git-commit'):
+            self.assertIn(skill, skills)
+
+    def test_all_quick_start_skills_exist_in_marketplace(self):
+        for bundle_name in ('quick-start-java', 'quick-start-typescript', 'quick-start-python'):
+            if bundle_name not in self.bundles:
+                continue
+            for skill in self.bundles[bundle_name]['skills']:
+                self.assertIn(skill, self.all_skills,
+                              f"Bundle '{bundle_name}' references skill '{skill}' not in marketplace")

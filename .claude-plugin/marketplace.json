@@ -7,6 +7,36 @@
   },
   "bundles": [
     {
+      "name": "quick-start-java",
+      "displayName": "Quick Start: Java / Quarkus",
+      "description": "Get immediate value with 3 skills: safety-first development, code review that catches bugs before they ship, and smart commits that sync DESIGN.md automatically",
+      "skills": [
+        "java-dev",
+        "java-code-review",
+        "java-git-commit"
+      ]
+    },
+    {
+      "name": "quick-start-typescript",
+      "displayName": "Quick Start: TypeScript",
+      "description": "Get immediate value with 3 skills: strict-mode TypeScript development, code review catching type safety and async bugs, and conventional commits with issue linking",
+      "skills": [
+        "ts-dev",
+        "ts-code-review",
+        "git-commit"
+      ]
+    },
+    {
+      "name": "quick-start-python",
+      "displayName": "Quick Start: Python",
+      "description": "Get immediate value with 3 skills: type-annotated Python development, code review catching bare excepts and injection risks, and conventional commits with issue linking",
+      "skills": [
+        "python-dev",
+        "python-code-review",
+        "git-commit"
+      ]
+    },
+    {
       "name": "core",
       "displayName": "Core",
       "description": "Universal workflow tools every project needs: commits, CLAUDE.md sync, architecture decisions, project health",
