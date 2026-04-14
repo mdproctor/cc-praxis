@@ -33,6 +33,7 @@ ALL_SKILLS = {
     'pip-dependency-update', 'python-project-health', 'design-snapshot',
     'idea-log', 'write-blog', 'cc-praxis-ui', 'garden', 'handover',
     'workspace-init', 'retro-issues',
+    'epic-start', 'epic-close',
 }
 
 # Ground truth extracted from all SKILL.md files.
@@ -47,6 +48,8 @@ CHAINING_TRUTH = {
     'custom-project-health': {'chains_to': [], 'invoked_by': ['project-health'], 'builds_on': ['project-health'], 'extended_by': []},
     'dependency-management-principles': {'chains_to': [], 'invoked_by': [], 'builds_on': [], 'extended_by': ['maven-dependency-update', 'npm-dependency-update', 'pip-dependency-update']},
     'design-snapshot': {'chains_to': ['adr', 'custom-git-commit', 'git-commit', 'idea-log', 'java-git-commit', 'write-blog'], 'invoked_by': ['handover', 'write-blog'], 'builds_on': [], 'extended_by': []},
+    'epic-close': {'chains_to': [], 'invoked_by': ['epic-start'], 'builds_on': [], 'extended_by': []},
+    'epic-start': {'chains_to': ['epic-close'], 'invoked_by': [], 'builds_on': [], 'extended_by': []},
     'garden': {'chains_to': [], 'invoked_by': ['handover'], 'builds_on': [], 'extended_by': []},
     'git-commit': {'chains_to': ['blog-git-commit', 'python-code-review', 'ts-code-review', 'update-claude-md'], 'invoked_by': ['adr', 'design-snapshot', 'idea-log', 'python-code-review', 'ts-code-review', 'write-blog'], 'builds_on': [], 'extended_by': ['custom-git-commit', 'java-git-commit']},
     'handover': {'chains_to': ['design-snapshot', 'garden', 'update-claude-md', 'write-blog'], 'invoked_by': [], 'builds_on': [], 'extended_by': []},

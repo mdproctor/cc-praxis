@@ -341,6 +341,18 @@
       "source": "./workspace-init",
       "description": "One-time workspace setup \u2014 creates ~/claude/private/<project>/ with routing CLAUDE.md, gitignored project symlink, and full directory structure",
       "version": "1.0.0-SNAPSHOT"
+    },
+    {
+      "name": "epic-start",
+      "source": "./epic-start",
+      "description": "One-time setup per epic \u2014 creates project and workspace branches, scaffolds design/JOURNAL.md with SHA baseline, links or creates a GitHub issue, optionally invokes brainstorming",
+      "version": "1.0.0-SNAPSHOT"
+    },
+    {
+      "name": "epic-close",
+      "source": "./epic-close",
+      "description": "Close an epic \u2014 routes artifacts per routing config, merges design/JOURNAL.md into project DESIGN.md, posts specs to GitHub issue, handles branch cleanup with approve-all or step-by-step option",
+      "version": "1.0.0-SNAPSHOT"
     }
   ]
 }

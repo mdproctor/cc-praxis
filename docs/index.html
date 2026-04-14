@@ -2552,6 +2552,30 @@
       </div>
 
 
+      <div class="overview-skill" id="ov-epic-start">
+        <div class="overview-skill-header">
+          <div class="skill-name-col"><div class="skill-name">epic-start</div><div class="skill-version">v1.0.0-SNAPSHOT</div></div>
+          <span class="role-pill role-setup">Setup</span><span class="not-installed-badge">Not installed</span>
+        </div>
+        <p class="overview-desc">One-time setup per epic — creates project and workspace branches, scaffolds design/JOURNAL.md with SHA baseline, links or creates a GitHub issue, optionally invokes brainstorming.</p>
+        <div class="overview-meta">
+          <div class="overview-meta-item"><strong>Chains to:</strong> <span class="overview-tag link" onclick="scrollToSkill('epic-close')">epic-close</span></div>
+        </div>
+      </div>
+
+
+      <div class="overview-skill" id="ov-epic-close">
+        <div class="overview-skill-header">
+          <div class="skill-name-col"><div class="skill-name">epic-close</div><div class="skill-version">v1.0.0-SNAPSHOT</div></div>
+          <span class="role-pill role-setup">Setup</span><span class="not-installed-badge">Not installed</span>
+        </div>
+        <p class="overview-desc">Closes an epic — routes artifacts per routing config, merges design/JOURNAL.md into project DESIGN.md, posts specs to GitHub issue, handles branch cleanup with approve-all or step-by-step option.</p>
+        <div class="overview-meta">
+          <div class="overview-meta-item"><strong>Invoked by:</strong> <span class="overview-tag link" onclick="scrollToSkill('epic-start')">epic-start</span></div>
+        </div>
+      </div>
+
+
 
 
 
@@ -2673,6 +2697,8 @@
     'quarkus-flow-testing': {parents:['quarkus-flow-dev'],children:['java-code-review', 'java-git-commit']},
     'quarkus-observability': {parents:['java-dev', 'quarkus-flow-dev'],children:['java-git-commit', 'maven-dependency-update']},
     'retro-issues': {parents:[],children:[]},
+    'epic-start': {parents:[],children:['epic-close']},
+    'epic-close': {parents:['epic-start'],children:[]},
     'security-audit-principles': {parents:[],children:[]},
     'skills-project-health': {parents:['project-health'],children:[]},
     'ts-code-review': {parents:['git-commit', 'ts-dev'],children:['git-commit', 'ts-security-audit']},
