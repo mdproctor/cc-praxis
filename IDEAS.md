@@ -23,4 +23,4 @@ The current write-blog skill only produces diary-style notes. Articles serve
 a different audience and need different routing — author blogs, group blogs,
 and syndication targets beyond the project repo.
 
-**Promoted to:**
+**Promoted to:** `docs/superpowers/specs/2026-04-14-blog-entry-types-design.md` (implemented 2026-04-14)
