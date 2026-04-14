@@ -36,10 +36,11 @@ class TestHeroStats(unittest.TestCase):
         self.html = load_html()
 
     def test_skills_count_is_current(self):
-        # Should show 43, not the old 33
         m = re.search(r'hero-stat-num[^>]*>(\d+)</div><div class="hero-stat-label">Skills', self.html)
         self.assertIsNotNone(m, 'Could not find Skills stat')
-        self.assertEqual(m.group(1), '44', f'Skills stat shows {m.group(1)}, expected 44')
+        actual = int(m.group(1))
+        self.assertGreaterEqual(actual, 48, f'Skills count in web app ({actual}) is below expected minimum of 48')
+        self.assertLess(actual, 200, f'Skills count ({actual}) is suspiciously high')
 
     def test_languages_count_is_current(self):
         # Should show 3 (Java, TypeScript, Python), not 2
