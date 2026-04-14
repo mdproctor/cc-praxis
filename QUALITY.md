@@ -759,7 +759,7 @@ Claude:
 - ✅ Automatic revert on corruption
 - ✅ Modular documentation support (primary + modules)
 
-**Validation Infrastructure (17 validators across 3 tiers):**
+**Validation Infrastructure (18 validators across 3 tiers):**
 
 **COMMIT Tier (<2s budget):**
 - ✅ `validate_frontmatter.py` — YAML structure, required fields
@@ -769,6 +769,7 @@ Claude:
 - ✅ `validate_sections.py` — Required sections by type
 - ✅ `validate_structure.py` — File organization
 - ✅ `validate_project_types.py` — Project type list consistency
+- ✅ `validate_blog_frontmatter.py` — Blog post frontmatter (layout, title, date, type fields)
 
 **PUSH Tier (<30s budget):**
 - ✅ `validate_flowcharts.py` — Mermaid syntax via mmdc (puppeteer, too slow for COMMIT), semantic labels

@@ -525,7 +525,7 @@ Invoked automatically by `custom-git-commit` when Sync Rules configured.
 - Cross-reference integrity (bidirectional chaining)
 - Documentation completeness (Success Criteria, Common Pitfalls, Prerequisites)
 
-**Automated validators:** `scripts/validate_all.py` orchestrates 14 validators across 3 tiers (commit/push/ci). See CLAUDE.md § Quality Assurance Framework for complete validation architecture.
+**Automated validators:** `scripts/validate_all.py` orchestrates 18 validators across 3 tiers (commit/push/ci). See CLAUDE.md § Quality Assurance Framework for complete validation architecture.
 
 **Why modular, not a skill:** Skills-specific validation only applies to THIS repository (type: skills). Loading as a portable skill would waste ~800 lines of tokens in all other projects (java, custom, generic). See CLAUDE.md § Skills-Repository-Specific Documentation. <!-- nocheck:project-types -->
 
@@ -1615,7 +1615,7 @@ See [QUALITY.md § Why Quality Matters](QUALITY.md#why-quality-matters) for comp
 │   ├── validate_all.py                  # Master orchestrator (3-tier validation)
 │   ├── validate_document.py             # Universal .md corruption detector
 │   ├── generate_skill_metadata.py       # Regenerates skill.json for all skills
-│   └── validation/                      # SKILL.md validators (17 total, 3 tiers)
+│   └── validation/                      # SKILL.md validators (18 total, 3 tiers)
 │       ├── validate_frontmatter.py     # YAML structure, required fields [COMMIT]
 │       ├── validate_cso.py             # Description CSO compliance [COMMIT]
 │       ├── validate_references.py      # Cross-reference integrity [COMMIT]
@@ -1623,6 +1623,7 @@ See [QUALITY.md § Why Quality Matters](QUALITY.md#why-quality-matters) for comp
 │       ├── validate_sections.py        # Required sections by type [COMMIT]
 │       ├── validate_structure.py       # File organization [COMMIT]
 │       ├── validate_project_types.py   # Project type list consistency [COMMIT]
+│       ├── validate_blog_frontmatter.py # Blog post frontmatter validation [COMMIT]
 │       ├── validate_flowcharts.py      # Mermaid syntax validation [PUSH]
 │       ├── validate_web_app.py         # Web app sync with SKILL.md data [PUSH]
 │       ├── validate_cross_document.py  # Cross-document consistency [PUSH]
