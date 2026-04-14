@@ -109,6 +109,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "cc-praxis-check",
+      "source": "./cc-praxis-check",
+      "description": "Use when something seems wrong with cc-praxis \u2014 diagnoses CLAUDE.md, installed skills, session hook, and DESIGN.md with specific recovery steps for each issue",
+      "version": "1.0.0-SNAPSHOT"
+    },
+    {
       "name": "install-skills",
       "source": "./install-skills",
       "description": "One-time marketplace bootstrap: configure hooks and install skills",
