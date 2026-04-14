@@ -1,42 +1,34 @@
 # Handover — 2026-04-14
 
 **Branch:** main
-**Head:** a39139c
+**Head:** ae6c63e
 
 ---
 
 ## What Changed This Session
 
-**Design journal model** — replaced the full-copy `design/DESIGN.md` workspace model
-with `design/JOURNAL.md`: a cohesive narrative of design changes during an epic, with
-structured `§Section` anchors for three-way merge at close. SHA baseline recorded at
-`epic-start` enables true three-way merge (base + journal + current project).
+**Blog entry types** — article/note taxonomy shipped. New frontmatter fields (`entry_type`, `subtype`, `projects`, `tags`) on all 14 blog entries. `validate_blog_frontmatter.py` added (now 19 validators). `yaml_utils.py` upgraded from homemade parser to PyYAML.
 
-**Three new specs:**
-- `docs/superpowers/specs/2026-04-13-design-journal-design.md`
-- `docs/superpowers/specs/2026-04-13-artifact-routing-design.md`
-- `docs/superpowers/specs/2026-04-14-epic-lifecycle-design.md`
+**Workspace routing design** — three-layer routing config specced and implemented. Targets: `project`, `workspace`, `alternative <path>`. Global default in `~/.claude/CLAUDE.md ## Routing`. `epic-close` reads all three layers with routing preview before execution. Workspace-init template shows routing section. SHA baseline ratchet bug documented: when `design → workspace`, epic-start must record workspace/main HEAD SHA.
 
-**Implemented and merged:**
-- `epic-start` and `epic-close` skills (new) — full workspace branch lifecycle
-- `java-update-design` + `update-primary-doc` — workspace mode detection, JOURNAL.md entry format
-- `handover` — `journal-entry` item added to wrap checklist (OFF by default)
-- All skill paths updated: `adr/`, `blog/`, `snapshots/`, `IDEAS.md` (workspace-relative)
-- Session-start hook: HANDOVER.md read prompt + workspace check
-- `workspace-init` Step 3b removed (no longer copies project DESIGN.md)
-- INDEX.md maintenance in `adr`, `design-snapshot`, `write-blog`
-- Issue #49 closed
+**Health sweeps (×2)** — fixed `garden`→`forage` in README (5 sections), web app stats bar (44→48, 17→19, 295→1016), blog INDEX.md (1→14 entries), CLAUDE.md tier list, validator counts across all primary docs.
 
-**446 tests passing. 48 skills synced.**
+**Test coverage: 446 → 1016** — 22 new test files across two passes. All 19 registered validators now covered. Key TDD findings captured to forage: `validate_links` uses `requests.get` not `requests.head`; `validate_cross_document` writes to stderr; `validate_examples` silently skips `{...}` JSON as template.
+
+**Forage: 6 entries submitted** — PR [Hortora/garden#43](https://github.com/Hortora/garden/pull/43). Three gotchas (worktree cwd, enum identity, sed comment), one technique (TDD agents read source first), two undocumented (requests.get, json template skip).
+
+**Issues:** `#57` closed (test coverage). Open: `#50` blog pipeline, `#52` publish-blog, `#53` Jekyll pages, `#54` workspace routing epic, `#56` epic-start SHA baseline.
 
 ---
 
 ## Immediate Next Step
 
-**Smoke tests in a real workspace session:**
-1. `/epic-start` → verify `design/JOURNAL.md` and `design/.meta` created with SHA
+**Smoke tests** (deferred since yesterday):
+1. `/epic-start` → verify `design/JOURNAL.md` + `design/.meta` created with SHA
 2. `java-update-design` → verify journal entry written (not project DESIGN.md)
-3. `/epic-close` (dry run, no artifacts) → verify close plan presented with "all / step" prompt
+3. `/epic-close` (dry run) → verify three-layer routing preview shown correctly
+
+Then: resume issue/epic creation from yesterday's interrupted flow (we got as far as creating epics #50 and #54 before the workspace routing insight interrupted).
 
 ---
 
@@ -44,12 +36,8 @@ structured `§Section` anchors for three-way merge at close. SHA baseline record
 
 | Context | Where |
 |---------|-------|
-| Design journal spec | `docs/superpowers/specs/2026-04-13-design-journal-design.md` |
-| Artifact routing spec | `docs/superpowers/specs/2026-04-13-artifact-routing-design.md` |
-| Epic lifecycle spec | `docs/superpowers/specs/2026-04-14-epic-lifecycle-design.md` |
-| Implementation plan | `docs/superpowers/plans/2026-04-14-epic-lifecycle.md` |
-| epic-start skill | `epic-start/SKILL.md` |
-| epic-close skill | `epic-close/SKILL.md` |
-| Blog entry | `docs/_posts/2026-04-14-mdp01-the-model-comes-together.md` |
-| Parked ideas | `IDEAS.md` (blog article/note types, complex routing) |
+| Blog entry types spec | `docs/superpowers/specs/2026-04-14-blog-entry-types-design.md` |
+| Workspace routing spec | `docs/superpowers/specs/2026-04-14-workspace-routing-design.md` |
+| Blog entry (this session) | `docs/_posts/2026-04-14-mdp02-closing-gaps.md` |
+| Open epics | GitHub: #50 (blog pipeline), #54 (workspace routing) |
 | Previous handover | `git show HEAD~1:HANDOFF.md` |
