@@ -24,7 +24,7 @@ version tags, or explicit milestone commits. Group commits into candidate phases
 ## Step R2 — Check what's already been written
 
 ```bash
-ls docs/blog/ 2>/dev/null | sort
+ls blog/ 2>/dev/null | sort
 ```
 
 Any phases already covered by existing entries are excluded from the proposed list.
@@ -62,7 +62,7 @@ For each confirmed entry, follow the full standard write-blog workflow (Steps 0�
 - Gather the story from git history and commit messages for that phase
 - Draft with correct voice, style, and tone
 - Show the draft and confirm before writing to disk
-- Write to `docs/blog/YYYY-MM-DD-<initials>NN-<slug>.md` — initials from `~/.claude/settings.json`, per-author sequence number determined at write time
+- Write to `blog/YYYY-MM-DD-<initials>NN-<slug>.md` — initials from `~/.claude/settings.json`, per-author sequence number determined at write time
 - Offer to commit each entry, or batch-commit at the end
 
 After each entry is confirmed, move to the next. Do not draft the next entry
@@ -89,7 +89,7 @@ All committed. Ready to publish via publish-blog when you're ready.
 flowchart TD
     Trigger((Retrospective triggered))
     ScanGit[git log --oneline --no-merges\nidentify natural phase boundaries]
-    CheckExisting[ls docs/blog/\nexclude already-covered phases]
+    CheckExisting[ls blog/\nexclude already-covered phases]
     ProposeList[Present numbered selection list\nall ticked by default]
     UserToggles{User toggles\nor confirms?}
     FinalConfirm[Show final selection\nask for go-ahead]
@@ -100,7 +100,7 @@ flowchart TD
     Draft[Draft with correct voice,\ntone, and style]
     UserConfirms{User confirms?}
     Refine[Refine based\non feedback]
-    Write[Write to docs/blog/]
+    Write[Write to blog/]
     CommitOffer[Offer to commit\nor batch at end]
     MoreEntries{More confirmed\nentries remaining?}
     Summary[Print final summary\nof all entries written]
@@ -138,7 +138,7 @@ When grouping commits into phases, look for:
 - **Theme shifts** — commits about one feature area give way to another (infrastructure → UI → quality)
 - **Milestone markers** — version tags, "feat:" commits that name a significant capability, commits with "initial" or "first" in the message
 - **Volume changes** — a burst of commits on one topic followed by silence suggests a completed phase
-- **Existing ADRs or snapshots** — `git log -- docs/adr/ docs/design-snapshots/` shows when formal decisions were captured, which often coincides with phase boundaries
+- **Existing ADRs or snapshots** — `git log -- adr/ snapshots/` shows when formal decisions were captured, which often coincides with phase boundaries
 
 When in doubt, propose more phases rather than fewer — the user can deselect.
 A phase should represent 2–5 days of work or a coherent body of work, not

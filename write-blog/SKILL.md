@@ -85,7 +85,7 @@ Match tone to the phase — see **[entry-template.md](entry-template.md)** for t
 <BLOG_DIR>/YYYY-MM-DD-<initials>NN-phase-title.md
 ```
 
-`<BLOG_DIR>` is resolved in Step 0 Layer 0. Default: `docs/blog/`.
+`<BLOG_DIR>` is resolved in Step 0 Layer 0. Default: `blog/`.
 
 One file per entry. `<initials>` is the author's 2–4 letter identifier (e.g. `mdp`), read from `~/.claude/settings.json` § `initials`. `NN` is a two-digit per-author sequence number starting at `01`. Kebab-case title, ≤30 chars (no "the", "a", "an").
 
@@ -146,7 +146,7 @@ grep -i "blog directory:" CLAUDE.md 2>/dev/null
 
 If a line matching `Blog directory:` is found (e.g. `Blog directory: site/_posts/`), extract that path and use it as `<BLOG_DIR>` throughout all subsequent steps.
 
-If not found, default to `docs/blog/`.
+If not found, default to `blog/`.
 
 **Layer 1 — Scan CLAUDE.md for context**
 
