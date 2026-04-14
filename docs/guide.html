@@ -22,16 +22,7 @@ title: Getting Started with cc-praxis
     transition: width 0.2s ease;
   }
 
-  /* Layout */
-  .guide-wrap {
-    display: flex;
-    align-items: flex-start;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
-    gap: 2rem;
-  }
-
+  /* Layout — pane wraps sidebar + content for each language tab */
   /* Sidebar */
   .guide-sidebar {
     position: sticky;
@@ -310,7 +301,47 @@ title: Getting Started with cc-praxis
   /* Mobile */
   @media (max-width: 768px) {
     .guide-sidebar { display: none; }
-    .guide-wrap { padding: 1rem; }
+    .guide-pane { padding: 1rem; }
+  }
+
+  /* ── Tab bar ──────────────────────────────────────────── */
+  .guide-tab-bar {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid #e5e7eb;
+    background: white;
+    position: sticky;
+    top: 3px;
+    z-index: 100;
+    padding: 0 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .guide-tab {
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #6b7280;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .guide-tab:hover { color: #374151; }
+  .guide-tab.active {
+    color: #4f46e5;
+    border-bottom-color: #4f46e5;
+  }
+  .guide-pane {
+    display: flex;
+    align-items: flex-start;
+    min-height: calc(100vh - 56px - 3px - 42px);
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    gap: 2rem;
   }
 </style>
 
@@ -318,67 +349,75 @@ title: Getting Started with cc-praxis
   <div id="guide-progress" class="guide-progress-fill"></div>
 </div>
 
-<div class="guide-wrap">
+<!-- Tab bar -->
+<div class="guide-tab-bar">
+  <button class="guide-tab active" data-lang="java">Java / Quarkus</button>
+  <button class="guide-tab" data-lang="typescript">TypeScript</button>
+  <button class="guide-tab" data-lang="python">Python</button>
+</div>
+
+<!-- Java pane (default) -->
+<div class="guide-pane" id="pane-java">
 
   <!-- Sidebar -->
-  <aside class="guide-sidebar">
+  <aside class="guide-sidebar" id="sidebar-java">
     <h3>Getting Started</h3>
-    <a class="guide-step" data-step="1" href="#section-1">
+    <a class="guide-step" data-step="1" href="#java-section-1">
       <span class="guide-step-circle">1</span>
       <span class="guide-step-title">CLAUDE.md Setup</span>
       <span class="guide-step-sub">Your configuration hub</span>
     </a>
-    <a class="guide-step" data-step="2" href="#section-2">
+    <a class="guide-step" data-step="2" href="#java-section-2">
       <span class="guide-step-circle">2</span>
       <span class="guide-step-title">Workspace Setup</span>
       <span class="guide-step-sub">Separate code from methodology</span>
     </a>
-    <a class="guide-step" data-step="3" href="#section-3">
+    <a class="guide-step" data-step="3" href="#java-section-3">
       <span class="guide-step-circle">3</span>
       <span class="guide-step-title">Java Development</span>
       <span class="guide-step-sub">Safety-first rules</span>
     </a>
-    <a class="guide-step" data-step="4" href="#section-4">
+    <a class="guide-step" data-step="4" href="#java-section-4">
       <span class="guide-step-circle">4</span>
       <span class="guide-step-title">Code Review</span>
       <span class="guide-step-sub">Catches problems early</span>
     </a>
-    <a class="guide-step" data-step="5" href="#section-5">
+    <a class="guide-step" data-step="5" href="#java-section-5">
       <span class="guide-step-circle">5</span>
       <span class="guide-step-title">Smart Commits</span>
       <span class="guide-step-sub">Design sync built in</span>
     </a>
-    <a class="guide-step" data-step="6" href="#section-6">
+    <a class="guide-step" data-step="6" href="#java-section-6">
       <span class="guide-step-circle">6</span>
       <span class="guide-step-title">Brainstorming</span>
       <span class="guide-step-sub">Design before code</span>
     </a>
-    <a class="guide-step" data-step="7" href="#section-7">
+    <a class="guide-step" data-step="7" href="#java-section-7">
       <span class="guide-step-circle">7</span>
       <span class="guide-step-title">Ideas</span>
       <span class="guide-step-sub">Park and record</span>
     </a>
-    <a class="guide-step" data-step="8" href="#section-8">
+    <a class="guide-step" data-step="8" href="#java-section-8">
       <span class="guide-step-circle">8</span>
       <span class="guide-step-title">Issues</span>
       <span class="guide-step-sub">Automatic tracking</span>
     </a>
-    <a class="guide-step" data-step="9" href="#section-9">
+    <a class="guide-step" data-step="9" href="#java-section-9">
       <span class="guide-step-circle">9</span>
       <span class="guide-step-title">Design Documentation</span>
       <span class="guide-step-sub">Journal and snapshots</span>
     </a>
-    <a class="guide-step" data-step="10" href="#section-10">
+    <a class="guide-step" data-step="10" href="#java-section-10">
       <span class="guide-step-circle">10</span>
       <span class="guide-step-title">Closing an Epic</span>
       <span class="guide-step-sub">Merge, route, close</span>
     </a>
-    <a class="guide-step" data-step="11" href="#section-11">
+    <a class="guide-step" data-step="11" href="#java-section-11">
       <span class="guide-step-circle">11</span>
       <span class="guide-step-title">Session Handover</span>
       <span class="guide-step-sub">Resume in one message</span>
     </a>
-    <a class="guide-step" data-step="12" href="#section-12">
+    <a class="guide-step" data-step="12" href="#java-section-12">
       <span class="guide-step-circle">12</span>
       <span class="guide-step-title">Project Diary</span>
       <span class="guide-step-sub">Honest in-the-moment writing</span>
@@ -394,7 +433,7 @@ title: Getting Started with cc-praxis
     </div>
 
     <!-- Section 1: CLAUDE.md Setup -->
-    <section class="guide-section" id="section-1" data-section="1">
+    <section class="guide-section" id="java-section-1" data-section="1">
       <div class="section-header">
         <div class="section-num">1</div>
         <div>
@@ -436,12 +475,12 @@ title: Getting Started with cc-praxis
       <div class="prompt-block" data-guide="pb">Set up a CLAUDE.md for my Java project. It's a Quarkus REST API tracked on GitHub at owner/repo.</div>
 
       <div class="section-next" data-guide="sn">
-        Next: <a href="#section-2">Workspace Setup →</a>
+        Next: <a href="#java-section-2">Workspace Setup →</a>
       </div>
     </section>
 
     <!-- Section 2: Workspace Setup -->
-    <section class="guide-section" id="section-2" data-section="2">
+    <section class="guide-section" id="java-section-2" data-section="2">
       <div class="section-header">
         <div class="section-num">2</div>
         <div>
@@ -480,12 +519,12 @@ title: Getting Started with cc-praxis
       <div class="prompt-block" data-guide="pb">/workspace-init</div>
 
       <div class="section-next" data-guide="sn">
-        Next: <a href="#section-3">Java Development →</a>
+        Next: <a href="#java-section-3">Java Development →</a>
       </div>
     </section>
 
     <!-- Section 3: Java Development -->
-    <section class="guide-section" id="section-3" data-section="3">
+    <section class="guide-section" id="java-section-3" data-section="3">
       <div class="section-header">
         <div class="section-num">3</div>
         <div>
@@ -524,12 +563,12 @@ title: Getting Started with cc-praxis
       <div class="prompt-block" data-guide="pb">Implement a Quarkus REST endpoint to fetch orders by customer ID, with proper error handling.</div>
 
       <div class="section-next" data-guide="sn">
-        Next: <a href="#section-4">Code Review →</a>
+        Next: <a href="#java-section-4">Code Review →</a>
       </div>
     </section>
 
     <!-- Section 4: Code Review -->
-    <section class="guide-section" id="section-4" data-section="4">
+    <section class="guide-section" id="java-section-4" data-section="4">
       <div class="section-header">
         <div class="section-num">4</div>
         <div>
@@ -566,12 +605,12 @@ title: Getting Started with cc-praxis
       <div class="prompt-block" data-guide="pb">Review my changes.</div>
 
       <div class="section-next" data-guide="sn">
-        Next: <a href="#section-5">Smart Commits →</a>
+        Next: <a href="#java-section-5">Smart Commits →</a>
       </div>
     </section>
 
     <!-- Section 5: Smart Commits -->
-    <section class="guide-section" id="section-5" data-section="5">
+    <section class="guide-section" id="java-section-5" data-section="5">
       <div class="section-header">
         <div class="section-num">5</div>
         <div>
@@ -611,12 +650,12 @@ title: Getting Started with cc-praxis
       <div class="prompt-block" data-guide="pb">/java-git-commit</div>
 
       <div class="section-next" data-guide="sn">
-        Next: <a href="#section-6">Brainstorming →</a>
+        Next: <a href="#java-section-6">Brainstorming →</a>
       </div>
     </section>
 
     <!-- Section 6: Brainstorming -->
-    <section class="guide-section" id="section-6" data-section="6">
+    <section class="guide-section" id="java-section-6" data-section="6">
       <div class="section-header">
         <div class="section-num">6</div>
         <div>
@@ -654,12 +693,12 @@ title: Getting Started with cc-praxis
       <div class="prompt-block" data-guide="pb">Let's brainstorm the order validation feature.</div>
 
       <div class="section-next" data-guide="sn">
-        Next: <a href="#section-7">Ideas &amp; Decisions →</a>
+        Next: <a href="#java-section-7">Ideas &amp; Decisions →</a>
       </div>
     </section>
 
     <!-- Section 7: Ideas & Decisions -->
-    <section class="guide-section" id="section-7" data-section="7">
+    <section class="guide-section" id="java-section-7" data-section="7">
       <div class="section-header">
         <div class="section-num">7</div>
         <div>
@@ -696,12 +735,12 @@ title: Getting Started with cc-praxis
       <div class="prompt-block" data-guide="pb">Log this idea: cache order lookups in Redis to reduce database load on peak traffic.</div>
 
       <div class="section-next" data-guide="sn">
-        Next: <a href="#section-8">Issues &amp; Epics →</a>
+        Next: <a href="#java-section-8">Issues &amp; Epics →</a>
       </div>
     </section>
 
     <!-- Section 8: Issues & Epics -->
-    <section class="guide-section" id="section-8" data-section="8">
+    <section class="guide-section" id="java-section-8" data-section="8">
       <div class="section-header">
         <div class="section-num">8</div>
         <div>
@@ -736,12 +775,12 @@ title: Getting Started with cc-praxis
       <div class="prompt-block" data-guide="pb">/issue-workflow</div>
 
       <div class="section-next" data-guide="sn">
-        Next: <a href="#section-9">Design Documentation →</a>
+        Next: <a href="#java-section-9">Design Documentation →</a>
       </div>
     </section>
 
     <!-- Section 9: Design Documentation -->
-    <section class="guide-section" id="section-9" data-section="9">
+    <section class="guide-section" id="java-section-9" data-section="9">
       <div class="section-header">
         <div class="section-num">9</div>
         <div>
@@ -772,12 +811,12 @@ title: Getting Started with cc-praxis
       <div class="prompt-block" data-guide="pb">Take a design snapshot before we change the repository layer architecture.</div>
 
       <div class="section-next" data-guide="sn">
-        Next: <a href="#section-10">Closing an Epic →</a>
+        Next: <a href="#java-section-10">Closing an Epic →</a>
       </div>
     </section>
 
     <!-- Section 10: Closing an Epic -->
-    <section class="guide-section" id="section-10" data-section="10">
+    <section class="guide-section" id="java-section-10" data-section="10">
       <div class="section-header">
         <div class="section-num">10</div>
         <div>
@@ -814,12 +853,12 @@ title: Getting Started with cc-praxis
       <div class="prompt-block" data-guide="pb">/epic-close</div>
 
       <div class="section-next" data-guide="sn">
-        Next: <a href="#section-11">Session Handover →</a>
+        Next: <a href="#java-section-11">Session Handover →</a>
       </div>
     </section>
 
     <!-- Section 11: Session Handover -->
-    <section class="guide-section" id="section-11" data-section="11">
+    <section class="guide-section" id="java-section-11" data-section="11">
       <div class="section-header">
         <div class="section-num">11</div>
         <div>
@@ -856,12 +895,12 @@ title: Getting Started with cc-praxis
       <div class="prompt-block" data-guide="pb">Create a handover.</div>
 
       <div class="section-next" data-guide="sn">
-        Next: <a href="#section-12">Project Diary →</a>
+        Next: <a href="#java-section-12">Project Diary →</a>
       </div>
     </section>
 
     <!-- Section 12: Project Diary -->
-    <section class="guide-section" id="section-12" data-section="12">
+    <section class="guide-section" id="java-section-12" data-section="12">
       <div class="section-header">
         <div class="section-num">12</div>
         <div>
@@ -907,70 +946,104 @@ title: Getting Started with cc-praxis
   </main>
 </div>
 
+<!-- TypeScript pane (hidden) -->
+<div class="guide-pane" id="pane-typescript" style="display:none">
+  <div style="padding:3rem;color:#6b7280;font-size:14px;">TypeScript guide — coming soon in this task's follow-up.</div>
+</div>
+
+<!-- Python pane (hidden) -->
+<div class="guide-pane" id="pane-python" style="display:none">
+  <div style="padding:3rem;color:#6b7280;font-size:14px;">Python guide — coming soon in this task's follow-up.</div>
+</div>
+
 <script>
 (function () {
-  var sections = document.querySelectorAll('.guide-section');
-  var steps = document.querySelectorAll('.guide-step');
-  var progressFill = document.getElementById('guide-progress');
+  var LANGS = ['java', 'typescript', 'python'];
 
-  if (!sections.length || !steps.length) return;
-
-  function setActive(index) {
-    steps.forEach(function (step, i) {
-      step.classList.remove('active', 'done');
-      var circle = step.querySelector('.guide-step-circle');
-      if (i === index) {
-        step.classList.add('active');
-        if (circle) circle.textContent = i + 1;
-      } else if (i < index) {
-        step.classList.add('done');
-        if (circle) circle.textContent = '✓';
-      } else {
-        if (circle) circle.textContent = i + 1;
-      }
-    });
-    if (progressFill) {
-      progressFill.style.width = ((index + 1) / sections.length * 100) + '%';
-    }
+  function getLang() {
+    var h = location.hash.replace('#', '');
+    return LANGS.indexOf(h) !== -1 ? h : 'java';
   }
 
-  var observer = new IntersectionObserver(function (entries) {
-    // Pick the topmost intersecting section across all entries in this batch
-    // (fast scroll can deliver multiple entries simultaneously in arbitrary order)
-    var best = null;
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        var n = parseInt(entry.target.getAttribute('data-section'), 10);
-        if (!isNaN(n) && (best === null || n < best)) {
-          best = n;
-        }
-      }
+  function activateTab(lang) {
+    document.querySelectorAll('.guide-tab').forEach(function (btn) {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
     });
-    if (best !== null) setActive(best - 1);
-  }, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -60% 0px'
-  });
+    LANGS.forEach(function (l) {
+      var pane = document.getElementById('pane-' + l);
+      if (pane) pane.style.display = l === lang ? 'flex' : 'none';
+    });
+    initObserver(lang);
+  }
 
-  sections.forEach(function (section) {
-    observer.observe(section);
-  });
-
-  // Set initial state — IntersectionObserver won't fire on load
-  setActive(0);
-
-  // Sidebar smooth scroll
-  steps.forEach(function (step) {
-    step.addEventListener('click', function (e) {
-      var href = step.getAttribute('href');
-      if (href && href.startsWith('#')) {
-        e.preventDefault();
-        var target = document.querySelector(href);
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      }
+  document.querySelectorAll('.guide-tab').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var lang = btn.dataset.lang;
+      history.pushState(null, '', '#' + lang);
+      activateTab(lang);
     });
   });
+
+  window.addEventListener('hashchange', function () {
+    activateTab(getLang());
+  });
+
+  var activeObserver = null;
+
+  function initObserver(lang) {
+    if (activeObserver) { activeObserver.disconnect(); activeObserver = null; }
+
+    var prefix = lang === 'java' ? 'java' : lang === 'typescript' ? 'ts' : 'py';
+    var sections = Array.from(document.querySelectorAll('#pane-' + lang + ' .guide-section'));
+    var steps = Array.from(document.querySelectorAll('#sidebar-' + lang + ' .guide-step'));
+    var progressFill = document.getElementById('guide-progress');
+
+    if (!sections.length || !steps.length) return;
+
+    function setActive(index) {
+      steps.forEach(function (step, i) {
+        step.classList.remove('active', 'done');
+        var circle = step.querySelector('.guide-step-circle');
+        if (i === index) {
+          step.classList.add('active');
+          if (circle) circle.textContent = i + 1;
+        } else if (i < index) {
+          step.classList.add('done');
+          if (circle) circle.textContent = '\u2713';
+        } else {
+          if (circle) circle.textContent = i + 1;
+        }
+      });
+      if (progressFill) {
+        progressFill.style.width = ((index + 1) / sections.length * 100) + '%';
+      }
+    }
+
+    activeObserver = new IntersectionObserver(function (entries) {
+      var best = null;
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var n = parseInt(entry.target.dataset.section, 10);
+          if (!isNaN(n) && (best === null || n < best)) best = n;
+        }
+      });
+      if (best !== null) setActive(best - 1);
+    }, { threshold: 0.1, rootMargin: '0px 0px -60% 0px' });
+
+    sections.forEach(function (s) { activeObserver.observe(s); });
+    setActive(0);
+
+    steps.forEach(function (step) {
+      step.addEventListener('click', function (e) {
+        var n = parseInt(step.dataset.step, 10);
+        if (!isNaN(n)) {
+          var target = document.getElementById(prefix + '-section-' + n);
+          if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+        }
+      });
+    });
+  }
+
+  activateTab(getLang());
 })();
 </script>

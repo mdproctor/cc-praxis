@@ -84,14 +84,14 @@ class TestSectionStructure(unittest.TestCase):
         self.content = load_guide()
 
     def test_has_twelve_sections(self):
-        count = len(re.findall(r'id="section-\d+"', self.content))
+        count = len(re.findall(r'id="java-section-\d+"', self.content))
         self.assertEqual(count, SECTION_COUNT,
                          f'Expected {SECTION_COUNT} section IDs, found {count}')
 
     def test_all_section_ids_sequential(self):
         for n in range(1, SECTION_COUNT + 1):
-            self.assertIn(f'id="section-{n}"', self.content,
-                          f'Missing id="section-{n}"')
+            self.assertIn(f'id="java-section-{n}"', self.content,
+                          f'Missing id="java-section-{n}"')
 
     def test_all_data_section_attributes(self):
         for n in range(1, SECTION_COUNT + 1):
@@ -177,3 +177,45 @@ class TestJavaScript(unittest.TestCase):
     def test_done_class_logic_present(self):
         self.assertIn("classList.add('done'", self.content,
                       "JS must call classList.add('done') for completed steps")
+
+
+class TestTabStructure(unittest.TestCase):
+    """Integration: guide has three language tabs."""
+
+    def setUp(self):
+        self.content = load_guide()
+
+    def test_tab_bar_present(self):
+        self.assertIn('guide-tab-bar', self.content)
+
+    def test_three_language_tabs(self):
+        for lang in ('java', 'typescript', 'python'):
+            self.assertIn(f'data-lang="{lang}"', self.content,
+                          f'Missing tab for {lang}')
+
+    def test_three_panes(self):
+        for lang in ('java', 'typescript', 'python'):
+            self.assertIn(f'id="pane-{lang}"', self.content,
+                          f'Missing pane for {lang}')
+
+    def test_hash_routing_js_present(self):
+        self.assertIn('hashchange', self.content)
+        self.assertIn('getLang', self.content)
+
+    def test_java_pane_is_default(self):
+        import re
+        java_pane = re.search(r'id="pane-java"[^>]*>', self.content)
+        self.assertIsNotNone(java_pane)
+        self.assertNotIn('display:none', java_pane.group(0))
+
+    def test_typescript_pane_hidden_by_default(self):
+        import re
+        ts_pane = re.search(r'id="pane-typescript"[^>]*>', self.content)
+        self.assertIsNotNone(ts_pane)
+        self.assertIn('display:none', ts_pane.group(0))
+
+    def test_python_pane_hidden_by_default(self):
+        import re
+        py_pane = re.search(r'id="pane-python"[^>]*>', self.content)
+        self.assertIsNotNone(py_pane)
+        self.assertIn('display:none', py_pane.group(0))
