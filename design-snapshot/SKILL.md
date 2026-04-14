@@ -314,8 +314,10 @@ Snapshot is complete when:
 
 ## Skill Chaining
 
-**Invoked by:** User directly: "create a design snapshot", "snapshot where we are", "document our progress"
+**Invoked by:** User directly: "create a design snapshot", "snapshot where we are", "document our progress"; [`handover`] — offered as part of the session wrap checklist (off by default, user must tick it explicitly); [`write-blog`] — offered after writing a major milestone entry (not automatic; user is offered the choice)
 
 **Invokes:** [`adr`] — if significant decisions in the snapshot have no ADRs yet (offered, not automatic); [`idea-log`] — if undecided possibilities surfaced during snapshot review (offered, not automatic); [`git-commit`] — to commit the snapshot file (routes to `java-git-commit`, `custom-git-commit`, etc. per CLAUDE.md project type)
+
+**Can be followed by:** [`write-blog`] — after a major milestone snapshot, the user may want to write a diary entry narrating how the project reached that state (offered in write-blog, not automatic here)
 
 **Does NOT invoke:** `java-update-design` or `update-primary-doc` — those update *living* docs that change over time; a snapshot is an *immutable* record. Both coexist: update the living doc with one, freeze the moment with the other.

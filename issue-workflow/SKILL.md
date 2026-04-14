@@ -524,6 +524,7 @@ user confirmation to skip. Skipping silently is not permitted.**
 - `git-commit` Step 0b → Phase 0: Setup (offered on new CLAUDE.md)
 - `git-commit` Step 2 → Phase 3: Pre-Commit (automatic when Work Tracking enabled)
 - Work Tracking automatic behaviours in CLAUDE.md → Phase 1 or Phase 2 (automatic)
+- [`idea-log`] PROMOTE flow → creates a tracked GitHub issue from a promoted idea
 
 **Invokes:** Nothing — this is a terminal skill. Issue numbers produced here feed
 into `git-commit` commit messages via `Refs #N` / `Closes #N`.

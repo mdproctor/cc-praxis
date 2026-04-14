@@ -227,7 +227,7 @@ Severity scale: see [check-categories.md](../project-health/check-categories.md#
 
 ## Skill Chaining
 
-**Invoked by:** User directly via `/python-project-health`, or by `project-health` if `type: python` is configured in CLAUDE.md
+**Invoked by:** User directly via `/python-project-health`. Also suggested by `project-health` when a Python project is detected — `type: python` is not a built-in project type (Python projects use `type: generic` or `type: custom`), so `project-health` cannot auto-chain here; it suggests this skill instead
 
 **Can be invoked directly:** Yes — `/python-project-health` runs universal checks first,
 then Python-specific checks, producing identical output to the auto-chained flow

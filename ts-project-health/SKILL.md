@@ -222,7 +222,7 @@ Severity scale: see [check-categories.md](../project-health/check-categories.md#
 
 ## Skill Chaining
 
-**Invoked by:** User directly via `/ts-project-health`, or by `project-health` if `type: ts` is configured in CLAUDE.md (TypeScript is not a built-in project type; see `docs/PROJECT-TYPES.md` for supported types)
+**Invoked by:** User directly via `/ts-project-health`. Also suggested by `project-health` when a TypeScript/Node.js project is detected — `type: ts` is not a built-in project type (TypeScript projects use `type: generic`; see `docs/PROJECT-TYPES.md`), so `project-health` cannot auto-chain here; it suggests this skill instead
 
 **Can be invoked directly:** Yes — `/ts-project-health` runs universal checks first,
 then TypeScript-specific checks, producing identical output to the auto-chained flow

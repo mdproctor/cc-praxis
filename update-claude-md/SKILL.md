@@ -262,7 +262,7 @@ CLAUDE.md update is complete when:
 
 ## Skill Chaining
 
-**Invoked by:** [`git-commit`] when committing in any repository, [`java-git-commit`] alongside update-design, [`blog-git-commit`] when committing blog changes, [`custom-git-commit`] when committing custom project changes
+**Invoked by:** [`git-commit`] when committing in any repository, [`java-git-commit`] alongside update-design, [`blog-git-commit`] when committing blog changes, [`custom-git-commit`] when committing custom project changes, [`handover`] as part of the session wrap checklist (syncs new conventions before the handover is written), [`write-blog`] on the first blog entry ever in a project (adds the mandatory Writing Style Guide section)
 
 **Invokes:** None (terminal skill in the chain)
 

@@ -261,5 +261,9 @@ Health check is complete when:
 - `blog-project-health` — for type: blog
 - `custom-project-health` — for type: custom
 
+**Suggests (not auto-chained — these types are not built-in project types):**
+- `python-project-health` — suggested when a Python project is detected (no `type: python` built-in; Python projects use `type: generic` or `type: custom`)
+- `ts-project-health` — suggested when a TypeScript/Node.js project is detected (no `type: ts` built-in; TS projects use `type: generic`)
+
 **Companion skill:**
 - [`project-refine`] — once health is green, use project-refine for improvement opportunities (bloat, structure, deduplication). They share the same CLAUDE.md Health Check Configuration section.
