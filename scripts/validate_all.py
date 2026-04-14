@@ -21,6 +21,7 @@ VALIDATORS = {
         {'script': 'validate_sections.py', 'name': 'Sections', 'target': None},
         {'script': 'validate_structure.py', 'name': 'Structure', 'target': None},
         {'script': 'validate_project_types.py', 'name': 'Project Type Lists', 'target': None},
+        {'script': 'validate_blog_frontmatter.py', 'name': 'Blog Entry Frontmatter', 'target': None},
     ],
     'push': [
         # Pre-push tier: <30s budget, moderate validators + regression
