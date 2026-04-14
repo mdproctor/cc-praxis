@@ -17,7 +17,37 @@ elif ! grep -q "## Project Type" CLAUDE.md; then
   echo "Prompt the user to choose a project type and insert it into CLAUDE.md."
   echo "Choices: skills | java | blog | custom | generic"
   echo "(See CLAUDE.md § Project Type for what each type means)"
-elif ! grep -q "## Work Tracking" CLAUDE.md; then
+fi
+
+# Check for HANDOVER.md and prompt to read it (runs when CLAUDE.md exists)
+if [ -f "CLAUDE.md" ] && [ -f "HANDOVER.md" ]; then
+  LAST_UPDATED=$(git log -1 --format="%ar" -- HANDOVER.md 2>/dev/null || echo "unknown age")
+  echo "📋 HANDOVER.md found (last updated: $LAST_UPDATED)."
+  echo "Before starting: ask the user 'Read your session handover? (y/n)' — if yes, read and briefly summarise HANDOVER.md."
+  # Check staleness
+  COMMIT_TIME=$(git log -1 --format="%ct" -- HANDOVER.md 2>/dev/null)
+  if [ -n "$COMMIT_TIME" ]; then
+    NOW=$(date +%s)
+    DAYS=$(( (NOW - COMMIT_TIME) / 86400 ))
+    if [ "$DAYS" -gt 7 ]; then
+      echo "⚠️ Handover is $DAYS days old — flag as potentially stale before summarising."
+    fi
+  fi
+fi
+
+# Check for workspace CLAUDE.md session-start instruction
+if [ -f "CLAUDE.md" ]; then
+  if grep -q "## Session Start" CLAUDE.md 2>/dev/null; then
+    : # Workspace configured — session-start add-dir will handle project access
+  elif grep -q "## Project Type" CLAUDE.md 2>/dev/null; then
+    echo "ℹ️  No workspace configured for this project."
+    echo "Run /workspace-init to create ~/claude/private/<project>/ and set up the companion workspace."
+    echo "(Keeps methodology artifacts out of the project repo)"
+  fi
+fi
+
+# Check for Work Tracking configuration
+if [ -f "CLAUDE.md" ] && grep -q "## Project Type" CLAUDE.md && ! grep -q "## Work Tracking" CLAUDE.md; then
   echo "ℹ️  OPTIONAL: No issue tracking configured for this project."
   echo "Run /issue-workflow to set up GitHub issue tracking and release-based changelog."
   echo "(Enables cross-cutting task detection and commit split suggestions)"
