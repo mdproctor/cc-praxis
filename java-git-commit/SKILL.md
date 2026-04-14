@@ -336,7 +336,7 @@ All pitfalls from `git-commit` apply, plus:
 
 ## Skill Chaining
 
-**Invoked by:** [`java-code-review`] after all critical issues resolved; [`quarkus-flow-dev`] and [`quarkus-flow-testing`] when ready to commit workflow work; [`quarkus-observability`] after observability configuration; [`maven-dependency-update`] after successful dependency updates; [`adr`] when committing an ADR alongside related changes
+**Invoked by:** [`java-code-review`] after all critical issues resolved; [`quarkus-flow-dev`] and [`quarkus-flow-testing`] when ready to commit workflow work; [`quarkus-observability`] after observability configuration; [`maven-dependency-update`] after successful dependency updates; [`adr`] when committing an ADR alongside related changes; [`design-snapshot`] to commit a snapshot file; [`idea-log`] to commit IDEAS.md additions; [`write-blog`] to commit a blog entry
 
 **Invokes:** [`java-update-design`] and [`update-claude-md`] before proposing commit (automatic)
 

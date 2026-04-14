@@ -267,7 +267,7 @@ total = sum(record.value for record in records)
 
 ## Skill Chaining
 
-**Invoked by:** [`python-dev`] before committing (user can skip), [`git-commit`] when no review has been run in the current session (asks user for confirmation before running)
+**Invoked by:** [`python-dev`] before committing (user can skip)
 
 **Invokes:** [`python-security-audit`] for security-critical code (offered when reviewing auth/payment/PII/user-input handling), [`git-commit`] after approval if user wants to commit
 

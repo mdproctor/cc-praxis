@@ -377,7 +377,7 @@ Commit is complete when:
 
 ## Skill Chaining
 
-**Invoked by:** User says "commit", "make a commit", or invokes `/git-commit`
+**Invoked by:** User says "commit", "make a commit", or invokes `/git-commit`; [`adr`] to commit a new ADR; [`design-snapshot`] to commit the snapshot file; [`idea-log`] to commit IDEAS.md additions; [`write-blog`] to commit a new blog entry; [`python-code-review`] and [`ts-code-review`] after review approval when user wants to commit
 
 **Routes to specialized skills based on CLAUDE.md declaration:**
 - type: java → Redirects to `java-git-commit`

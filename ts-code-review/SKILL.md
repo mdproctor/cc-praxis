@@ -303,7 +303,7 @@ function isValidEmail(email: string): boolean {
 
 ## Skill Chaining
 
-**Invoked by:** [`ts-dev`] before committing (user can skip), [`git-commit`] when no review has been run in the current session (asks user for confirmation before running)
+**Invoked by:** [`ts-dev`] before committing (user can skip)
 
 **Invokes:** [`ts-security-audit`] for security-critical code (offered when reviewing auth/payment/PII handling), [`git-commit`] after approval if user wants to commit
 

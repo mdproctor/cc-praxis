@@ -343,7 +343,7 @@ Commit is complete when:
 
 ## Skill Chaining
 
-**Invoked by:** User says "commit" in a type: custom project (after git-commit routes here)
+**Invoked by:** User says "commit" in a type: custom project (after git-commit routes here); [`adr`] to commit a new ADR; [`design-snapshot`] to commit a snapshot file; [`idea-log`] to commit IDEAS.md additions; [`write-blog`] to commit a blog entry
 
 **Invokes:**
 - [`update-primary-doc`] for primary document sync (automatic if Sync Rules configured)
