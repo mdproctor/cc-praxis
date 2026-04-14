@@ -34,6 +34,34 @@ preference and per-workspace per-artifact overrides.
 | `workspace` | Artifact is committed to workspace/main — new |
 | `alternative <path>` | Artifact goes to a different git repo — existing capability |
 
+### `alternative <path>` Syntax
+
+```
+alternative ~/personal-blog/
+alternative /absolute/path/to/repo/
+```
+
+Rules:
+- Keyword `alternative` followed by exactly one space, then the path
+- Path must start with `/` (absolute) or `~` (tilde-expanded to `$HOME`)
+- Path must not contain unquoted spaces. If path has spaces: `alternative ~/my\ docs/`
+- Invalid: `alternative` (no path), `alternative~` (no space), `/path` (no keyword)
+- Path is validated to exist before epic-close begins routing
+
+### Artifact Names in Routing Config
+
+| Config key | What it routes |
+|------------|---------------|
+| `adr` | All ADR files in `adr/` |
+| `blog` | All blog entries in `blog/` |
+| `design` | The journal-to-DESIGN.md merge operation (not JOURNAL.md itself) |
+| `snapshots` | All design snapshots in `snapshots/` |
+
+The `design` key controls **where DESIGN.md lives** — the merge destination. JOURNAL.md
+is always posted to the GitHub issue then discarded, regardless of routing. If routing
+`design: workspace`, the merged DESIGN.md is written to workspace/main; if `design: project`,
+it is written to the project repo (current behaviour).
+
 ---
 
 ## Three-Layer Config
@@ -44,8 +72,27 @@ Layer 2 (global):     ~/.claude/CLAUDE.md  ## Routing
 Layer 3 (workspace):  <workspace>/CLAUDE.md  ## Routing  (per-artifact)
 ```
 
-Resolution: Layer 3 overrides Layer 2 per-artifact. Unspecified artifacts fall back to
-Layer 2. If Layer 2 is absent, fall back to Layer 1.
+### Resolution Algorithm (formal)
+
+For each artifact type at epic-close:
+
+```
+1. If artifact row present in Layer 3 table → use Layer 3 value
+2. Else if Layer 2 section present AND has a valid **Default destination:** line → use Layer 2 value
+3. Else → use Layer 1 default: project
+```
+
+**Edge cases — explicit rules:**
+
+| Situation | Behaviour |
+|-----------|-----------|
+| Layer 3 `## Routing` section absent | Treat as absent; fall to Layer 2 |
+| Layer 3 table present but artifact not listed | Fall to Layer 2 |
+| Layer 3 table empty | Treat as absent; fall to Layer 2 |
+| Layer 2 section absent | Treat as absent; fall to Layer 1 |
+| Layer 2 present but no `**Default destination:**` line | Treat as absent; fall to Layer 1 |
+| Any layer has invalid value | Warn user; fall to next layer |
+| `alternative` keyword with no path | Invalid; warn and fall to next layer |
 
 ### Layer 2 — Global (`~/.claude/CLAUDE.md`)
 
@@ -92,11 +139,30 @@ workspace/main (updated — all artifacts accumulated)
     └── epic/feature-y (next epic, sees everything)
 ```
 
-**Journal merge with `design: workspace`:**
-When the design artifact target is `workspace`, the journal merge writes the merged
-`DESIGN.md` to workspace/main rather than the project repo. The SHA baseline in
-`design/.meta` remains the project SHA (used to detect independent project changes
-during the three-way merge); only the merge destination changes.
+**Journal merge with `design: workspace` — baseline shift:**
+
+When `design → workspace`, the three-way merge must operate against workspace/main's
+`DESIGN.md`, not the project's. This requires a different SHA baseline:
+
+| Routing | Baseline source | Merge target | Baseline recorded by |
+|---------|----------------|--------------|---------------------|
+| `design: project` | project HEAD at epic-start | project DESIGN.md | epic-start (current behaviour) |
+| `design: workspace` | workspace/main HEAD at epic-start | workspace/main DESIGN.md | epic-start (reads routing config) |
+
+**epic-start** reads the routing config at branch creation time. If `design → workspace`,
+it records the **workspace/main HEAD SHA** in `design/.meta` instead of the project HEAD SHA.
+
+**epic-close** three-way merge when `design → workspace`:
+```
+baseline = git -C <workspace> show <workspace-sha>:DESIGN.md
+current  = workspace/main HEAD DESIGN.md
+journal  = design/JOURNAL.md §Section entries
+result   → write merged DESIGN.md to workspace/main
+```
+
+This ensures each epic's journal merge builds on accumulated workspace design knowledge,
+regardless of what the project repo does independently. There is no ratcheting problem
+because the baseline advances with workspace/main, not the stale project SHA.
 
 ---
 
@@ -169,6 +235,21 @@ is out of scope until explicitly requested.
 - Changes to workspace git structure (already correct)
 - Changes to epic-start branching model (already forks from workspace/main)
 - UI or tooling for inspecting accumulated workspace artifacts
+
+---
+
+## Vocabulary Reconciliation
+
+The 2026-04-13 artifact routing spec used different target names. This spec supersedes that vocabulary:
+
+| Old term (2026-04-13) | New term (2026-04-14) | Notes |
+|-----------------------|-----------------------|-------|
+| `project repo` | `project` | Same meaning; shorter |
+| `base` | _(removed)_ | Was shorthand for base destination path; replaced by `workspace` or explicit `alternative <path>` |
+| `design-journal` (config key) | `design` | The config key; `design-journal` was the old artifact name |
+
+The old terms must not be used in new workspace CLAUDE.md routing configs. epic-close
+should warn and fall through to the next layer if it encounters `project repo` or `base`.
 
 ---
 

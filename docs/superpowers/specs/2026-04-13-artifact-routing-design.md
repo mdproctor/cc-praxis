@@ -1,7 +1,11 @@
 # Artifact Routing — Design Spec
 
 **Date:** 2026-04-13
-**Status:** Approved
+**Status:** Superseded by `docs/superpowers/specs/2026-04-14-workspace-routing-design.md`
+
+> ⚠️ **Vocabulary in this spec is deprecated.** The destination values `base`, `project repo`,
+> and config key `design-journal` have been replaced. See the 2026-04-14 spec for current
+> vocabulary: `project`, `workspace`, `alternative <path>`, `design`.
 
 ---
 
