@@ -149,16 +149,16 @@ If **n** → skip silently.
 ### Step 4c: Check for missing Writing Style Guide section
 
 ```bash
-ls docs/blog/ 2>/dev/null | head -1
+ls blog/ 2>/dev/null | head -1
 ```
 
-If `docs/blog/` exists (meaning write-blog has been used in this project), check whether CLAUDE.md already contains the Writing Style Guide requirement:
+If `blog/` exists (meaning write-blog has been used in this workspace), check whether CLAUDE.md already contains the Writing Style Guide requirement:
 
 ```bash
 grep -l "writing style guide\|blog-technical" CLAUDE.md 2>/dev/null
 ```
 
-If `docs/blog/` exists **and** the requirement is absent from CLAUDE.md, propose adding:
+If `blog/` exists **and** the requirement is absent from CLAUDE.md, propose adding:
 
 ```markdown
 ## Writing Style Guide
