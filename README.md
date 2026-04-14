@@ -572,6 +572,8 @@ See [QUALITY.md § Why Quality Matters](QUALITY.md#why-quality-matters) for comp
 ├── docs/                                # Web skill manager + documentation
 │   ├── index.html                       # Web skill manager UI (About/Browse/Install tabs)
 │   ├── guide.html                       # 12-section interactive getting started guide (/guide/)
+│   ├── architecture.md                  # Skills layered architecture — 9-layer diagram and tables
+│   ├── skills-catalog.md               # Full 48-skill reference catalog with descriptions and usage
 │   ├── articles/
 │   │   └── index.html                   # Articles listing page — filters entry_type: article
 │   ├── blog/

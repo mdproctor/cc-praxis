@@ -19,19 +19,20 @@ def get_skills_from_filesystem() -> Set[str]:
     return skills
 
 def get_skills_from_readme() -> Set[str]:
-    """Parse skills from README.md § Skills section."""
-    readme = Path('README.md')
-    if not readme.exists():
-        return set()
+    """Parse skills from README.md and docs/skills-catalog.md.
 
-    content = readme.read_text()
+    After the README extraction, skill descriptions live in docs/skills-catalog.md.
+    Check both files so validation works whether skills are in README or the catalog.
+    Pattern: #### **skill-name**
+    """
     skills = set()
+    pattern = re.compile(r'####\s+\*\*([a-z][a-z0-9-]+)\*\*')
 
-    # Find Skills section and extract skill names
-    # Pattern: #### **skill-name**
-    for match in re.finditer(r'####\s+\*\*([a-z][a-z0-9-]+)\*\*', content):
-        skill_name = match.group(1)
-        skills.add(skill_name)
+    for path in [Path('README.md'), Path('docs/skills-catalog.md')]:
+        if not path.exists():
+            continue
+        for match in pattern.finditer(path.read_text()):
+            skills.add(match.group(1))
 
     return skills
 
