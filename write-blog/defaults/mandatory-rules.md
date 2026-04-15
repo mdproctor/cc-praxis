@@ -187,6 +187,44 @@ A previous part may be revised to link forward once the next part is published.
 
 ---
 
+## Content Focus — Write for the Reader, Not the Process
+
+Blog entries are for people who use or evaluate the software. They care about
+what was built, why, what was discovered, and what decisions were made. They do
+not care how the development process was run.
+
+**Unless the user explicitly asks to include it, omit all process and tooling
+narration.** This includes:
+
+- How many AI agents, instances, or subagents were used
+- Whether TDD, BDD, or any methodology was followed
+- Whether code reviews, spec reviews, or quality gates were run
+- Whether tasks were executed in parallel or sequentially
+- Which Claude skills, tools, or workflows were invoked
+- Internal iteration counts ("after 3 attempts", "on the second pass")
+
+**Examples of what to cut:**
+
+| ❌ Cut this | ✅ What the reader actually cares about |
+|---|---|
+| "I used TDD throughout — write test first, confirm red, implement, confirm green." | The test caught an edge case — describe the edge case. |
+| "I dispatched 3 subagents to implement the scenarios in parallel." | The scenarios themselves and what they demonstrate. |
+| "A spec reviewer subagent caught the missing dependency." | The dependency issue was non-obvious — explain why. |
+| "We ran subagent-driven development with review gates between tasks." | Omit entirely. |
+| "I handed execution to the brainstorming skill." | Omit entirely. |
+| "Claude reviewed the code before committing." | Omit entirely. |
+| "TDD was non-negotiable for this session." | Omit entirely. |
+
+**The test:** Would a developer using this library care about this sentence?
+If it's about how the code was produced rather than what it does or why it was
+designed that way — cut it.
+
+The exception: if the process IS the subject of the entry (e.g. an entry about
+AI-assisted development workflows, written for that audience), name it explicitly
+in Step 0 Layer 3 as an invocation override. Otherwise, default is omit.
+
+---
+
 ## Factual Accuracy
 
 Diary entries must reflect what actually happened, not a dramatised version of it.
