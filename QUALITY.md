@@ -133,10 +133,10 @@ This framework ensures reliability, consistency, and correctness across all docu
 
 | Protection | What It Prevents | When It Runs |
 |------------|------------------|--------------|
-| **SKILL.md structural validation** | Invalid frontmatter, broken flowcharts, missing sections | skill-validation.md workflow (pre-commit) |
+| **SKILL.md structural validation** | Invalid frontmatter, broken flowcharts, missing sections | docs/development/skill-validation.md workflow (pre-commit) |
 | **CSO compliance** | "Expensive wallpaper" (Claude ignores skill body) | validate_cso.py checks descriptions |
 | **Cross-reference integrity** | Broken skill chains, dangling references | validate_references.py (bidirectional) |
-| **README.md sync accuracy** | Skill catalog drifting from actual skills | After readme-sync.md applies changes |
+| **README.md sync accuracy** | Skill catalog drifting from actual skills | After docs/development/readme-sync.md applies changes |
 | **Naming convention enforcement** | Inconsistent skill hierarchy | validate_naming.py checks prefixes |
 | **Flowchart validation** | Invalid Mermaid syntax | validate_flowcharts.py (PUSH tier) |
 
@@ -529,7 +529,7 @@ When sync workflows update modular documents:
 | **java-update-design** | DESIGN.md + modules | After applying proposals, before staging |
 | **update-claude-md** | CLAUDE.md + modules | After applying proposals, before staging |
 | **update-primary-doc** | User-configured + modules | After applying proposals, before staging |
-| **readme-sync.md** | README.md + modules | After applying proposals, before staging |
+| **docs/development/readme-sync.md** | README.md + modules | After applying proposals, before staging |
 
 **git-commit universal validation:**
 - Step 1c: Validates ALL staged .md files (single-file validation)
@@ -549,7 +549,7 @@ When sync workflows update modular documents:
 - `java-update-design/SKILL.md` - Step 1a: discover group, Step 6: validate group
 - `update-claude-md/SKILL.md` - Step 1a: discover group, Step 6: validate group
 - `update-primary-doc/SKILL.md` - Step 1a: discover group, Step 7: validate group
-- `readme-sync.md` - Step 1a: discover group, Step 6: validate group
+- `docs/development/readme-sync.md` - Step 1a: discover group, Step 6: validate group
 
 ### Philosophy: Excellence in Documentation
 
@@ -600,7 +600,7 @@ git commit -m "..."
 **Post-sync (automatic revert on failure):**
 ```bash
 # After any sync workflow applies changes:
-# → update-claude-md, java-update-design, update-primary-doc, readme-sync.md
+# → update-claude-md, java-update-design, update-primary-doc, docs/development/readme-sync.md
 # → validates modified document
 # → if CRITICAL issues → git restore <file> + stop
 ```
@@ -609,7 +609,7 @@ git commit -m "..."
 - All projects (if CLAUDE.md exists): update-claude-md
 - Type: java: java-update-design
 - Type: custom: update-primary-doc
-- Type: skills: readme-sync.md
+- Type: skills: docs/development/readme-sync.md
 
 **Pre-push (cross-document checks):**
 ```bash
@@ -798,11 +798,11 @@ Claude:
 - ✅ Tier-appropriate testing (functional for invoke-able, content for foundation)
 
 **Type: skills:**
-- ✅ SKILL.md frontmatter validation (skill-validation.md workflow)
+- ✅ SKILL.md frontmatter validation (docs/development/skill-validation.md workflow)
 - ✅ CSO compliance checking (prevents expensive wallpaper)
 - ✅ Flowchart syntax validation (Mermaid, PUSH tier)
 - ✅ Cross-reference integrity (bidirectional verification)
-- ✅ README.md sync (readme-sync.md)
+- ✅ README.md sync (docs/development/readme-sync.md)
 - ✅ Comprehensive quality review complete (278 issues found, 2 CRITICAL fixed)
 
 **Type: java:**

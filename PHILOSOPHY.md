@@ -108,7 +108,7 @@ Every decision considers: *"Will this waste tokens in projects that don't need i
 
 **Optimization 1: Modularized skills-specific workflows**
 - **Before:** skills-update-readme as portable skill (345 lines loaded in every session)
-- **After:** readme-sync.md workflow file (loaded only in type: skills)
+- **After:** docs/development/readme-sync.md workflow file (loaded only in type: skills)
 - **Savings:** 302 lines/session in type: java, type: custom, type: generic projects
 - **Impact:** If 75% of projects aren't skills repos → **75% × 302 = 227 lines saved per session**
 
@@ -126,7 +126,7 @@ Every decision considers: *"Will this waste tokens in projects that don't need i
 
 **Optimization 4: Workflow files vs skills**
 - **Before:** skill-validation as portable skill (would be ~280 lines)
-- **After:** skill-validation.md workflow file (loaded only when SKILL.md files staged)
+- **After:** docs/development/skill-validation.md workflow file (loaded only when SKILL.md files staged)
 - **Savings:** 280 lines/session in most commits (90% of commits don't touch SKILL.md)
 - **Impact:** 0.9 × 280 = **252 lines saved in 90% of commits**
 

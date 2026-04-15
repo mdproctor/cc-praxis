@@ -198,7 +198,7 @@ Maintains DESIGN.md documentation in sync with code changes, capturing:
 
 Invoked automatically by `java-git-commit` or independently. Handles architectural documentation; for workflow/convention documentation, see `update-claude-md`.
 
-#### **readme-sync.md**
+#### **docs/development/readme-sync.md**
 Maintains README.md documentation in sync with skill collection changes in skills repositories:
 - Skill descriptions (Skills section)
 - Chaining relationships (Skill Chaining Reference table)
@@ -226,7 +226,7 @@ Invoked automatically by `custom-git-commit` when Sync Rules configured.
 
 #### **SKILL.md Validation (Modular Workflow)**
 
-**Note:** SKILL.md validation for type: skills repositories is handled by the **skill-validation.md workflow**, not a portable skill. This modular documentation file is automatically referenced by git-commit when SKILL.md files are staged.
+**Note:** SKILL.md validation for type: skills repositories is handled by the **docs/development/skill-validation.md workflow**, not a portable skill. This modular documentation file is automatically referenced by git-commit when SKILL.md files are staged.
 
 **What it validates:**
 - Frontmatter structure (name, description, CSO compliance)
@@ -715,8 +715,8 @@ java-dev or quarkus-flow-dev
 ```
 superpowers:writing-skills
   → git-commit
-    → Validates SKILL.md (follows skill-validation.md workflow if staged)
-    → update-claude-md + readme-sync.md (automatic)
+    → Validates SKILL.md (follows docs/development/skill-validation.md workflow if staged)
+    → update-claude-md + docs/development/readme-sync.md (automatic)
 ```
 
 ### Blog Post → Commit (Blog repositories)
@@ -1053,9 +1053,9 @@ Claude: [Uses superpowers:writing-skills] Drafts skill with proper structure
 ```
 You: "commit"
 Claude: [Uses git-commit]
-  → Validates SKILL.md (follows skill-validation.md workflow)
+  → Validates SKILL.md (follows docs/development/skill-validation.md workflow)
   → Generates conventional commit message
-  → Updates README.md via readme-sync.md
+  → Updates README.md via docs/development/readme-sync.md
   → Updates CLAUDE.md via update-claude-md
   → Commits all changes together
 ```

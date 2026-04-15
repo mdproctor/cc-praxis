@@ -121,7 +121,7 @@ For the `custom` type's full sync configuration and all type definitions: [docs/
 ### What Happens at Commit Time
 
 **type: skills** → `git-commit`:
-- Validates SKILL.md files (follows skill-validation.md workflow)
+- Validates SKILL.md files (follows docs/development/skill-validation.md workflow)
 - Auto-syncs README.md (skill catalog)
 - Auto-syncs CLAUDE.md (workflow conventions)
 
@@ -486,9 +486,11 @@ For contributors and skill authors: [QUALITY.md](QUALITY.md) covers the full val
 │   ├── ideas/
 │   │   └── IDEAS.md                     # Project idea log (undecided possibilities)
 │   ├── PROJECT-TYPES.md                # Complete project type taxonomy and routing
-│   └── adr/                            # Architecture Decision Records
-├── skill-validation.md                  # Skills-specific SKILL.md validation workflow
-├── readme-sync.md                       # Skills-specific README.md sync workflow
+│   ├── adr/                            # Architecture Decision Records
+│   └── development/
+│       ├── skill-validation.md         # Skills-specific SKILL.md validation workflow
+│       ├── readme-sync.md              # Skills-specific README.md sync workflow
+│       └── registry-template.json     # Template for external registry repositories
 ├── install-skills/                      # Marketplace bootstrap wizard
 │   └── SKILL.md
 ├── uninstall-skills/                    # Guided uninstall wizard

@@ -59,13 +59,13 @@
 git-commit (for type: skills)
   ├─ skill-review (validates SKILL.md if staged)
   │   └─ Blocks on CRITICAL findings
-  ├─ readme-sync.md (syncs README.md if skill changes)
+  ├─ docs/development/readme-sync.md (syncs README.md if skill changes)
   ├─ update-claude-md (syncs CLAUDE.md if exists)
   └─ Conventional commit
 ```
 
 **Sync Logic (Hardcoded):**
-- `readme-sync.md` knows: SKILL.md changes → update Skills section, chaining table
+- `docs/development/readme-sync.md` knows: SKILL.md changes → update Skills section, chaining table
 - `skill-review` knows: Check frontmatter format, CSO compliance, cross-refs
 
 **This type is ONLY for skills repositories.** Don't use for other documentation projects.
@@ -361,7 +361,7 @@ Step 1: Read CLAUDE.md
 Step 2: Route based on type
   ├─ skills → Continue with git-commit (skills mode)
   │           ├─ skill-review
-  │           ├─ readme-sync.md
+  │           ├─ docs/development/readme-sync.md
   │           └─ update-claude-md
   │
   ├─ java → STOP: "Use java-git-commit instead"

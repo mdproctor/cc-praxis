@@ -157,8 +157,8 @@ Skills-repository-specific logic (SKILL.md validation, README synchronization) i
 
 | File | Purpose | Used By |
 |------|---------|---------|
-| **skill-validation.md** | SKILL.md validation workflow (frontmatter, CSO, flowcharts, cross-references) | `git-commit` when type: skills AND SKILL.md files staged |
-| **readme-sync.md** | README.md synchronization workflow (skill collection changes) | `git-commit` when type: skills AND skill changes detected |
+| **docs/development/skill-validation.md** | SKILL.md validation workflow (frontmatter, CSO, flowcharts, cross-references) | `git-commit` when type: skills AND SKILL.md files staged |
+| **docs/development/readme-sync.md** | README.md synchronization workflow (skill collection changes) | `git-commit` when type: skills AND skill changes detected |
 
 **Why modularized (not skills):**
 - These workflows only apply to THIS repository
@@ -168,8 +168,8 @@ Skills-repository-specific logic (SKILL.md validation, README synchronization) i
 - git-commit can reference these files when operating in type: skills mode
 
 **When git-commit operates in type: skills mode:**
-1. Check for staged SKILL.md files → Follow skill-validation.md workflow
-2. Check for skill collection changes → Follow readme-sync.md workflow
+1. Check for staged SKILL.md files → Follow docs/development/skill-validation.md workflow
+2. Check for skill collection changes → Follow docs/development/readme-sync.md workflow
 3. Both workflows maintain the same confirmation pattern (propose → user YES → apply)
 
 **These files are NOT:**
@@ -405,7 +405,7 @@ Run these checks **before every commit** to this repository. *These map to `proj
 
 - [ ] **Commit message** → No `Co-Authored-By`, `Generated-by`, or AI attribution of any kind. Commit messages describe WHAT and WHY only.
 - [ ] **New skill added?** → Run `python scripts/generate_commands.py` to create its slash command file `[coverage]`
-- [ ] **SKILL.md files modified?** → Follow readme-sync.md workflow (NEVER skip, let it decide if README needs updates) `[docs-sync]`
+- [ ] **SKILL.md files modified?** → Follow docs/development/readme-sync.md workflow (NEVER skip, let it decide if README needs updates) `[docs-sync]`
 - [ ] **CLAUDE.md modified?** → Follow relevant update workflow if applicable `[docs-sync]`
 - [ ] **New validation/testing added?** → Update README.md § Skill Quality & Validation AND QUALITY.md § Implementation Status `[infrastructure]`
 - [ ] **New scripts/ files added?** → Update README.md § Repository Structure `[coverage]`
@@ -463,7 +463,7 @@ but this checklist ensures the new type is fully wired into all workflows.**
 
 ### Known Regressions (Learn From These)
 
-**Regression 1:** Validation framework added to 4 sync workflows but README.md not updated. Root cause: Skipped readme-sync.md workflow, rationalized "just internal changes". Result: Documentation drift. Fix: Never skip workflows when SKILL.md files change.
+**Regression 1:** Validation framework added to 4 sync workflows but README.md not updated. Root cause: Skipped docs/development/readme-sync.md workflow, rationalized "just internal changes". Result: Documentation drift. Fix: Never skip workflows when SKILL.md files change.
 
 **Regression 2:** Created 14 validators + test infrastructure (17 new files, ~2,800 LOC), committed completion document, but didn't update README.md § Repository Structure or QUALITY.md § Implementation Status until user asked. Root cause: Tunnel vision on Options A/B/C, didn't check Pre-Commit Checklist, rationalized "completion doc is sufficient". Result: Primary documentation out of date. Fix: Infrastructure changes require MORE documentation sync, not less. Checklist is mandatory, not advisory.
 
@@ -492,7 +492,7 @@ When you identify a problem and prepare a solution, STOP and consider:
 
 | Situation | Narrow Fix | Universal Fix | Correct Choice |
 |-----------|------------|---------------|----------------|
-| README.md sync missing | Add check to readme-sync.md only | Add framework change detection to ALL sync workflows | Universal (ADR-0001) |
+| README.md sync missing | Add check to docs/development/readme-sync.md only | Add framework change detection to ALL sync workflows | Universal (ADR-0001) |
 | Java-specific BOM issue | Fix in maven-dependency-update | Make dependency management universal | Narrow (Java-specific) |
 | Rationalization bypass | Strengthen git-commit Step 2b | Add mandatory checks to all workflows | Universal |
 | Quarkus event loop bug | Fix in quarkus-flow-dev | Make concurrency universal | Already universal (code-review-principles) |
@@ -557,7 +557,7 @@ Full design: `docs/superpowers/specs/2026-04-09-workspace-model-design.md`
 - `java-code-review` — triggers `java-security-audit` for security-critical code
 - `issue-workflow` — full-lifecycle GitHub issue tracking: Phase 0 setup (labels, CLAUDE.md), Phase 1 pre-implementation planning (epics + child issues), Phase 2 task intake (proactive issue creation + epic placement + cross-cutting detection), Phase 3 pre-commit safety net (issue linkage + split detection). Invoked automatically when Work Tracking is enabled
 - `retro-issues` — on-demand retrospective mapping of git history to epics and issues; analyses git log + ADRs + blog entries; proposes structure in `docs/retro-issues.md` for review before creating anything on GitHub; never auto-triggered
-- `skill-validation.md` workflow — blocks `git-commit` if CRITICAL findings exist (not a portable skill; lives at repo root)
+- `docs/development/skill-validation.md` workflow — blocks `git-commit` if CRITICAL findings exist (not a portable skill; lives at repo root)
 
 **Specialized skills** (domain-specific):
 - `quarkus-flow-dev` — builds on `java-dev`, extended by `quarkus-flow-testing`
@@ -567,7 +567,7 @@ Full design: `docs/superpowers/specs/2026-04-09-workspace-model-design.md`
 - `update-primary-doc` — generic table-driven primary doc sync, invoked by `custom-git-commit`
 - `java-update-design` — DESIGN.md sync, invoked by `java-git-commit`
 - `update-claude-md` — CLAUDE.md sync, invoked by all commit skills
-- `readme-sync.md` — README.md sync, invoked by `git-commit` for type: skills only
+- `docs/development/readme-sync.md` — README.md sync, invoked by `git-commit` for type: skills only
 - `adr` — Architecture Decision Records in MADR format
 - `design-snapshot` — immutable dated record of design state; links to ADRs rather than duplicating them
 - `idea-log` — lightweight living log for undecided possibilities; park ideas before they evaporate, promote to ADR when ready
