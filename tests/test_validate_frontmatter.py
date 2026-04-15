@@ -1,5 +1,6 @@
 import pytest
 import sys
+from test_base import is_critical, is_warning, is_note
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -14,12 +15,6 @@ from scripts.validation.validate_frontmatter import (
 # Helpers — compare by severity name to avoid module-identity issues
 # ---------------------------------------------------------------------------
 
-def is_critical(issue) -> bool:
-    return issue.severity.name == "CRITICAL"
-
-
-def is_warning(issue) -> bool:
-    return issue.severity.name == "WARNING"
 
 
 def make_skill(tmp_path: Path, skill_name: str, content: str) -> Path:

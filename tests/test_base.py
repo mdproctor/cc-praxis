@@ -1,10 +1,38 @@
 """
-Shared base classes for tests requiring temporary directories.
+Shared base classes and helpers for the cc-praxis test suite.
+
+Severity helpers
+----------------
+is_critical(issue), is_warning(issue), is_note(issue) — check ValidationIssue
+severity by name. Used across all validator test files; defined here once.
+
+Base classes
+------------
+TempDirTestCase, DualTempDirTestCase — setUp/tearDown for temporary directories.
 """
 
 import unittest
 from pathlib import Path
 from tempfile import TemporaryDirectory
+
+
+# ---------------------------------------------------------------------------
+# Severity helpers — import these instead of redefining in each test file
+# ---------------------------------------------------------------------------
+
+def is_critical(issue) -> bool:
+    """Return True if the ValidationIssue has CRITICAL severity."""
+    return issue.severity.name == "CRITICAL"
+
+
+def is_warning(issue) -> bool:
+    """Return True if the ValidationIssue has WARNING severity."""
+    return issue.severity.name == "WARNING"
+
+
+def is_note(issue) -> bool:
+    """Return True if the ValidationIssue has NOTE severity."""
+    return issue.severity.name == "NOTE"
 
 
 class TempDirTestCase(unittest.TestCase):

@@ -16,6 +16,7 @@ Covers:
 import json
 import subprocess
 import sys
+from test_base import is_critical, is_warning, is_note
 import unittest
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -47,12 +48,6 @@ def make_skill_file(tmp_path: Path, name: str, content: str) -> Path:
     return f
 
 
-def is_critical(issue) -> bool:
-    return issue.severity.name == "CRITICAL"
-
-
-def is_warning(issue) -> bool:
-    return issue.severity.name == "WARNING"
 
 
 # ---------------------------------------------------------------------------

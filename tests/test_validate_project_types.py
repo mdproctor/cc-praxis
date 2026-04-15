@@ -1,5 +1,6 @@
 import pytest
 import sys
+from test_base import is_critical, is_warning, is_note
 import subprocess
 from pathlib import Path
 
@@ -18,9 +19,6 @@ REPO_ROOT = Path(__file__).parent.parent
 # ---------------------------------------------------------------------------
 # Helpers — compare by severity name to avoid module-identity issues
 # ---------------------------------------------------------------------------
-
-def is_critical(issue) -> bool:
-    return issue.severity.name == "CRITICAL"
 
 
 # ---------------------------------------------------------------------------
