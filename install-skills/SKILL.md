@@ -66,13 +66,13 @@ elif ! grep -q "## Project Type" CLAUDE.md; then
   echo "(See CLAUDE.md § Project Type for what each type means)"
 fi
 
-# Check for HANDOVER.md and prompt to read it (runs when CLAUDE.md exists)
-if [ -f "CLAUDE.md" ] && [ -f "HANDOVER.md" ]; then
-  LAST_UPDATED=$(git log -1 --format="%ar" -- HANDOVER.md 2>/dev/null || echo "unknown age")
-  echo "📋 HANDOVER.md found (last updated: $LAST_UPDATED)."
-  echo "Before starting: ask the user 'Read your session handover? (y/n)' — if yes, read and briefly summarise HANDOVER.md."
+# Check for HANDOFF.md and prompt to read it (runs when CLAUDE.md exists)
+if [ -f "CLAUDE.md" ] && [ -f "HANDOFF.md" ]; then
+  LAST_UPDATED=$(git log -1 --format="%ar" -- HANDOFF.md 2>/dev/null || echo "unknown age")
+  echo "📋 HANDOFF.md found (last updated: $LAST_UPDATED)."
+  echo "Before starting: ask the user 'Read your session handover? (y/n)' — if yes, read and briefly summarise HANDOFF.md."
   # Check staleness
-  COMMIT_TIME=$(git log -1 --format="%ct" -- HANDOVER.md 2>/dev/null)
+  COMMIT_TIME=$(git log -1 --format="%ct" -- HANDOFF.md 2>/dev/null)
   if [ -n "$COMMIT_TIME" ]; then
     NOW=$(date +%s)
     DAYS=$(( (NOW - COMMIT_TIME) / 86400 ))
