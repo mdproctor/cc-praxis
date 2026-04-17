@@ -253,7 +253,7 @@ For the layered architecture showing how skills relate to each other: [**Skills 
 | `idea-log` | `issue-workflow` | manual | Promoting an idea to tracked implementation work |
 | `idea-log` | `git-commit` | manual | Committing IDEAS.md additions and status updates |
 | `design-snapshot` | `idea-log` | conditional | Reviewing a snapshot surfaces undecided ideas |
-| `epic-start` | `brainstorming` | conditional | User accepts brainstorm offer at end of epic-start |
+| `epic` | `superpowers:brainstorming` | conditional | User accepts brainstorm offer when starting an epic |
 | `project-health` | `skills-project-health` | auto | type: skills detected in CLAUDE.md (tier 3+) |
 | `project-health` | `java-project-health` | auto | type: java detected in CLAUDE.md (tier 3+) |
 | `project-health` | `blog-project-health` | auto | type: blog detected in CLAUDE.md (tier 3+) |

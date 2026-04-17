@@ -80,24 +80,14 @@ One-time workspace setup per project per machine:
 
 **Triggers:** "init workspace", "set up workspace", "create workspace for <project>", `/workspace-init`.
 
-#### **epic-start**
-One-time setup per epic — run once at the start of each epic:
-- Creates a matching branch in the project repo and a local workspace branch
-- Scaffolds `design/JOURNAL.md` with a SHA baseline from the project branch
-- Links to an existing GitHub issue or creates a new one
-- Writes `design/.meta` with epic name, branch, and issue number for `epic-close`
-- Optionally invokes brainstorming to kick off planning
+#### **epic**
+Single entry point for the full epic lifecycle — detects current state and routes automatically:
+- No active epic → offers to create branches, scaffold `design/JOURNAL.md` with SHA baseline, link or create a GitHub issue, optionally invoke brainstorming
+- Active epic → asks whether to close it or begin a new one
 
-**Triggers:** "start epic", "begin epic", "create epic branch", `/epic-start`.
+**Starting an epic:** creates matching branches in the project repo and workspace, scaffolds `design/.meta` with epic name and SHA baseline, links to an existing GitHub issue or creates one.
 
-#### **epic-close**
-Closes the current epic — run at the end of each epic:
-- Reads `design/.meta` (created by `epic-start`) for branch and issue metadata
-- Routes artifacts per `## Routing` config in workspace CLAUDE.md
-- Merges `design/JOURNAL.md` into the project `DESIGN.md`
-- Posts accumulated specs to the linked GitHub issue
-- Handles branch cleanup: merge project branch or open PR, delete workspace branch
-- Supports approve-all or step-by-step confirmation modes
+**Closing an epic:** routes artifacts per `## Routing` config in workspace CLAUDE.md, merges `design/JOURNAL.md` into the project `DESIGN.md`, posts specs to the GitHub issue, handles branch cleanup with approve-all or step-by-step confirmation.
 
 **Artifact routing** — three-layer config controls where artifacts go at epic close:
 - Layer 1 (built-in): all artifacts → project repo
@@ -105,7 +95,7 @@ Closes the current epic — run at the end of each epic:
 - Layer 3 (workspace): `## Routing` table in workspace CLAUDE.md — per-artifact override
 Valid destinations: `project`, `workspace` (workspace/main), `alternative <path>`
 
-**Triggers:** "close epic", "finish epic", "wrap up epic", `/epic-close`.
+**Triggers:** "begin epic", "new epic", "close epic", "finish epic", `/epic`.
 
 #### **install-skills**
 One-time bootstrap wizard for new environments:
@@ -492,7 +482,7 @@ rules:
     destinations: [quarkus-blog, personal-blog]
 ```
 
-**This is Level 2 blog routing** — independent of `epic-close`'s Level 1 routing (where the `blog/` directory lives). The two systems do not interact.
+**This is Level 2 blog routing** — independent of `epic`'s Level 1 routing (where the `blog/` directory lives). The two systems do not interact.
 
 **Triggers:** "publish blog", "publish entries", "cross-post this entry", `/publish-blog`.
 

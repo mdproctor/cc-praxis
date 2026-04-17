@@ -418,7 +418,7 @@ class TestWorkspaceRoutingIntegration:
 
     def test_design_routing_workspace_needs_workspace_sha(self):
         """
-        When design → workspace, epic-start must record workspace/main HEAD SHA.
+        When design → workspace, epic must record workspace/main HEAD SHA.
         Verify the resolved routing makes this deterministic.
         """
         global_content = textwrap.dedent("""\
@@ -429,4 +429,4 @@ class TestWorkspaceRoutingIntegration:
         router = WorkspaceRouter(layer2_default=layer2)
         dest = router.resolve('design')
         assert dest == 'workspace', \
-            "design routed to workspace → epic-start must use workspace/main SHA"
+            "design routed to workspace → epic must use workspace/main SHA"

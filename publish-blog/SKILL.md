@@ -12,7 +12,7 @@ Routes blog entries from the project's `docs/_posts/` directory to external
 publishing destinations based on `blog-routing.yaml` routing rules.
 
 This is a **second-level routing** step, independent of the workspace `## Routing`
-config used by `epic-close`. That config controls where the `blog/` directory lives.
+config used by `epic`. That config controls where the `blog/` directory lives.
 This skill controls where individual entries are cross-posted to blog platforms.
 
 ---
@@ -264,6 +264,6 @@ rules:
 
 **Uses:** `scripts/blog_router.py` — routing config loader and resolver
 
-**Related:** `epic-close` — Level 1 routing (where the `blog/` directory lives).
+**Related:** `epic` — Level 1 routing (where the `blog/` directory lives).
 This skill is Level 2 routing (per-entry cross-posting to platforms). The two are
-independent; `epic-close` does not invoke `publish-blog`.
+independent; `epic` does not invoke `publish-blog`.

@@ -45,7 +45,7 @@ This skill is invoked by `java-git-commit` when:
 - **Only operates in type: java repositories** — other project types use different documentation patterns
 - DESIGN.md lives at `design/DESIGN.md` in the workspace (CWD). In the workspace
   model, the project is accessed via `add-dir`.
-- **Epic close:** When the epic completes, `epic-close` reads `design/JOURNAL.md`,
+- **Epic close:** When the epic completes, `epic` reads `design/JOURNAL.md`,
   generates a three-way merge preview (base + current project + journal), and
   applies the changes to the project `DESIGN.md` with user confirmation.
   The journal itself is posted to the GitHub epic issue, then discarded.
@@ -70,7 +70,7 @@ ls design/JOURNAL.md 2>/dev/null || echo "not found"
 - If not found → **direct mode**: no workspace configured, or not on an epic branch.
   Fall back to the existing DESIGN.md sync workflow (unchanged — update the
   project `DESIGN.md` directly as before). Do not prompt; do not create JOURNAL.md.
-  `epic-start` is responsible for creating it.
+  `epic` is responsible for creating it.
 
 In workspace mode: read `design/JOURNAL.md` to understand which sections have
 already been journalled during this epic before adding or updating an entry.

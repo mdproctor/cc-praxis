@@ -53,7 +53,7 @@ Before doing anything else, check whether this session is running inside a works
 ls design/JOURNAL.md 2>/dev/null && echo "workspace-mode" || echo "direct-mode"
 ```
 
-- **Workspace mode** (file found): Do not sync to the primary doc directly. Instead, write a journal entry to `design/JOURNAL.md` using the entry format below. The primary doc is updated at epic close via `epic-close`. Skip Steps 1–7.
+- **Workspace mode** (file found): Do not sync to the primary doc directly. Instead, write a journal entry to `design/JOURNAL.md` using the entry format below. The primary doc is updated at epic close via `epic`. Skip Steps 1–7.
 - **Direct mode** (file not found): Proceed with the existing Sync Rules workflow unchanged (Steps 1–7 below). No file is created; detection is silent.
 
 **In workspace mode — journal entry format:**

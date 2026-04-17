@@ -858,7 +858,7 @@ title: Getting Started with cc-praxis
         </div>
       </div>
 
-      <p><strong>JOURNAL.md</strong> is created by <code>/epic-start</code> and auto-appended by <code>/java-git-commit</code> on every commit during an epic. It uses <code>§SectionName</code> anchors that match DESIGN.md section headings, so the three-way merge at epic close can route journal entries to the correct sections of DESIGN.md.</p>
+      <p><strong>JOURNAL.md</strong> is created by <code>/epic</code> and auto-appended by <code>/java-git-commit</code> on every commit during an epic. It uses <code>§SectionName</code> anchors that match DESIGN.md section headings, so the three-way merge at epic close can route journal entries to the correct sections of DESIGN.md.</p>
 
       <p><strong>Snapshots</strong> have five standard sections: Summary, Architecture, Data Model, Open Questions, and Next Steps. They are immutable — once written, never edited. The 10-snapshot limit keeps the <code>snapshots/</code> directory manageable without manual cleanup.</p>
 
@@ -878,36 +878,36 @@ title: Getting Started with cc-praxis
         <div class="section-num">10</div>
         <div>
           <h2>Closing an Epic</h2>
-          <span class="section-tag">Skill: epic-close</span>
+          <span class="section-tag">Skill: epic</span>
         </div>
       </div>
 
       <div class="what-it-does" data-guide="wid">
         <strong>What this does</strong>
-        epic-close merges the design journal back into DESIGN.md, posts specs and decisions to the GitHub issue, closes the issue, and deletes the epic and workspace branches. It always shows a routing plan and waits for confirmation before touching anything.
+        /epic detects the current epic state and routes accordingly — if on an epic branch it offers to close it, merging the design journal back into DESIGN.md, posting specs and decisions to the GitHub issue, closing the issue, and deleting the epic and workspace branches. It always shows a routing plan and waits for confirmation before touching anything.
       </div>
 
       <div class="install-callout" data-guide="ic">
         <div>
           <strong>Install this skill</strong>
-          <code>/install-skills</code> → select <code>epic-close</code>
+          <code>/install-skills</code> → select <code>epic</code>
         </div>
       </div>
 
-      <p>The three-way merge that <code>/epic-close</code> performs:</p>
+      <p>The three-way merge that <code>/epic</code> performs when closing:</p>
 
       <ol>
-        <li><strong>Baseline SHA</strong> — captured by <code>/epic-start</code> when the epic began, so Claude knows exactly what state DESIGN.md was in</li>
+        <li><strong>Baseline SHA</strong> — captured by <code>/epic</code> when the epic began, so Claude knows exactly what state DESIGN.md was in</li>
         <li><strong>Current DESIGN.md</strong> — may have received direct edits during the epic</li>
         <li><strong>JOURNAL.md entries</strong> — routed by <code>§SectionName</code> anchor into the matching DESIGN.md section</li>
       </ol>
 
-      <p>After merging, <code>/epic-close</code> posts all specs from <code>specs/</code> and ADRs created during the epic to the GitHub issue as comments, then closes the issue. It then offers to delete the epic branch and the workspace's companion branch.</p>
+      <p>After merging, <code>/epic</code> posts all specs from <code>specs/</code> and ADRs created during the epic to the GitHub issue as comments, then closes the issue. It then offers to delete the epic branch and the workspace's companion branch.</p>
 
       <p>Run it only when the epic is truly complete — it is not reversible once branches are deleted and the issue is closed.</p>
 
       <div class="prompt-label">Prompt to try</div>
-      <div class="prompt-block" data-guide="pb">/epic-close</div>
+      <div class="prompt-block" data-guide="pb">/epic</div>
 
       <div class="section-next" data-guide="sn">
         Next: <a href="#java-section-11">Session Handover →</a>
@@ -1300,7 +1300,7 @@ title: Getting Started with cc-praxis
         <div class="section-num">10</div>
         <div>
           <h2>Closing an Epic</h2>
-          <span class="section-tag">Skill: epic-close</span>
+          <span class="section-tag">Skill: epic</span>
         </div>
       </div>
       <div class="what-it-does" data-guide="wid">
@@ -1308,11 +1308,11 @@ title: Getting Started with cc-praxis
         Closes the epic branch: routes ADRs and snapshots per your routing config, posts specs to the GitHub issue, closes it, and cleans up branches. Shows a full plan before executing anything.
       </div>
       <div class="install-callout" data-guide="ic">
-        <div><strong>Install this skill</strong> <code>scripts/claude-skill install epic-close</code></div>
+        <div><strong>Install this skill</strong> <code>scripts/claude-skill install epic</code></div>
       </div>
-      <p>Before doing anything, <code>/epic-close</code> shows the routing plan and waits for confirmation. For TypeScript projects there is no DESIGN.md merge — epic-close routes ADRs and snapshots, posts specs to the GitHub issue, closes it, and offers to delete both branches.</p>
+      <p>Before doing anything, <code>/epic</code> shows the routing plan and waits for confirmation. For TypeScript projects there is no DESIGN.md merge — /epic routes ADRs and snapshots, posts specs to the GitHub issue, closes it, and offers to delete both branches.</p>
       <div class="prompt-label">Prompt to try</div>
-      <div class="prompt-block" data-guide="pb">/epic-close</div>
+      <div class="prompt-block" data-guide="pb">/epic</div>
       <div class="section-next" data-guide="sn">Next: <a href="#ts-section-11">Session Handover →</a></div>
     </section>
 
@@ -1688,7 +1688,7 @@ title: Getting Started with cc-praxis
         <div class="section-num">10</div>
         <div>
           <h2>Closing an Epic</h2>
-          <span class="section-tag">Skill: epic-close</span>
+          <span class="section-tag">Skill: epic</span>
         </div>
       </div>
       <div class="what-it-does" data-guide="wid">
@@ -1698,12 +1698,12 @@ title: Getting Started with cc-praxis
       <div class="install-callout" data-guide="ic">
         <div>
           <strong>Install this skill</strong>
-          <code>scripts/claude-skill install epic-close</code>
+          <code>scripts/claude-skill install epic</code>
         </div>
       </div>
-      <p>Before doing anything, <code>/epic-close</code> shows the routing plan and waits for confirmation. For Python projects there is no DESIGN.md merge — epic-close routes ADRs and snapshots, posts specs to the GitHub issue, closes it, and offers to delete both branches.</p>
+      <p>Before doing anything, <code>/epic</code> shows the routing plan and waits for confirmation. For Python projects there is no DESIGN.md merge — /epic routes ADRs and snapshots, posts specs to the GitHub issue, closes it, and offers to delete both branches.</p>
       <div class="prompt-label">Prompt to try</div>
-      <div class="prompt-block" data-guide="pb">/epic-close</div>
+      <div class="prompt-block" data-guide="pb">/epic</div>
       <div class="section-next" data-guide="sn">Next: <a href="#py-section-11">Session Handover →</a></div>
     </section>
 

@@ -385,15 +385,9 @@
       "version": "1.0.0"
     },
     {
-      "name": "epic-start",
-      "source": "./epic-start",
-      "description": "One-time setup per epic \u2014 creates project and workspace branches, scaffolds design/JOURNAL.md with SHA baseline, links or creates a GitHub issue, optionally invokes brainstorming",
-      "version": "1.0.0"
-    },
-    {
-      "name": "epic-close",
-      "source": "./epic-close",
-      "description": "Close an epic \u2014 routes artifacts per routing config, merges design/JOURNAL.md into project DESIGN.md, posts specs to GitHub issue, handles branch cleanup with approve-all or step-by-step option",
+      "name": "epic",
+      "source": "./epic",
+      "description": "Start or close a development epic \u2014 detects current epic state automatically; if no epic is active offers to start one, if on an epic branch asks whether to close it or start a new one",
       "version": "1.0.0"
     }
   ]

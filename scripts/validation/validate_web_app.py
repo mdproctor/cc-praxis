@@ -46,7 +46,7 @@ ALL_SKILLS = {
     'pip-dependency-update', 'python-project-health', 'design-snapshot',
     'idea-log', 'write-blog', 'cc-praxis-ui', 'garden', 'handover',
     'workspace-init', 'retro-issues',
-    'epic-start', 'epic-close',
+    'epic',
 }
 
 KNOWN_NON_SKILL_TERMS = {

@@ -24,9 +24,9 @@
 ## Immediate Next Step
 
 **Smoke tests** (deferred since yesterday):
-1. `/epic-start` → verify `design/JOURNAL.md` + `design/.meta` created with SHA
+1. `/epic` (start) → verify `design/JOURNAL.md` + `design/.meta` created with SHA
 2. `java-update-design` → verify journal entry written (not project DESIGN.md)
-3. `/epic-close` (dry run) → verify three-layer routing preview shown correctly
+3. `/epic` (close, dry run) → verify three-layer routing preview shown correctly
 
 Then: resume issue/epic creation from yesterday's interrupted flow (we got as far as creating epics #50 and #54 before the workspace routing insight interrupted).
 

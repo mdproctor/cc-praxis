@@ -534,8 +534,7 @@ Full design: `docs/superpowers/specs/2026-04-09-workspace-model-design.md`
 - `workspace-init` — one-time setup; creates `~/claude/private/<project>/` or
   `~/claude/public/<project>/` with routing CLAUDE.md, gitignored project symlink
   via `.git/info/exclude`, and all subdirectories
-- `epic-start` — one-time per epic; creates project + workspace branches, scaffolds `design/JOURNAL.md` with SHA baseline, links or creates GitHub issue, optionally invokes brainstorming
-- `epic-close` — closes an epic; routes artifacts per `## Routing` config, merges `design/JOURNAL.md` into project `DESIGN.md`, posts specs to GitHub issue, handles branch cleanup
+- `epic` — full epic lifecycle; detects current state and routes to start or close workflow; start creates branches, scaffolds `design/JOURNAL.md` with SHA baseline, links or creates GitHub issue, optionally invokes brainstorming; close routes artifacts per `## Routing` config, merges `design/JOURNAL.md` into project `DESIGN.md`, posts specs to GitHub issue, handles branch cleanup
 
 **Generic foundation skills** (not invoked directly, referenced via Prerequisites):
 - `code-review-principles` — universal code review checklist (extended by `java-code-review`)
@@ -572,7 +571,7 @@ Full design: `docs/superpowers/specs/2026-04-09-workspace-model-design.md`
 - `design-snapshot` — immutable dated record of design state; links to ADRs rather than duplicating them
 - `idea-log` — lightweight living log for undecided possibilities; park ideas before they evaporate, promote to ADR when ready
 - `write-blog` — living project diary; captures decisions, pivots, and discoveries in diary voice as they happen; never revised in hindsight
-- `publish-blog` — routes blog entries to external git destinations via blog-routing.yaml; Level 2 blog routing (per-entry cross-posting), independent of epic-close Level 1 routing
+- `publish-blog` — routes blog entries to external git destinations via blog-routing.yaml; Level 2 blog routing (per-entry cross-posting), independent of epic Level 1 routing
 - `handover` — end-of-session HANDOFF.md generator; lazy references to blog, design-snapshot, and CLAUDE.md rather than loading them; invokes write-blog, design-snapshot, and update-claude-md via user-confirmed wrap checklist
 
 **TypeScript/Node.js skills:**

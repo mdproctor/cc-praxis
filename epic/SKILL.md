@@ -1,24 +1,160 @@
 ---
-name: epic-close
+name: epic
 description: >
-  Use when closing an epic — user says "close epic", "finish epic", "wrap up
-  epic", or invokes /epic-close. NOT automatic — only on explicit user request.
+  Use when a development epic needs to begin or wrap up — user says "begin
+  epic", "new epic", "close epic", "finish epic", or invokes /epic. Detects
+  whether an epic is currently active and routes accordingly.
 ---
 
-# Epic Close
+# Epic
 
-Closes the current epic: routes artifacts to declared destinations, merges
-the design journal into the project DESIGN.md, posts specs to the GitHub
-issue, and handles branch cleanup.
+Single entry point for the full epic lifecycle. Detects whether an epic is
+currently active and routes to the appropriate workflow — start or close.
 
-Requires CWD to be the workspace and `design/.meta` to exist (created by
-`epic-start`).
+Requires CWD to be the workspace.
 
 ---
 
-## Workflow
+## Detection
 
-### Step 1 — Read .meta and routing config
+```bash
+current_branch=$(git branch --show-current)
+meta_exists=$(test -f design/.meta && echo yes || echo no)
+```
+
+| State | Action |
+|-------|--------|
+| Not on epic branch, no `.meta` | Offer to start a new epic |
+| On epic branch, `.meta` exists | Ask: close this epic, or start a new one? |
+| On epic branch, no `.meta` | Warn: incomplete setup — offer to scaffold `.meta` and `design/JOURNAL.md`, then continue |
+
+---
+
+## Workflow A — Starting an Epic
+
+### Step A1 — Get epic name
+
+Ask: "What's the epic name? (e.g. `epic-payments`)"
+
+Rules:
+- Lowercase with hyphens
+- Prefix with `epic-` (e.g. `epic-payments`, `epic-auth-redesign`)
+
+If currently on an epic branch (starting a second epic while one is active):
+
+```
+You're currently on <current-branch>. Starting a new epic requires
+returning to main first. Switch to main on both branches and continue? (y/n)
+```
+
+If yes:
+```bash
+git -C <project-path> checkout main
+git checkout main
+```
+
+If no → stop.
+
+Read the project path from workspace CLAUDE.md `## Session Start` → `add-dir` line:
+
+```bash
+grep "add-dir" CLAUDE.md | head -1 | sed 's/.*add-dir //'
+```
+
+### Step A2 — Create branches
+
+```bash
+# Create project branch
+git -C <project-path> checkout -b <epic-name>
+
+# Create workspace branch
+git checkout -b <epic-name>
+```
+
+Confirm both commands succeeded before continuing. If either fails (branch
+already exists, uncommitted changes), report the error and stop — do not
+proceed with a partial setup.
+
+### Step A3 — Scaffold workspace
+
+```bash
+mkdir -p design
+```
+
+Create `design/JOURNAL.md`:
+
+```markdown
+# Design Journal — <epic-name>
+```
+
+Create `design/.meta`:
+
+```
+epic: <epic-name>
+project-sha: <output of: git -C <project-path> rev-parse HEAD>
+date: <YYYY-MM-DD>
+issue:
+```
+
+**Routing-aware SHA baseline:** Before writing `project-sha`, read the workspace
+`CLAUDE.md ## Routing` config (and global `~/.claude/CLAUDE.md ## Routing`). If the
+resolved `design` destination is `workspace`, record the **workspace/main HEAD SHA**
+instead of the project HEAD SHA:
+
+```bash
+# If design → workspace:
+git -C <workspace-path> rev-parse main   # use this as the baseline SHA
+# If design → project (default):
+git -C <project-path> rev-parse HEAD     # use this (current behaviour)
+```
+
+This ensures the journal merge at epic-close compares against the right DESIGN.md
+(workspace/main's, not the project's) when design artifacts live in the workspace.
+
+### Step A4 — GitHub issue
+
+If `## Work Tracking` with `Issue tracking: enabled` exists in CLAUDE.md:
+
+1. Search for an existing open issue:
+   ```bash
+   gh issue list --repo <owner>/<repo> --state open --search "<epic-name>" --json number,title
+   ```
+
+2. If found → confirm with user:
+   > "Found issue #N: `<title>`. Use this for the epic? (y/n)"
+   - If yes: fill in `issue: <N>` in `design/.meta`
+
+3. If not found → offer to create:
+   > "No existing issue found. Create one? (y/n)"
+   - If yes:
+     ```bash
+     gh issue create --repo <owner>/<repo> \
+       --title "<epic-name>" \
+       --body "Epic branch: \`<epic-name>\`"
+     ```
+     Record the returned issue number in `design/.meta` `issue:` field.
+
+If issue tracking is not enabled in CLAUDE.md → skip silently.
+
+### Step A5 — Commit workspace scaffold
+
+```bash
+git add design/JOURNAL.md design/.meta
+git commit -m "init(<epic-name>): scaffold workspace branch"
+```
+
+### Step A6 — Offer brainstorming
+
+Prompt: "Start a brainstorm for this epic? (y/n)"
+
+- Yes → invoke `brainstorming` skill
+- No → done
+
+---
+
+## Workflow B — Closing an Epic
+
+### Step B1 — Read .meta and routing config
 
 ```bash
 cat design/.meta
@@ -36,7 +172,7 @@ Read GitHub repo from workspace CLAUDE.md `## Work Tracking` → `GitHub repo:` 
 grep "GitHub repo:" CLAUDE.md | head -1 | sed 's/.*GitHub repo: *//'
 ```
 
-#### Step 1a — Read Layer 2 (global routing default)
+#### Step B1a — Read Layer 2 (global routing default)
 
 ```bash
 grep -A 5 "^## Routing$" "$HOME/.claude/CLAUDE.md" 2>/dev/null \
@@ -53,7 +189,7 @@ Valid values: `workspace` or `project` only. If the value is anything else, warn
 If the `## Routing` section is absent or has no valid `**Default destination:**` line,
 Layer 2 is considered absent.
 
-#### Step 1b — Read Layer 3 (workspace per-artifact overrides)
+#### Step B1b — Read Layer 3 (workspace per-artifact overrides)
 
 ```bash
 grep -A 30 "^## Routing$" "$WORKSPACE/CLAUDE.md" 2>/dev/null
@@ -77,7 +213,7 @@ Warn for each deprecated value found:
 
 If Layer 3 is absent or empty, skip to Layer 2.
 
-### Step 2 — Inventory artifacts
+### Step B2 — Inventory artifacts
 
 ```bash
 ls adr/ 2>/dev/null | grep -v INDEX.md      # ADRs
@@ -87,7 +223,7 @@ ls specs/ 2>/dev/null                        # Specs (user selects)
 cat design/JOURNAL.md 2>/dev/null            # Journal
 ```
 
-### Step 3 — Generate journal merge preview
+### Step B3 — Generate journal merge preview
 
 Retrieve baseline project DESIGN.md at the recorded SHA:
 
@@ -105,7 +241,7 @@ and the journal narrative. This forms the merge preview.
 
 If `design/JOURNAL.md` has no `§Section` entries → skip journal merge in the plan.
 
-### Step 4 — Ask user to select specs
+### Step B4 — Ask user to select specs
 
 If an issue number exists in `design/.meta` and issue tracking is enabled:
 
@@ -122,7 +258,7 @@ Enter numbers (e.g. "1 2"), "all", or "none":
 
 If no issue or tracking disabled → skip this step silently.
 
-### Step 5 — Resolve destinations
+### Step B5 — Resolve destinations
 
 Apply the three-layer routing algorithm for each artifact type with files present:
 
@@ -135,7 +271,7 @@ Apply the three-layer routing algorithm for each artifact type with files presen
 Edge cases:
 - `alternative <path>` is valid at Layer 3 only; if seen at Layer 2, warn and fall to Layer 1.
 - `alternative` without a path → invalid; warn and fall to next layer.
-- Any deprecated vocabulary (see Step 1b) → warn and fall to next layer.
+- Any deprecated vocabulary (see Step B1b) → warn and fall to next layer.
 
 After resolving all artifacts, show the routing table and the layer source for each:
 
@@ -169,7 +305,7 @@ detect_capability() {
 }
 ```
 
-### Step 6 — Present close plan and prompt
+### Step B6 — Present close plan and prompt
 
 ```
 Epic close plan — <epic-name>
@@ -195,7 +331,7 @@ Epic close plan — <epic-name>
 Approve all, or go step by step? (all / step)
 ```
 
-### Step 7a — "all" path
+### Step B7a — "all" path
 
 Execute all steps in order. On any failure: continue remaining steps, report at the end.
 
@@ -260,13 +396,13 @@ gh issue close <issue> --repo <owner>/<repo>
 ❌ Push failed — <dest> has no network. Run: git -C <dest> push
 ```
 
-### Step 7b — "step" path
+### Step B7b — "step" path
 
 **Phase 1 — Artifact routing**
 
 Show what will be promoted where. Prompt: "Promote artifacts? (y/n)"
 
-If yes: execute promotion for all artifact types (same logic as Step 7a).
+If yes: execute promotion for all artifact types (same logic as Step B7a).
 Report results. Prompt: "Continue to journal merge? (y/n)"
 
 **Phase 2 — Journal merge**
@@ -299,11 +435,11 @@ Prompt: "Continue to GitHub posting? (y/n)"
 
 **Phase 3 — GitHub posting and cleanup**
 
-Post each selected spec as a comment (same format as Step 7a).
+Post each selected spec as a comment (same format as Step B7a).
 Close the issue.
 Prompt: "Continue to branch cleanup? (y/n)"
 
-### Step 8 — Branch cleanup (both paths)
+### Step B8 — Branch cleanup (both paths)
 
 Prompt:
 ```
@@ -349,10 +485,22 @@ git commit -m "docs(<epic-name>): mark epic as closed"
 | Push fails (no network) | Report failure with manual resolution command; continue |
 | Project has no `DESIGN.md` | Skip journal merge; note in summary |
 | `design/JOURNAL.md` after close | Remains in workspace git history; not promoted to project repo |
+| On epic branch, no `.meta` | Warn: incomplete setup — offer to scaffold `.meta` and `design/JOURNAL.md` |
 
 ---
 
 ## Success Criteria
+
+### Starting an epic
+
+- [ ] Project branch `<epic-name>` created
+- [ ] Workspace branch `<epic-name>` created
+- [ ] `design/JOURNAL.md` exists with stub header
+- [ ] `design/.meta` exists with epic name, project SHA, date
+- [ ] `design/.meta` `issue:` field populated (if tracking enabled and issue found/created)
+- [ ] Workspace scaffold committed
+
+### Closing an epic
 
 - [ ] All artifacts promoted to declared destinations (or failures reported with resolution commands)
 - [ ] Journal merged into project `DESIGN.md`, user confirmed
@@ -366,8 +514,8 @@ git commit -m "docs(<epic-name>): mark epic as closed"
 
 ## Skill Chaining
 
-**Invoked by:** User directly at epic close via `/epic-close`
+**Invoked by:** User directly via `/epic`
 
-**Chains from:** [`epic-start`] — which created `design/.meta` and `design/JOURNAL.md`
+**Invokes (start):** `superpowers:brainstorming` — if user accepts the prompt in Step A6
 
-**Reads output of:** [`java-update-design`] and [`update-primary-doc`] from `design/JOURNAL.md`
+**Reads output of (close):** [`java-update-design`] and [`update-primary-doc`] from `design/JOURNAL.md`
