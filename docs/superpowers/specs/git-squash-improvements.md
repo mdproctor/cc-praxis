@@ -357,6 +357,29 @@ Lower than Gaps 1–3. The git-squash Q&A fallback covers the missing-section ca
 
 ---
 
+## Known limitation — proximity grouping for loose commits
+
+Some commits have no natural semantic home: a build chore (jandex pin, version bump) committed between two unrelated feature commits, or an ADR/config chore that happened to land between a test and a fix. The skill's nearest-preceding-KEEP rule absorbs these into whatever KEEP precedes them, regardless of semantic relationship.
+
+This is an inherent limit of automated grouping. The skill cannot resolve it without human judgment.
+
+**What the skill should do:** distinguish proximity-grouped absorptions from semantically related ones. When a SQUASH commit has **zero word overlap** (4+ character words) with its KEEP commit's subject, label it differently in the Curated result column:
+
+- Semantically related: `*(absorbed — chore cleanup; message adequate)*`
+- Proximity grouped: `*(absorbed — proximity grouped; no semantic match to KEEP — relocatable if desired)*`
+
+**Detection:** compute word overlap between absorbed commit subject and KEEP commit subject. Zero overlap → proximity group annotation. Non-zero → normal absorption note.
+
+This makes it easy for reviewers to spot cases that warrant manual relocation without marking them as errors.
+
+**Known examples from ledger:**
+- `chore: pin jandex-maven-plugin` in group 44 (`docs: spec for DESIGN.md split`) — zero overlap
+- `chore: commit ADR 0002, plan, spec, and session config changes` in group 12 (`fix(merkle): address code review`) — zero overlap
+
+Both are inherent proximity groups with no better automated home.
+
+---
+
 ## Open questions
 
 - **Gap 2, reconstruction format:** Should the three-column table include line counts per commit? The brief doesn't mention it but it was useful context in classification. Decision: omit from reconstruction table (too wide); available on request.
