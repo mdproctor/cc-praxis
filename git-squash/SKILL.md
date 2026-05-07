@@ -772,6 +772,52 @@ For each MERGE operation, before finalising the unified message:
    git commit --amend -m "<unified message>"
    ```
 
+**AFTER block — correct arithmetic:**
+
+Compute absorbed count as a simple subtraction, not by comparing commit subjects:
+
+```bash
+BEFORE_SQUASH=$(git log --oneline <base>..<work-branch-pre-squash> | wc -l)
+AFTER_SQUASH=$(git log --oneline <base>..<work-branch-post-squash> | wc -l)
+ABSORBED=$(( BEFORE_SQUASH - AFTER_SQUASH ))
+```
+
+Do NOT compute absorbed by counting `original_subjects - compacted_subjects` —
+subject matching double-counts commits that appear under different wording and
+misses commits whose subjects changed. Arithmetic is authoritative.
+
+**Filter-repo stripped commits in the plan:**
+
+Commits eliminated by Phase 0 filter-repo (became empty after blog/HANDOFF.md
+removal, pruned by `--prune-empty`) disappear from the compacted branch just like
+squashed commits. When building the plan by comparing original vs compacted, they
+will appear in the "absorbed" set — but they were handled by Phase 0, not squash.
+
+Distinguish them: before building groups, identify which original commits were
+purely workspace artifact commits (only touched `blog/`, `HANDOFF.md`, or other
+filtered paths). Label those in the plan as:
+```
+| `sha` <subject> | 🚫 FILTER-REPO | *(stripped by Phase 0 — commit only touched workspace artifact files, became empty and was pruned)* |
+```
+
+Do not attribute filter-repo eliminations to squash groups. They are not squash
+candidates — they were eliminated before squash ran.
+
+**Net no-op pair detection:**
+
+When a squash group absorbs both an operation and its reversal — `chore: migrate X`
++ `chore: restore X`, or `feat: add Y` + `revert "feat: add Y"` — flag it:
+
+```
+⚠️ Net no-op pair: this group absorbs both [commit A] and its reversal [commit B].
+   Combined effect on the tree is zero for the affected files. Only other files
+   in those commits contribute any lasting change.
+```
+
+Detect by looking for: migrate/restore pairs on the same path, add/revert pairs
+on the same subject, or any two absorbed commits that together produce a zero diff
+on their shared files.
+
 **Post-squash interval tree verification:**
 
 After rebase completes, verify content integrity at sampled points — not just HEAD.
