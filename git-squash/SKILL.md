@@ -854,8 +854,10 @@ git log --format="%H" <base>..<work-branch> | \
   original_sha=$(git log --format="%H %s" backup/pre-squash-* 2>/dev/null \
     | grep -F "$subject" | head -1 | awk '{print $1}')
   if [ -n "$original_sha" ]; then
-    diff_lines=$(git diff "$original_sha" "$compacted_sha" \
-      -- ':!HANDOFF.md' ':!blog/' 2>/dev/null | wc -l | tr -d ' ')
+    # Use printf not echo: echo "" | wc -l returns 1 (false positive for empty diff)
+    diff_out=$(git diff "$original_sha" "$compacted_sha" \
+      -- ':!HANDOFF.md' ':!blog/' 2>/dev/null)
+    diff_lines=$(printf '%s' "$diff_out" | wc -l | tr -d ' ')
     echo "$compacted_sha  diff=$diff_lines  ($subject)"
   else
     echo "$compacted_sha  original not found  ($subject)"
