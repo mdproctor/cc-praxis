@@ -345,6 +345,25 @@ in priority order. Pay particular attention to the refined merge commit rules (r
 
 Only classify a commit as DROP if `git show --stat` confirms **zero files changed**.
 
+**Scoped patterns — scope does not exempt from SQUASH:**
+`chore(docs):`, `chore(build):`, `chore(examples):`, `style(enricher):`, `style(trust):`
+etc. all match their base type (`chore:`, `style:`) for classification purposes.
+A scope in parentheses does not make a chore or style commit a KEEP.
+
+**Rename sweep grouping — stale-ref fixups anchor to the rename, not nearest KEEP:**
+When the range contains a rename commit (`refactor: rename to X — groupId, package...`),
+scan forward from it for all stale-reference fixup commits:
+- `docs: fix stale ... references`
+- `docs: replace stale ... artifact names`
+- `docs: update stale ...`
+- `chore(docs): replace stale ...`
+- `chore: update repo references to ...`
+
+These all belong grouped under the rename commit regardless of what other KEEPs
+appear between the rename and the fixups. A stale-ref fixup that is "already clean"
+in isolation is wrong if a rename commit exists in the range — it is part of that
+rename sweep.
+
 #### 3f — Temporal scrutiny
 
 Extract timestamps and identify commits from the same author within 30-minute windows:

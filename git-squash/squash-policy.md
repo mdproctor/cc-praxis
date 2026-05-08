@@ -75,11 +75,10 @@ Process rows in order — first match wins.
 | 2e | Any other `Merge branch '...'` — if merging a named feature/fix branch → KEEP; if merging main/master/develop into current branch → SQUASH | Inspect branch names before classifying |
 | 3 | `Revert "..."` followed within 3 commits by a replacement | Squash all three into the final working commit |
 | 4 | `build: wire ...` with a `Revert "build: wire ..."` following it | Both noise — squash into the eventual working state |
-| 5 | `style: ...` / `chore: apply spotless` / `chore: fix formatting` | Always squash — cosmetic only |
-| 6 | `chore: pin <tool> <version> in root pluginManagement` / `chore: add <tool> for CDI bean discovery` | Squash into the commit that triggered the need, or next infra commit |
-| 7 | `chore: remove dead ...` / `chore: update .gitignore` / `chore: bump version` | Squash into preceding commit |
+| 5 | `style: ...` / `style(<scope>): ...` / `chore: apply spotless` / `chore: fix formatting` | Always squash — cosmetic only. **Scoped variants (`style(enricher):`, etc.) match the same rule.** |
+| 6 | `chore: ...` / `chore(<scope>): ...` — any chore regardless of scope | Squash into preceding commit. **Scope does not change the classification: `chore(docs):`, `chore(build):`, `chore(examples):` are all SQUASH.** |
 | 8 | `docs(scope): align Javadoc ...` / `docs(scope): fix wording` / `docs(scope): add missing ...` | Squash into the feature commit it follows |
-| 9 | `docs: fix stale ... references post-rename` / `docs: fix stale ... references` (multiple trailing fixups after a rename commit) | MERGE all into the rename commit — they are part of the same sweep |
+| 9 | `docs: fix stale ...` / `docs: replace stale ...` / `docs: update stale ...` / `chore(docs): replace stale ...` — stale reference fixups after a rename | MERGE all into the rename commit — they are part of the same sweep. Match any variant: `fix stale`, `replace stale`, `update stale`, `replace stale artifact names`, `fix stale repo name references post-rename`. **The anchor must be the rename commit itself, not whatever KEEP happens to be nearest.** |
 | 10 | `docs: ...` with issue reference immediately following `feat: ...` with the same issue reference | MERGE into the feat — same issue, same sitting |
 | 11 | `docs(claude): ...` updating project-useful content (build commands, test patterns, naming conventions, architecture) | SQUASH into the related feature or chore commit it follows |
 | 12 | `fix(test): ...` where the same test class was fixed in the previous commit | Squash — same test being hardened |
