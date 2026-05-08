@@ -385,43 +385,59 @@ Keep modified lines to a minimum to reduce conflicts and ease review:
 
 Use a **three-tier tool strategy**, prioritized in this order:
 
-**Tier 1 — intellij-index MCP (always prefer for semantic operations)**
+**Tier 1 — `mcp__intellij-index` (always prefer for semantic operations)**
 
-When available, always use the `intellij-index` MCP server first — it provides
-a rich semantic index with accurate cross-project references, type hierarchies,
-and safe refactoring tools that text-based tools cannot match:
+When available, always use `mcp__intellij-index` first — it provides a rich
+semantic index with accurate cross-project references, type hierarchies, and
+safe refactoring that text-based tools cannot match. Check `ide_index_status`
+if results seem stale; indexing may still be in progress.
 
-| Tool | Use For |
+| Tool | Use for — not bash |
+|------|--------------------|
+| `ide_find_references` | **Before any rename or delete** — understand full impact |
+| `ide_find_definition` | Navigate to symbol declaration |
+| `ide_find_implementations` | All implementations of an interface or abstract method |
+| `ide_find_super_methods` | What does this method override |
+| `ide_type_hierarchy` | Full class/interface inheritance tree |
+| `ide_call_hierarchy` | Who calls this method / what this method calls |
+| `ide_find_class` | Locate a class when you know the name |
+| `ide_find_file` | Locate a file when you know the name |
+| `ide_refactor_rename` | **Safe rename** — updates all references across project |
+| `ide_move_file` | **Safe move** — updates package declarations and imports |
+| `ide_refactor_safe_delete` | Delete only if no usages; lists usages if blocked |
+| `ide_search_text` | Fast identifier/word search (faster than grep for exact names) |
+| `ide_diagnostics` | Errors, warnings, and quick-fix intentions in a file |
+| `ide_index_status` | Check IDE is ready before batch semantic operations |
+| `ide_sync_files` | Refresh IDE after external file changes |
+
+**Tier 2 — `mcp__intellij` (for what intellij-index cannot do)**
+
+Use for build/run, formatting, file browsing, and database tools:
+
+| Tool | Use for |
 |------|---------|
-| `ide_find_references` | Understand impact before any rename or move |
-| `ide_find_definition` | Navigate to symbol definitions |
-| `ide_refactor_rename` | Safe symbol rename across the entire project |
-| `ide_move_file` | Safe file/class relocation |
-| `ide_type_hierarchy` | Explore class/interface hierarchies |
-| `ide_find_implementations` | Find all implementations of an interface |
-
-**Before any rename or move:** always run `ide_find_references` first to
-understand the full scope of impact.
-
-**Tier 2 — Official JetBrains MCP (fallback)**
-
-Fall back to the official `jetbrains` MCP tools only when `intellij-index`
-doesn't provide the specific operation you need. It offers basic IDE integration
-but lacks the semantic depth of the index server.
+| `build_project` | Compile and get build errors |
+| `execute_run_configuration` | Run a named test or application configuration |
+| `get_symbol_info` | Hover documentation / type info at a position |
+| `get_file_problems` | File-level inspection results |
+| `replace_text_in_file` | Targeted text replacement (not semantic — no reference awareness) |
+| `reformat_file` | Apply code formatting rules |
+| `get_project_modules` | Project module structure |
+| `get_project_dependencies` | Library dependencies |
+| `find_files_by_glob` | Find files matching a glob pattern |
+| `find_files_by_name_keyword` | Find files by name keyword |
+| `list_directory_tree` | Browse project structure |
+| `execute_terminal_command` | Run shell commands in IDE terminal |
 
 **Tier 3 — Native tools (routine operations)**
 
-Use native tools (Read, Edit, Grep, Glob) for all routine file operations —
-reading, searching, and targeted text edits. These are always appropriate for
-non-semantic operations regardless of MCP availability.
+Use Read, Edit, Grep, Glob for reading files, searching content, and targeted
+text edits. Always appropriate for non-semantic operations.
 
-If no MCP server is available when a semantic operation (rename, find
-references, move) is needed:
-1. Inform the user
-2. Ask: continue with text-based tools (with risk of missed references), or
-   start IntelliJ first?
-3. If continuing without MCP: use `git diff` to validate scope, make changes
-   conservatively, and run the build/tests after each logical step
+If no MCP server is available when a semantic operation is needed:
+1. Inform the user — do not silently fall back to text tools for renames or moves
+2. Ask: continue with text-based tools (with risk of missed references), or start IntelliJ first?
+3. If continuing without MCP: use `git diff` to validate scope, make changes conservatively, run build/tests after each logical step
 
 ## Common Pitfalls — These Thoughts Mean STOP
 
