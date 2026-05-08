@@ -86,7 +86,12 @@ Process rows in order — first match wins.
 | 14 | `ci: use GH_PAT for ...` / `ci: standardise publish workflow` / `ci: add workflow_dispatch` / `ci: fix ...` | Squash into preceding commit, or DROP if truly empty (zero file changes) |
 | 15 | `fix(ci): ...` / `build: bump` when a feature commit follows | Squash into the feature it unblocked |
 | 16 | `fix(ci): ...` / `ci: retrigger` / `build: bump` when no feature follows, **and zero file changes** | ❌ DROP — truly empty, no files to preserve |
-| 17 | Any commit with `< 5 lines changed` (excluding blank lines and imports) and no issue reference | Squash into preceding commit |
+| 17 | Any commit with `< 5 lines changed` (excluding blank lines and imports) and no issue reference — **with exceptions below** | Squash into preceding commit |
+
+**Row 17 exceptions — never auto-squash by size alone:**
+- **Security-relevant paths:** any file whose path contains `auth`, `security`, `permission`, `secret`, `credential`, or `encryption` — a 2-line change to auth config may be critical
+- **Configuration files:** `application.properties`, `application.yml`, `*.yaml` config, `pom.xml` (when the change is a dependency version or property, not boilerplate)
+- **Zero file overlap with preceding KEEP:** if the small commit shares no files with the commit it would be squashed into, prefer standalone over proximity-forced attachment |
 | 18 | Multiple commits with near-identical messages on the same class/file | Identify the most complete, integrate unique content, squash the rest |
 
 ---

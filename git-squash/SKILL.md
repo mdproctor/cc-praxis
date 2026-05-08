@@ -84,31 +84,27 @@ RANGE_SHAS=$(git log --format="%H" <range>)
 
 Apply strategies in order — stop at the first one that produces groups:
 
-**Strategy A — Direct SHA match (squash-merge):**  
-Compare each PR's `mergeCommit.oid` against `RANGE_SHAS`. If a match is found,
-the PR is represented by that single squash commit. All original commits on
-`headRefName` that were squashed into it are the group members (fetch from the
-remote branch or PR commit list). Use **reconstruction format** for these groups —
-the squash already happened; we are recovering the original commits.
+**Strategy B — Merge commit in range (PRIMARY — implement this):**  
+Scan commits whose subject matches `Merge pull request #N from ...` targeting a
+protected branch (row 2a: KEEP). These are natural group boundaries:
+- All commits between two consecutive PR merge commits belong to the earlier PR's group (pre-merge work)
+- Group heading: `### PR #N — <merge commit message truncated> (date) [AUTHOR]`
+- Use **compaction format**
 
-**Strategy B — Merge commit in range:**  
-Scan commits whose subject matches `Merge pull request #N from ...`. Extract N,
-look up from `PR_DATA`. All commits between this merge commit and the previous
-merge commit belong to that PR group. Use **compaction format**.
+```bash
+git log --format="%H %s" <range> | grep "Merge pull request #"
+```
 
-**Strategy C — Remote branch tip match:**  
-For each remote branch in `REMOTE_BRANCHES`, check if its tip SHA is in
-`RANGE_SHAS`. If so, all commits on that branch (back to where it diverged from
-the base) form one group, headed by the branch name. Use **compaction format**.
-
-**Strategy D — Scope clustering (no API needed):**  
+**Strategy D — Scope clustering (fallback when no merge commits found):**  
 Group contiguous commits sharing the same conventional commit scope tag
 (`feat(causality)`, `feat(merkle)`). Do NOT group non-contiguous same-scope
 commits — separate clusters of the same scope are separate capabilities.
 Use **compaction format** with scope as the heading.
 
 **Strategy E — Flat (no context):**  
-No groups found. Use KEEP commit message as heading (existing behaviour).
+No merge commits, no scope clusters. Use KEEP commit message as heading (existing behaviour).
+
+*Note: Strategies A (squash-merge SHA) and C (remote branch tip) are not implemented — they require GitHub API calls with uncertain availability and are specced in git-squash-improvements-v2.md for future work.*
 
 **False grouping guard:** Only form a group if the commits are **contiguous**
 in the range. An intervening commit from a different scope or branch breaks
@@ -292,9 +288,21 @@ the rationale, the constraint, the approach tried first — information that mus
 survive into the curated message if not already captured in the subject.
 
 **Non-trivial body content:** a body is non-trivial if it contains more than
-`Co-authored-by:`, `Signed-off-by:`, or blank lines. Non-trivial bodies from
-SQUASH commits must be condensed and appended to the surviving KEEP commit's body
-if the information isn't already captured in the curated subject.
+`Co-authored-by:`, `Signed-off-by:`, or blank lines.
+
+**Body synthesis for groups (Step 3a-ii):** After gathering all commit bodies in a group,
+extract and synthesise substantive content for the curated final commit body:
+
+1. **ADR references:** any mention of "ADR", "ADR-NNN", "Architecture Decision" → always preserve
+2. **Rationale phrases:** sentences containing "because", "to avoid", "so that", "decided to", "per decision", "constraint" → preserve the sentence
+3. **Rejected alternatives:** "instead of", "not X because", "considered X but" → preserve
+4. **Planning doc subjects:** when absorbing a design spec or implementation plan commit, prepend `[Plan: <planning commit subject>]` to the synthesised body
+5. **Deduplication:** remove repeated content across multiple commit bodies
+
+The synthesised body appears in the plan's curated result column alongside the subject.
+If no substantive body content is found, the curated body is empty (no "message adequate" noise).
+
+This preserves architectural rationale through the squash — the *why* survives, not just the *what*.
 
 #### 3b — Detect conventional commits
 
@@ -321,6 +329,25 @@ If a PR exists:
   (they document the work breakdown; squashing loses the traceability)
 - **PR description says "fix typo in X"** → corresponding commit is SQUASH regardless
   of message pattern
+
+#### 3d-pre — Same-issue clustering (runs before pattern classification)
+
+Before pattern classification, group commits by shared issue reference. Extract
+issue refs from both subject and body (`#N`, `Closes #N`, `Refs #N`).
+
+For each issue number that appears in 2+ commits in the range:
+
+```bash
+git log --format="%H %s%n%b" <range> | grep -oE '(Closes|Refs|Fixes)?\s*#[0-9]+' 
+```
+
+**Clustering rules:**
+- **One feat + one or more fix/test/docs sharing the same #N**: MERGE all into the feat. The combined work for that issue belongs together.
+- **Multiple feat commits sharing the same #N**: KEEP each but annotate as parts of the same issue — they document distinct steps of a larger capability.
+- **Only fix/test/docs for #N, no feat**: MERGE into the most substantive (largest diff), flag "no primary feat identified for #N"
+- **Contiguity not required**: commits for the same issue may be scattered across the range — same-issue clustering reaches across non-adjacent commits.
+
+Store the resulting issue-based groups as `ISSUE_GROUPS` for use in Step 3d (PR context).
 
 #### 3d — Apply PR grouping context (if Step 0b produced groups)
 
@@ -365,6 +392,16 @@ whatever KEEP precedes them. Instead:
 2. Promote the **last** commit in the arc to KEEP — it represents the working outcome
 3. Classify all preceding commits in the arc as SQUASH, absorbed into that final KEEP
 4. The arc is self-contained — it does not absorb unrelated preceding commits
+
+**Proximity-grouped resolution — scan forward before accepting a wrong attachment:**
+When a SQUASH commit has zero meaningful word overlap with its nearest preceding KEEP
+(PROXIMITY_STOP-filtered), do not immediately absorb it there. Instead:
+1. Scan forward up to 20 commits for a KEEP with overlap > 0
+2. If a better semantic home is found: re-group there; note in plan "relocated to semantic home"
+3. If no better home exists: promote the commit to KEEP micro-commit — a small standalone
+   chore is better history than a wrong attachment
+
+Only fall back to proximity grouping (with annotation) when no semantic home can be found.
 
 **Rename sweep grouping — stale-ref fixups anchor to the rename, not nearest KEEP:**
 When the range contains a rename commit (`refactor: rename to X — groupId, package...`),
@@ -510,9 +547,26 @@ For **"full"** or for ranges ≤ 50 commits, continue to Step 5a.
 
 ### Step 5a — Full plan (if user says YES or range ≤ 50)
 
-#### Already-clean callout
+#### Already-clean section — capability narrative
 
-Do not list individual commits. Collapse to count and representative sample:
+Do not list individual commits. Group by scope cluster with counts:
+
+```markdown
+## Already Clean — <n> commits (no action needed)
+
+| Capability | Commits | What was built |
+|------------|---------|----------------|
+| supplement | 14 | LedgerSupplement base, serialiser, V1002 migration, Art.22 example |
+| merkle | 12 | MMR algorithm, verification service, Ed25519 signed checkpoint |
+| causality | 8 | findCausedBy SPI + JPA, correlationId core, e2e tests |
+| ... | ... | ... |
+```
+
+Group by: extract the scope from conventional commit (`feat(scope):`); cluster commits with the same scope together; write a 1-line summary of what the scope delivered using the most descriptive commit subjects. For commits without a scope, group under their type (feat, fix, test) with a brief summary.
+
+This makes the already-clean section readable as a project narrative, not a commit dump.
+
+#### Already-clean callout (legacy format — use narrative above for ranges > 20 clean commits)
 
 ```
 ## Already Clean — <n> commits (no action needed)
@@ -607,19 +661,26 @@ Non-trivial body content (rationale, constraints, approach notes) belongs as a
 `📝` annotation line immediately after its table row — NOT inside the Curated result
 cell. This keeps the cell clean and the body visible for review.
 
-**Plain SQUASH group (message adequate):**
+**Plain SQUASH group (message adequate — suppressed rows):**
+
+When all absorbed commits contribute nothing to the curated message (pure noise: style, chore, stale refs, CI one-liners), collapse the table to signal-only:
+
 ```markdown
 ## <semantic group title>
 *Compaction group — <N> commits → 1*
+**Final message:** *(message adequate — unchanged)*
 
-| Commit | Action | Curated result |
-|--------|--------|----------------|
-| `<sha>` <KEEP message> | ✅ KEEP | *(message adequate — unchanged)* |
-| `<sha>` <absorbed message> | 🔽 SQUASH ↑ | *(absorbed — <reason>)* |
-📝 *body: <condensed body if non-trivial>*
-
+> Absorbed: <list absorbed subjects in a single line>
 > **Result:** 1 commit.
 ```
+
+Only expand to the full three-column table when:
+- The curated message is enhanced (synthesis happened)
+- An absorbed commit has a non-trivial body worth noting (📝)
+- A ⚠️ flag applies (handover, proximity-grouped, no-op pair)
+- The absorbed commit has meaningful content that the reviewer should be aware of
+
+This makes every shown table row carry signal — "message adequate — unchanged" rows are never shown individually.
 
 **SQUASH group with enhanced subject (Final message above table):**
 ```markdown
@@ -887,6 +948,54 @@ warrants investigation before proceeding to the review gate. Report results to u
 Show the result in group format with real post-rebase SHAs.
 
 ---
+
+### Step 6b — Mixed-content handover resolution (when ⚠️ groups exist)
+
+When the plan contains ⚠️ groups where the KEEP commit is a session handover that
+survived filter-repo as mixed content, offer an interactive resolution before executing:
+
+```
+Group N has a session handover as KEEP (mixed content survived filter-repo):
+  Project files changed: CLAUDE.md (17 lines), docs/integration-guide.md (3 lines)
+  
+Options:
+  a — Extract project file changes to a separate commit, squash the handover
+  b — Keep as-is (handover message stays in history)
+  c — Rename commit to describe the project changes only (drop handover message)
+```
+
+**If option a:** use `git show <sha> -- <project-files>` to create a patch, apply it
+as a new commit with a descriptive message, mark the original as SQUASH into it.
+
+Offer this resolution after showing the plan but before applying squash operations.
+
+### Step 6c — Post-squash quality gate
+
+After squash executes (Step 6) but before the review gate, assess surviving commit quality:
+
+```bash
+# For each KEEP commit in the compacted range
+git log --format="%H %s" <base>..<work-branch> | while read sha subject; do
+  diff_lines=$(git show --stat --format="" $sha | awk '/changed/{sum+=$1} END{print sum}')
+  body=$(git log -1 --format="%b" $sha | grep -v '^$' | wc -l)
+  echo "$sha $diff_lines $body $subject"
+done
+```
+
+Flag these patterns:
+
+| Pattern | Severity | Message |
+|---------|----------|---------|
+| Subject < 50 chars AND diff > 50 lines | ⚠️ | Subject too brief for change size — consider expanding |
+| No body AND diff > 30 lines AND no issue ref | 📝 | Large change without rationale — consider adding context |
+| Non-conventional subject on significant commit | 📝 | Consider adding type/scope prefix |
+
+Output a quality summary before the review gate:
+```
+Quality check: 2 ⚠️  5 📝  (show details? YES / n)
+```
+
+Never blocks execution — this is signal, not a gate.
 
 ### Step 7 — Review gate
 
