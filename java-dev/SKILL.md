@@ -32,7 +32,7 @@ description: >
 | **Code Quality** | Mutability | Mark new parameters/variables `final` unless mutated |
 | | Imports | Use simple names with imports, not FQNs |
 | | Documentation | Javadoc only for non-trivial methods; focus on why |
-| | Changes | Minimize line changes; don't reformat untouched code |
+| | Commits | Keep commits focused on the problem; isolate refactors in separate commits |
 
 ## Rule Priority Decision Flow
 
@@ -361,13 +361,16 @@ proceeding.
 
 Do not add `@author` tags unless explicitly requested.
 
-## Minimize changes
+## Keep commits focused
 
-Keep modified lines to a minimum to reduce conflicts and ease review:
-- Do not alter existing method signatures unless semantically necessary
+Keep each commit scoped to the problem at hand. The goal is reviewability and clean revert history — not avoiding necessary changes.
+
 - Do not reformat lines that don't need changing — respect existing conventions
 - Do not add `final` to existing method signatures (new code only)
 - Do not change whitespace or imports in lines you're not otherwise touching
+- Do not alter existing method signatures unless semantically necessary
+
+Refactoring for clarity is always valid when the problem justifies it. If a method or class needs rewriting to make the fix or feature comprehensible, do it — but isolate it in its own commit rather than bundling it with the functional change. A focused refactor commit is a contribution, not scope creep.
 
 ## Refactoring
 
