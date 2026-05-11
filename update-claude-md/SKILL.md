@@ -40,9 +40,19 @@ changes.
 
 Before updating CLAUDE.md, ensure the local config architecture map is current.
 
+Projects can provide a project-specific config-architecture by adding to their CLAUDE.md:
+```
+**Config architecture:** https://raw.githubusercontent.com/<owner>/<repo>/main/docs/config-architecture.md
+```
+If present, that URL is used. Otherwise falls back to the generic cc-praxis version.
+
 ```bash
 CONFIG_FILE="$HOME/.claude/config-architecture.md"
-GITHUB_URL="https://raw.githubusercontent.com/mdproctor/cc-praxis/main/docs/config-architecture.md"
+GENERIC_URL="https://raw.githubusercontent.com/mdproctor/cc-praxis/main/docs/config-architecture.md"
+
+# Check for project-specific config-architecture URL in CLAUDE.md
+PROJECT_URL=$(grep -m1 "^\*\*Config architecture:\*\*" CLAUDE.md 2>/dev/null | sed 's/\*\*Config architecture:\*\* *//')
+GITHUB_URL="${PROJECT_URL:-$GENERIC_URL}"
 
 if [ ! -f "$CONFIG_FILE" ]; then
   NEEDS_UPDATE=true

@@ -2,7 +2,7 @@
 
 > **Source:** https://raw.githubusercontent.com/mdproctor/cc-praxis/main/docs/config-architecture.md  
 > **Installed to:** `~/.claude/config-architecture.md` — refreshed daily by `update-claude-md`  
-> **Tracks:** casehubio/parent#13
+> **Project override:** set `**Config architecture:** <url>` in CLAUDE.md to use a project-specific version instead
 
 This document is the canonical map of the Claude configuration system. Before adding new guidance anywhere, consult this map to find the authoritative location and avoid duplication.
 
@@ -17,8 +17,7 @@ Each layer has a defined purpose and hard boundaries.
 | **Global norms** | `~/.claude/engagement.md`, `working-style.md`, `document-boundaries.md`, `design-implementation.md` | Behavioral norms — how Claude engages, universal workflow principles | Project-specific facts, workflow procedures, tool catalogues |
 | **Skills** | `~/.claude/skills/*/SKILL.md` | Comprehensive guidance for a specific task type | Repetition of other skills' content — use Prerequisites instead |
 | **Project CLAUDE.md** | `<repo>/CLAUDE.md` | Project-specific facts + invocation hooks | Generic norms already in global config |
-| **Platform doc** | `PLATFORM.md` (casehubio) | Platform architecture + coherence protocol | Workflow procedures, skill invocations, tool catalogues |
-| **Prompt snippet** | `~/claude/casehub/parent/docs/prompt-snippets.md` | Session-critical non-negotiables that must not fade | Everything that can live elsewhere |
+| **Platform doc** | `<project>/docs/PLATFORM.md` or equivalent (optional) | Project-wide architecture + coherence protocol | Workflow procedures, skill invocations, tool catalogues |
 | **This map** | `~/.claude/config-architecture.md` | Topic ownership — where each concern lives | (meta — do not add guidance here) |
 
 ---
@@ -55,7 +54,7 @@ For each topic: the **authoritative** location, plus acceptable secondary appear
 | Location | Role |
 |----------|------|
 | `design-implementation.md` ## Before Designing ← **authoritative** | The norm |
-| PLATFORM.md Development Session Protocol | One-line pointer |
+| Project platform doc (if any) | One-line pointer (optional) |
 | Project CLAUDE.md Development Workflow | Invocation hook (3 lines) — project-specific surface |
 
 ### TDD / tests before implementing
@@ -63,7 +62,7 @@ For each topic: the **authoritative** location, plus acceptable secondary appear
 | Location | Role |
 |----------|------|
 | `design-implementation.md` ## Before Implementing ← **authoritative** | The norm |
-| PLATFORM.md Development Session Protocol | One-line pointer |
+| Project platform doc (if any) | One-line pointer (optional) |
 | Project CLAUDE.md Development Workflow | Invocation hook — project-specific surface |
 
 ### Code review before committing
@@ -85,7 +84,7 @@ For each topic: the **authoritative** location, plus acceptable secondary appear
 | Location | Role |
 |----------|------|
 | `design-implementation.md` ## Protocols Are Not Dogma ← **authoritative** | General principle |
-| PLATFORM.md Protocol preamble | One sentence in context — kept for in-situ reminder |
+| Project platform doc (if any) | One sentence in context — kept for in-situ reminder (optional) |
 
 ### Documentation drift
 
@@ -93,14 +92,6 @@ For each topic: the **authoritative** location, plus acceptable secondary appear
 |----------|------|
 | `design-implementation.md` ## Documentation ← **authoritative** | The norm |
 | Project CLAUDE.md Development Workflow | Living docs list — project-specific, extends the norm |
-
-### Platform coherence protocol (casehubio-specific)
-
-| Location | Role |
-|----------|------|
-| `PLATFORM.md` ← **authoritative** | Full 6-step protocol |
-| All casehubio project CLAUDE.md | Reference via `~/claude/casehub/parent/docs/` path; note says "skip gracefully if not cloned" with GitHub raw URL fallback |
-| Prompt snippet | Reminder to read it at session start |
 
 ### Behavioral norms (engagement, directness, no sycophancy)
 
@@ -122,17 +113,7 @@ For each topic: the **authoritative** location, plus acceptable secondary appear
 |----------|------|
 | `java-dev` Skill Chaining section | Partial — Java only |
 | Project CLAUDE.md Development Workflow | Invocation hooks — partial |
-| **Gap**: no single document shows the full chain | Tracked in parent#13 |
-
----
-
-## Known Duplications (to resolve in parent#13 restructuring phase)
-
-| Topic | Where duplicated | Status |
-|-------|-----------------|--------|
-| IntelliJ guidance | 4 places: ide-tooling + design-implementation.md + java-dev + python-dev + ts-dev | Partially resolved — language skills now use prerequisites |
-| Skill invocation chain | Scattered, no authoritative source | Open gap |
-| java-dev monolithic structure | IntelliJ section at line ~386, fades mid-session | Deferred to restructuring decision |
+| **Gap**: no single document shows the full chain | Each project should document this in their platform doc or config-architecture |
 
 ---
 
