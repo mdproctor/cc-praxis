@@ -441,8 +441,9 @@ For each issue number that appears more than once with `Closes`:
     Typically: the PR merge commit closes; the individual branch commit refs.
 ```
 
-Surface this flag in the plan before the approval prompt. Do not block execution —
-the author may accept both or choose to amend one.
+Surface this flag in the plan before the approval prompt. Present both options:
+amend one to `Refs #N`, or accept both as-is. Wait for the user's decision before
+building the rebase todo.
 
 **Consistent proximity-grouped flagging:**
 
@@ -1040,7 +1041,7 @@ on their shared files.
 **Post-squash interval tree verification (automatic — mandatory, not a placeholder):**
 
 After rebase completes, automatically sample and verify. Run before showing the
-result to the user — do not defer to the executor's judgment on whether to run this.
+result to the user. Run it. Do not skip.
 
 ```bash
 TOTAL=$(git log --oneline <base>..<work-branch> | wc -l)

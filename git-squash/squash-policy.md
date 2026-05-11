@@ -1,14 +1,6 @@
 # Commit Squash Policy
 
-**Principle:** Good commit messages are information. The noise patterns below
-are mechanical artifacts of the development process, not meaningful history.
-Keep the signal, remove the noise.
-
-**Tie-breaking rule:** When a commit matches multiple rows, the first matching
-row wins. Squash targets are always the preceding KEEP commit; if none exists
-in the range, squash *forward* into the next KEEP commit instead. If no KEEP
-commits exist at all, treat the most substantive commit as KEEP and squash
-the rest into it.
+**Tie-breaking:** First matching row wins. Squash target = preceding KEEP. No preceding KEEP → squash forward into next KEEP. No KEEP at all → treat most substantive commit as KEEP, squash rest into it.
 
 ---
 
@@ -20,9 +12,7 @@ Filter-repo strips workspace artifact files from history before any compaction
 runs. `--prune-empty` then removes commits that become empty. The KEEP/SQUASH/MERGE
 pass runs only on commits with remaining project file changes.
 
-**When to run:** Only during on-demand `/git-squash` when workspace artifact
-commits are found in the range. The Q&A UI (see SKILL.md Step 0) asks the
-author what to filter before proceeding.
+**When to run:** On-demand `/git-squash` only, when workspace artifact commits are found in the range. Present Q&A (see SKILL.md Step 1) before running.
 
 **What counts as a workspace artifact path** (default candidates for filtering):
 - `HANDOFF.md` — session handover files
@@ -115,8 +105,7 @@ message tells the story more cleanly.
 - Combine key points from both messages into one description — richer than either alone, no longer than necessary
 - Keep all issue references from both commits
 
-**Do not merge** commits from different features or scopes just because they are small.
-Merge only when the result tells a cleaner, more complete story.
+**Do not merge** commits from different features or scopes just because they are small. Merge only when the result is richer than either message alone.
 
 **Good — rename sweep merged into one:**
 ```
@@ -135,12 +124,11 @@ INTO  → feat(blackboard): PlanItem strict lifecycle with IllegalStateTransitio
         markRunning/markCompleted enforce valid transitions; concurrent CAS prevents races
 ```
 
-**Bad — different modules, don't merge:**
+**Bad — different modules, different concerns:**
 ```
 DO NOT MERGE:
   feat(api): add UserRepository SPI
   feat(engine): wire WorkerStatusListener
-These address different concerns in different modules.
 ```
 
 ---
@@ -192,13 +180,7 @@ same issue, flag it — only one should be authoritative. Convention: the PR mer
 commit closes the issue; the individual branch commit that preceded it should use
 `Refs #N` instead.
 
-**Consistent proximity-grouped flagging:** The ⚠️ proximity-grouped annotation
-applies to ANY commit absorbed into a semantically unrelated KEEP — not only chore
-commits. CI commits (`ci:`, `fix(ci):`), formatting commits (`style:`), and any
-other commit with zero meaningful word overlap with its KEEP target all receive the
-same ⚠️ proximity-grouped label. Inconsistent flagging (some proximity groups
-flagged, others not) creates a false impression that unflagged groups are semantically
-correct.
+**Consistent proximity-grouped flagging:** Apply ⚠️ proximity-grouped to ANY commit absorbed into a semantically unrelated KEEP — CI commits (`ci:`, `fix(ci):`), formatting commits (`style:`), and any commit with zero meaningful word overlap with its KEEP target. Flag all cases consistently, not selectively.
 
 **Multi-issue reference preservation:** When a group absorbs commits that carry
 issue references different from the KEEP commit's references, all unique refs must
