@@ -25,10 +25,33 @@ using the MADR (Markdown Any Decision Records) format. ADRs live in
 
 ## Workflow
 
-### Step 1 — Check existing ADRs
+### Step 1 — Resolve write destination
+
+Before checking existing ADRs, resolve where to write using the three-layer routing cascade:
 
 ```bash
-ls docs/adr/ 2>/dev/null || echo "No ADRs yet"
+# Layer 3: workspace CLAUDE.md per-artifact override
+grep -A 20 "^## Routing$" CLAUDE.md 2>/dev/null | grep "^| adr"
+
+# Layer 2: global default
+grep -A 5 "^## Routing$" "$HOME/.claude/CLAUDE.md" 2>/dev/null | grep "Default destination"
+
+# Layer 1: built-in default → project (docs/adr/)
+```
+
+Read `**Workspace:**` and `**Project repo:**` from CLAUDE.md to resolve absolute paths.
+
+| Resolved destination | Write to | git -C path |
+|----------------------|----------|-------------|
+| `workspace` | `<Workspace>/adr/` | `<Workspace>` |
+| `project` (default) | `<Project repo>/docs/adr/` | `<Project repo>` |
+
+Use `git -C <resolved-path>` for all git operations — never bare `git add/commit`.
+
+### Step 1b — Check existing ADRs
+
+```bash
+ls <resolved-adr-dir>/ 2>/dev/null || echo "No ADRs yet"
 ```
 
 Determine the next sequence number. If no ADRs exist, start at `0001`.
@@ -117,8 +140,8 @@ Show the full ADR draft and the target filename, then ask:
 ### Step 5 — Write and confirm
 
 Only after explicit YES:
-1. Write the file to `docs/adr/NNNN-<title>.md`
-2. Update `docs/adr/INDEX.md`:
+1. Write the file to `<resolved-adr-dir>/NNNN-<title>.md`
+2. Update `<resolved-adr-dir>/INDEX.md`:
    - If `docs/adr/INDEX.md` doesn't exist yet, create it with:
      ```markdown
      # ADR Index
@@ -130,7 +153,12 @@ Only after explicit YES:
      ```
      | NNNN | [Title](NNNN-title.md) | Accepted | YYYY-MM-DD |
      ```
-3. Confirm: "✅ Written to `docs/adr/NNNN-<title>.md`"
+3. Commit using explicit path:
+   ```bash
+   git -C <resolved-path> add <resolved-adr-dir>/NNNN-<title>.md <resolved-adr-dir>/INDEX.md
+   git -C <resolved-path> commit -m "adr: NNNN <title>"
+   ```
+4. Confirm: "✅ Written to `<resolved-adr-dir>/NNNN-<title>.md`"
 
 ### Step 6 — Suggest an ADR when appropriate
 
