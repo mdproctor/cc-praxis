@@ -138,13 +138,29 @@ Full rules and image path conventions: **[visual-elements.md](visual-elements.md
 
 **Layer 0 — Resolve blog directory**
 
+Resolution order (first match wins):
+
+1. **`Blog directory:` field** in CLAUDE.md — explicit path, highest priority (e.g. `Blog directory: site/_posts/`). Use as-is.
+   ```bash
+   grep -i "blog directory:" CLAUDE.md 2>/dev/null
+   ```
+
+2. **Routing table** in CLAUDE.md — if no `Blog directory:` field, check `## Routing` for a `blog` row:
+   ```bash
+   grep -A 20 "^## Routing$" CLAUDE.md 2>/dev/null | grep "^| blog"
+   ```
+   - `blog → workspace`: write to `<Workspace>/blog/` (read `**Workspace:**` property)
+   - `blog → project`: write to `<Project repo>/blog/`
+
+3. **Default**: `blog/` relative to CWD — only if neither of the above is configured.
+
+Resolve `<BLOG_DIR>` to an **absolute path** so that all git operations use `git -C <workspace-or-project-path>` rather than relying on CWD.
+
+When committing the entry:
 ```bash
-grep -i "blog directory:" CLAUDE.md 2>/dev/null
+git -C <workspace-or-project-path> add <BLOG_DIR>/<entry-file>
+git -C <workspace-or-project-path> commit -m "docs: add blog entry YYYY-MM-DD-<title>"
 ```
-
-If a line matching `Blog directory:` is found (e.g. `Blog directory: site/_posts/`), extract that path and use it as `<BLOG_DIR>` throughout all subsequent steps.
-
-If not found, default to `blog/`.
 
 **Layer 1 — Scan CLAUDE.md for context**
 

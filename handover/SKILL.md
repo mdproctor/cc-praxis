@@ -1,16 +1,58 @@
 ---
 name: handover
 description: >
-  Use when ending a session and wanting to preserve context for resumption —
-  says "create a handover", "end of session", "update the handover", or
-  "write a handover". Generates a concise HANDOFF.md with lazy references
-  to deeper context, not the context itself. NOT for design records (use
-  design-snapshot) or project narrative (use write-blog).
+  Use when ending a session and wanting to preserve context for resumption,
+  OR when starting a session and needing to resume from where things left off —
+  says "create a handover", "end of session", "update the handover",
+  "write a handover", or "resume handover". When creating: generates a concise
+  HANDOFF.md with lazy references to deeper context. When resuming: locates and
+  reads HANDOFF.md from the correct location (workspace or project repo).
+  NOT for design records (use design-snapshot) or project narrative (use write-blog).
 ---
 
 # Session Handover
 
 > **Terminology:** *handover* is the act (what you do at session end); *handoff* is the artifact (the `HANDOFF.md` file passed to the next session).
+
+---
+
+## Resuming a Handover
+
+When the user says "resume handover" (or similar), the job is to **locate and read** HANDOFF.md, not create one.
+
+**HANDOFF.md lives in the workspace, not the project repo.** Many projects separate methodology artifacts (handovers, blog, specs, ADRs) into a dedicated workspace repository. Always resolve the correct location before reading.
+
+### Step R1 — Determine where HANDOFF.md lives
+
+Check CLAUDE.md for a workspace path. Look for a line like:
+
+```
+**Workspace** (`/path/to/workspace`)
+```
+
+or an artifact routing table that maps `handover` → `workspace`.
+
+- **If a workspace path is found:** HANDOFF.md is at `<workspace>/HANDOFF.md`
+- **If no workspace is configured:** HANDOFF.md is at the project root (CWD)
+
+### Step R2 — Check freshness, then read
+
+```bash
+# In the workspace (or CWD if no workspace)
+cd <resolved-path>
+git log -1 --format="%ar" -- HANDOFF.md
+```
+
+If more than a week old, flag it before using the context:
+> "HANDOFF.md is N days old — some context may be stale. Verify key assumptions before building on it."
+
+Then read the file and summarise the session state to the user.
+
+### Common Mistake
+
+Do **not** look for HANDOFF.md in the current working directory if a workspace is configured. The CWD is typically the project repo (source code); HANDOFF.md is a methodology artifact and belongs in the workspace. Looking in the wrong place will return "file not found" even when the handover exists.
+
+---
 
 Generates a concise `HANDOFF.md` — a pointer document that gives the next
 Claude session enough context to resume immediately. References are read on
@@ -317,9 +359,11 @@ suggest the name and prompt at the right moment.
 
 ### Step 6 — Commit (required)
 
+Read `**Workspace:**` from CLAUDE.md to get the absolute workspace path. Use `git -C` — never bare git commands:
+
 ```bash
-git add HANDOFF.md
-git commit -m "docs: session handover YYYY-MM-DD"
+git -C <Workspace> add HANDOFF.md
+git -C <Workspace> commit -m "docs: session handover YYYY-MM-DD"
 ```
 
 Committing is mandatory. It's what makes git history the archive.
@@ -399,6 +443,7 @@ flowchart TD
 | Copying CLAUDE.md content | Auto-loaded; pure duplication | Omit entirely |
 | Skipping the freshness check | Old handover misleads the next session | `git log -1 --format="%ar" -- HANDOFF.md` before using |
 | Writing "continue work" as next step | Too vague to act on | Be specific — name the file, command, or section |
+| Looking for HANDOFF.md in the project repo when resuming | HANDOFF.md is a methodology artifact — it lives in the workspace, not source code | Check CLAUDE.md for workspace path before reading; see **Resuming a Handover** section |
 
 ---
 

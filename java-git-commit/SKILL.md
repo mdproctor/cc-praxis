@@ -256,15 +256,21 @@ Then ask exactly:
 
 Follow `git-commit` Step 4 (commit), with this enhancement:
 
-**Before committing:** Apply any proposed documentation changes:
+**Before committing:** Apply any proposed documentation changes.
+Read `**Project repo:**` from CLAUDE.md to get the absolute project path. Use `git -C` for all operations:
+
 1. If java-update-design proposed DESIGN.md changes:
    - Let java-update-design apply its changes to `docs/DESIGN.md`
-   - Stage the updated file: `git add docs/DESIGN.md`
+   - Stage: `git -C <Project repo> add docs/DESIGN.md`
 2. If update-claude-md proposed CLAUDE.md changes:
    - Let update-claude-md apply its changes to `CLAUDE.md`
-   - Stage the updated file: `git add CLAUDE.md`
+   - Stage: `git -C <Project repo> add CLAUDE.md`
 
-**Then commit:** Same as git-commit (`git commit`, confirm with `git log --oneline -1`)
+**Then commit:**
+```bash
+git -C <Project repo> commit -m "<message>"
+git -C <Project repo> log --oneline -1   # confirm
+```
 
 > If neither skill found changes needed, commit the originally staged files as-is.
 
