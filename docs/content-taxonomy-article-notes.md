@@ -108,6 +108,205 @@ Multi-part applies to both articles and essays.
 
 ---
 
+## Taxonomy Classification Rules — Refined Through Corpus Validation `[BOTH]`
+
+These rules emerged from classifying 577 real posts against the taxonomy. They refine the definitions and provide tests for edge cases.
+
+### Note/log = coding/development log only
+
+**Log is not a general diary.** It records technical work — coding sessions, algorithm progress, benchmark results, test milestones, API progress. NOT:
+- Conference attendance or event recaps
+- Personal travel or off-topic observations
+- Job postings or community announcements
+- Download stats or subscriber counts
+- Link posts or external content shares
+
+### Note vs Article — craft and audience intent, not privacy
+
+**Notes are still public** — they have an audience. The distinction is effort and craft:
+- **Note**: quick, rough, less shaped for a reader — assumes the reader can follow without hand-holding
+- **Article**: crafted for a wider audience — provides the context and structure a reader needs
+
+A Note written fast that you expect a small audience to read. An Article written with the expectation that many people will read it.
+
+### Article/commentary = wider audience catch-all
+
+**If you intend a wider audience for it, but it doesn't fit tutorial/how-to/explanation/essay, it's Article/commentary.** Even if it's off-topic, observational, or doesn't argue a position — the intent to reach a wider audience is the determining factor.
+
+> Example: "[Off Topic] Back from my honeymoon" (252) — has the off-topic disclaimer (signalling public awareness), intended for wide readership → Article/commentary, not Note/musing
+
+### Note/musing = catch-all for short informal Notes that aren't log or idea
+
+Quick, rough, encoder-dominant. Can be:
+- Internal thinking out loud
+- Pointing at external content and reacting briefly  
+- A casual observation or reaction
+- A brief community announcement intended for a small/known audience
+
+### Cross-posting — primary determination
+
+When a post has two genuine types, use three tests to determine primary:
+1. **Strip test** — which type survives if the other is removed?
+2. **Intent test** — what was the author's main goal?
+3. **Structure test** — which type's conventions does the post follow?
+
+> Example: "Argentina June Workshop - Volcano update" (371) — informing event attendees of late arrival (News/event primary) with personal amusing tone (Note/musing secondary)
+> Example: "Washington Rules!" (011) — substantive narrative review of an event (Article/commentary primary) that happens to cover an event (News/event secondary)
+
+### Article/explanation = showcase category
+
+Feature demonstrations, New and Noteworthy posts, and capability showcases are **Article/explanation** — they explain/demonstrate what a feature does. If tied to a release, cross-post with News/release as secondary.
+
+### News/event scope
+
+News/event covers all of these:
+- Pre-event announcements ("I'm speaking at JavaOne next week")
+- Event information shares — slides, videos, agenda posted after the event
+- Brief event recaps — "sold out", "full house", photos, mid-event updates
+- Boot camp logistics, venue announcements, registration reminders
+
+News/event does NOT cover:
+- A full narrative review of what happened at the event, with impressions, named people, technical observations → **Article/commentary** (primary) + News/event (secondary if genuinely present)
+
+### Thin showcase rule
+
+A post that is just one sentence + a video link or slide link — regardless of how interesting the underlying content is — is **NOT an Article**. Classify as News/release (if tied to a release), News/event (if tied to an event), or Note/musing.
+
+The content needs to actually explain or demonstrate something in the post itself to qualify as Article/explanation.
+
+> Example: "Build Pong in 13 minutes using JBoss Drools" (451) — one sentence + YouTube link → News/release, not Article
+
+### Guest posts — classify by content, not authorship
+
+Whether a post was written by a guest or by Mark doesn't affect classification. Classify by what the content does, not who wrote it.
+
+> Example: "Rule Analytics - Looking at the AST" (042) — guest post by a student, but contains substantive technical analysis → Article/explanation
+
+### Conference recaps — the spectrum
+
+| Content | Classification |
+|---------|---------------|
+| "Here are my slides from X" | News/event |
+| "Here are photos from Day 1 of X" | News/event |
+| "Full house at the session" + brief note | News/event |
+| Full narrative: who was there, what was discussed, vendor impressions, technical insights | Article/commentary primary + News/event secondary |
+
+### Brief — nearly absent historically
+
+In the 577-post historical corpus, only 3 genuine Briefs were found. Brief is a **new form** not represented in the historical writing style. Do not force posts into Brief — if in doubt, classify elsewhere.
+
+### Canonical examples from corpus validation
+
+| Post | Classification | Rule illustrated |
+|------|---------------|-----------------|
+| 007 — Rete with Lazy Joins | Article/explanation ⭐ | Deep technical explanation with Forgy correspondence |
+| 011 — Washington Rules! | Article/commentary + News/event | 780w conference narrative with vendor impressions, named people, technical insights → Article primary. Strip the event context and the narrative still stands. |
+| 042 — Rule Analytics (guest post) | Article/explanation | Guest post by a student — classify by content (substantive technical analysis), not authorship |
+| 108 — A Vision for Unified Rules and Processes | Article/essay ⭐ | Landmark argued position — defines the KIE platform thesis |
+| 189 — Drools 5.0 M5 New and Noteworthy | Article/explanation + News/release | 700w comprehensive feature walkthrough → Article primary. Tied to a release → secondary. |
+| 228 — Drools Blog gains over 1000 subscribers | Note/musing | PR/community milestone — short, informal, not crafted for wide audience |
+| 230 — Drools: a reflection on 5 years | Article/essay ⭐ | Reflective milestone essay — historically important primary source |
+| 249 — Some articles from Java Beans dot Asia | Article/commentary | Curating external content for a wider audience → Article, not Note. Intended for broad readership. |
+| 252 — [Off Topic] Back from my honeymoon | Article/commentary | Off-topic personal travel — but off-topic disclaimer signals public awareness; intended for wide readership → Article/commentary, not Note/musing |
+| 257 — My first look at Drools (ORF09 feedback) | Article/commentary + News/event | Commentary about an event — shares impressions of the bootcamp → Article primary. Event context → secondary. |
+| 369 — CEP Operators in Guvnor | Article/explanation + News/release | Feature showcase with enough substance (screenshots, explanation) → Article primary. Tied to a release → secondary. |
+| 371 — Argentina Volcano update | News/event + Note/musing | Informing event attendees of late arrival (functional purpose) → News/event primary. Personal amusing tone → secondary. Strip event context: nothing remains. |
+| 387 — Why you should learn Drools (job ad) | Note/musing | PR observation/job market signal — same pattern as subscriber count posts; not crafted for wide audience |
+| 411 — The Decision Model IP Trap | Article/essay ⭐ | Argued position with evidence, addresses counter-arguments, concludes |
+| 450 — Drools 5.4: AI History | Article/explanation ⭐ | Broad-audience primer — most intellectually ambitious explanatory post in corpus |
+| 451 — Build Pong in 13 minutes | News/release | One sentence + YouTube link → thin showcase, not Article |
+| 508 — R.I.P. RETE time to get PHREAKY | Article/explanation ⭐ | Flagship technical deep-dive — corpus centrepiece |
+| 568 — BRMS/BPMS 7.0 Roadmap | Article/essay ⭐ | Rare strategic transparency — unusually candid product roadmap |
+| 577 — KIE Community welcomes IBM | Article/commentary ⭐ | Landmark closing post of the corpus |
+
+---
+
+## Cross-Posting Rules `[BOTH]`
+
+Cross-posts are rare. A post has one primary type and optionally one secondary type.
+
+**When to cross-post:** Only when both types are genuinely present AND the secondary meaningfully changes how the content should be written or indexed. If the secondary is a weak echo of the primary, classify primary only.
+
+**The primary test — three questions in order:**
+
+1. **Strip test** — if you removed the secondary element, would the primary still work as content on its own? The one that survives stripping is secondary; the one that doesn't work without context is primary.
+2. **Intent test** — what was the author's main goal? What would the reader lose if they only got the primary type?
+3. **Structure test** — which type's conventions does the post follow structurally?
+
+**Format:** `primary_type/primary_subtype + secondary_type/secondary_subtype`
+
+**Canonical examples:**
+
+| Example | Classification | Why |
+|---------|---------------|-----|
+| "CEP Operators in Guvnor" (369) — showcases a Guvnor feature tied to a release | `Article/explanation + News/release` | Primary: explains/demonstrates the feature. Secondary: tied to a release. |
+| "Argentina June Workshop - Volcano update" (371) — informs attendees of late arrival, with amusing personal voice | `News/event + Note/musing` | Primary: functional event update for attendees. Secondary: personal amusing tone. Strip the event context and nothing remains. |
+| "Build Pong in 13 minutes using JBoss Drools" (451) — one sentence and a YouTube link | `News/release` only | Too thin for Article. No secondary needed. |
+
+**Showcase posts:**
+- A showcase with enough substance (explanation, screenshots, code) → `Article/explanation` primary
+- A showcase tied to a release → `Article/explanation + News/release`
+- A thin showcase (one sentence + video link) → `News/release` only — not enough for Article
+
+---
+
+## The Taxonomy — Final Form (for article use) `[ARTICLE]`
+
+*Naming confirmed: "essay" — recommended by Grok, consistent with all five academic frameworks, natural alongside tutorial/how-to/explanation/commentary.*
+
+### Taxonomy table
+
+| Type | Intent | Subtypes |
+|------|--------|---------|
+| **Note** | Capture — quick, informal, encoder-dominant | log, musing, idea |
+| **Article** | Inform or argue — full treatment, crafted for a cold reader | tutorial, how-to, explanation, commentary, essay |
+| **Brief** | Maximum information density, minimum prose | standalone or linked |
+| **News** | Something happened externally worth sharing | release, event, industry |
+
+### Each term explained
+
+**Note** — quick, informal, close to the writer. Assumes shared context. Less shaped for a cold reader than an article. Quick by nature — not necessarily short, but not laboured over.
+- **log** — records what happened. The development diary, the session notes. Chronological, first-person, factual account of work done.
+- **musing** — short, informal, encoder-dominant piece that is neither a record nor a developed proposal. Can be internal thinking out loud or a brief external reaction (link + quick take, quote + personal comment). Low investment, not fully formed.
+- **idea** — developed enough to propose something specific. "We should do X because Y." A musing that has crystallised into a specific proposal.
+
+**Article** — full treatment of a topic, standalone readable. Background is provided; a cold reader can follow without prior context. Crafted for the audience, not just for the writer.
+- **tutorial** — learn by doing. The reader acquires a capability through guided practice. Sequential, hands-on, the reader does something.
+- **how-to** — task completion. The reader applies existing capability to accomplish a specific goal. Practical, step-oriented, assumes some prior knowledge.
+- **explanation** — understand why. Builds the reader's mental model of a concept, system, or decision. Not about doing — about understanding.
+- **commentary** — informed take on a topic. Personal voice, expertise-led, no formal thesis or structured conclusion. The author has a view and shares it discursively.
+- **??? (essay/thesis/case)** — argued to a conclusion. Clear position, builds evidence, addresses counter-arguments, reaches a conclusion. "When the Machine Codes" is the canonical example — six parts, a thesis that Python is the wrong default for LLM-first development, argued and concluded.
+
+**Brief** — maximum information density, minimum prose. Fully scannable — scanning IS the experience. Two modes:
+- **Standalone** — self-contained, no deeper layer. The full picture at a glance.
+- **Linked** — navigation layer into a longer piece. Each section, paragraph, even bullet can link to the corresponding deep-dive in an accompanying article or essay. Becomes the TLDR with links throughout.
+
+**News** — something happened externally worth sharing. Not the author's work — something in the world.
+- **release** — software release, new version, new feature. What changed and why it matters.
+- **event** — conference, talk, meetup. Announcement or recap.
+- **industry** — observation on something happening in the broader landscape. IBM, Nvidia, open source trends.
+
+---
+
+### Academic mapping table
+
+| Our type | Newman (1827) | Kinneavy (1969) | Britton (1970) | Diátaxis (2017) |
+|----------|--------------|-----------------|----------------|-----------------|
+| Note/log | Narration | Expressive/individual — explicitly names "diaries" | Expressive | — |
+| Note/musing | Narration | Expressive/individual | Expressive — "close to the self" | — |
+| Note/idea | — | Referential/exploratory — "proposing solutions" | Expressive | — |
+| Article/tutorial | Exposition | Referential/exploratory | Transactional | Tutorial |
+| Article/how-to | Exposition | Referential/informative | Transactional | How-to |
+| Article/explanation | Exposition | Referential/scientific | Transactional | Explanation |
+| Article/commentary | — | Referential/exploratory | Transactional | — |
+| Article/essay | Argumentation | Persuasive aim | Transactional | — |
+| Brief | Description | Referential/informative | Transactional | Reference |
+| News | — | Persuasive/transactional | Transactional | — |
+
+*Five frameworks — developed independently across 200 years from completely different starting points — converging on the same underlying taxonomy. Kinneavy (1969) called this "almost fearful symmetry" when he found it across 8 scholars. We are extending his observation by 57 years and two new domains.*
+
+---
+
 ## Act 3 — The Structured Essay: A Form Discovered in Revision `[ARTICLE]`
 
 "When the Machine Codes" — a 6-part series — revealed a distinct form through the revision process.
@@ -201,6 +400,54 @@ The mapping:
 | InfoBrief | Description | Reference |
 
 We had independently arrived at a taxonomy that maps directly onto work from 1827. And the modern equivalent had been in plain sight the entire time.
+
+---
+
+## Encoder/Decoder Theory — The Theoretical Basis for Note vs Article `[BOTH]`
+
+*Source: Kinneavy (1969) communication triangle, validated by Grok independently reaching for the same terminology when analysing the taxonomy.*
+
+### The framework
+
+Kinneavy's communication triangle has four corners:
+- **Encoder** — the writer/speaker
+- **Decoder** — the reader/listener
+- **Signal** — the text itself
+- **Reality** — the subject matter the text refers to
+
+Each aim of discourse foregrounds a different corner. Applied to our content taxonomy:
+
+| Type | Dominant corner | Why |
+|------|----------------|-----|
+| Note/log | **Encoder** | Author records for themselves or a known audience; assumes shared context |
+| Note/musing | **Encoder** | Author thinking out loud or reacting briefly; not shaped for a cold reader |
+| Note/idea | **Encoder** | Author proposing for their own exploration; not yet crafted for an audience |
+| Article/tutorial | **Decoder** | Entirely structured around the reader's learning journey |
+| Article/how-to | **Decoder** | Structured around the reader's task completion |
+| Article/explanation | **Decoder** | Structured around the reader's understanding |
+| Brief | **Reality** | The information dominates; neither encoder nor decoder foregrounded |
+| News | **Reality** | Pointing at external facts in the world |
+
+### Where it gets fuzzy
+
+- **Article/commentary** — quite encoder-dominant (personal voice, author's take) but crafted for a public audience. Sits between encoder and decoder.
+- **Article/essay** — the *position* is the encoder's, but the *argument structure* is shaped for the decoder. Both at once.
+
+### The operationally reliable test
+
+Encoder/decoder dominance is a useful approximation, not a universal rule. The more reliable operational test for Note vs Article is:
+
+> **Does the content assume shared context (Note) or provide sufficient context for a cold reader to follow (Article)?**
+
+This maps onto encoder/decoder dominance without being identical to it. A Note/musing about an external article (posts 220 and 239) is still encoder-dominant — the author's brief reaction is the content, and the reader is assumed to be able to follow a link. An Article/commentary on the same topic would explain the context and develop the argument for a reader who wasn't there.
+
+### Why this matters for LLMs
+
+When an LLM is asked to write a Note, it should write encoder-first: the author's voice, perspective, and reaction dominate. Assume the reader shares context. Don't over-explain.
+
+When an LLM is asked to write an Article, it should write decoder-first: provide sufficient background, define terms, structure for a reader who comes cold. The author's voice is still present but the reader's needs shape the structure.
+
+This distinction is more reliable than word count or structure as a guide to register and tone.
 
 ---
 
@@ -910,6 +1157,206 @@ Restraint in emotional register is both honest and strategic. Passion comes thro
 
 ---
 
+## Avoiding AI Slop — The Anti-Trigger Framework `[BOTH]`
+
+*Source: Grok feedback. Critical for both the write-blog skill (actionable) and the article series (explains the problem and its solution). Connects directly to Act 1 (the AI trigger problem) and the augmenting-heuristic-evolution argument.*
+
+---
+
+### Why this matters
+
+Reader backlash against AI content is real and growing. People have developed a strong "AI detector" instinct — they bounce off anything that feels generic, overly polished, repetitive, or soulless. The goal is writing that feels human, sharp, and worth reading. Our taxonomy helps because it forces intentionality — but the taxonomy alone isn't enough. The HOW matters as much as the WHAT.
+
+This connects directly to the compounding problem in Act 1: a prose-led personal style, applied by AI without the brevity instinct, amplifies exactly the worst AI characteristics. The anti-slop techniques below are the constructive answer to that diagnosis.
+
+---
+
+### Core principles (universal — apply to all content types)
+
+**1. Voice and imperfection**
+Real humans hedge, use contractions, write occasional short sentences, include personal asides. Force personality and mild imperfection. Ban corporate/marketing voice entirely.
+
+Banned words: *delve, tapestry, realm, crucible, nuanced, intricate, game-changer, groundbreaking, transformative, leverage, synergy, seamlessly, holistic, robust, paradigm* — and any word that reads like it was chosen to sound impressive rather than to communicate.
+
+**2. Specificity over generality**
+AI loves vague abstractions. Demand concrete examples, anecdotes, hard numbers, specific observations. "400% performance gain" beats "significant improvement." "129-word median post" beats "short posts." The corpus analysis on 577 posts is exactly this.
+
+**3. Structural variety**
+Break predictable patterns. No constant "Furthermore…", "In conclusion…", or repetitive 3–5 bullet lists. Vary sentence length. Mix short, punchy sentences with longer technical ones.
+
+**4. Thinking traces**
+Show the messiness of real thought instead of perfect logical flow. Uncertainty, corrections, "what I wish I knew earlier" — these signal a real human working through something. MacArthur calls this "functional linguistic competence" — understanding the real context, not just producing fluent tokens.
+
+---
+
+### Taxonomy-specific anti-slop techniques `[SKILL]`
+
+Each content type has natural human textures. Use them:
+
+**Note / log**
+Should feel raw. Write like a private journal or thinking-aloud session. Allow fragments, tangents, uncertainty. A polished, structured log is a contradiction — it has already become an article.
+
+**Note / musing**
+Maximum rawness. This is the writer thinking, not communicating. Incomplete sentences, tangents, unresolved questions are features, not flaws.
+
+**Note / idea**
+A proposal, not a pitch. Rough edges are fine. The idea is what matters; the packaging is secondary.
+
+**Article / tutorial**
+Include real friction points. "I got stuck here because..." moments. "What I wish I knew before starting." The friction is what makes it believable and useful. A tutorial with no stumbling blocks reads as AI-generated.
+
+**Article / how-to**
+Step-by-step but not robotic. Include the "why this step, not that" where it's non-obvious. Acknowledge what can go wrong. Real how-tos have warnings and edge cases.
+
+**Article / explanation**
+Use analogies from unexpected domains. Show the evolution of your own understanding — "I used to think X, but it turns out Y." The journey to understanding is more valuable than the understanding stated flatly.
+
+**Article / commentary**
+Lean heavily into personal opinion and subjective experience. This is where the practitioner voice is most important. "Here's what I actually think, having worked with this for ten years" is the whole point.
+
+**Article / essay**
+Strong personal voice + clear stance. Engage counter-arguments naturally, not formulaically. Mandate one surprising or contrarian point. The "fair counter" and "type hint caveat, stated fairly" patterns from "When the Machine Codes" are exactly right.
+
+**Brief**
+Ruthless editing — make it denser and more telegraphic than a human would naturally write. This ironically makes it feel more human. Experts write densely. The Brief should feel like it was written by someone who knows exactly what matters and respects the reader's time.
+
+**News**
+Fast, direct, with clear sourcing. Opinion clearly separated from fact. No padding. No "this is an exciting development" — just what happened and why it matters.
+
+---
+
+### The master anti-slop instruction `[SKILL]`
+
+Add this to every write-blog prompt:
+
+```
+Write in a natural, human style. Avoid all AI-sounding patterns:
+- No words like: delve, tapestry, realm, crucible, nuanced, intricate, 
+  game-changer, groundbreaking, transformative, leverage, synergy, seamlessly,
+  holistic, robust, paradigm
+- Vary sentence length. Mix short, punchy sentences with longer ones.
+- Include occasional contractions and personal asides.
+- Show actual thinking process, including uncertainties and minor imperfections.
+- Use specific, concrete details and numbers instead of vague abstractions.
+- Sound like a sharp, opinionated human who has real experience with this topic.
+```
+
+Layer these for higher quality:
+- "Write as [specific persona] with [specific background] who has been thinking about this for years."
+- "Include one unexpected observation or contrarian take that most people miss."
+- "After writing, revise to remove any corporate or generic fluff. Make it 15% more direct and human."
+
+---
+
+### Workflow recommendations `[SKILL]`
+
+**1. Generate raw → edit ruthlessly**
+Use LLM for first draft, then heavy human editing pass. The first draft is raw material, not the product.
+
+**2. Staged generation (maps to our Note → Article conversion path)**
+- Stage 1: Muse/log in raw voice — thinking out loud, no editing
+- Stage 2: Expand into full Article/Essay — structure applied
+- Stage 3: Human revision pass — voice, specificity, anti-slop check
+
+**3. Style anchors**
+Give the LLM 2–3 examples of the best existing writing as reference before generating. The 577 corpus analysis is the grounding for Mark's voice — the style guide already operationalises this.
+
+**4. Detection test (optional)**
+After generation, ask a separate LLM: "Does this read like typical AI slop? Be brutally honest." Then fix flagged issues. This is the self-review step.
+
+---
+
+### The final truth
+
+The best defence against "this looks AI-generated" is writing that is actually good and human. Even perfect anti-AI prompting won't save mediocre ideas. The taxonomy helps because it forces intentionality — especially the commentary vs essay distinction. A writer who knows they're writing an essay knows they need a thesis, counter-arguments, and a conclusion. That intentionality produces better prompts, which produce better output, which needs less editing to feel human.
+
+**The connection to our paper argument:** This is the constructive side of MacArthur's rhetorical debt diagnosis. MacArthur says LLMs lack rhetorical awareness and produce fluency without substance. The anti-slop techniques are what rhetorical awareness looks like in practice — knowing what type of content you're producing, for whom, with what intent, and what human texture that type should have.
+
+---
+
+### What goes into the skill files from this section `[SKILL]`
+
+- The master anti-slop instruction → goes into `write-blog/defaults/mandatory-rules.md` or a new `anti-slop.md` in defaults
+- Taxonomy-specific textures → one paragraph per subtype in each `write-blog/forms/` file
+- Staged generation workflow → goes into `write-blog/SKILL.md` main workflow
+- Banned words list → goes into `write-blog/defaults/common-voice.md` (already has "What to Avoid" — extend it)
+- Style anchors instruction → goes into the per-author style guide loading step
+
+---
+
+## What Makes a Best-in-Class LLM Writing Framework `[ARTICLE]`
+
+*Source: Grok feedback on the taxonomy. The gap table and criteria below are article-ready — include in the standalone practical article or as a standalone piece on framework quality.*
+
+---
+
+### Grok's assessment of where the taxonomy sits
+
+> "Most content systems are vague ('long-form', 'short post', 'note') or overly complex. Yours is focused, intent-driven, and academically grounded. The final 5% is what separates 'very good and usable' from 'this is genuinely best-in-class / could become a reference standard.'"
+
+Current position: **93–95th percentile**.
+
+---
+
+### The gap table — what the top 5% looks like
+
+| Aspect | Current level | Top 5% level | Gap |
+|--------|--------------|-------------|-----|
+| **Precision** | Good definitions | Crystal-clear boundaries + canonical examples + non-examples | Medium |
+| **Usability** | Implicit decision making | Decision tree + one-page cheat sheet + LLM classifier | Small–Medium |
+| **Quality control** | None yet | Per-type rubrics with scoring | Large |
+| **Handling reality** | Clean categories | Graceful degradation for hybrids and edge cases | Medium |
+| **Adoption and scale** | Personal workflow | Templates, automation, versioning, evolution rules | Medium–Large |
+| **Validation** | Academic mapping | Tested on 100+ real pieces + iteration data | Large |
+| **Extensibility** | Fixed | Mechanism to add new subtypes safely | Medium |
+
+---
+
+### What "top 5%" requires — prioritised
+
+**Immediate high-impact (do these first):**
+- One perfect canonical example + one anti-example per subtype
+- Short quality criteria (5–7 items) for every Article subtype — for Essay: thesis clarity, counter-argument engagement, evidence quality, conclusion strength
+- A classification decision tree — yes/no questions an LLM or human can follow in under 60 seconds
+- Strict LLM prompt templates per subtype (the write-blog/forms/ directory is this)
+
+**Next-level moves:**
+- Metadata layer: audience level (beginner/intermediate/advanced/expert), evergreen vs temporal, update cadence
+- Explicit conversion rules: when a musing becomes an idea, when an idea becomes an essay, when an essay should also have a Brief version
+- Hybrid handling policy: primary type + secondary tags (e.g. Article/Essay + Brief)
+
+**Elite tier (top 1–2%):**
+- A small LLM classifier that reads a draft and outputs: type + confidence + missing elements + quality scores
+- A retrospective: tag the last 30–50 published pieces; note where the taxonomy feels painful
+- Publish the full framework openly with templates and quality criteria; get feedback
+- Add versioning to the taxonomy itself (v1.0, v1.1...)
+
+---
+
+### Path to each percentile
+
+| Target | What it takes |
+|--------|--------------|
+| **Top 5%** | Quality criteria + decision tree + canonical examples + LLM templates |
+| **Top 2–3%** | All of the above + rubrics with scoring |
+| **Top 1%** | All of the above + retrospective tagging + public publication with adoption data |
+
+---
+
+### What this means for the article
+
+This section works as either:
+1. A closing section of the standalone practical article (Proposal B) — "where this taxonomy sits and what comes next"
+2. A standalone follow-on piece about framework quality in LLM-assisted writing
+
+The gap table is the centrepiece — it's concrete, scannable, and gives practitioners a clear picture of what "good enough" vs "best in class" actually means. The criteria for each level make it actionable rather than just aspirational.
+
+**Things to do before writing this section:**
+- Tag 10–20 existing posts using the taxonomy — note friction points (this is the start of the retrospective)
+- Write one canonical example + one anti-example per subtype — these become the concrete anchors
+
+---
+
 ## Standalone Practical Article — Proposal B `[ARTICLE]`
 
 **What it is:** A short standalone article in Mark's natural mature voice (Phase 3 — concise, direct, peer-to-peer, prose-led, ends when the point is made). 400–600 words. Not an InfoBrief — prose carries the argument, structure aids scanning. The kind of thing that would have appeared in the original 577 posts and takes three minutes to read.
@@ -1391,4 +1838,248 @@ Pick one section from the 6-part series. Rewrite in two forms: current (dense pr
 **Paper status:** Notes comprehensive, argument solid, gap confirmed. Ready to draft when research is complete and article series is published.
 
 **Target journal (priority):** *AI & Society* (Springer) — MacArthur (2025) published here; natural home for constructive complement.
+
+
+---
+
+## Corpus Analysis Project — Full Design `[SKILL]`
+
+*Three separate passes. Each pass has a clear, testable output before the next begins.*
+
+---
+
+### Goals
+
+1. **Validate the taxonomy** — stress-test Note / Article / Brief / News against 577 real posts written before the taxonomy existed. Flag what fits cleanly, what is forced, and what leaks through without a home.
+2. **Build the corpus catalogue** — machine-readable metadata for all 577 posts with IDs, taxonomy classification, quality ratings, and topic labels.
+3. **Build the content index** — inverted index by taxonomy type and by label, human-navigable.
+4. **Build the linguistic fingerprint** — deep stylistic analysis from a stratified sample.
+
+The Note/Article/Brief distinction is the hardest case. Brief may be nearly empty in a corpus written before the taxonomy — that itself is information. Note vs Article (encoder-dominant/quick vs decoder-standalone/crafted) will be the most contested boundary.
+
+---
+
+### ID System
+
+Deterministic 3-digit counter assigned by sorting posts chronologically (filename is date-prefixed, so alphabetical = chronological). IDs 001–577. Same result every time. ID is the primary key linking the catalogue, index, and fingerprint.
+
+---
+
+### File Locations
+
+```
+~/claude-workspace/corpus/
+  catalogue.tsv              ← all 577, machine-readable (Pass 1 output)
+  label-vocabulary.md        ← seed + discovered labels + variants
+  index.md                   ← inverted index by taxonomy + label (Pass 2 output)
+
+~/claude-workspace/writing-styles/
+  mark-proctor-voice.md      ← linguistic fingerprint (Pass 3 output)
+```
+
+---
+
+### Pass 1 — Corpus Catalogue + Taxonomy Validation + Labels
+
+#### Pass 1a — Seed-based classification and discovery
+
+**What the agent does per post:**
+- Read the post
+- Assign taxonomy type + subtype (see definitions below)
+- Rate confidence: high / medium / low / uncertain
+- Flag if uncertain: one-line note on what's ambiguous
+- Rate quality: exemplary / strong / typical / weak
+- Identify phase: Explorer (2006–09) / Authority (2009–12) / Strategist (2013–17)
+- Count words and assign length bucket
+- Apply seed labels where they fit
+- Discover and record any labels outside the seed
+- Write one-line notable note
+
+**TSV fields (catalogue.tsv):**
+
+| Field | Values |
+|-------|--------|
+| id | 001–577 |
+| date | YYYY-MM-DD |
+| title | from frontmatter or first heading |
+| path | relative to mark-proctor/ |
+| type | Note / Article / Brief / News |
+| subtype | log / musing / idea / tutorial / how-to / explanation / commentary / essay / release / event / industry |
+| confidence | high / medium / low / uncertain |
+| flag | blank or one-line ambiguity note |
+| quality | exemplary / strong / typical / weak |
+| phase | Explorer / Authority / Strategist |
+| words | integer |
+| length | micro / short / medium / long |
+| labels | comma-separated, seed-normalised |
+| discovered | comma-separated new labels not in seed |
+| notable | one-line note |
+
+**Taxonomy definitions for the agent:**
+
+*Note* — Quick, informal, encoder-dominant. Written fast, assumes shared context, not crafted for a cold reader. Subcategories:
+- **log** — records what happened (session, project update, event recap)
+- **musing** — thinking out loud or brief external reaction; encoder-dominant, low investment, not fully formed
+- **idea** — developed enough to propose something specific
+
+*Article* — Full treatment of a topic, crafted for a cold reader who needs no prior context. Subcategories:
+- **tutorial** — learn by doing, reader acquires capability
+- **how-to** — task completion, reader applies existing capability
+- **explanation** — understand why, builds mental model
+- **commentary** — informed take, personal voice, no formal thesis
+- **essay** — argued to a conclusion: thesis, evidence, counter-arguments
+
+*Brief* — Maximum information density, minimum prose. Fully scannable. Rare in this corpus — flag any genuine instance.
+
+*News* — Something happened externally worth sharing. Subcategories:
+- **release** — software release, version, new feature
+- **event** — conference, talk, meetup announcement or recap
+- **industry** — observation on something in the broader landscape
+
+**Hard cases — guidance for the agent:**
+
+Note vs Article is the key boundary. If in doubt:
+- Was this clearly written fast, assuming the reader knows the context? → Note
+- Does it provide enough background that a cold reader could follow? → Article
+- Could it be both? → classify as whichever is more dominant, flag with "Note/Article boundary"
+
+Brief is rare. Only classify as Brief if the post is genuinely scannable as a complete experience — most dense posts are still Articles, just short ones.
+
+Multi-part posts — classify each part individually. Note in the flag field if it's part of a series.
+
+**Seed label vocabulary (Pass 1a):**
+
+```
+Technology: java, quarkus, drools, jbpm, bpmn, kie, optaplanner, vert.x,
+            maven, spring, ai, llm, python, typescript, hibernate, cdi,
+            infinispan, wildfly, jboss, openshift, kubernetes, docker
+
+Concepts:   rules-engine, backward-chaining, forward-chaining,
+            pattern-matching, algorithm, performance, reactive,
+            event-driven, decision-table, cep, drl, rete, phreak,
+            truth-maintenance, agenda, conflict-resolution, working-memory
+
+Standards:  dmn, pmml, cmmn, bpmn2, openapi, rest, json, xml
+
+Domain:     open-source, licensing, community, release, conference,
+            benchmark, architecture, refactoring, testing, debugging
+
+Personal:   drools-team, kie-team, jboss-team, red-hat
+```
+
+**Batching:** ~60–80 posts per agent call. ~8–10 agent calls for all 577.
+
+---
+
+#### Between 1a and 1b — Human review step
+
+Review the `discovered` column from all catalogue rows. For each new label:
+- Is it a variant of an existing seed label? → record as variant, map to canonical
+- Is it genuinely new? → add to vocabulary
+- Is it too specific to be useful? → discard
+
+Update `label-vocabulary.md` with the expanded vocabulary and variant mappings:
+
+```
+quarkus    | seed    | variants: Quarkus, quarkus-framework, JBoss Quarkus
+drools     | seed    | variants: Drools, JBoss Drools
+arc        | discovered pass 1a | CDI container in Quarkus
+```
+
+---
+
+#### Pass 1b — Full vocabulary relabelling
+
+Re-read all 577 posts with the expanded vocabulary. Only update the `labels` and `discovered` fields. Do not redo taxonomy, quality, or other fields. Purpose: catch labels that Pass 1a missed because the label didn't exist yet, and normalize variant forms.
+
+Output: updated catalogue.tsv with final, normalized labels.
+
+---
+
+### Pass 2 — Content Index
+
+From the completed catalogue.tsv, build index.md. Mechanical transformation — no reading of posts required.
+
+**Structure of index.md:**
+
+```markdown
+# Content Index
+
+## By Taxonomy
+
+### Note / log
+001 — title (date)
+023 — title (date)
+...
+
+### Note / musing
+...
+
+### Article / essay
+...
+
+[etc. for each type/subtype]
+
+## By Label
+
+### quarkus
+001, 023, 045, 089 — [count: N posts]
+
+### drools
+...
+
+[etc. for each label, sorted by post count descending]
+```
+
+Each ID in the index is navigable: look up ID in catalogue.tsv to get the path.
+
+---
+
+### Pass 3 — Linguistic Fingerprint
+
+Stratified sample from the completed catalogue. Now we know which posts are exemplary per type (from quality ratings) — use those for sampling.
+
+Sample: ~4–5 exemplary posts per phase × 3 phases + 5–8 negative examples (weak quality) = ~20–23 posts for deep analysis.
+
+Output: fills `mark-proctor-voice.md` per the agreed structure.
+
+---
+
+### Taxonomy Validation — What to Watch For
+
+The agent will flag uncertain classifications. After all passes, review:
+
+1. **What leaks through** — posts that don't fit any type cleanly. Do they suggest a missing category?
+2. **What feels forced** — posts classified correctly but where the agent notes it's a stretch. Are these genuine edge cases or taxonomy refinement opportunities?
+3. **Note/Article boundary posts** — the most likely source of tension. How many? What makes them ambiguous?
+4. **Brief instances** — how many genuine Briefs exist in the corpus? If zero, that's informative — Brief is a new form not in the historical writing style.
+5. **Subtype distribution** — are some subtypes nearly empty (musing? idea?)? Does that suggest they're too fine-grained, or just underrepresented in this corpus?
+
+The taxonomy may need refinement after this pass. That is the point.
+
+---
+
+### Work To Do — Update
+
+Add to section A (skill and writing work):
+
+**A5. Run corpus analysis Pass 1a**
+- Requires: catalogue.tsv template, label vocabulary seed, taxonomy definitions
+- Output: catalogue.tsv (partial, labels from seed only)
+
+**A6. Human review between 1a and 1b**
+- Review discovered labels, normalize, update label-vocabulary.md
+- Review flagged uncertain taxonomy classifications
+
+**A7. Run corpus analysis Pass 1b**
+- Requires: completed label-vocabulary.md
+- Output: final catalogue.tsv
+
+**A8. Build content index (Pass 2)**
+- Mechanical transformation from catalogue.tsv
+- Output: corpus/index.md
+
+**A9. Run linguistic fingerprint (Pass 3)**
+- Requires: completed catalogue.tsv (for stratified sampling)
+- Output: writing-styles/mark-proctor-voice.md
 
