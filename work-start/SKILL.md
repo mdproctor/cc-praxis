@@ -59,6 +59,11 @@ Wait for the user to respond before continuing.
 
 **Do NOT output the work-start summary. Do NOT say "proceeding to brainstorming". Do NOT continue to steps 1–4.** This is a hard gate — the session stops here until the user picks one of the three options above.
 
+**After the user responds:**
+- Option 1 (epic begin): wait for `/epic begin` to complete, then resume work-start from Step 1.
+- Option 2 (worktrees): wait for `superpowers:using-git-worktrees` to complete, then resume work-start from Step 1.
+- Option 3 (confirmed main): accept the confirmation and proceed to Steps 1–4 normally. Include `⚠️ Working on main (explicitly confirmed)` in the final work-start report.
+
 **If mid-epic, include in the work-start report:**
 ```
 ⚡ Active epic: <epic-name>  Issue: #<N>
