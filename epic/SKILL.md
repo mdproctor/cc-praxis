@@ -757,10 +757,12 @@ For each artifact file, resolve destination:
 # For workspace-routed artifacts (blog, snapshots):
 git stash
 git checkout main
+git -C <workspace-path> pull --rebase origin main
 mkdir -p "<workspace-dest>"
 git checkout <epic-name> -- <artifact-files>
 git -C <workspace-path> add <workspace-dest>/
 git -C <workspace-path> commit -m "feat: promote <artifact-type> from epic <epic-name>"
+git -C <workspace-path> push
 git checkout <epic-name>
 git stash pop
 
@@ -790,8 +792,9 @@ Plans are moved to `plans/attic/<epic-name>/` on the workspace `main` branch so 
 # Stash any uncommitted workspace changes
 git stash
 
-# Switch workspace to main
+# Switch workspace to main and sync
 git checkout main
+git -C <workspace-path> pull --rebase origin main
 
 # Copy plan files from the epic branch into attic
 git checkout <epic-name> -- plans/<file1> plans/<file2> ...
@@ -799,6 +802,7 @@ mkdir -p plans/attic/<epic-name>
 mv plans/<file1> plans/<file2> ... plans/attic/<epic-name>/
 git add -A
 git commit -m "archive(<epic-name>): move plans to attic"
+git -C <workspace-path> push
 
 # Return to epic branch
 git checkout <epic-name>

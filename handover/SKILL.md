@@ -368,13 +368,17 @@ CURRENT_BRANCH=$(git -C <Workspace> branch --show-current)
 if [ "$CURRENT_BRANCH" != "main" ]; then
   git -C <Workspace> stash
   git -C <Workspace> checkout main
+  git -C <Workspace> pull --rebase origin main
   git -C <Workspace> add HANDOFF.md
   git -C <Workspace> commit -m "docs: session handover YYYY-MM-DD"
+  git -C <Workspace> push
   git -C <Workspace> checkout "$CURRENT_BRANCH"
   git -C <Workspace> stash pop
 else
+  git -C <Workspace> pull --rebase origin main
   git -C <Workspace> add HANDOFF.md
   git -C <Workspace> commit -m "docs: session handover YYYY-MM-DD"
+  git -C <Workspace> push
 fi
 ```
 

@@ -29,9 +29,11 @@ When switching both repos to a branch (at session start, after epic begin, or on
 PROJECT=$(grep "add-dir" CLAUDE.md | head -1 | sed 's/.*add-dir //')
 WORKSPACE=$(grep "^\*\*Workspace:\*\*" CLAUDE.md | head -1 | sed 's/.*`\(.*\)`.*/\1/')
 
-# Switch both repos atomically
+# Switch both repos atomically and sync with remote
 git -C "$PROJECT" checkout <branch>
+git -C "$PROJECT" pull --rebase origin <branch>
 git -C "$WORKSPACE" checkout <branch>
+git -C "$WORKSPACE" pull --rebase origin <branch>
 
 # Verify alignment
 PROJECT_BRANCH=$(git -C "$PROJECT" branch --show-current)
