@@ -104,6 +104,32 @@ Union the two lists. For each branch name, check its status in the workspace rep
 
 ### Step C2 — Assess each branch
 
+**Flyway V-number conflict check:** Before checking code merge, scan for migration
+version conflicts across all open epic branches. This catches the problem before
+any branch attempts to merge.
+
+```bash
+# For each epic branch: extract its claimed V numbers from migration files
+git -C <project-path> ls-tree <branch> --name-only -r \
+  | grep -oP "V\d+(?=__)" | sort -n
+
+# Also read flyway-next-v from .meta on that branch
+git -C <workspace-path> show <branch>:design/.meta 2>/dev/null | grep "flyway-next-v"
+```
+
+Compare claimed V numbers across all open epic branches. Any overlap is a conflict
+that must be resolved before either branch merges:
+
+```
+⚠️  V number conflict:
+   epic-output-schema  claims V23, V24, V25
+   epic-excluded-users also claims V23, V24
+   → epic-excluded-users must renumber to V26, V27 before merging
+```
+
+Resolution: whichever branch merges second renumbers its migrations (file rename + commit).
+Safe at any time while no production installations exist.
+
 **Code merge check (most important):** Verify that implementation commits from the
 epic branch have landed on project main. An epic with unmerged code was never shipped.
 
@@ -167,16 +193,17 @@ would be permanently lost. Block deletion until the code merge issue is resolved
 ```
 Branch hygiene scan — <N> epic branches found
 
-  Branch                 Code    Closed       Artifacts    Deletion
-  ─────────────────────────────────────────────────────────────────
-  epic-payments          ✅ merged  ✅ 2026-04-01  ✅ clean     🗑️ overdue (was 2026-04-15)
-  epic-auth-redesign     ✅ merged  ✅ 2026-05-10  ✅ clean     ⏳ due 2026-05-24
-  epic-output-schema     ✅ merged  ✅ 2026-05-17  ✅ clean     ⏳ due 2026-05-31
-  epic-excluded-users    ✅ merged  ✅ 2026-05-18  ✅ clean     ⏳ due 2026-06-01
-  epic-old-feature       🚨 3 commits unmerged  ⚠️ never closed  ⚠️ spec not promoted  🔒 blocked
+  Branch                 Flyway  Code           Closed        Artifacts    Deletion
+  ──────────────────────────────────────────────────────────────────────────────────
+  epic-payments          ✅ V18   ✅ merged       ✅ 2026-04-01  ✅ clean     🗑️ overdue
+  epic-auth-redesign     ✅ V19   ✅ merged       ✅ 2026-05-10  ✅ clean     ⏳ 2026-05-24
+  epic-output-schema     ⚠️ V23↔V23  🚨 4 commits  ✅ 2026-05-17  ✅ clean     🔒 blocked
+  epic-excluded-users    ⚠️ V23↔V23  🚨 4 commits  ✅ 2026-05-18  ✅ clean     🔒 blocked
+  epic-old-feature       ✅ none  🚨 3 commits   ⚠️ never closed  ⚠️ no spec   🔒 blocked
 ```
 
-Branches with 🚨 unmerged code are **blocked from deletion** and shown first.
+Flyway conflicts (⚠️) and unmerged code (🚨) both **block deletion**. Flyway conflicts
+are shown first since they must be resolved before a code merge is attempted.
 
 ### Step C4 — Offer fixes for each issue
 
@@ -336,6 +363,26 @@ Create `design/JOURNAL.md`:
 # Design Journal — <epic-name>
 ```
 
+**Scan for the next safe Flyway V number** (before writing `.meta`) if this epic will add
+migrations to the core sequential V1–V999 range:
+
+```bash
+# Highest V on main
+v_main=$(git -C <project-path> log main --name-only --format="" \
+  | grep -oP "(?<=V)\d+(?=__)" | sort -n | tail -1)
+
+# Highest V on any remote epic branch
+git -C <project-path> fetch --all 2>/dev/null
+v_branches=$(git -C <project-path> log --remotes="*/epic-*" --name-only --format="" \
+  | grep -oP "(?<=V)\d+(?=__)" | sort -n | tail -1)
+
+# Next safe V = max(v_main, v_branches) + 1
+echo "Next safe Flyway V: $(( [highest of v_main, v_branches] + 1 ))"
+```
+
+Record this as `flyway-next-v` in `.meta`. If the epic will not add any core runtime
+migrations (optional-module-range epics, or non-schema epics), set `flyway-next-v: none`.
+
 Create `design/.meta`:
 
 ```
@@ -343,6 +390,7 @@ epic: <epic-name>
 project-sha: <output of: git -C <project-path> rev-parse HEAD>
 date: <YYYY-MM-DD>
 issue:
+flyway-next-v: <N or none>
 design-section-hashes: <see below>
 ```
 
