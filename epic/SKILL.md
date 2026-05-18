@@ -24,10 +24,22 @@ meta_exists=$(test -f design/.meta && echo yes || echo no)
 
 | State | Action |
 |-------|--------|
-| Not on epic branch, no `.meta` | Offer to start a new epic |
+| Not on epic branch, no `.meta` | Offer to start a new epic **or run branch hygiene scan** |
 | On epic branch, `.meta` exists | Ask: close this epic, or start a new one? |
 | On epic branch, no `.meta` | Warn: incomplete setup — offer to scaffold `.meta` and `design/JOURNAL.md`, then continue |
 | **On main branch, `.meta` exists** | **Orphaned epic — offer to complete close from here (see Workflow B-Orphaned below)** |
+
+**When no active epic:** always present the scan option alongside "start new epic":
+
+```
+No active epic. What next?
+
+  [S] Start a new epic
+  [H] Branch hygiene scan — find finished epics with unresolved issues
+  [X] Nothing for now
+```
+
+If `[H]` → run Workflow C below.
 
 ---
 
@@ -62,6 +74,124 @@ After close completes: remove `.meta` and commit on workspace main.
 ```bash
 rm design/.meta design/JOURNAL.md 2>/dev/null
 git add -A && git commit -m "chore: discard orphaned epic scaffold for <epic-name>"
+```
+
+---
+
+## Workflow C — Branch Hygiene Scan
+
+Finds epic branches that are finished but have unresolved issues: unmerged
+journals, unpromoted artifacts, or branches past their scheduled deletion date.
+Run from the workspace on `main`.
+
+### Step C1 — Discover epic branches
+
+Read project path from workspace CLAUDE.md:
+```bash
+grep "add-dir" CLAUDE.md | head -1 | sed 's/.*add-dir //'
+```
+
+List all local epic-* branches in both repos:
+```bash
+# Workspace branches
+git branch | grep 'epic-' | sed 's/^[* ]*//'
+
+# Project branches
+git -C <project-path> branch | grep 'epic-' | sed 's/^[* ]*//'
+```
+
+Union the two lists. For each branch name, check its status in the workspace repo.
+
+### Step C2 — Assess each branch
+
+For each epic branch, check out just the relevant files (without switching branches):
+
+```bash
+# Does EPIC-CLOSED.md exist on this branch?
+git show <branch>:EPIC-CLOSED.md 2>/dev/null
+
+# Are there unremoved spec files for this epic?
+git show <branch>:specs/<branch>/ 2>/dev/null | head -5
+
+# What is the scheduled deletion date (from EPIC-CLOSED.md)?
+git show <branch>:EPIC-CLOSED.md 2>/dev/null | grep "Scheduled for deletion"
+```
+
+Also check the project repo for promoted artifacts:
+```bash
+# Was the spec promoted to docs/specs/ on the project's main?
+ls <project-path>/docs/specs/ 2>/dev/null | grep -i <short-epic-name>
+
+# Is there a plan in the attic?
+ls plans/attic/<branch>/ 2>/dev/null
+```
+
+Build a status for each branch:
+
+| Check | Good | Issue |
+|-------|------|-------|
+| `EPIC-CLOSED.md` exists | ✅ Closed | ⚠️ Never closed |
+| Scheduled deletion date | shows date | ⚠️ No date — legacy marker |
+| Scheduled deletion date passed | future | 🗑️ Eligible for deletion |
+| `specs/<branch>/` is empty or absent | ✅ Clean | ⚠️ Unremoved specs |
+| `docs/specs/` has promoted files | ✅ Promoted | ⚠️ Spec never promoted |
+| `plans/attic/<branch>/` exists | ✅ Archived | ⚠️ Plan never archived |
+
+### Step C3 — Present report
+
+```
+Branch hygiene scan — <N> epic branches found
+
+  epic-payments          ✅ Closed 2026-04-01  🗑️ Eligible for deletion (was 2026-04-15)
+  epic-auth-redesign     ✅ Closed 2026-05-10  ⏳ Deletion due 2026-05-24
+  epic-output-schema     ✅ Closed 2026-05-17  ⏳ Deletion due 2026-05-31
+  epic-excluded-users    ✅ Closed 2026-05-18  ⏳ Deletion due 2026-06-01
+  epic-old-feature       ⚠️ Never closed       Spec not promoted, no plan in attic
+```
+
+### Step C4 — Offer fixes for each issue
+
+For each branch with a `⚠️` issue, offer:
+
+```
+epic-old-feature has unresolved issues:
+  ⚠️ Never closed — no EPIC-CLOSED.md found
+  ⚠️ specs/epic-old-feature/design.md not removed from workspace
+  ⚠️ Spec never promoted to docs/specs/
+
+Options:
+  [F] Fix — run epic close for this branch (switch to it, run Workflow B)
+  [S] Skip — leave as-is
+  [D] Discard — mark closed with today's date, no journal merge (data may be lost)
+```
+
+For each branch with `🗑️ Eligible for deletion`:
+
+```
+epic-payments — closed 2026-04-01, deletion was due 2026-04-15 (N days overdue)
+
+Delete branches?
+  workspace: epic-payments
+  project:   epic-payments
+  (y/n — or 'skip' to leave for later)
+```
+
+If `y`:
+```bash
+git -C <project-path> branch -d epic-payments
+git branch -d epic-payments
+```
+
+### Step C5 — Summary
+
+After processing all branches, report what was done and what remains:
+
+```
+Hygiene scan complete:
+  ✅ Deleted: epic-payments (both repos)
+  ✅ Fixed: epic-old-feature (ran close workflow)
+  ⏳ Retained: epic-auth-redesign (deletion due 2026-05-24)
+  ⏳ Retained: epic-output-schema (deletion due 2026-05-31)
 ```
 
 ---
