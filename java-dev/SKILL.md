@@ -400,7 +400,7 @@ Refactoring for clarity is always valid when the problem justifies it. If a meth
 ## Refactoring
 
 **Prerequisites: `ide-tooling`** — invoke it for the full IntelliJ MCP tool guide.
-Always prefer IntelliJ MCPs over bash for any rename, move, find-references, or navigation.
+Always prefer IntelliJ MCPs over bash for any rename, move, find-references, navigation, or bulk structural edit (including adding/removing parameters and fixing call sites across files). Never write Python or bash scripts to manipulate Java source text — that is what IntelliJ is for.
 If no MCP is available for a semantic operation, inform the user — do not silently fall back.
 
 ## Common Pitfalls — These Thoughts Mean STOP
