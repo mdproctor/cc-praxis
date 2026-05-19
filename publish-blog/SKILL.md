@@ -66,7 +66,7 @@ ls docs/_posts/*.md | sort
 
 For each entry, parse the YAML frontmatter to extract:
 - `entry_type` — article | note
-- `subtype` — diary | ... (notes only)
+- `subtype` — log | ... (notes only)
 - `projects` — list of project identifiers
 - `tags` — list of topic tags (may be absent or empty)
 

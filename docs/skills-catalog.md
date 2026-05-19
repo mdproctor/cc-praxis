@@ -469,7 +469,7 @@ Living project diary — captures decisions, pivots, and discoveries written in 
 
 **Entry metadata (added at write time):**
 - `entry_type`: `article` (topic-driven, standalone) or `note` (session narrative)
-- `subtype`: `diary` for note entries
+- `subtype`: `log` for note entries
 - `projects`: 1..n project identifiers — drives personal blog filtering
 - `tags`: topic tags — drives routing rules via `blog-routing.yaml`
 

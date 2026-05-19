@@ -12,7 +12,7 @@ Britton's expressive function — close to the self, not yet shaped for audience
 
 ### log — coding/development diary
 Records technical work: what you built, what you fixed, what you found.
-NOT a general diary — specifically about code and technical progress.
+NOT a general diary — specifically about technical and technical progress.
 
 **Characteristics:**
 - First-person throughout
