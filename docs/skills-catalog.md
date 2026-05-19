@@ -80,22 +80,35 @@ One-time workspace setup per project per machine:
 
 **Triggers:** "init workspace", "set up workspace", "create workspace for <project>", `/workspace-init`.
 
-#### **epic**
-Single entry point for the full epic lifecycle — detects current state and routes automatically:
-- No active epic → offers to create branches, scaffold `design/JOURNAL.md` with SHA baseline, link or create a GitHub issue, optionally invoke brainstorming
-- Active epic → asks whether to close it or begin a new one
+#### **work-start** *(replaces epic begin + former work-start)*
+Unified entry point for all work. Detects current branch state (6 states including paused, orphaned, misaligned) and routes accordingly. On the new-branch path: creates `issue-NNN-<slug>` branches in both repos atomically, scaffolds `design/.meta` + `JOURNAL.md` with SHA baseline and design routing, runs platform coherence / protocols / IntelliJ pre-checks, offers brainstorming.
 
-**Starting an epic:** creates matching branches in the project repo and workspace, scaffolds `design/.meta` with epic name and SHA baseline, links to an existing GitHub issue or creates one.
+**Triggers:** "work-start", start of any work session, first instruction in a work-item prompt.
 
-**Closing an epic:** routes artifacts per `## Routing` config in workspace CLAUDE.md, merges `design/JOURNAL.md` into the project `DESIGN.md`, posts specs to the GitHub issue, handles branch cleanup with approve-all or step-by-step confirmation.
+#### **work-end** *(replaces epic close)*
+Closes the current branch. Promotes artifacts per routing config (three-layer cascade), merges `design/JOURNAL.md` into project `DESIGN.md` with three-way diff preview, posts specs to GitHub issue, closes issue, marks branch with `design/EPIC-CLOSED.md`, returns both repos to main.
 
-**Artifact routing** — three-layer config controls where artifacts go at epic close:
+**Artifact routing** — three-layer config controls where artifacts go:
 - Layer 1 (built-in): all artifacts → project repo
 - Layer 2 (global): `~/.claude/CLAUDE.md ## Routing` — default destination
 - Layer 3 (workspace): `## Routing` table in workspace CLAUDE.md — per-artifact override
-Valid destinations: `project`, `workspace` (workspace/main), `alternative <path>`
 
-**Triggers:** "begin epic", "new epic", "close epic", "finish epic", `/epic`.
+**Triggers:** "work-end", "close this branch", "wrap up this issue".
+
+#### **work-pause**
+Saves current context, stashes uncommitted changes with recorded references (`stash@{N}`), atomically writes `.paused` marker to workspace main (push must succeed before switching repos), switches both repos to main. Only one paused branch at a time.
+
+**Triggers:** "work-pause", "pause this work", "switch to something else".
+
+#### **work-resume**
+Resumes a paused branch. Reads `.paused` from workspace main, switches both repos back to the branch using exact branch-name matching, removes pause marker, restores stashed changes using recorded references, runs pre-checks.
+
+**Triggers:** "work-resume", "resume", "go back to that branch".
+
+#### **epic** *(deprecated — use work-start / work-end)*
+Retained for reference during migration. Use `work-start` instead of `/epic begin` and `work-end` instead of `/epic close`.
+
+**Triggers:** "begin epic", "new epic", "close epic", "finish epic", `/epic` (deprecated).
 
 #### **install-skills**
 One-time bootstrap wizard for new environments:

@@ -224,7 +224,7 @@ Focus on reasoning and context — not implementation details. 2-6 sentences.]
 
 **Rules:**
 - Use the exact section name from the project `DESIGN.md` in the `§` anchor
-  (e.g. `§Architecture`, `§Data Model`) — this is the merge map at epic close
+  (e.g. `§Architecture`, `§Data Model`) — this is the merge map at branch close (work-end)
 - If an entry for this `§Section` already exists in `JOURNAL.md` → update it
   in place (the journal is a living document; git history preserves the evolution)
 - If this is a new section affected → append a new entry at the end
@@ -249,13 +249,13 @@ After writing the entry, verify it has a `§SectionName` anchor in the header be
 grep -c "^### .*·.*§" design/JOURNAL.md
 ```
 
-If the entry you just wrote does not contain `· §SectionName` in its header — **do not commit**. The entry will be silently skipped at epic close, permanently losing the design context. Fix the header first:
+If the entry you just wrote does not contain `· §SectionName` in its header — **do not commit**. The entry will be silently skipped at branch close (work-end), permanently losing the design context. Fix the header first:
 
 ```markdown
 ### YYYY-MM-DD · §SectionName        ← §SectionName is required; without it the merge is a no-op
 ```
 
-This is not optional. An anchor-free journal entry is invisible to the epic close merge.
+This is not optional. An anchor-free journal entry is invisible to the work-end merge.
 
 ---
 
@@ -274,7 +274,7 @@ Avoid these mistakes when updating DESIGN.md:
 | Skipping "Reason:" in proposals | User doesn't understand why change needed | Always explain rationale |
 | Not reading existing DESIGN.md first | Proposals conflict with structure | Always read full file before proposing |
 | Mentioning AI/tools in DESIGN.md | Breaks professional documentation standards | Never mention Claude, AI, or tooling in the doc itself |
-| Writing to design/DESIGN.md directly | Bypasses the journal; merge at epic close loses context | Always write to design/JOURNAL.md with §Section anchors |
+| Writing to design/DESIGN.md directly | Bypasses the journal; merge at branch close (work-end) loses context | Always write to design/JOURNAL.md with §Section anchors |
 
 ## Document Structure Check
 
