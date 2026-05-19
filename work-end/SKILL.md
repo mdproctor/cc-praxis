@@ -116,6 +116,42 @@ subsequent steps.
 
 ---
 
+## Step 3b — Pre-close sweep
+
+Before inventorying artifacts, verify the branch leaves nothing behind. Present
+this checklist:
+
+```
+Pre-close sweep — create before presenting the close plan?
+
+[x] 1  write-blog     capture any work on this branch worth a diary entry
+[x] 2  adr            record any significant architectural decisions without a formal ADR
+[x] 3  protocol sweep formalise any project rules established or re-enforced this branch
+[x] 4  forage sweep   check for gotchas, techniques, or undocumented behaviours
+
+Type numbers to toggle, "all" to toggle all, or "go" to proceed:
+```
+
+Defaults: all four on. The user may deselect any that clearly don't apply (e.g. "go"
+immediately if the branch was a one-line typo fix). Do not auto-skip — the point is
+to make the decision explicit.
+
+Run checked items in this order:
+1. **Forage sweep** — while context is full; findings may feed the blog entry
+2. **Protocol sweep** — while context is full (invoke `protocol` skill with `SWEEP` operation)
+3. **adr** — invoke `adr` skill for each candidate identified
+4. **write-blog** — last, so it can synthesise the full branch narrative including any forage/protocol submissions
+
+**Why this step exists:** Step 4 inventories artifacts that *were written*. Without this
+sweep, the close plan accurately reports "blog: no new entries" when it should say "blog:
+no new entries (and none were considered)." The sweep converts the inventory from a
+snapshot into a verified statement. Only after this step is complete does the close plan
+accurately reflect what the branch leaves behind.
+
+After all checked items complete, proceed to Step 4.
+
+---
+
 ## Step 4 — Inventory artifacts
 
 ```bash
