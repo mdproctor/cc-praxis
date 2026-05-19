@@ -1,12 +1,21 @@
 ---
 name: epic
 description: >
-  Use when a development epic needs to begin or wrap up — user says "begin
-  epic", "new epic", "close epic", "finish epic", or invokes /epic. Detects
-  whether an epic is currently active and routes accordingly.
+  DEPRECATED. Use work-start (replaces /epic begin) and work-end (replaces
+  /epic close). work-pause and work-resume are new. The workflows below are
+  preserved for reference during migration only.
 ---
 
-# Epic
+> ⚠️ **This skill is deprecated.** Use instead:
+> - `work-start` — replaces `/epic begin` (branch creation is now integrated)
+> - `work-end`   — replaces `/epic close`
+> - `work-pause` — new: save context, switch to main
+> - `work-resume` — new: restore context, return to branch
+>
+> The workflows below are preserved for reference during migration.
+> Retire this skill once all sessions use the new commands.
+
+# Epic (deprecated — see above)
 
 Single entry point for the full epic lifecycle. Detects whether an epic is
 currently active and routes to the appropriate workflow — start or close.

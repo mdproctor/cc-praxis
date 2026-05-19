@@ -45,10 +45,10 @@ This skill is invoked by `java-git-commit` when:
 - **Only operates in type: java repositories** — other project types use different documentation patterns
 - DESIGN.md lives at `design/DESIGN.md` in the workspace (CWD). In the workspace
   model, the project is accessed via `add-dir`.
-- **Epic close:** When the epic completes, `epic` reads `design/JOURNAL.md`,
+- **Branch close:** When the branch completes, `work-end` reads `design/JOURNAL.md`,
   generates a three-way merge preview (base + current project + journal), and
   applies the changes to the project `DESIGN.md` with user confirmation.
-  The journal itself is posted to the GitHub epic issue, then discarded.
+  The journal entry is posted to the GitHub issue, then the branch is cleaned up.
 - **Never apply changes without explicit user confirmation** (a plain "YES" or
   equivalent). If in doubt, ask.
 - Focus only on **architectural impact**: new/removed components, changed
@@ -65,26 +65,38 @@ This skill is invoked by `java-git-commit` when:
 All three conditions must be true for workspace mode. Check in order:
 
 ```bash
-# 1. Are we on an epic branch?
-git branch --show-current   # must match epic-* pattern
+# 1. Does design/.meta exist?
+ls "$WORKSPACE/design/.meta" 2>/dev/null
 
-# 2. Does .meta exist?
-ls design/.meta 2>/dev/null
+# 2. Does design/JOURNAL.md exist?
+ls "$WORKSPACE/design/JOURNAL.md" 2>/dev/null
 
-# 3. Does JOURNAL.md exist?
-ls design/JOURNAL.md 2>/dev/null
+# 3. Is the workspace NOT on main?
+[ "$(git -C "$WORKSPACE" branch --show-current)" != "main" ]
 ```
 
-- All three present → **workspace mode**: proceed with journal entry workflow below.
-- Any absent → **direct mode**: fall back to updating project `DESIGN.md` directly.
-  Do not prompt; do not create JOURNAL.md. `epic` is responsible for creating it.
+Where `$WORKSPACE` is resolved from CLAUDE.md:
+```bash
+WORKSPACE=$(grep "^\*\*Workspace:\*\*" CLAUDE.md | head -1 | sed 's/.*`\(.*\)`.*/\1/')
+```
 
-**Why all three?** JOURNAL.md presence alone is unreliable — a stale JOURNAL.md from a previous epic that was not cleaned up would silently activate workspace mode when it should not. Branch + `.meta` + JOURNAL.md together confirm an active epic.
+- All three true → **workspace mode**: proceed with journal entry workflow below.
+- Any false → **direct mode**: fall back to updating project `DESIGN.md` directly.
+  Do not prompt; do not create JOURNAL.md. `work-start` is responsible for creating it.
 
-In workspace mode: read `design/JOURNAL.md` to understand which sections have
-already been journalled during this epic before adding or updating an entry.
+**Why these three and not branch prefix?** `.meta` + `JOURNAL.md` + not-on-main
+together confirm an active working branch regardless of naming convention. The
+`epic-*` prefix check broke for `issue-NNN-*` branches — this fix handles all
+branch names uniformly.
 
-> **Workspace mode path:** If `design/JOURNAL.md` was found in Step 1, skip Steps 5 and 6. Proceed directly to Step 7 after completing Steps 2-4 (read DESIGN.md for section names, review changes, map to sections). The journal entry (Step 7) is the only write action in workspace mode.
+**Why not branch prefix?** Branch name prefix (`epic-*`) is fragile — it breaks
+silently for `issue-NNN-*` branches, causing every commit to write directly to
+`DESIGN.md` with no error, bypassing the journal entirely.
+
+In workspace mode: read `$WORKSPACE/design/JOURNAL.md` to understand which sections
+have already been journalled during this branch before adding or updating an entry.
+
+> **Workspace mode path:** If workspace mode is detected in Step 1, skip Steps 5 and 6. Proceed directly to Step 7 after completing Steps 2-4 (read DESIGN.md for section names, review changes, map to sections). The journal entry (Step 7) is the only write action in workspace mode.
 
 ### Step 1a: Check for modular structure
 
