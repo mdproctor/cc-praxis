@@ -73,7 +73,7 @@ The dominant corner of Kinneavy's communication triangle determines register:
 |------|----------------|----------------------------|
 | Note | Encoder | Write encoder-first. Assume shared context. Don't over-explain. |
 | Article | Decoder | Write decoder-first. Provide context. Structure for cold readers. |
-| Brief | Reality | Information dominates. Neither encoder nor decoder foregrounded. |
+| InfoBrief | Reality | Information dominates. Neither encoder nor decoder foregrounded. |
 | News | Reality | Facts dominate. External event, not author's perspective. |
 
 **Note vs Article test:** Did you write this quickly without heavy audience

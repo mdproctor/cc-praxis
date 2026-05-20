@@ -45,7 +45,7 @@ Use the intent test to classify what is being written:
 | "I want you to understand why X works" | **Article/explanation** |
 | "I want to share my take on something" | **Article/commentary** |
 | "I want to argue a position to a conclusion" | **Article/essay** |
-| "I want maximum information density, minimum prose" | **Brief** |
+| "I want maximum information density, minimum prose" | **InfoBrief** |
 | "I want to announce a release / event / industry news" | **News** |
 
 **If unclear:** ask one question — "Is this primarily informing, explaining, or arguing?"

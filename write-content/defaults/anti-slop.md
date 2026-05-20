@@ -92,10 +92,10 @@ Strong personal voice + clear stance. Engage counter-arguments naturally,
 not formulaically. Mandate one surprising or contrarian point. The argument
 is logos-first; passion is the human layer that makes evidence feel important.
 
-### Brief (InfoBrief)
+### InfoBrief
 Ruthless editing — make it denser and more telegraphic than a human would
 naturally write. This ironically makes it feel more human. Experts write
-densely. The Brief should feel like it was written by someone who knows
+densely. The InfoBrief should feel like it was written by someone who knows
 exactly what matters and respects the reader's time.
 
 ### News

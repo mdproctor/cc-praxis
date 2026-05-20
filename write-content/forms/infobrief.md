@@ -73,7 +73,7 @@ The reader who wants more clicks through to exactly what they need.
 **The navigation layer is opt-in, not a requirement.** A standalone InfoBrief
 is complete on its own — no deeper layer needed.
 
-**Cross-post format:** `Brief + Article/explanation` or `Brief + Article/essay`
+**Cross-post format:** `InfoBrief + Article/explanation` or `InfoBrief + Article/essay`
 
 ---
 
@@ -102,6 +102,6 @@ to go further — never required reading.
 
 ## Historical note
 
-Brief is nearly absent from the historical corpus (3 instances in 577 posts).
+InfoBrief is nearly absent from the historical corpus (3 instances in 577 posts).
 It is a new form — not in the historical writing style. Do not force posts
-into Brief. Only use when maximum density is the actual goal.
+into InfoBrief. Only use when maximum density is the actual goal.

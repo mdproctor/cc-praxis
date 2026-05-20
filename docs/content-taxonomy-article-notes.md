@@ -191,9 +191,9 @@ Whether a post was written by a guest or by Mark doesn't affect classification. 
 | "Full house at the session" + brief note | News/event |
 | Full narrative: who was there, what was discussed, vendor impressions, technical insights | Article/commentary primary + News/event secondary |
 
-### Brief — nearly absent historically
+### InfoBrief — nearly absent historically
 
-In the 577-post historical corpus, only 3 genuine Briefs were found. Brief is a **new form** not represented in the historical writing style. Do not force posts into Brief — if in doubt, classify elsewhere.
+In the 577-post historical corpus, only 3 genuine InfoBriefs were found. InfoBrief is a **new form** not represented in the historical writing style. Do not force posts into InfoBrief — if in doubt, classify elsewhere.
 
 ### Canonical examples from corpus validation
 
@@ -260,7 +260,7 @@ Cross-posts are rare. A post has one primary type and optionally one secondary t
 |------|--------|---------|
 | **Note** | Capture — quick, informal, encoder-dominant | log, musing, idea |
 | **Article** | Inform or argue — full treatment, crafted for a cold reader | tutorial, how-to, explanation, commentary, essay |
-| **Brief** | Maximum information density, minimum prose | standalone or linked |
+| **InfoBrief** | Maximum information density, minimum prose | standalone or linked |
 | **News** | Something happened externally worth sharing | release, event, industry |
 
 ### Each term explained
@@ -277,7 +277,7 @@ Cross-posts are rare. A post has one primary type and optionally one secondary t
 - **commentary** — informed take on a topic. Personal voice, expertise-led, no formal thesis or structured conclusion. The author has a view and shares it discursively.
 - **??? (essay/thesis/case)** — argued to a conclusion. Clear position, builds evidence, addresses counter-arguments, reaches a conclusion. "When the Machine Codes" is the canonical example — six parts, a thesis that Python is the wrong default for LLM-first development, argued and concluded.
 
-**Brief** — maximum information density, minimum prose. Fully scannable — scanning IS the experience. Two modes:
+**InfoBrief** — maximum information density, minimum prose. Fully scannable — scanning IS the experience. Two modes:
 - **Standalone** — self-contained, no deeper layer. The full picture at a glance.
 - **Linked** — navigation layer into a longer piece. Each section, paragraph, even bullet can link to the corresponding deep-dive in an accompanying article or essay. Becomes the TLDR with links throughout.
 
@@ -300,7 +300,7 @@ Cross-posts are rare. A post has one primary type and optionally one secondary t
 | Article/explanation | Exposition | Referential/scientific | Transactional | Explanation |
 | Article/commentary | — | Referential/exploratory | Transactional | — |
 | Article/essay | Argumentation | Persuasive aim | Transactional | — |
-| Brief | Description | Referential/informative | Transactional | Reference |
+| InfoBrief | Description | Referential/informative | Transactional | Reference |
 | News | — | Persuasive/transactional | Transactional | — |
 
 *Five frameworks — developed independently across 200 years from completely different starting points — converging on the same underlying taxonomy. Kinneavy (1969) called this "almost fearful symmetry" when he found it across 8 scholars. We are extending his observation by 57 years and two new domains.*
@@ -425,7 +425,7 @@ Each aim of discourse foregrounds a different corner. Applied to our content tax
 | Article/tutorial | **Decoder** | Entirely structured around the reader's learning journey |
 | Article/how-to | **Decoder** | Structured around the reader's task completion |
 | Article/explanation | **Decoder** | Structured around the reader's understanding |
-| Brief | **Reality** | The information dominates; neither encoder nor decoder foregrounded |
+| InfoBrief | **Reality** | The information dominates; neither encoder nor decoder foregrounded |
 | News | **Reality** | Pointing at external facts in the world |
 
 ### Where it gets fuzzy
@@ -1217,8 +1217,8 @@ Lean heavily into personal opinion and subjective experience. This is where the 
 **Article / essay**
 Strong personal voice + clear stance. Engage counter-arguments naturally, not formulaically. Mandate one surprising or contrarian point. The "fair counter" and "type hint caveat, stated fairly" patterns from "When the Machine Codes" are exactly right.
 
-**Brief**
-Ruthless editing — make it denser and more telegraphic than a human would naturally write. This ironically makes it feel more human. Experts write densely. The Brief should feel like it was written by someone who knows exactly what matters and respects the reader's time.
+**InfoBrief**
+Ruthless editing — make it denser and more telegraphic than a human would naturally write. This ironically makes it feel more human. Experts write densely. The InfoBrief should feel like it was written by someone who knows exactly what matters and respects the reader's time.
 
 **News**
 Fast, direct, with clear sourcing. Opinion clearly separated from fact. No padding. No "this is an exciting development" — just what happened and why it matters.
@@ -1322,8 +1322,8 @@ Current position: **93–95th percentile**.
 
 **Next-level moves:**
 - Metadata layer: audience level (beginner/intermediate/advanced/expert), evergreen vs temporal, update cadence
-- Explicit conversion rules: when a musing becomes an idea, when an idea becomes an essay, when an essay should also have a Brief version
-- Hybrid handling policy: primary type + secondary tags (e.g. Article/Essay + Brief)
+- Explicit conversion rules: when a musing becomes an idea, when an idea becomes an essay, when an essay should also have an InfoBrief version
+- Hybrid handling policy: primary type + secondary tags (e.g. Article/Essay + InfoBrief)
 
 **Elite tier (top 1–2%):**
 - A small LLM classifier that reads a draft and outputs: type + confidence + missing elements + quality scores
@@ -1850,12 +1850,12 @@ Pick one section from the 6-part series. Rewrite in two forms: current (dense pr
 
 ### Goals
 
-1. **Validate the taxonomy** — stress-test Note / Article / Brief / News against 577 real posts written before the taxonomy existed. Flag what fits cleanly, what is forced, and what leaks through without a home.
+1. **Validate the taxonomy** — stress-test Note / Article / InfoBrief / News against 577 real posts written before the taxonomy existed. Flag what fits cleanly, what is forced, and what leaks through without a home.
 2. **Build the corpus catalogue** — machine-readable metadata for all 577 posts with IDs, taxonomy classification, quality ratings, and topic labels.
 3. **Build the content index** — inverted index by taxonomy type and by label, human-navigable.
 4. **Build the linguistic fingerprint** — deep stylistic analysis from a stratified sample.
 
-The Note/Article/Brief distinction is the hardest case. Brief may be nearly empty in a corpus written before the taxonomy — that itself is information. Note vs Article (encoder-dominant/quick vs decoder-standalone/crafted) will be the most contested boundary.
+The Note/Article/InfoBrief distinction is the hardest case. InfoBrief may be nearly empty in a corpus written before the taxonomy — that itself is information. Note vs Article (encoder-dominant/quick vs decoder-standalone/crafted) will be the most contested boundary.
 
 ---
 
@@ -1903,7 +1903,7 @@ Deterministic 3-digit counter assigned by sorting posts chronologically (filenam
 | date | YYYY-MM-DD |
 | title | from frontmatter or first heading |
 | path | relative to mark-proctor/ |
-| type | Note / Article / Brief / News |
+| type | Note / Article / InfoBrief / News |
 | subtype | log / musing / idea / tutorial / how-to / explanation / commentary / essay / release / event / industry |
 | confidence | high / medium / low / uncertain |
 | flag | blank or one-line ambiguity note |
@@ -1929,7 +1929,7 @@ Deterministic 3-digit counter assigned by sorting posts chronologically (filenam
 - **commentary** — informed take, personal voice, no formal thesis
 - **essay** — argued to a conclusion: thesis, evidence, counter-arguments
 
-*Brief* — Maximum information density, minimum prose. Fully scannable. Rare in this corpus — flag any genuine instance.
+*InfoBrief* — Maximum information density, minimum prose. Fully scannable. Rare in this corpus — flag any genuine instance.
 
 *News* — Something happened externally worth sharing. Subcategories:
 - **release** — software release, version, new feature
@@ -1943,7 +1943,7 @@ Note vs Article is the key boundary. If in doubt:
 - Does it provide enough background that a cold reader could follow? → Article
 - Could it be both? → classify as whichever is more dominant, flag with "Note/Article boundary"
 
-Brief is rare. Only classify as Brief if the post is genuinely scannable as a complete experience — most dense posts are still Articles, just short ones.
+InfoBrief is rare. Only classify as InfoBrief if the post is genuinely scannable as a complete experience — most dense posts are still Articles, just short ones.
 
 Multi-part posts — classify each part individually. Note in the flag field if it's part of a series.
 
@@ -2052,7 +2052,7 @@ The agent will flag uncertain classifications. After all passes, review:
 1. **What leaks through** — posts that don't fit any type cleanly. Do they suggest a missing category?
 2. **What feels forced** — posts classified correctly but where the agent notes it's a stretch. Are these genuine edge cases or taxonomy refinement opportunities?
 3. **Note/Article boundary posts** — the most likely source of tension. How many? What makes them ambiguous?
-4. **Brief instances** — how many genuine Briefs exist in the corpus? If zero, that's informative — Brief is a new form not in the historical writing style.
+4. **InfoBrief instances** — how many genuine InfoBriefs exist in the corpus? If zero, that's informative — InfoBrief is a new form not in the historical writing style.
 5. **Subtype distribution** — are some subtypes nearly empty (musing? idea?)? Does that suggest they're too fine-grained, or just underrepresented in this corpus?
 
 The taxonomy may need refinement after this pass. That is the point.
