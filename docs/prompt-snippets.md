@@ -31,6 +31,28 @@ Replace `[java-dev|python-dev|ts-dev]` with the appropriate dev skill for the pr
 
 ---
 
+## Content creation workflow
+
+Paste at the start of any session involving writing articles, notes, essays, briefs, or news:
+
+```
+write-content for all content. Load personal style file if available (~/claude-workspace/writing-styles/mark-proctor-voice.md). Any gaps, deferred ideas, or out-of-scope topics identified during writing must be captured as GitHub issues or idea-log entries before the session ends — not just noted in the draft.
+
+[describe what you want to write, or provide the topic/subject]
+```
+
+---
+
+## Content workflow — what each instruction does
+
+| Instruction | What it enforces |
+|-------------|-----------------|
+| `write-content` | Content type selection (Note/Article/Brief/News + subtype), structure principles, anti-slop guidance, form-specific writing rules |
+| Personal style file | Linguistic fingerprint — how the author sounds at sentence level; load alongside write-content |
+| Capture gaps as issues | Any deferred concern or out-of-scope topic identified during writing → GitHub issue or idea-log before session ends |
+
+---
+
 ## Notes
 
 - `~/.claude/prompt-snippets.md` previously held a general snippet; that content is now superseded by `work-start` and `ide-tooling` — this file is the canonical replacement
