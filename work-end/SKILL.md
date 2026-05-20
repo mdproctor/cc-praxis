@@ -387,13 +387,13 @@ git -C "$PROJECT" rebase "$BRANCH_NAME"
 - **Stop. Do not proceed to Step 9.**
 - Instruct the user: resolve conflicts on project main, then re-run `work end` to complete the close.
 
-**Push to fork remote (mandatory after successful rebase):**
+**Push to fork remote:**
+
+> "Push project main to `$FORK_REMOTE`? (y/n)"
 
 ```bash
 git -C "$PROJECT" push "$FORK_REMOTE" main
 ```
-
-No prompt — pushing local main to the fork remote is always correct after a rebase.
 
 **Offer upstream PR (fork model only):**
 
