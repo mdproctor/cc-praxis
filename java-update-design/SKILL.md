@@ -75,10 +75,20 @@ ls "$WORKSPACE/design/JOURNAL.md" 2>/dev/null
 [ "$(git -C "$WORKSPACE" branch --show-current)" != "main" ]
 ```
 
-Where `$WORKSPACE` is resolved from CLAUDE.md:
+Where `$WORKSPACE` and `$PROJECT` are resolved — **symlink-first, CLAUDE.md fallback:**
 ```bash
-WORKSPACE=$(grep "^\*\*Workspace:\*\*" CLAUDE.md | head -1 | sed 's/.*`\(.*\)`.*/\1/')
+# Primary: proj/ symlink in workspace CWD (portable — works for all per-repo workspaces)
+if [ -L "proj" ]; then
+  WORKSPACE=$(git rev-parse --show-toplevel 2>/dev/null)
+  PROJECT=$(readlink -f proj)
+else
+  # Fallback: explicit **Workspace:** field (for top-level multi-repo workspaces)
+  WORKSPACE=$(grep "^\*\*Workspace:\*\*" CLAUDE.md 2>/dev/null | head -1 | sed 's/.*`\(.*\)`.*/\1/')
+  PROJECT=$(grep "^Run \`add-dir" CLAUDE.md 2>/dev/null | head -1 | sed "s/.*add-dir //; s/\`.*//")
+fi
 ```
+
+The `proj/` symlink lives in the workspace root and points at the project repo. It is created by `workspace-init` and is the canonical way to locate the project from any workspace. The `**Workspace:**` grep is kept as fallback for top-level shared workspaces (e.g. casehub parent) where multiple repos share one workspace directory and no single `proj/` applies.
 
 - All three true → **workspace mode**: proceed with journal entry workflow below.
 - Any false → **direct mode**: fall back to updating project `DESIGN.md` directly.

@@ -16,8 +16,15 @@ closes the issue, marks the branch closed, returns to main.
 ## Path Resolution (run first, always)
 
 ```bash
-PROJECT=$(grep "add-dir" CLAUDE.md | head -1 | sed 's/.*add-dir //')
-WORKSPACE=$(grep "^\*\*Workspace:\*\*" CLAUDE.md | head -1 | sed 's/.*`\(.*\)`.*/\1/')
+# Primary: proj/ symlink in workspace CWD (works for all per-repo workspaces)
+if [ -L "proj" ]; then
+  WORKSPACE=$(git rev-parse --show-toplevel 2>/dev/null)
+  PROJECT=$(readlink -f proj)
+else
+  # Fallback: explicit fields (for top-level multi-repo workspaces)
+  WORKSPACE=$(grep "^\*\*Workspace:\*\*" CLAUDE.md 2>/dev/null | head -1 | sed 's/.*`\(.*\)`.*/\1/')
+  PROJECT=$(grep "^Run \`add-dir" CLAUDE.md 2>/dev/null | head -1 | sed "s/.*add-dir //; s/\`.*//")
+fi
 ```
 
 ---
