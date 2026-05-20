@@ -9,7 +9,8 @@ description: >
 # work-end
 
 Closes the current branch cleanly. Promotes artifacts, merges the journal,
-closes the issue, marks the branch closed, returns to main.
+closes the issue, rebases the project branch onto project main, marks the
+branch closed, returns to main.
 
 ---
 
@@ -356,14 +357,39 @@ If blog entries were staged to workspace, offer: "Publish blog entries now? (y/n
 
 "Run branch hygiene scan? Checks Flyway conflicts, unmerged code, stale branches. (y/n)"
 
+### 8j — Merge project branch to project main
+
+**This step is mandatory.** Implementation commits on the project branch must land on project main before the branch is marked closed. Skipping this means the work is permanently inaccessible once the branch is deleted.
+
+```bash
+git -C "$PROJECT" fetch origin main 2>/dev/null || echo "⚠️  No network — using local main"
+git -C "$PROJECT" checkout main
+git -C "$PROJECT" rebase "$BRANCH_NAME"
+```
+
+**If rebase succeeds:** continue to Step 9.
+
+**If rebase fails (conflict):**
+- Report the conflicting files verbatim.
+- **Stop. Do not proceed to Step 9.**
+- Instruct the user: resolve conflicts on project main, then re-run `work end` to complete the close.
+
+After a successful rebase, check for a remote and offer to push:
+```bash
+git -C "$PROJECT" remote get-url origin &>/dev/null 2>&1 && echo "has-remote" || echo "local-only"
+```
+If remote exists: "Push project main to origin? (y/n)" — not automatic.
+
+**Why rebase and not merge --no-ff?** Rebase keeps the project main history linear and avoids a merge commit that references a branch the consumer never saw. Fast-forward is a safe subset — use `git rebase` which fast-forwards when possible and replays commits otherwise.
+
 ### Step path (alternative to all-at-once)
 
 If user chose "step" in Step 7:
 
 - Phase 1: Artifact routing — confirm, execute, report → "Continue to journal merge? (y/n)"
 - Phase 2: Journal merge — show each `§Section` before/after, confirm → "Continue to GitHub posting? (y/n)"
-- Phase 3: Spec posting, issue close, publish-blog offer → "Continue to branch cleanup? (y/n)"
-- Phase 4: EPIC-CLOSED.md and return to main.
+- Phase 3: Spec posting, issue close, publish-blog offer → "Continue to branch merge? (y/n)"
+- Phase 4: Merge project branch to main (8j), EPIC-CLOSED.md, return workspace to main.
 
 ---
 
@@ -395,13 +421,9 @@ Branches are **not deleted**. `EPIC-CLOSED.md` is the signal for hygiene scan cl
 
 ## Step 10 — Return to main
 
-```
-Return both repos to main? (y/n)
-```
+Project is already on main from Step 8j. Switch workspace:
 
-If y:
 ```bash
-git -C "$PROJECT" checkout main
 git -C "$WORKSPACE" checkout main
 ```
 
