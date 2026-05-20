@@ -19,13 +19,9 @@ stops immediately.
 ## Path Resolution (run first, always)
 
 ```bash
-if [ -L "proj" ]; then
-  WORKSPACE=$(git rev-parse --show-toplevel 2>/dev/null)
-  PROJECT=$(readlink -f proj)
-else
-  WORKSPACE=$(grep "^\*\*Workspace:\*\*" CLAUDE.md 2>/dev/null | head -1 | sed 's/.*`\(.*\)`.*/\1/')
-  PROJECT=$(grep "^Run \`add-dir" CLAUDE.md 2>/dev/null | head -1 | sed "s/.*add-dir //; s/\`.*//")
-fi
+WORKSPACE=$(git rev-parse --show-toplevel 2>/dev/null)
+PROJECT=$(readlink -f proj 2>/dev/null)
+[ -z "$PROJECT" ] && { echo "⚠️ No proj/ symlink found. Run workspace-init to set up."; exit 1; }
 ```
 
 ---

@@ -16,19 +16,14 @@ runs pre-checks. **Never skip this skill — even for small changes.**
 ## Path Resolution (run first, always)
 
 ```bash
-# Primary: proj/ symlink in workspace CWD (works for all per-repo workspaces)
-if [ -L "proj" ]; then
-  WORKSPACE=$(git rev-parse --show-toplevel 2>/dev/null)
-  PROJECT=$(readlink -f proj)
-else
-  # Fallback: explicit fields (for top-level multi-repo workspaces)
-  WORKSPACE=$(grep "^\*\*Workspace:\*\*" CLAUDE.md 2>/dev/null | head -1 | sed 's/.*`\(.*\)`.*/\1/')
-  PROJECT=$(grep "^Run \`add-dir" CLAUDE.md 2>/dev/null | head -1 | sed "s/.*add-dir //; s/\`.*//")
-fi
+WORKSPACE=$(git rev-parse --show-toplevel 2>/dev/null)
+PROJECT=$(readlink -f proj 2>/dev/null)
+[ -z "$PROJECT" ] && { echo "⚠️ No proj/ symlink found. Run workspace-init to set up."; exit 1; }
 ```
 
-All file paths and git commands below use `$PROJECT` and `$WORKSPACE`. Never
-use bare `git` without `-C <path>`. Never rely on CWD.
+`WORKSPACE` is the git root of the current workspace. `PROJECT` follows the `proj/` symlink
+to the project repo. All git commands use `-C "$WORKSPACE"` or `-C "$PROJECT"` explicitly.
+Never use bare `git` without `-C <path>`. Never rely on CWD.
 
 ---
 

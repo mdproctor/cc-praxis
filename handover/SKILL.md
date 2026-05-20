@@ -403,7 +403,11 @@ suggest the name and prompt at the right moment.
 
 ### Step 6 — Commit (required)
 
-Read `**Workspace:**` from CLAUDE.md to get the absolute workspace path. HANDOFF.md must **always** be committed to workspace **main**, even when the session is on an epic branch. It is a session artifact, not an epic artifact — committing it to an epic branch makes it invisible to the next session starting on main.
+Resolve the workspace path via symlinks, then commit. HANDOFF.md must **always** be committed to workspace **main**, even when the session is on a branch. It is a session artifact, not a branch artifact — committing it to a branch makes it invisible to the next session starting on main.
+
+```bash
+WORKSPACE=$(git rev-parse --show-toplevel 2>/dev/null)
+```
 
 ```bash
 CURRENT_BRANCH=$(git -C <Workspace> branch --show-current)

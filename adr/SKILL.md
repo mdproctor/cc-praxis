@@ -39,12 +39,16 @@ grep -A 5 "^## Routing$" "$HOME/.claude/CLAUDE.md" 2>/dev/null | grep "Default d
 # Layer 1: built-in default → project (docs/adr/)
 ```
 
-Read `**Workspace:**` and `**Project repo:**` from CLAUDE.md to resolve absolute paths.
+Resolve paths via symlinks:
+```bash
+WORKSPACE=$(git rev-parse --show-toplevel 2>/dev/null)
+PROJECT=$(readlink -f proj 2>/dev/null)
+```
 
 | Resolved destination | Write to | git -C path |
 |----------------------|----------|-------------|
-| `workspace` | `<Workspace>/adr/` | `<Workspace>` |
-| `project` (default) | `<Project repo>/docs/adr/` | `<Project repo>` |
+| `workspace` | `$WORKSPACE/adr/` | `$WORKSPACE` |
+| `project` (default) | `$PROJECT/docs/adr/` | `$PROJECT` |
 
 Use `git -C <resolved-path>` for all git operations — never bare `git add/commit`.
 
