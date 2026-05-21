@@ -223,7 +223,7 @@ work-end close plan — <branch-name>
   Journal merge      → DESIGN.md  (<N> sections)
   Spec posting       → #<N>  (<filenames>)
   Issue              → close #<N>
-  Publish blog       → offer after (N entries staged)
+  Publish blog       → publish-blog (N entries staged)
 
 Approve all, or step by step? (all / step)
 ```
@@ -343,9 +343,9 @@ Only if tracking enabled and `$ISSUE_N` is non-empty:
 [ -n "$ISSUE_N" ] && gh issue close "$ISSUE_N" --repo "$OWNER_REPO"
 ```
 
-### 8g — Offer publish-blog
+### 8g — Publish blog
 
-If blog entries were staged to workspace, offer: "Publish blog entries now? (y/n)"
+If blog entries were staged to workspace, invoke `publish-blog` automatically.
 
 ### 8h — Final report
 
