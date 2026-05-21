@@ -61,21 +61,27 @@ No implementation detail — refs: covers that.
 Before any operation, resolve the protocols path:
 
 ```bash
-# Find project root
 PROJECT_ROOT=$(git rev-parse --show-toplevel 2>/dev/null)
-
-# Protocols directory
-PROTOCOLS_DIR="$PROJECT_ROOT/docs/protocols"
 ```
 
-If `docs/protocols/` does not exist at the project root, check whether the current
-project uses a parent-repo layout (`parent/docs/protocols/`). If still not found,
-**create `docs/protocols/` at the project root** — do not ask the user to confirm
-the path. Protocol information must never be lost because the directory is absent.
+Resolution order — use the first that applies:
 
-```bash
-mkdir -p "$PROJECT_ROOT/docs/protocols"
-```
+1. **CLAUDE.md routing row (highest priority):** If the project's `CLAUDE.md` has a `protocols` row in its Routing table, extract the explicit path from the Notes column and use it. This handles multi-repo ecosystems where a peer module delegates protocol storage to a central parent repo.
+   ```
+   | protocols  | parent | /absolute/path/to/parent/docs/protocols/ — ... |
+   ```
+   Parse: first token starting with `/` in the Notes cell.
+
+2. **Local `docs/protocols/`:** If `$PROJECT_ROOT/docs/protocols/` exists, use it.
+
+3. **Sibling parent layout:** If `$PROJECT_ROOT/../parent/docs/protocols/` exists (multi-repo layout where each module repo sits beside a `parent/` repo), use that path.
+
+4. **Child parent layout:** If `$PROJECT_ROOT/parent/docs/protocols/` exists, use it.
+
+5. **Create at project root (last resort):** Only if none of the above exist. Do not ask the user to confirm — protocol information must never be lost.
+   ```bash
+   mkdir -p "$PROJECT_ROOT/docs/protocols"
+   ```
 
 ---
 
