@@ -2,14 +2,16 @@
 name: work-resume
 description: >
   Use when returning to a paused branch — user says "work-resume", "resume",
-  or "go back to that branch". Requires a .paused marker on workspace main
-  (created by work-pause). Must be invoked from main.
+  or "go back to that branch". Reads the pause stack on workspace main and
+  lets the user pick which branch to resume. Rebases onto current main before
+  restoring WIP. Must be invoked from main.
 ---
 
 # work-resume
 
-Resumes a paused branch: switches both repos back, removes the pause marker,
-restores stashed changes, runs pre-checks.
+Resumes a paused branch from the stack: lets the user pick, rebases the branch
+onto current main (picking up any work that landed since it was paused), resets
+the WIP commit to restore working state, removes the entry from the stack.
 
 ---
 
@@ -28,138 +30,139 @@ Read `$PROJECT` and `$WORKSPACE` from CLAUDE.md (see Path Resolution above).
 
 ---
 
-## Step 1 — Check .paused
+## Step 1 — Read pause stack
 
 ```bash
-cat "$WORKSPACE/design/.paused" 2>/dev/null \
-  || { echo "Nothing to resume — no .paused found."; exit 1; }
-
-RESUME_BRANCH=$(grep "^branch:" "$WORKSPACE/design/.paused" | sed 's/branch: //')
-PAUSED_AT=$(grep "^paused-at:" "$WORKSPACE/design/.paused" | sed 's/paused-at: //')
+STACK_FILE="$WORKSPACE/design/.pause-stack"
+[ -f "$STACK_FILE" ] || { echo "Nothing to resume — pause stack is empty."; exit 1; }
+grep -q "^- branch:" "$STACK_FILE" || { echo "Nothing to resume — pause stack is empty."; exit 1; }
 ```
+
+Parse all entries. Each entry has: `branch`, `issue`, `paused`, `wip_project`, `wip_workspace`.
 
 ---
 
-## Step 2 — Stale check
+## Step 2 — Pick branch (if stack depth > 1)
 
-Verify the branch still exists in both repos:
+If only one entry: auto-select it, no prompt.
 
-```bash
-# Use rev-parse --verify for exact match — grep would match partial branch names
-git -C "$WORKSPACE" rev-parse --verify "$RESUME_BRANCH" &>/dev/null \
-  || echo "⚠️ $RESUME_BRANCH not found in workspace"
-git -C "$PROJECT" rev-parse --verify "$RESUME_BRANCH" &>/dev/null \
-  || echo "⚠️ $RESUME_BRANCH not found in project"
+If multiple entries, show the stack (most recent last = shown at bottom):
+```
+Paused branches:
+  1. issue-94-work-lifecycle   #94   paused 3 days ago   "WIP committed"
+  2. issue-87-api-refactor     #87   paused 1 week ago   "WIP committed"
+
+Resume which? (1 / 2)
 ```
 
-If missing from either repo:
-- `[D]` Discard `.paused` and clean up — remove the marker file and commit
+Set `$RESUME_BRANCH`, `$RESUME_WIP_PROJECT`, `$RESUME_WIP_WORKSPACE` from selected entry.
+
+---
+
+## Step 3 — Verify branch exists
+
+```bash
+git -C "$PROJECT" rev-parse --verify "$RESUME_BRANCH" &>/dev/null \
+  || { echo "⚠️ $RESUME_BRANCH not found in project repo."; exit 1; }
+git -C "$WORKSPACE" rev-parse --verify "$RESUME_BRANCH" &>/dev/null \
+  || { echo "⚠️ $RESUME_BRANCH not found in workspace repo."; exit 1; }
+```
+
+If missing from either:
+- `[D]` Discard this stack entry and clean up
 - `[A]` Abort — leave state as-is for manual investigation
 
 ---
 
-## Step 3 — Switch both repos to epic branch
+## Step 4 — Remove entry from stack (on workspace main)
 
-Use Branch Switch Helper with `$RESUME_BRANCH`. Prompt before remote pull.
+```bash
+# Still on main — update the stack before switching branches
+python3 -c "
+import sys, re
+stack = open('$STACK_FILE').read()
+# Remove the selected branch block (- branch: NAME through next - branch: or EOF)
+pattern = r'- branch: $RESUME_BRANCH\n(?:  .*\n)*'
+stack = re.sub(pattern, '', stack)
+open('$STACK_FILE', 'w').write(stack)
+"
+
+git -C "$WORKSPACE" add design/.pause-stack
+git -C "$WORKSPACE" commit -m "chore: resume $RESUME_BRANCH — pop from pause stack"
+git -C "$WORKSPACE" push
+```
+
+**If push fails: abort** — do not switch branches. The stack on main must be
+updated before switching, to prevent a second session from also resuming the
+same branch.
+
+---
+
+## Step 5 — Switch both repos to branch
 
 ```bash
 git -C "$PROJECT" checkout "$RESUME_BRANCH"
 git -C "$WORKSPACE" checkout "$RESUME_BRANCH"
-
-PROJECT_BEHIND=$(git -C "$PROJECT" rev-list HEAD..origin/"$RESUME_BRANCH" --count 2>/dev/null || echo 0)
-WORKSPACE_BEHIND=$(git -C "$WORKSPACE" rev-list HEAD..origin/"$RESUME_BRANCH" --count 2>/dev/null || echo 0)
-if [ "$PROJECT_BEHIND" -gt 0 ] || [ "$WORKSPACE_BEHIND" -gt 0 ]; then
-  echo "Remote has new commits (+${PROJECT_BEHIND} project, +${WORKSPACE_BEHIND} workspace)."
-  echo "Incorporate now with pull --rebase? (y/n)"
-fi
 ```
+
+Verify both are on the same branch after switching.
 
 ---
 
-## Step 4 — Remove .paused from workspace main
+## Step 6 — Rebase branch onto current main
 
 ```bash
-# Capture stash ref if workspace has uncommitted changes on the epic branch
-STEP4_STASH=none
-if git -C "$WORKSPACE" status --short | grep -q .; then
-  stash_out=$(git -C "$WORKSPACE" stash)
-  echo "$stash_out" | grep -q "Saved working" && STEP4_STASH="stash@{0}"
-fi
-
-git -C "$WORKSPACE" checkout main
-git -C "$WORKSPACE" pull --rebase origin main
-rm "$WORKSPACE/design/.paused"
-git -C "$WORKSPACE" add -A
-git -C "$WORKSPACE" commit -m "chore: resume $RESUME_BRANCH, remove pause marker"
-git -C "$WORKSPACE" push
-
-git -C "$WORKSPACE" checkout "$RESUME_BRANCH"
-# Use the recorded ref, not bare stash pop (consistent with Step 5 principle)
-if [ "$STEP4_STASH" != "none" ]; then
-  git -C "$WORKSPACE" stash pop "$STEP4_STASH" 2>/dev/null \
-    || echo "⚠️ Workspace stash pop failed ($STEP4_STASH) — resolve manually"
-fi
+git -C "$PROJECT" rebase main
 ```
 
----
+**If rebase succeeds:** continue to Step 7.
 
-## Step 5 — Restore stashed changes
+**If rebase fails (conflict):**
+- Report conflicting files verbatim.
+- **Stop. Do not proceed.**
+- Instruct: resolve conflicts, `git rebase --continue`, then run `work-resume` again — it will detect the stack entry is already removed and skip Steps 1–5.
+- The branch is now checked out; work can continue after manual resolution.
 
-Read stash references from `.meta` and pop each using its recorded position:
+Workspace branch does not need rebasing — it holds methodology artifacts only,
+not implementation code. Switch workspace to the branch but do not rebase it.
 
 ```bash
-STASH_PROJECT=$(grep "^stash-project:" "$WORKSPACE/design/.meta" | sed 's/stash-project: //')
-STASH_WORKSPACE=$(grep "^stash-workspace:" "$WORKSPACE/design/.meta" | sed 's/stash-workspace: //')
-
-# Use the recorded stash reference — do NOT use bare stash pop (pops wrong
-# stash if the stack shifted since pause time)
-if [ "$STASH_PROJECT" != "none" ]; then
-  if ! git -C "$PROJECT" stash pop "$STASH_PROJECT" 2>/dev/null; then
-    echo "⚠️ Project stash pop failed ($STASH_PROJECT) — resolve manually"
-  fi
-fi
-
-if [ "$STASH_WORKSPACE" != "none" ]; then
-  if ! git -C "$WORKSPACE" stash pop "$STASH_WORKSPACE" 2>/dev/null; then
-    echo "⚠️ Workspace stash pop failed ($STASH_WORKSPACE) — resolve manually"
-  fi
-fi
+git -C "$WORKSPACE" rebase main 2>/dev/null || true  # best-effort only
 ```
-
-If stash pop fails: warn and continue. Do not abort — the branch is already restored
-and the user can resolve stash conflicts manually.
 
 ---
 
-## Step 6 — Clear pause flags from .meta
+## Step 7 — Reset WIP commit
 
 ```bash
-sed -i '' \
-  '/^paused:/d; /^paused-at:/d; /^paused-issue:/d; /^stash-project:/d; /^stash-workspace:/d' \
-  "$WORKSPACE/design/.meta"
-git -C "$WORKSPACE" add design/.meta
-git -C "$WORKSPACE" commit -m "chore($RESUME_BRANCH): clear pause flags from .meta"
-git -C "$WORKSPACE" push
+if [ "$RESUME_WIP_PROJECT" = "true" ]; then
+  git -C "$PROJECT" reset HEAD~1
+  echo "✅ Project WIP commit reset — changes restored to working tree"
+fi
+
+if [ "$RESUME_WIP_WORKSPACE" = "true" ]; then
+  git -C "$WORKSPACE" reset HEAD~1
+  echo "✅ Workspace WIP commit reset — changes restored to working tree"
+fi
+```
+
+The reset restores the working tree to exactly where it was when work was paused.
+
+---
+
+## Step 8 — Confirm
+
+```
+▶  Resumed: <branch-name>  Issue: #<N>
+   Paused <duration> ago
+   Rebased onto main  (+N commits incorporated)
+   WIP restored: project=<yes|no>  workspace=<yes|no>
+   Stack remaining: <N> paused branch(es)
 ```
 
 ---
 
-## Step 7 — Surface context
-
-```bash
-# Extract issue number from .meta (read once here, not re-derived later)
-ISSUE_N=$(grep "^issue:" "$WORKSPACE/design/.meta" | sed 's/issue: //')
-# $PAUSED_AT read from .paused in Step 1
-```
-
-```
-▶  Resumed: <branch-name>  Issue: #<N>  Paused <duration> ago
-   Stash restored: <yes | no | conflict — resolve manually>
-```
-
----
-
-## Step 8 — Run pre-checks
+## Step 9 — Run pre-checks
 
 Run Steps 0, 2, 3, 11 from work-start:
 - **Step 0**: Path resolution (already done)

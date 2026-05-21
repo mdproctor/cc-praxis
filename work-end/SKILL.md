@@ -33,8 +33,14 @@ WORKSPACE=$(grep "^\*\*Workspace:\*\*" CLAUDE.md | head -1 | sed 's/.*`\(.*\)`.*
 CURRENT_WORKSPACE=$(git -C "$WORKSPACE" branch --show-current)
 ```
 
-1. **If `$WORKSPACE/design/.paused` exists** → hard stop.
-   "You have a paused branch. Invoke `work-resume` first, then `work-end`."
+1. **If `$WORKSPACE/design/.pause-stack` exists and has entries** — check whether
+   the target branch is in the stack:
+   - **Current branch is in the stack** (ending a paused branch without resuming it):
+     allowed. After all close steps complete, remove this branch from the stack
+     (Step 9 will handle it — see "Stack cleanup on end" below).
+   - **Current branch is NOT in the stack but stack is non-empty**: inform the user
+     the stack has N other paused branches. Continue — this is normal when ending
+     the active branch while others are paused.
 
 2. **`$WORKSPACE/design/.meta` must exist on the current branch** → proceed.
 
@@ -445,6 +451,25 @@ git -C "$WORKSPACE" push
 ```
 
 Branches are **not deleted**. `EPIC-CLOSED.md` is the signal for hygiene scan cleanup.
+
+**Stack cleanup on end:** If this branch was in the pause stack (detected in Pre-conditions),
+remove it now that the branch is closed:
+
+```bash
+STACK_FILE="$WORKSPACE/design/.pause-stack"
+if grep -q "branch: $BRANCH_NAME" "$STACK_FILE" 2>/dev/null; then
+  python3 -c "
+import re
+stack = open('$STACK_FILE').read()
+pattern = r'- branch: $BRANCH_NAME\n(?:  .*\n)*'
+stack = re.sub(pattern, '', stack)
+open('$STACK_FILE', 'w').write(stack)
+"
+  git -C "$WORKSPACE" add design/.pause-stack
+  git -C "$WORKSPACE" commit -m "chore: remove $BRANCH_NAME from pause stack (branch closed)"
+  git -C "$WORKSPACE" push
+fi
+```
 
 ---
 

@@ -68,8 +68,10 @@ CURRENT_PROJECT=$(git -C "$PROJECT" branch --show-current)
 Check in order — first match wins:
 
 ```
-1. $WORKSPACE/design/.paused exists in the working tree
-   → Hard stop. "Paused branch detected. Invoke work-resume first."
+1. $WORKSPACE/design/.pause-stack exists and has entries, AND on main
+   → Route to work skill for stack picker. Do not start a new branch until
+     the user explicitly chooses "new" from the stack picker.
+     (Stack depth 1: auto-route to work-resume. Stack depth 2+: show picker.)
 
 2. $WORKSPACE/design/.meta exists, AND
    META_BRANCH == CURRENT_WORKSPACE == CURRENT_PROJECT (all three match)
@@ -86,7 +88,7 @@ Check in order — first match wins:
    → Invoke Branch Switch Helper inline.
      If helper fails → hard stop with manual instructions (no loop).
 
-5. CURRENT_WORKSPACE == main, no .meta, no .paused
+5. CURRENT_WORKSPACE == main, no .meta, empty/absent .pause-stack
    → New branch path (Steps 0–12 below).
 
 6. On non-main branch, no .meta
