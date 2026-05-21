@@ -18,3 +18,4 @@
 | [2026-04-14-mdp01-the-model-comes-together.md](2026-04-14-mdp01-the-model-comes-together.md) | 2026-04-14 | cc-praxis — The Model Comes Together |
 | [2026-04-14-mdp02-closing-gaps.md](2026-04-14-mdp02-closing-gaps.md) | 2026-04-14 | Blog types, workspace routing, health sweeps, 446→1016 tests, six forage entries |
 | [2026-05-20-mdp01-taxonomy-fingerprint-corpus.md](2026-05-20-mdp01-taxonomy-fingerprint-corpus.md) | 2026-05-20 | Content taxonomy finalised, write-content skill, 570-post corpus classified, linguistic fingerprint written |
+| [2026-05-21-mdp01-work-end-fix-pause-stack.md](2026-05-21-mdp01-work-end-fix-pause-stack.md) | 2026-05-21 | work-end missing merge fix, engine three-way audit, pause stack replacing single .paused marker |
