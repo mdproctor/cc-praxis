@@ -562,8 +562,8 @@ Full design: `docs/superpowers/specs/2026-04-09-workspace-model-design.md`
 - `work` — **unified lifecycle entry point**; detects current state and routes automatically: `work` alone starts or resumes, `work end` closes the branch, `work pause` saves state and returns to main. Single command replaces needing to know which lifecycle skill to invoke
 - `work-start` — unified entry point for all work; detects branch state (6 states including paused, orphaned, misaligned); creates `issue-NNN-<slug>` branches in both repos atomically; scaffolds `.meta` + `JOURNAL.md` with SHA baseline and design routing; runs platform coherence, protocols, IntelliJ pre-checks; replaces the former "work-start + /epic begin" two-step
 - `work-end` — closes the current branch; promotes artifacts per routing config; merges `design/JOURNAL.md` into DESIGN.md with three-way diff preview; posts specs to GitHub issue; closes issue; marks branch with `design/EPIC-CLOSED.md`; returns both repos to main. Replaces "epic close"
-- `work-pause` — saves current context; stashes uncommitted changes with recorded references; writes `.paused` marker to workspace main atomically (push must succeed before switching repos); switches both repos to main
-- `work-resume` — reads `.paused`; switches both repos back to branch; removes pause marker from main; restores stashed changes using recorded references (not bare stash pop); runs pre-checks
+- `work-pause` — commits all WIP as a `WIP:` commit on the branch; pushes an entry onto `.pause-stack` on workspace main (supports multiple paused branches); switches both repos to main. No stash used — WIP commit is durable and visible in history
+- `work-resume` — reads `.pause-stack`; shows picker if multiple paused branches; rebases selected branch onto current main (picks up work that landed while paused); resets the WIP commit to restore working state; removes entry from stack
 - `epic` — **deprecated**. Use `work-start` (replaces `/epic begin`) and `work-end` (replaces `/epic close`). Retained for reference during migration
 
 **Generic foundation skills** (not invoked directly, referenced via Prerequisites):
