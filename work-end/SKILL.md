@@ -169,10 +169,12 @@ ls "$WORKSPACE/plans/" 2>/dev/null | grep -v "^attic$"
 cat "$WORKSPACE/design/JOURNAL.md"
 ```
 
-Compute and store the blog count for use in Steps 7 and 8g:
+Compute and store the blog count. This variable drives the close plan and the
+publish step — treat it as a first-class output of Step 4, not a footnote:
 
 ```bash
 BLOG_COUNT=$(ls "$WORKSPACE/blog/" 2>/dev/null | grep -v INDEX.md | grep "\.md$" | wc -l | tr -d ' ')
+echo "BLOG_COUNT=$BLOG_COUNT"   # surface it explicitly — do not silently swallow
 ```
 
 ---
@@ -216,6 +218,14 @@ collapsible comments on the GitHub issue. Skip silently if tracking disabled.
 
 ## Step 7 — Present close plan
 
+Before presenting, if `$BLOG_COUNT > 0`, output this acknowledgement on its own
+line so it cannot be missed:
+
+> ⚠️ **BLOG_COUNT=$BLOG_COUNT** — publish-blog will run as part of workspace-main
+> operations (8a). It is not optional and will not be skipped.
+
+Then present the plan:
+
 ```
 work-end close plan — <branch-name>
 
@@ -229,10 +239,17 @@ work-end close plan — <branch-name>
   Journal merge      → DESIGN.md  (<N> sections)
   Spec posting       → #<N>  (<filenames>)
   Issue              → close #<N>
-  Publish blog       → publish-blog ($BLOG_COUNT entries)   ← omit line if BLOG_COUNT=0
+  Publish blog       → publish-blog ($BLOG_COUNT entries)   ← "skipped (no entries)" if BLOG_COUNT=0
+                       runs during workspace-main operations (8a), before returning
+                       to epic branch
 
 Approve all, or step by step? (all / step)
 ```
+
+**The Publish blog line is always shown** — never omitted. When BLOG_COUNT=0,
+write "skipped (no entries)". When BLOG_COUNT>0, write the count and confirm it
+runs during 8a. A plan that lists blog entries in artifact routing but shows
+"skipped" for Publish blog is an error — stop and fix it.
 
 ---
 
@@ -283,6 +300,16 @@ if [ "$DESIGN_REPO_KEY" = "workspace" ]; then
 fi
 
 git -C "$WORKSPACE" push  # single push for all workspace-main commits
+
+# ─── PUBLISH BLOG (runs here, while workspace is on main) ─────────────────────
+# Blog entries are now on workspace main. Publish immediately — do not defer
+# to a later step. If BLOG_COUNT=0 this block is a no-op.
+if [ "$BLOG_COUNT" -gt 0 ]; then
+  echo "Publishing $BLOG_COUNT blog entries from workspace main..."
+  # invoke publish-blog skill — it reads from $WORKSPACE/blog/ and commits/pushes
+  # to the publishing repo. Do not proceed past this block until it confirms success.
+fi
+# ─────────────────────────────────────────────────────────────────────────────
 
 git -C "$WORKSPACE" checkout "$BRANCH_NAME"
 # Use the captured ref, not bare stash pop
@@ -349,23 +376,19 @@ Only if tracking enabled and `$ISSUE_N` is non-empty:
 [ -n "$ISSUE_N" ] && gh issue close "$ISSUE_N" --repo "$OWNER_REPO"
 ```
 
-### 8g — Publish blog
+### 8g — Publish blog (runs inside 8a — not a separate step)
 
-**Mandatory when `$BLOG_COUNT > 0`. Must complete before 8h and 8j — not optional, not deferrable.**
+Blog publishing now runs **inside 8a**, immediately after `git push` and before
+returning to the epic branch. See the `# PUBLISH BLOG` block in 8a above.
 
-```bash
-[ "$BLOG_COUNT" -gt 0 ] && echo "Publishing $BLOG_COUNT blog entries" || echo "No blog entries — skip"
-```
+This section exists only to document the decision: publish-blog was moved into 8a
+because positioning it as a separate step created a reliable skip vector — Claude
+would complete 8a (which lists blog in artifact routing), then proceed to 8f/8j
+without circling back to 8g. Moving it inside 8a eliminates the gap.
 
-If `$BLOG_COUNT > 0`: invoke `publish-blog`. The skill handles routing, destination
-validation, and the git commit/push to the publishing repo. Do not proceed to 8h until
-`publish-blog` confirms the entries are committed and pushed.
-
-If `$BLOG_COUNT = 0`: skip silently.
-
-**Why this is mandatory:** blog entries promoted to workspace main in 8a are not yet
-published. Without this step they sit in the workspace repo indefinitely. The close plan
-shows the count explicitly so there is no ambiguity about whether entries exist.
+**Verification:** the 8h final report must include a "Blog published" line when
+BLOG_COUNT > 0. If the report is missing this line, publish-blog was not run —
+stop, go back to workspace main, and run it before proceeding to 8i/8j.
 
 ### 8h — Final report
 
@@ -376,12 +399,17 @@ shows the count explicitly so there is no ambiguity about whether entries exist.
 ✅ Plans → attic
 ✅ Journal merged → DESIGN.md (N sections)
 ✅ Specs posted to #N, issue closed
-✅ Blog published → <destination path> (N entries)   ← required if BLOG_COUNT > 0; omit if 0
+✅ Blog published → <destination path> (N entries)   ← "skipped (no entries)" if BLOG_COUNT=0
 ❌ Push failed — <path>. Run: git -C <path> push
 ```
 
-**The `Blog published` line is required when `$BLOG_COUNT > 0`.** If it is missing from
-the report, 8g was skipped — do not proceed to 8i/8j; go back and run 8g first.
+**The `Blog published` line is always present.** When BLOG_COUNT=0, write
+"skipped (no entries)". When BLOG_COUNT>0, write the count and destination path.
+
+**If you are generating this report and the Blog published line shows anything
+other than a confirmed count with destination path when BLOG_COUNT > 0:**
+— stop. Do not proceed to 8i or 8j. Go back to workspace main and run
+`publish-blog` now. The report must reflect reality, not intention.
 
 ### 8i — Offer hygiene scan
 
@@ -445,10 +473,13 @@ If no `$BLESSED_REMOTE`: no PR step — the push to `origin/main` is the final d
 
 If user chose "step" in Step 7:
 
-- Phase 1: Artifact routing — confirm, execute, report → "Continue to journal merge? (y/n)"
-- Phase 2: Journal merge — show each `§Section` before/after, confirm → "Continue to GitHub posting? (y/n)"
-- Phase 3: Spec posting, issue close, publish-blog offer → "Continue to branch merge? (y/n)"
+- Phase 1: Artifact routing (8a including publish-blog if BLOG_COUNT > 0), 8b, 8c — confirm, execute, report → "Continue to journal merge? (y/n)"
+- Phase 2: Journal merge (8d) — show each `§Section` before/after, confirm → "Continue to GitHub posting? (y/n)"
+- Phase 3: Spec posting (8e), issue close (8f) → "Continue to branch merge? (y/n)"
 - Phase 4: Merge project branch to main (8j), EPIC-CLOSED.md, return workspace to main.
+
+Note: publish-blog is part of Phase 1 (runs inside 8a), not Phase 3. It is not
+an "offer" — it is mandatory when BLOG_COUNT > 0.
 
 ---
 
