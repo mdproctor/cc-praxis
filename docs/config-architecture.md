@@ -107,6 +107,13 @@ For each topic: the **authoritative** location, plus acceptable secondary appear
 | `~/.claude/document-boundaries.md` ← **authoritative** | What belongs in written artifacts |
 | Not in any skill or project CLAUDE.md | — |
 
+### Model selection by stage
+
+| Location | Role |
+|----------|------|
+| `design-implementation.md` ## Model Selection by Stage ← **authoritative** | Stage→model mapping and when to prompt |
+| Not in any skill or project CLAUDE.md | — |
+
 ### Skill invocation chain
 
 | Location | Role |
