@@ -152,19 +152,40 @@ and loads the appropriate form guide.
 
 Resolution order (first match wins):
 
-1. **`Blog directory:` field** in CLAUDE.md — explicit path, highest priority (e.g. `Blog directory: site/_posts/`). Use as-is.
+1. **`~/.claude/blog-routing.yaml`** — if this file exists, derive `<BLOG_DIR>` from the `defaults.destinations` list and match the entry type to the correct subdir:
+   ```bash
+   python3 -c "
+import yaml, os, sys
+cfg = yaml.safe_load(open(os.path.expanduser('~/.claude/blog-routing.yaml')))
+# entry_type is determined in Step 1 — pass as arg or assume 'note'
+entry_type = sys.argv[1] if len(sys.argv) > 1 else 'note'
+# find matching rule or fall back to default destination
+dest_name = cfg.get('defaults', {}).get('destinations', [None])[0]
+for rule in cfg.get('rules', []):
+    if rule.get('match', {}).get('entry_type') == entry_type:
+        dest_name = rule.get('destinations', [dest_name])[0]
+        break
+dest = cfg['destinations'][dest_name]
+path = os.path.expanduser(dest['path'])
+subdir = dest.get('subdir', '')
+print(os.path.join(path, subdir).rstrip('/'))
+" note  # replace 'note' with actual entry_type once known
+   ```
+   Use the printed path as `<BLOG_DIR>`. The routing YAML is the single source of truth for where blog entries are written — no per-project CLAUDE.md configuration needed.
+
+2. **`Blog directory:` field** in CLAUDE.md — explicit path override (e.g. `Blog directory: site/_posts/`). Use only if blog-routing.yaml is absent.
    ```bash
    grep -i "blog directory:" CLAUDE.md 2>/dev/null
    ```
 
-2. **Routing table** in CLAUDE.md — if no `Blog directory:` field, check `## Routing` for a `blog` row:
+3. **Routing table** in CLAUDE.md — if neither above is configured, check `## Routing` for a `blog` row:
    ```bash
    grep -A 20 "^## Routing$" CLAUDE.md 2>/dev/null | grep "^| blog"
    ```
    - `blog → workspace`: write to `<Workspace>/blog/` (read `**Workspace:**` property)
    - `blog → project`: write to `<Project repo>/blog/`
 
-3. **Default**: `blog/` relative to CWD — only if neither of the above is configured.
+4. **Default**: `blog/` relative to CWD — only if none of the above is configured.
 
 Resolve `<BLOG_DIR>` to an **absolute path** so that all git operations use `git -C <workspace-or-project-path>` rather than relying on CWD.
 
