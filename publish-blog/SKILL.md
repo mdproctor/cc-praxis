@@ -8,8 +8,8 @@ description: >
 
 # Publish Blog
 
-Routes blog entries from the project's `docs/_posts/` directory to external
-publishing destinations based on `blog-routing.yaml` routing rules.
+Routes blog entries from the workspace blog directory to external publishing
+destinations based on `blog-routing.yaml` routing rules.
 
 This is a **second-level routing** step, independent of the workspace `## Routing`
 config used by `epic`. That config controls where the `blog/` directory lives.
@@ -28,6 +28,24 @@ This skill controls where individual entries are cross-posted to blog platforms.
 
 ## Workflow
 
+### Step 0 — Resolve blog directory
+
+Use the same three-layer resolution as write-blog:
+
+1. `Blog directory:` field in CLAUDE.md — explicit path, highest priority
+2. `## Routing` table in CLAUDE.md — `blog → workspace` means `<Workspace>/blog/`; `blog → project` means `<Project repo>/blog/`
+3. Default: `blog/` relative to CWD
+
+```bash
+# Check for explicit Blog directory field
+grep -i "blog directory:" CLAUDE.md 2>/dev/null
+
+# Otherwise check routing table
+grep -A 20 "^## Routing$" CLAUDE.md 2>/dev/null | grep "^| blog"
+```
+
+Resolve `BLOG_DIR` to an **absolute path** before proceeding.
+
 ### Step 1 — Load routing config
 
 Check for configs:
@@ -41,11 +59,15 @@ If global config is missing, stop and tell the user:
 > "No global routing config found at `~/.claude/blog-routing.yaml`.
 > Create it first — see the routing config format in the Blog Entry Types Design spec."
 
-Use `scripts/blog_router.py` to load and merge the configs:
+Use `blog_router.py` from cc-praxis to load and merge the configs:
 
 ```python
-from scripts.blog_router import BlogRouter, load_routing_config, merge_configs
+import sys
 from pathlib import Path
+
+CC_PRAXIS = Path.home() / 'claude/cc-praxis'
+sys.path.insert(0, str(CC_PRAXIS / 'scripts'))
+from blog_router import BlogRouter, load_routing_config, merge_configs
 
 global_config = load_routing_config(Path.home() / '.claude/blog-routing.yaml')
 project_config = None
@@ -56,12 +78,16 @@ merged = merge_configs(global_config, project_config)
 router = BlogRouter(merged)
 ```
 
+If `~/claude/cc-praxis/scripts/blog_router.py` does not exist, fall back to
+direct routing: read `~/.claude/blog-routing.yaml` with PyYAML directly and
+match `entry_type` against the rules manually — no Python import needed.
+
 ### Step 2 — Scan blog entries
 
-Read all entries in `docs/_posts/`:
+Read all entries in `$BLOG_DIR`:
 
 ```bash
-ls docs/_posts/*.md | sort
+ls "$BLOG_DIR"/*.md | grep -v INDEX | sort
 ```
 
 For each entry, parse the YAML frontmatter to extract:
@@ -70,7 +96,7 @@ For each entry, parse the YAML frontmatter to extract:
 - `projects` — list of project identifiers
 - `tags` — list of topic tags (may be absent or empty)
 
-Use `scripts/utils/yaml_utils.py` → `extract_frontmatter()` for parsing.
+Parse YAML frontmatter directly with PyYAML (split on `---` delimiters) — no utility script dependency needed.
 
 Skip entries where `entry_type` is missing (warn the user).
 
@@ -132,7 +158,7 @@ If any target directory is missing, warn before proceeding:
 For each (entry, destination) pair approved by the user:
 
 ```bash
-cp "docs/_posts/<filename>" "<target_dir>/<filename>"
+cp "$BLOG_DIR/<filename>" "<target_dir>/<filename>"
 ```
 
 If the destination is a git repo:
@@ -260,9 +286,9 @@ rules:
 
 **Invoked by:** User directly — "publish blog", "cross-post entries", `/publish-blog`
 
-**Reads output of:** [`write-blog`] — the blog entries in `docs/_posts/`
+**Reads output of:** [`write-blog`] — the blog entries in the resolved `$BLOG_DIR`
 
-**Uses:** `scripts/blog_router.py` — routing config loader and resolver
+**Uses:** `~/claude/cc-praxis/scripts/blog_router.py` — routing config loader and resolver (falls back to direct PyYAML parsing if absent)
 
 **Related:** `epic` — Level 1 routing (where the `blog/` directory lives).
 This skill is Level 2 routing (per-entry cross-posting to platforms). The two are
