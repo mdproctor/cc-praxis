@@ -1,94 +1,122 @@
-# Design: diary→log Subtype Sweep
+# Design: Revert log→diary Subtype (issue #96)
 
-**Date:** 2026-05-22
+**Date:** 2026-05-22 (revised same day)
 **Issue:** #96
 **Branch:** issue-96-diary-to-log-sweep
 
-## Context
+## Decision
 
-The `note` subtype was renamed from `diary` to `log` during taxonomy work (refs #95). Skill files and the taxonomy definition were updated at that time. This sweep completes the rename by updating all remaining `subtype: diary` occurrences across the full `~/claude/` tree.
+The rename of `subtype: diary` → `subtype: log` (refs #95) was a mistake. "Log" implies
+dry, chronological, technical records. Write-blog produces personal, narrative,
+in-the-moment writing — that is a diary, not a log. The taxonomy value should match
+the character of the content and the natural English word for it.
+
+This issue now reverts the partial rename rather than completing it.
+
+## Eventual Consistency
+
+Active Claude sessions that loaded the skills before this fix will continue generating
+`subtype: log` entries until they reload. The revert script must therefore be:
+- **Kept** in `scripts/` (not a throwaway `/tmp/` script)
+- **Re-run periodically** on posts directories until all sessions have picked up the updated skills
+- **Idempotent** — files already at `subtype: diary` are untouched
 
 ## Scope
 
-### Frontmatter files (~275 files across 5 repos)
+### Frontmatter files to revert (~108 files, `subtype: log` → `subtype: diary`)
 
-| Repo | Path | Approx count |
-|------|------|-------------|
-| `cc-praxis` | `docs/_posts/` | 15 |
-| `mdproctor.github.io` | `_notes/` | ~236 |
-| `drools` | `_posts/` | 3 |
-| `hortora/hortora.github.io` | `_posts/` | 7 |
-| `permuplate` | `_posts/` | 14 |
+| Repo / path | Count |
+|---|---|
+| `mdproctor.github.io/_notes/` | 54 |
+| `public/casehub/engine/blog/` | 8 |
+| `public/casehub/work/blog/` | 6 |
+| `public/casehub/qhorus/blog/` | 6 |
+| `public/quarkmind/blog/` | 5 |
+| `public/casehub/ledger/blog/` | 5 |
+| `public/casehub/clinical/blog/` | 4 |
+| `drools/blog/` | 4 |
+| `public/casehub/claudony/blog/` | 3 |
+| `public/casehub/blog/` | 3 |
+| `public/casehub/devtown/blog/` | 2 |
+| `public/casehub/aml/blog/` | 2 |
+| `hortora/hortora.github.io/_posts/` | 2 |
+| `cc-praxis/docs/_posts/` | 2 |
+| `public/cc-praxis/blog/` | 1 |
 
-### Non-frontmatter targeted edits (10 files, all in `cc-praxis` unless noted)
+### Skill and doc files to revert (4 files in `cc-praxis`)
 
-| File | Nature of change |
-|------|-----------------|
-| `docs/blog/index.html:24` | Liquid filter `'diary'` → `'log'` |
-| `tests/test_jekyll_pages.py` | 6 lines: descriptions + assertions |
-| `tests/test_blog_frontmatter.py` | 4 valid-fixture lines + 1 intentionally-wrong fixture (`entry_type: log`) |
-| `mdproctor.github.io/CLAUDE.md:43` | Example frontmatter block |
-| `README.md:486` | Description text |
-| `docs/guide.html:981` | Documentation prose |
-| `scripts/validation/validate_blog_frontmatter.py:7` | Example comment |
+| File | What reverts |
+|---|---|
+| `write-blog/SKILL.md` | 3 lines: `subtype: log` → `subtype: diary` in frontmatter examples and success criteria |
+| `publish-blog/SKILL.md` | 1 line: subtype enumeration |
+| `docs/skills-catalog.md` | 1 line: subtype field description |
+| `docs/content-taxonomy-article-notes.md` | 1 line: taxonomy table |
 
 ### Do NOT change
 
-- Descriptive uses of "diary voice", "diary entries", "write-blog as a diary skill" — these describe character, not taxonomy values
-- `handover/SKILL.md` trigger description — "capture this session's work as a diary entry"
-- `update-claude-md/SKILL.md` — "blog and diary entries"
-- `docs/skills-catalog.md` trigger description — "add a diary entry"
-- Archive documents: `docs/superpowers/specs/`, `docs/superpowers/plans/`, `adr/`, `_site/`
-- `public/cc-praxis/plans/2026-04-14-*.md` — historical plan documents
+- Everything already at `subtype: diary` — untouched
+- "diary voice", "diary entries", "living diary" throughout skill files — correct as-is
+- `public/cc-praxis/HANDOFF.md` — prose reference to the old sweep direction, not frontmatter
+- Archive documents: `specs/`, `plans/`, `adr/`, `_site/`
 
 ## Implementation
 
-### Phase 1: Batch script (frontmatter files)
+### Phase 1: Revert script (`scripts/revert_diary_subtype.py`)
 
-A one-shot Python script at `/tmp/diary_to_log.py`:
+Permanent script in `scripts/` for re-running until sessions reach eventual consistency.
 
 **Algorithm:**
 1. Walk `~/claude/` recursively, targeting `.md` files
-2. Skip paths containing: `.git/`, `_site/`, `superpowers/specs/`, `superpowers/plans/`, `superpowers/snapshots/`, `adr/`
+2. Skip paths containing: `.git/`, `_site/`, `superpowers/specs/`, `superpowers/plans/`,
+   `superpowers/snapshots/`, `adr/`, `HANDOFF.md`
 3. For each file:
-   - Normalize CRLF → LF (guards against silent regex skip — GE-20260414-c12931)
-   - Use `re.match(r'^---\n(.*?)\n---\n?(.*)', content, re.DOTALL)` to isolate frontmatter (guards against split-on-quoted-value — GE-20260521-df2a10)
-   - Within frontmatter only: replace `^subtype: diary$` → `subtype: log` (whole-line match)
-   - Write only if changed; preserve original line endings after write
-4. Dry-run mode (default): print would-change list per repo, no writes
-5. `--apply` flag: apply changes, print per-repo count
+   - Normalize CRLF → LF (GE-20260414-c12931)
+   - Use `re.match(r'^---\n(.*?)\n---\n?(.*)', content, re.DOTALL)` to isolate frontmatter (GE-20260521-df2a10)
+   - Within frontmatter only: replace `^subtype: log$` → `subtype: diary` (whole-line)
+   - Write only if changed
+4. Dry-run (default): print would-change list per repo, no writes
+5. `--apply`: apply changes, print per-repo count
 
 **Run sequence:**
+```bash
+python3 scripts/revert_diary_subtype.py          # dry-run
+python3 scripts/revert_diary_subtype.py --apply  # apply
 ```
-python3 /tmp/diary_to_log.py          # dry-run: review list
-python3 /tmp/diary_to_log.py --apply  # apply
+
+**Re-run as needed** on posts directories while sessions reach eventual consistency:
+```bash
+python3 scripts/revert_diary_subtype.py --apply  # idempotent, safe to repeat
 ```
 
-### Phase 2: Targeted edits (non-frontmatter)
+### Phase 2: Skill and doc targeted edits
 
-Direct edits to the 10 files listed above. All `diary` → `log` in value positions; descriptive prose left unchanged.
+Direct edits to the 4 files listed above. These are the source of truth — once updated
+and synced, new sessions will generate `subtype: diary` correctly.
 
-Key judgment call on `test_blog_frontmatter.py` line 75: change `'entry_type': 'diary'` to `'entry_type': 'log'` — demonstrates the same "subtype value in wrong field" mistake with the current valid subtype name.
+Sync skills immediately after editing:
+```bash
+python3 scripts/claude-skill sync-local --all -y
+```
 
 ### Phase 3: Test and commit
 
 1. Run `python3 -m pytest tests/test_jekyll_pages.py tests/test_blog_frontmatter.py -v`
-2. Commit per repo:
-   - `cc-praxis`: `chore: sweep subtype diary→log (Closes #96)` — frontmatter + all targeted edits
-   - `mdproctor.github.io`: `chore: sweep subtype diary→log (refs #96)`
-   - `drools`: `chore: sweep subtype diary→log (refs #96)`
-   - `hortora/hortora.github.io`: `chore: sweep subtype diary→log (refs #96)`
-   - `permuplate`: `chore: sweep subtype diary→log (refs #96)`
+   (tests already expect `diary` — no test changes needed)
+2. Commit per git repo — identify repo roots from the path list above
+3. Commit message: `chore: revert subtype log→diary (refs #96)` per repo;
+   `cc-praxis` commit: `chore: revert subtype log→diary (Closes #96)`
 
 ## Garden GEs Applied
 
-- **GE-20260414-c12931** — CRLF normalization before frontmatter regex: `content.replace('\r\n', '\n')`
+- **GE-20260414-c12931** — CRLF normalization before frontmatter regex
 - **GE-20260521-df2a10** — Use `re.match(r'^---\n(.*?)\n---\n?(...)', re.DOTALL)` not `str.split('---', 2)`
 
 ## Success Criteria
 
 - [ ] Dry-run output reviewed and confirmed
-- [ ] `grep -rn "subtype: diary" ~/claude/` returns only archive/descriptive hits
-- [ ] `cc-praxis` tests pass
-- [ ] All 5 repos committed
+- [ ] Skill files updated and synced via `sync-local`
+- [ ] `grep -rn "subtype: log" ~/claude/` returns only HANDOFF.md and archive hits
+- [ ] `cc-praxis` tests pass without modification
+- [ ] All affected git repos committed
 - [ ] Issue #96 closed
+- [ ] Script retained in `scripts/` for re-runs during eventual consistency period
