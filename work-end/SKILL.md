@@ -332,8 +332,41 @@ git -C "$WORKSPACE" push  # single push for all workspace-main commits
 # to a later step. If BLOG_COUNT=0 this block is a no-op.
 if [ "$BLOG_COUNT" -gt 0 ]; then
   echo "Publishing $BLOG_COUNT blog entries from workspace main..."
-  # invoke publish-blog skill — it reads from $WORKSPACE/blog/ and commits/pushes
-  # to the publishing repo. Do not proceed past this block until it confirms success.
+  # invoke publish-blog skill
+  # After publish-blog returns, VERIFY the destination actually received the entries.
+  # Read ~/.claude/blog-routing.yaml to find the notes destination path and subdir,
+  # then count .md files there and compare with BLOG_COUNT.
+  #
+  # After publish-blog returns, VERIFY every workspace blog entry exists at the
+  # destination. Count-comparison is wrong (destination has entries from all projects).
+  # Instead check each filename individually. Run as inline Python:
+  #
+  #   python3 - "$WORKSPACE" <<'VERIFY'
+  #   import yaml, pathlib, sys
+  #   workspace = pathlib.Path(sys.argv[1])
+  #   cfg = yaml.safe_load(open(pathlib.Path("~/.claude/blog-routing.yaml").expanduser()))
+  #   # check all configured destinations (notes + articles)
+  #   dest_dirs = []
+  #   for dest in cfg["destinations"].values():
+  #       p = pathlib.Path(dest["path"]).expanduser() / dest.get("subdir", "")
+  #       dest_dirs.append(p)
+  #   blog_dir = workspace / "blog"
+  #   source_files = {f.name for f in blog_dir.glob("*.md") if f.name != "INDEX.md"}
+  #   missing = []
+  #   for name in source_files:
+  #       if not any((d / name).exists() for d in dest_dirs):
+  #           missing.append(name)
+  #   if missing:
+  #       print(f"PUBLISH FAILED: {len(missing)} entries not at any destination:")
+  #       for m in missing:
+  #           print(f"  {m}")
+  #       sys.exit(1)
+  #   print(f"PUBLISH VERIFIED: all {len(source_files)} entries confirmed at destination")
+  #   VERIFY
+  #
+  # If verification exits non-zero: HARD STOP. Do NOT proceed to 8b.
+  # Tell the user publish-blog failed and which entries are missing.
+  # The branch is not closed until every entry is confirmed at destination.
 fi
 # ─────────────────────────────────────────────────────────────────────────────
 
