@@ -1904,7 +1904,7 @@ Deterministic 3-digit counter assigned by sorting posts chronologically (filenam
 | title | from frontmatter or first heading |
 | path | relative to mark-proctor/ |
 | type | Note / Article / InfoBrief / News |
-| subtype | log / musing / idea / tutorial / how-to / explanation / commentary / essay / release / event / industry |
+| subtype | diary / musing / idea / tutorial / how-to / explanation / commentary / essay / release / event / industry |
 | confidence | high / medium / low / uncertain |
 | flag | blank or one-line ambiguity note |
 | quality | exemplary / strong / typical / weak |

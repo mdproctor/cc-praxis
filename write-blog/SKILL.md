@@ -299,7 +299,7 @@ Tags (optional):
 
 Set frontmatter from the response:
 - `entry_type: article` or `entry_type: note`
-- `subtype: log` (if note — omit for articles)
+- `subtype: diary` (if note — omit for articles)
 - `projects: [...]` — pre-populate from the `**Name:**` field in CLAUDE.md; user may extend.
   **If no `**Name:**` field exists in CLAUDE.md, stop and tell the user:**
   > "I can't find a `**Name:**` field in CLAUDE.md — this is needed to tag the blog entry
@@ -404,7 +404,7 @@ title: "<title>"
 date: YYYY-MM-DD
 type: <day-zero|phase-update|pivot|correction>   # omit for articles
 entry_type: <article|note>
-subtype: log                                     # omit for articles
+subtype: diary                                     # omit for articles
 projects: [<project>, ...]
 tags: [<tag>, ...]                               # omit if empty
 ---
@@ -531,7 +531,7 @@ Entry is complete when:
 - ✅ File exists at `<BLOG_DIR>/YYYY-MM-DD-<initials>NN-<title>.md` with correct initials and per-author sequence number
 - ✅ `entry_type` present in frontmatter (`article` or `note`)
 - ✅ `projects` non-empty list in frontmatter
-- ✅ `subtype: log` present for note entries; omitted for articles
+- ✅ `subtype: diary` present for note entries; omitted for articles
 - ✅ Voice is correct: "I" for developer perspective, "we" for collaboration, no third-person protagonist
 - ✅ Headings: thematic headings were kept or enhanced — none were replaced with bare structural slots
 - ✅ All required sections filled — no TBDs; "What Changed" may be omitted only if nothing pivoted

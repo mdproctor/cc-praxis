@@ -82,7 +82,7 @@ ls "$BLOG_DIR"/*.md | grep -v INDEX | sort
 
 For each entry, parse the YAML frontmatter to extract:
 - `entry_type` — article | note
-- `subtype` — log | ... (notes only)
+- `subtype` — diary | ... (notes only)
 - `projects` — list of project identifiers
 - `tags` — list of topic tags (may be absent or empty)
 
