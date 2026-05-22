@@ -22,23 +22,25 @@ When the user says "resume handover" (or similar), the job is to **locate and re
 
 ### Step R1 — Determine where HANDOFF.md lives
 
-Check CLAUDE.md for a workspace path. Look for a line like:
+Use the same convention as `work-start` — derive workspace from CWD via git, not from CLAUDE.md:
 
+```bash
+WORKSPACE=$(git rev-parse --show-toplevel 2>/dev/null)
+PROJECT=$(realpath "$WORKSPACE/proj" 2>/dev/null)
 ```
-**Workspace** (`/path/to/workspace`)
-```
 
-or an artifact routing table that maps `handover` → `workspace`.
+- `WORKSPACE` is the git root of the session's starting directory — this IS the workspace.
+- `PROJECT` follows the `proj/` symlink to the source repo (confirms we are in the workspace, not the project repo).
+- HANDOFF.md is at `$WORKSPACE/HANDOFF.md`.
 
-- **If a workspace path is found:** HANDOFF.md is at `<workspace>/HANDOFF.md`
-- **If no workspace is configured:** HANDOFF.md is at the project root (CWD)
+**If `proj/` does not exist** (no workspace configured), HANDOFF.md is at `$WORKSPACE/HANDOFF.md` anyway — CWD is both workspace and project in that case.
+
+**Do not scan CLAUDE.md for a workspace path.** Multiple CLAUDE.mds are loaded per session (global, parent, project). The parent's `**Workspace:**` declaration will be found first and will point to the wrong repo. `git rev-parse --show-toplevel` from the session's CWD is always correct.
 
 ### Step R2 — Check freshness, then read
 
 ```bash
-# In the workspace (or CWD if no workspace)
-cd <resolved-path>
-git log -1 --format="%ar" -- HANDOFF.md
+git -C "$WORKSPACE" log -1 --format="%ar" -- HANDOFF.md
 ```
 
 If more than a week old, flag it before using the context:
@@ -84,7 +86,7 @@ Be directionally honest — don't inflate Complexity to seem thorough.
 
 ### Common Mistake
 
-Do **not** look for HANDOFF.md in the current working directory if a workspace is configured. The CWD is typically the project repo (source code); HANDOFF.md is a methodology artifact and belongs in the workspace. Looking in the wrong place will return "file not found" even when the handover exists.
+Do **not** scan CLAUDE.md for a workspace path. Multiple CLAUDE.mds are loaded (global, parent, project-level), and a parent repo's `**Workspace:**` declaration will be picked up instead of the current session's workspace. Always use `git rev-parse --show-toplevel` from CWD — that is the workspace.
 
 ---
 
@@ -532,7 +534,7 @@ flowchart TD
 | Copying CLAUDE.md content | Auto-loaded; pure duplication | Omit entirely |
 | Skipping the freshness check | Old handover misleads the next session | `git log -1 --format="%ar" -- HANDOFF.md` before using |
 | Writing "continue work" as next step | Too vague to act on | Be specific — name the file, command, or section |
-| Looking for HANDOFF.md in the project repo when resuming | HANDOFF.md is a methodology artifact — it lives in the workspace, not source code | Check CLAUDE.md for workspace path before reading; see **Resuming a Handover** section |
+| Scanning CLAUDE.md for workspace path when resuming | Multiple CLAUDE.mds are loaded; parent's `**Workspace:**` is found first and points to the wrong repo | Use `git rev-parse --show-toplevel` from CWD — that is always the workspace |
 
 ---
 
