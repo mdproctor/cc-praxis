@@ -195,12 +195,12 @@ ls "$WORKSPACE/plans/" 2>/dev/null | grep -v "^attic$"
 cat "$WORKSPACE/design/JOURNAL.md"
 ```
 
-Compute and store the blog count. This variable drives the close plan and the
-publish step — treat it as a first-class output of Step 4, not a footnote:
+Check whether the blog directory has any entries at all. This only determines
+whether to run `publish-blog` — the skill itself handles the "what's new" check
+by comparing the workspace blog against the destination:
 
 ```bash
-BLOG_COUNT=$(ls "$WORKSPACE/blog/" 2>/dev/null | grep -v INDEX.md | grep "\.md$" | wc -l | tr -d ' ')
-echo "BLOG_COUNT=$BLOG_COUNT"   # surface it explicitly — do not silently swallow
+BLOG_HAS_ENTRIES=$(ls "$WORKSPACE/blog/" 2>/dev/null | grep -v INDEX.md | grep -q "\.md$" && echo yes || echo no)
 ```
 
 ---
@@ -244,13 +244,7 @@ collapsible comments on the GitHub issue. Skip silently if tracking disabled.
 
 ## Step 7 — Present close plan
 
-Before presenting, if `$BLOG_COUNT > 0`, output this acknowledgement on its own
-line so it cannot be missed:
-
-> ⚠️ **BLOG_COUNT=$BLOG_COUNT** — publish-blog will run as part of workspace-main
-> operations (8a). It is not optional and will not be skipped.
-
-Then present the plan:
+Present the plan:
 
 ```
 work-end close plan — <branch-name>
@@ -265,17 +259,14 @@ work-end close plan — <branch-name>
   Journal merge      → DESIGN.md  (<N> sections)
   Spec posting       → #<N>  (<filenames>)
   Issue              → close #<N>
-  Publish blog       → publish-blog ($BLOG_COUNT entries)   ← "skipped (no entries)" if BLOG_COUNT=0
-                       runs during workspace-main operations (8a), before returning
-                       to epic branch
+  Publish blog       → publish-blog (runs during 8a; skill determines what's new)
 
 Approve all, or step by step? (all / step)
 ```
 
-**The Publish blog line is always shown** — never omitted. When BLOG_COUNT=0,
-write "skipped (no entries)". When BLOG_COUNT>0, write the count and confirm it
-runs during 8a. A plan that lists blog entries in artifact routing but shows
-"skipped" for Publish blog is an error — stop and fix it.
+**The Publish blog line is always shown.** `publish-blog` compares the workspace
+blog against the destination and publishes only what's missing — it handles the
+"what's new" check. Do not attempt to pre-count new entries here.
 
 ---
 
@@ -328,45 +319,16 @@ fi
 git -C "$WORKSPACE" push  # single push for all workspace-main commits
 
 # ─── PUBLISH BLOG (runs here, while workspace is on main) ─────────────────────
-# Blog entries are now on workspace main. Publish immediately — do not defer
-# to a later step. If BLOG_COUNT=0 this block is a no-op.
-if [ "$BLOG_COUNT" -gt 0 ]; then
-  echo "Publishing $BLOG_COUNT blog entries from workspace main..."
-  # invoke publish-blog skill
-  # After publish-blog returns, VERIFY the destination actually received the entries.
-  # Read ~/.claude/blog-routing.yaml to find the notes destination path and subdir,
-  # then count .md files there and compare with BLOG_COUNT.
-  #
+# Blog entries are now on workspace main. publish-blog compares the workspace
+# blog against the destination and publishes only what's new — no pre-counting needed.
+# Skip only if the blog/ directory has no entries at all.
+if [ "$BLOG_HAS_ENTRIES" = "yes" ]; then
+  # invoke publish-blog skill — it reads from $WORKSPACE/blog/ and commits/pushes
+  # to the publishing repo. Do not proceed past this block until it confirms success.
   # After publish-blog returns, VERIFY every workspace blog entry exists at the
-  # destination. Count-comparison is wrong (destination has entries from all projects).
-  # Instead check each filename individually. Run as inline Python:
-  #
-  #   python3 - "$WORKSPACE" <<'VERIFY'
-  #   import yaml, pathlib, sys
-  #   workspace = pathlib.Path(sys.argv[1])
-  #   cfg = yaml.safe_load(open(pathlib.Path("~/.claude/blog-routing.yaml").expanduser()))
-  #   # check all configured destinations (notes + articles)
-  #   dest_dirs = []
-  #   for dest in cfg["destinations"].values():
-  #       p = pathlib.Path(dest["path"]).expanduser() / dest.get("subdir", "")
-  #       dest_dirs.append(p)
-  #   blog_dir = workspace / "blog"
-  #   source_files = {f.name for f in blog_dir.glob("*.md") if f.name != "INDEX.md"}
-  #   missing = []
-  #   for name in source_files:
-  #       if not any((d / name).exists() for d in dest_dirs):
-  #           missing.append(name)
-  #   if missing:
-  #       print(f"PUBLISH FAILED: {len(missing)} entries not at any destination:")
-  #       for m in missing:
-  #           print(f"  {m}")
-  #       sys.exit(1)
-  #   print(f"PUBLISH VERIFIED: all {len(source_files)} entries confirmed at destination")
-  #   VERIFY
-  #
-  # If verification exits non-zero: HARD STOP. Do NOT proceed to 8b.
-  # Tell the user publish-blog failed and which entries are missing.
-  # The branch is not closed until every entry is confirmed at destination.
+  # destination by checking each filename individually (count-comparison is wrong
+  # because the destination accumulates entries from all projects). Hard stop on failure.
+  :
 fi
 # ─────────────────────────────────────────────────────────────────────────────
 
@@ -447,8 +409,8 @@ would complete 8a (which lists blog in artifact routing), then proceed to 8f/8j
 without circling back to 8g. Moving it inside 8a eliminates the gap.
 
 **Verification:** the 8h final report must include a "Blog published" line when
-BLOG_COUNT > 0. If the report is missing this line, publish-blog was not run —
-stop, go back to workspace main, and run it before proceeding to 8i/8j.
+the blog directory has entries. If the report is missing this line, publish-blog
+was not run — stop, go back to workspace main, and run it before proceeding to 8i/8j.
 
 ### 8h — Final report
 
@@ -459,17 +421,19 @@ stop, go back to workspace main, and run it before proceeding to 8i/8j.
 ✅ Plans → attic
 ✅ Journal merged → DESIGN.md (N sections)
 ✅ Specs posted to #N, issue closed
-✅ Blog published → <destination path> (N entries)   ← "skipped (no entries)" if BLOG_COUNT=0
+✅ Blog published → <destination path> (N new entries published)   ← "skipped (no blog entries)" if blog/ is empty
 ❌ Push failed — <path>. Run: git -C <path> push
 ```
 
-**The `Blog published` line is always present.** When BLOG_COUNT=0, write
-"skipped (no entries)". When BLOG_COUNT>0, write the count and destination path.
+**The `Blog published` line is always present.** The N count comes from
+`publish-blog`'s own output (entries it actually copied) — not from a
+pre-computed total. "N new entries published" means N were missing at the
+destination; 0 means everything was already there.
 
-**If you are generating this report and the Blog published line shows anything
-other than a confirmed count with destination path when BLOG_COUNT > 0:**
-— stop. Do not proceed to 8i or 8j. Go back to workspace main and run
-`publish-blog` now. The report must reflect reality, not intention.
+**If the report shows N=0 but you expected new entries:** verify `publish-blog`
+ran by checking the destination directly, then re-run it on workspace main.
+The report must reflect what `publish-blog` actually did, not a count of files
+in the blog directory.
 
 ### 8i — Offer hygiene scan
 
@@ -533,13 +497,13 @@ If no `$BLESSED_REMOTE`: no PR step — the push to `origin/$PROJECT_BASE_BRANCH
 
 If user chose "step" in Step 7:
 
-- Phase 1: Artifact routing (8a including publish-blog if BLOG_COUNT > 0), 8b, 8c — confirm, execute, report → "Continue to journal merge? (y/n)"
+- Phase 1: Artifact routing (8a including publish-blog if blog/ has entries), 8b, 8c — confirm, execute, report → "Continue to journal merge? (y/n)"
 - Phase 2: Journal merge (8d) — show each `§Section` before/after, confirm → "Continue to GitHub posting? (y/n)"
 - Phase 3: Spec posting (8e), issue close (8f) → "Continue to branch merge? (y/n)"
 - Phase 4: Merge project branch to `$PROJECT_BASE_BRANCH` (8j), EPIC-CLOSED.md, return workspace to main.
 
 Note: publish-blog is part of Phase 1 (runs inside 8a), not Phase 3. It is not
-an "offer" — it is mandatory when BLOG_COUNT > 0.
+an "offer" — it always runs when blog/ has entries, and the skill handles what's new.
 
 ---
 
