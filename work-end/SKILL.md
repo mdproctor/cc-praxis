@@ -9,8 +9,8 @@ description: >
 # work-end
 
 Closes the current branch cleanly. Promotes artifacts, merges the journal,
-closes the issue, rebases the project branch onto project main, marks the
-branch closed, returns to main.
+closes the issue, rebases the project branch onto the project base branch, marks the
+branch closed, returns to the workspace base (main).
 
 ---
 
@@ -19,7 +19,12 @@ branch closed, returns to main.
 ```bash
 PROJECT=$(grep "add-dir" CLAUDE.md | head -1 | sed 's/.*add-dir //')
 WORKSPACE=$(grep "^\*\*Workspace:\*\*" CLAUDE.md | head -1 | sed 's/.*`\(.*\)`.*/\1/')
+PROJECT_BASE_BRANCH=$(grep "^\*\*Project base branch:\*\*" CLAUDE.md 2>/dev/null | head -1 | sed 's/.*`\(.*\)`.*/\1/')
+[ -z "$PROJECT_BASE_BRANCH" ] && PROJECT_BASE_BRANCH="main"
 ```
+
+`PROJECT_BASE_BRANCH` is the project's base branch — read from `**Project base branch:** \`<name>\``
+in CLAUDE.md; defaults to `main`. The workspace always uses `main` as its base branch.
 
 ---
 
@@ -55,6 +60,8 @@ CURRENT_WORKSPACE=$(git -C "$WORKSPACE" branch --show-current)
 PROJECT=$(grep "add-dir" CLAUDE.md | head -1 | sed 's/.*add-dir //')
 WORKSPACE=$(grep "^\*\*Workspace:\*\*" CLAUDE.md | head -1 | sed 's/.*`\(.*\)`.*/\1/')
 OWNER_REPO=$(grep "GitHub repo:" CLAUDE.md | head -1 | sed 's/.*GitHub repo: *//')
+PROJECT_BASE_BRANCH=$(grep "^\*\*Project base branch:\*\*" CLAUDE.md 2>/dev/null | head -1 | sed 's/.*`\(.*\)`.*/\1/')
+[ -z "$PROJECT_BASE_BRANCH" ] && PROJECT_BASE_BRANCH="main"
 ```
 
 ---
@@ -435,9 +442,9 @@ other than a confirmed count with destination path when BLOG_COUNT > 0:**
 
 "Run branch hygiene scan? Checks Flyway conflicts, unmerged code, stale branches. (y/n)"
 
-### 8j — Rebase project branch onto project main, push, offer upstream PR
+### 8j — Rebase project branch onto project base branch, push, offer upstream PR
 
-**This step is mandatory.** Implementation commits on the project branch must land on project main before the branch is marked closed.
+**This step is mandatory.** Implementation commits on the project branch must land on `$PROJECT_BASE_BRANCH` before the branch is marked closed.
 
 **Detect remote topology first:**
 
@@ -455,39 +462,39 @@ BLESSED_REMOTE=$(git -C "$PROJECT" remote get-url upstream 2>/dev/null && echo "
 **Rebase:**
 
 ```bash
-git -C "$PROJECT" fetch "$FORK_REMOTE" main 2>/dev/null || echo "⚠️  No network — using local main"
-git -C "$PROJECT" checkout main
+git -C "$PROJECT" fetch "$FORK_REMOTE" "$PROJECT_BASE_BRANCH" 2>/dev/null || echo "⚠️  No network — using local $PROJECT_BASE_BRANCH"
+git -C "$PROJECT" checkout "$PROJECT_BASE_BRANCH"
 git -C "$PROJECT" rebase "$BRANCH_NAME"
 ```
 
 **If rebase fails (conflict):**
 - Report the conflicting files verbatim.
 - **Stop. Do not proceed to Step 9.**
-- Instruct the user: resolve conflicts on project main, then re-run `work end` to complete the close.
+- Instruct the user: resolve conflicts on `$PROJECT_BASE_BRANCH`, then re-run `work end` to complete the close.
 
 **Push to fork remote:**
 
-> "Push project main to `$FORK_REMOTE`? (y/n)"
+> "Push `$PROJECT_BASE_BRANCH` to `$FORK_REMOTE`? (y/n)"
 
 ```bash
-git -C "$PROJECT" push "$FORK_REMOTE" main
+git -C "$PROJECT" push "$FORK_REMOTE" "$PROJECT_BASE_BRANCH"
 ```
 
 **Offer upstream PR (fork model only):**
 
 If `$BLESSED_REMOTE` is non-empty:
-> "Open a PR from `$FORK_REMOTE/main` → `$BLESSED_REMOTE/main`? (y/n)"
+> "Open a PR from `$FORK_REMOTE/$PROJECT_BASE_BRANCH` → `$BLESSED_REMOTE/$PROJECT_BASE_BRANCH`? (y/n)"
 
 If yes:
 ```bash
-gh pr create --base main --head "$(git -C "$PROJECT" remote get-url "$FORK_REMOTE" \
-  | sed 's|.*github.com[:/]\(.*\)\.git|\1|'):main" \
+gh pr create --base "$PROJECT_BASE_BRANCH" --head "$(git -C "$PROJECT" remote get-url "$FORK_REMOTE" \
+  | sed 's|.*github.com[:/]\(.*\)\.git|\1|'):$PROJECT_BASE_BRANCH" \
   --title "<issue title>" --body "Closes #$ISSUE_N"
 ```
 
-If no `$BLESSED_REMOTE`: no PR step — the push to `origin/main` is the final delivery.
+If no `$BLESSED_REMOTE`: no PR step — the push to `origin/$PROJECT_BASE_BRANCH` is the final delivery.
 
-**Why rebase and not merge --no-ff?** Rebase keeps the project main history linear and avoids a merge commit that references a branch consumers never saw. Fast-forward is a safe subset — `git rebase` fast-forwards when possible, replays commits otherwise.
+**Why rebase and not merge --no-ff?** Rebase keeps the project base branch history linear and avoids a merge commit that references a branch consumers never saw. Fast-forward is a safe subset — `git rebase` fast-forwards when possible, replays commits otherwise.
 
 ### Step path (alternative to all-at-once)
 
@@ -496,7 +503,7 @@ If user chose "step" in Step 7:
 - Phase 1: Artifact routing (8a including publish-blog if BLOG_COUNT > 0), 8b, 8c — confirm, execute, report → "Continue to journal merge? (y/n)"
 - Phase 2: Journal merge (8d) — show each `§Section` before/after, confirm → "Continue to GitHub posting? (y/n)"
 - Phase 3: Spec posting (8e), issue close (8f) → "Continue to branch merge? (y/n)"
-- Phase 4: Merge project branch to main (8j), EPIC-CLOSED.md, return workspace to main.
+- Phase 4: Merge project branch to `$PROJECT_BASE_BRANCH` (8j), EPIC-CLOSED.md, return workspace to main.
 
 Note: publish-blog is part of Phase 1 (runs inside 8a), not Phase 3. It is not
 an "offer" — it is mandatory when BLOG_COUNT > 0.
@@ -548,9 +555,9 @@ fi
 
 ---
 
-## Step 10 — Return to main
+## Step 10 — Return to base branches
 
-Project is already on main from Step 8j. Switch workspace:
+Project is already on `$PROJECT_BASE_BRANCH` from Step 8j. Switch workspace to main:
 
 ```bash
 git -C "$WORKSPACE" checkout main

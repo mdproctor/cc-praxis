@@ -9,7 +9,7 @@ description: >
 # work-pause
 
 Commits all work-in-progress, pushes an entry onto the pause stack on workspace
-main, and switches both repos to main. Supports multiple paused branches.
+main, and switches both repos to their base branch. Supports multiple paused branches.
 
 Uncommitted changes are always committed as a `WIP:` commit on the branch —
 no stash used. On resume, the WIP commit is reset so work continues cleanly.
@@ -21,7 +21,11 @@ no stash used. On resume, the WIP commit is reset so work continues cleanly.
 ```bash
 PROJECT=$(grep "add-dir" CLAUDE.md | head -1 | sed 's/.*add-dir //')
 WORKSPACE=$(grep "^\*\*Workspace:\*\*" CLAUDE.md | head -1 | sed 's/.*`\(.*\)`.*/\1/')
+PROJECT_BASE_BRANCH=$(grep "^\*\*Project base branch:\*\*" CLAUDE.md 2>/dev/null | head -1 | sed 's/.*`\(.*\)`.*/\1/')
+[ -z "$PROJECT_BASE_BRANCH" ] && PROJECT_BASE_BRANCH="main"
 ```
+
+`PROJECT_BASE_BRANCH` is the project's base branch — defaults to `main` if not set in CLAUDE.md.
 
 ---
 
@@ -120,10 +124,10 @@ of truth across sessions.
 
 ---
 
-## Step 6 — Switch project repo to main
+## Step 6 — Switch project repo to base branch
 
 ```bash
-git -C "$PROJECT" checkout main
+git -C "$PROJECT" checkout "$PROJECT_BASE_BRANCH"
 ```
 
 Prompt before `pull --rebase` — not automatic.

@@ -19,11 +19,16 @@ runs pre-checks. **Never skip this skill — even for small changes.**
 WORKSPACE=$(git rev-parse --show-toplevel 2>/dev/null)
 PROJECT=$(readlink -f proj 2>/dev/null)
 [ -z "$PROJECT" ] && { echo "⚠️ No proj/ symlink found. Run workspace-init to set up."; exit 1; }
+PROJECT_BASE_BRANCH=$(grep "^\*\*Project base branch:\*\*" CLAUDE.md 2>/dev/null | head -1 | sed 's/.*`\(.*\)`.*/\1/')
+[ -z "$PROJECT_BASE_BRANCH" ] && PROJECT_BASE_BRANCH="main"
 ```
 
 `WORKSPACE` is the git root of the current workspace. `PROJECT` follows the `proj/` symlink
 to the project repo. All git commands use `-C "$WORKSPACE"` or `-C "$PROJECT"` explicitly.
 Never use bare `git` without `-C <path>`. Never rely on CWD.
+
+`PROJECT_BASE_BRANCH` is the project's base branch — read from `**Project base branch:** \`<name>\``
+in CLAUDE.md; defaults to `main`. The workspace always uses `main` as its base branch.
 
 ---
 
@@ -200,7 +205,7 @@ Do not proceed without resolving this step.
 Derive: `issue-NNN-<slug>` (title lowercased, special chars stripped, max 30 chars after prefix).
 
 Show to user, allow override. Guards:
-- Reject `main`, `HEAD`, or any existing branch name in either repo.
+- Reject `main`, `$PROJECT_BASE_BRANCH`, `HEAD`, or any existing branch name in either repo.
 - The issue number (NNN) is the stable key — the slug is a convenience only.
 
 ### Step 6 — Flyway V scan
@@ -209,7 +214,7 @@ Show to user, allow override. Guards:
 git -C "$PROJECT" fetch --all 2>/dev/null || echo "⚠️ No network — scan incomplete"
 ```
 
-If network available: scan main + all remote branches for claimed V numbers. Compute
+If network available: scan `$PROJECT_BASE_BRANCH` + all remote branches for claimed V numbers. Compute
 `next-safe-v = max + 1`. If conflict found: warn, show offending branches, block until acknowledged.
 
 Only ask about Flyway if the user described migration work:

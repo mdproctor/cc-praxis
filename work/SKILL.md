@@ -34,7 +34,7 @@ correct skill — developer says `work` to begin, `work end` to close,
 WORKSPACE=$(grep "^\*\*Workspace:\*\*" CLAUDE.md 2>/dev/null | head -1 | sed "s/.*\`\(.*\)\`.*/\1/")
 STACK_FILE="$WORKSPACE/design/.pause-stack"
 STACK_DEPTH=$(grep -c "^- branch:" "$STACK_FILE" 2>/dev/null || echo 0)
-CURRENT_BRANCH=$(git branch --show-current 2>/dev/null)
+CURRENT_BRANCH=$(git -C "$WORKSPACE" branch --show-current 2>/dev/null)
 IS_MAIN=$([ "$CURRENT_BRANCH" = "main" ] && echo "yes" || echo "no")
 ```
 

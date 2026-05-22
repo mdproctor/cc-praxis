@@ -10,7 +10,7 @@ description: >
 # work-resume
 
 Resumes a paused branch from the stack: lets the user pick, rebases the branch
-onto current main (picking up any work that landed since it was paused), resets
+onto the current project base branch (picking up any work that landed since it was paused), resets
 the WIP commit to restore working state, removes the entry from the stack.
 
 ---
@@ -20,7 +20,11 @@ the WIP commit to restore working state, removes the entry from the stack.
 ```bash
 PROJECT=$(grep "add-dir" CLAUDE.md | head -1 | sed 's/.*add-dir //')
 WORKSPACE=$(grep "^\*\*Workspace:\*\*" CLAUDE.md | head -1 | sed 's/.*`\(.*\)`.*/\1/')
+PROJECT_BASE_BRANCH=$(grep "^\*\*Project base branch:\*\*" CLAUDE.md 2>/dev/null | head -1 | sed 's/.*`\(.*\)`.*/\1/')
+[ -z "$PROJECT_BASE_BRANCH" ] && PROJECT_BASE_BRANCH="main"
 ```
+
+`PROJECT_BASE_BRANCH` is the project's base branch — defaults to `main` if not set in CLAUDE.md.
 
 ---
 
@@ -109,10 +113,10 @@ Verify both are on the same branch after switching.
 
 ---
 
-## Step 6 — Rebase branch onto current main
+## Step 6 — Rebase branch onto current base branch
 
 ```bash
-git -C "$PROJECT" rebase main
+git -C "$PROJECT" rebase "$PROJECT_BASE_BRANCH"
 ```
 
 **If rebase succeeds:** continue to Step 7.
@@ -127,7 +131,7 @@ Workspace branch does not need rebasing — it holds methodology artifacts only,
 not implementation code. Switch workspace to the branch but do not rebase it.
 
 ```bash
-git -C "$WORKSPACE" rebase main 2>/dev/null || true  # best-effort only
+git -C "$WORKSPACE" rebase main 2>/dev/null || true  # best-effort only; workspace always uses main
 ```
 
 ---
@@ -155,7 +159,7 @@ The reset restores the working tree to exactly where it was when work was paused
 ```
 ▶  Resumed: <branch-name>  Issue: #<N>
    Paused <duration> ago
-   Rebased onto main  (+N commits incorporated)
+   Rebased onto $PROJECT_BASE_BRANCH  (+N commits incorporated)
    WIP restored: project=<yes|no>  workspace=<yes|no>
    Stack remaining: <N> paused branch(es)
 ```
