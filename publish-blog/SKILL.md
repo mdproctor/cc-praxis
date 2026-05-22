@@ -48,39 +48,29 @@ Resolve `BLOG_DIR` to an **absolute path** before proceeding.
 
 ### Step 1 — Load routing config
 
-Check for configs:
-
 ```bash
 ls ~/.claude/blog-routing.yaml 2>/dev/null && echo "global found"
-ls blog-routing.yaml 2>/dev/null && echo "project found"
+ls <WORKSPACE>/blog-routing.yaml 2>/dev/null && echo "project found"
 ```
 
-If global config is missing, stop and tell the user:
-> "No global routing config found at `~/.claude/blog-routing.yaml`.
-> Create it first — see the routing config format in the Blog Entry Types Design spec."
+If global config is missing, stop:
+> "No global routing config found at `~/.claude/blog-routing.yaml`."
 
-Use `blog_router.py` from cc-praxis to load and merge the configs:
+Read the global config with PyYAML. If a project-level `blog-routing.yaml`
+exists in the workspace, read it too and merge: project `destinations` and
+`rules` extend (not replace) the global ones.
 
-```python
-import sys
-from pathlib import Path
+**No external script.** Apply the routing logic directly:
 
-CC_PRAXIS = Path.home() / 'claude/cc-praxis'
-sys.path.insert(0, str(CC_PRAXIS / 'scripts'))
-from blog_router import BlogRouter, load_routing_config, merge_configs
+**Matching rules** — for each entry, evaluate every rule in order:
+- `entry_type: X` — exact match against frontmatter `entry_type`
+- `tags: [a, b]` — entry must have at least one of these tags
+- `projects: [x, y]` — entry must belong to at least one of these projects
+- Multiple fields in one rule → AND logic
+- Multiple matching rules → union their `destinations` lists
+- No rule matches → use `defaults.destinations`
 
-global_config = load_routing_config(Path.home() / '.claude/blog-routing.yaml')
-project_config = None
-if Path('blog-routing.yaml').exists():
-    project_config = load_routing_config(Path('blog-routing.yaml'))
-
-merged = merge_configs(global_config, project_config)
-router = BlogRouter(merged)
-```
-
-If `~/claude/cc-praxis/scripts/blog_router.py` does not exist, fall back to
-direct routing: read `~/.claude/blog-routing.yaml` with PyYAML directly and
-match `entry_type` against the rules manually — no Python import needed.
+Collect `(entry_filename, [destination_names])` pairs. Proceed to Step 4.
 
 ### Step 2 — Scan blog entries
 
@@ -288,7 +278,7 @@ rules:
 
 **Reads output of:** [`write-blog`] — the blog entries in the resolved `$BLOG_DIR`
 
-**Uses:** `~/claude/cc-praxis/scripts/blog_router.py` — routing config loader and resolver (falls back to direct PyYAML parsing if absent)
+**No external scripts required** — routing logic is applied inline from the config YAML.
 
 **Related:** `epic` — Level 1 routing (where the `blog/` directory lives).
 This skill is Level 2 routing (per-entry cross-posting to platforms). The two are
