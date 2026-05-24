@@ -52,6 +52,15 @@ CURRENT_WORKSPACE=$(git -C "$WORKSPACE" branch --show-current)
 3. **If `$WORKSPACE/design/.meta` exists but `$CURRENT_WORKSPACE == main`** (orphaned)
    → hard stop. Offer to switch to the surviving branch and close from there, or discard.
 
+4. **Workspace must have a clean working tree** — run before any other work:
+   ```bash
+   git -C "$WORKSPACE" status --short
+   ```
+   If any output appears, hard stop:
+   > "Workspace has uncommitted changes on `$BRANCH_NAME`. Commit or discard them
+   > before running work-end — stash is not used in this workflow."
+   Do not proceed until the working tree is clean. Never stash automatically.
+
 ---
 
 ## Step 0 — Resolve paths
@@ -278,12 +287,8 @@ failure prompts the user before continuing to issue close.
 ### 8a — Batch workspace-main operations (single main-visit)
 
 ```bash
-# Capture stash ref if workspace has uncommitted changes
-WS_STASH_8A=none
-if git -C "$WORKSPACE" status --short | grep -q .; then
-  stash_out=$(git -C "$WORKSPACE" stash)
-  echo "$stash_out" | grep -q "Saved working" && WS_STASH_8A="stash@{0}"
-fi
+# Pre-condition: clean working tree verified in Pre-conditions step 4.
+# Never stash — if the tree is dirty, work-end should have stopped already.
 
 git -C "$WORKSPACE" checkout main
 git -C "$WORKSPACE" pull --rebase origin main
@@ -333,11 +338,6 @@ fi
 # ─────────────────────────────────────────────────────────────────────────────
 
 git -C "$WORKSPACE" checkout "$BRANCH_NAME"
-# Use the captured ref, not bare stash pop
-if [ "$WS_STASH_8A" != "none" ]; then
-  git -C "$WORKSPACE" stash pop "$WS_STASH_8A" 2>/dev/null \
-    || echo "⚠️ Workspace stash pop failed ($WS_STASH_8A) — resolve manually"
-fi
 ```
 
 ### 8b — Project-routed artifact promotion (ADRs, specs)
