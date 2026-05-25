@@ -1,6 +1,5 @@
 {
   "name": "install-skills",
-  "description": "/install-skills - one-time marketplace bootstrap",
-  "version": "1.0.0",
-  "dependencies": []
+  "description": "One-time marketplace bootstrap: configure hooks and install skills. Includes SessionStart hook that checks for CLAUDE.md, project type, workspace, and work tracking on every session.",
+  "version": "1.1.0"
 }
