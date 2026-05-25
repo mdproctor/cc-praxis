@@ -1,0 +1,29 @@
+#!/bin/bash
+# commit-msg hook: require issue reference or explicit no-issue bypass
+# Installed by issue-workflow when Work Tracking is enabled.
+
+MSG=$(cat "$1")
+
+# Allow: issue reference anywhere in the message
+if echo "$MSG" | grep -qE '(Refs|Closes|Fixes|Resolves) #[0-9]+'; then
+  exit 0
+fi
+
+# Allow: explicit no-issue bypass
+if echo "$MSG" | grep -qi 'no-issue'; then
+  exit 0
+fi
+
+echo ""
+echo "  Commit blocked — no issue reference found."
+echo ""
+echo "  Add one of:"
+echo "    Refs #N    — work in progress on issue N"
+echo "    Closes #N  — completes issue N"
+echo "    no-issue   — intentionally unlinked (add a brief reason)"
+echo ""
+echo "  Examples:"
+echo "    fix(auth): correct token expiry  Refs #42"
+echo "    chore: update .gitignore  no-issue: tooling only"
+echo ""
+exit 1
