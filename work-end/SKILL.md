@@ -268,7 +268,7 @@ work-end close plan — <branch-name>
   Journal merge      → DESIGN.md  (<N> sections)
   Spec posting       → #<N>  (<filenames>)
   Issue              → close #<N>
-  Publish blog       → publish-blog (runs during 8a; skill determines what's new)
+  Publish blog       → 8g (N unpublished entries → destination)
 
 Approve all, or step by step? (all / step)
 ```
@@ -322,20 +322,6 @@ if [ "$DESIGN_REPO_KEY" = "workspace" ]; then
 fi
 
 git -C "$WORKSPACE" push  # single push for all workspace-main commits
-
-# ─── PUBLISH BLOG (runs here, while workspace is on main) ─────────────────────
-# Blog entries are now on workspace main. publish-blog compares the workspace
-# blog against the destination and publishes only what's new — no pre-counting needed.
-# Skip only if the blog/ directory has no entries at all.
-if [ "$BLOG_HAS_ENTRIES" = "yes" ]; then
-  # invoke publish-blog skill — it reads from $WORKSPACE/blog/ and commits/pushes
-  # to the publishing repo. Do not proceed past this block until it confirms success.
-  # After publish-blog returns, VERIFY every workspace blog entry exists at the
-  # destination by checking each filename individually (count-comparison is wrong
-  # because the destination accumulates entries from all projects). Hard stop on failure.
-  :
-fi
-# ─────────────────────────────────────────────────────────────────────────────
 
 git -C "$WORKSPACE" checkout "$BRANCH_NAME"
 ```
@@ -398,19 +384,42 @@ CLOSE_REPO="${ISSUE_REPO_GITHUB:-$OWNER_REPO}"
 [ -n "$ISSUE_N" ] && gh issue close "$ISSUE_N" --repo "$CLOSE_REPO"
 ```
 
-### 8g — Publish blog (runs inside 8a — not a separate step)
+### 8g — Publish blog
 
-Blog publishing now runs **inside 8a**, immediately after `git push` and before
-returning to the epic branch. See the `# PUBLISH BLOG` block in 8a above.
+**Run on workspace main** (switch if needed — workspace must be on main when this runs).
 
-This section exists only to document the decision: publish-blog was moved into 8a
-because positioning it as a separate step created a reliable skip vector — Claude
-would complete 8a (which lists blog in artifact routing), then proceed to 8f/8j
-without circling back to 8g. Moving it inside 8a eliminates the gap.
+Resolve the blog destination from `~/.claude/blog-routing.yaml`. For each workspace blog
+entry not yet present at the destination, copy and commit:
 
-**Verification:** the 8h final report must include a "Blog published" line when
-the blog directory has entries. If the report is missing this line, publish-blog
-was not run — stop, go back to workspace main, and run it before proceeding to 8i/8j.
+```bash
+BLOG_DEST=$(python3 -c "
+import yaml, os
+cfg = yaml.safe_load(open(os.path.expanduser('~/.claude/blog-routing.yaml')))
+dest = cfg['destinations'][cfg['defaults']['destinations'][0]]
+print(os.path.expanduser(dest['path'] + dest.get('subdir', '')).rstrip('/'))
+")
+
+# Find unpublished entries (filename comparison — count comparison is wrong because
+# destination accumulates entries from all projects)
+comm -23 \
+  <(ls "$WORKSPACE/blog/" | grep "\.md$" | grep -v INDEX | sort) \
+  <(ls "$BLOG_DEST/" | sort) \
+  | while read entry; do
+      cp "$WORKSPACE/blog/$entry" "$BLOG_DEST/$entry"
+      git -C "$(dirname "$BLOG_DEST")" add "${BLOG_DEST##*/}/$entry"
+    done
+
+# Commit and push only if new entries were added
+if git -C "$(dirname "$BLOG_DEST")" diff --cached --quiet; then
+  echo "Blog: 0 new entries (all already published)"
+else
+  git -C "$(dirname "$BLOG_DEST")" commit -m "chore: publish blog entries from $BRANCH_NAME"
+  git -C "$(dirname "$BLOG_DEST")" push
+fi
+```
+
+**Hard stop if blog directory has entries and publish fails.** Do not proceed to 8h until
+every workspace blog entry exists at the destination. Verify with the same `comm` check.
 
 ### 8h — Final report
 
@@ -421,23 +430,39 @@ was not run — stop, go back to workspace main, and run it before proceeding to
 ✅ Plans → attic
 ✅ Journal merged → DESIGN.md (N sections)
 ✅ Specs posted to #N, issue closed
-✅ Blog published → <destination path> (N new entries published)   ← "skipped (no blog entries)" if blog/ is empty
+✅ Blog published → <destination path> (N new entries)   ← "0 new (all current)" if nothing to publish
 ❌ Push failed — <path>. Run: git -C <path> push
 ```
 
-**The `Blog published` line is always present.** The N count comes from
-`publish-blog`'s own output (entries it actually copied) — not from a
-pre-computed total. "N new entries published" means N were missing at the
-destination; 0 means everything was already there.
+**The `Blog published` line is always present** — 0 new entries is a valid outcome,
+not a skip. If the line is absent entirely, 8g was not run — stop and run it before
+proceeding to 8i/8j.
 
-**If the report shows N=0 but you expected new entries:** verify `publish-blog`
-ran by checking the destination directly, then re-run it on workspace main.
-The report must reflect what `publish-blog` actually did, not a count of files
-in the blog directory.
+### 8i — Hygiene scan
 
-### 8i — Offer hygiene scan
+Always run — not an offer. Checks:
 
-"Run branch hygiene scan? Checks Flyway conflicts, unmerged code, stale branches. (y/n)"
+**1. Blog published** — verify every workspace blog entry exists at the destination:
+
+```bash
+UNPUBLISHED=$(comm -23 \
+  <(ls "$WORKSPACE/blog/" | grep "\.md$" | grep -v INDEX | sort) \
+  <(ls "$BLOG_DEST/" | sort))
+
+if [ -n "$UNPUBLISHED" ]; then
+  echo "⚠️ Unpublished blog entries:"
+  echo "$UNPUBLISHED"
+  echo "→ Return to 8g and publish before proceeding."
+fi
+```
+
+If any unpublished entries are found, stop and return to 8g. Do not proceed to 8j.
+
+**2. Flyway conflicts** — check for V-number collisions with other branches (if Flyway
+was involved on this branch).
+
+**3. Stale workspace branches** — list open branches (no `design/EPIC-CLOSED.md` in
+`design/`) with no commits in the last 7 days. Report only; do not act.
 
 ### 8j — Rebase project branch onto project base branch, push, offer upstream PR
 
@@ -502,8 +527,8 @@ If user chose "step" in Step 7:
 - Phase 3: Spec posting (8e), issue close (8f) → "Continue to branch merge? (y/n)"
 - Phase 4: Merge project branch to `$PROJECT_BASE_BRANCH` (8j), EPIC-CLOSED.md, return workspace to main.
 
-Note: publish-blog is part of Phase 1 (runs inside 8a), not Phase 3. It is not
-an "offer" — it always runs when blog/ has entries, and the skill handles what's new.
+Note: publish-blog (8g) runs after issue close (8f), before 8i hygiene scan. It is not
+an "offer" — it always runs. 8i then verifies the result; any unpublished entries block 8j.
 
 ---
 
