@@ -116,8 +116,7 @@ user confirms before proceeding.
 detect_capability() {
   local dest="$1"
   if [ -d "$dest/.git" ]; then
-    git -C "$dest" remote get-url origin &>/dev/null 2>&1 \
-      && echo "remote-git" || echo "local-git"
+    git -C "$dest" remote get-url origin &>/dev/null 2>&1 && echo "remote-git" || echo "local-git"
   else
     echo "filesystem"
   fi
@@ -227,8 +226,7 @@ in `.meta`. For each `§Section` anchor in JOURNAL.md, verify its heading still 
 unchanged in DESIGN.md.
 ```bash
 STORED=$(grep "^design-section-hashes:" "$WORKSPACE/design/.meta" | sed 's/design-section-hashes: //')
-CURRENT=$(grep "^## " "$DESIGN_REPO/DESIGN.md" 2>/dev/null \
-  | while read h; do printf "%s:%s|" "$(printf '%s' "$h" | shasum -a 256 | cut -c1-8)" "$h"; done)
+CURRENT=$(grep "^## " "$DESIGN_REPO/DESIGN.md" 2>/dev/null | while read h; do printf "%s:%s|" "$(printf '%s' "$h" | shasum -a 256 | cut -c1-8)" "$h"; done)
 ```
 If drift: `[U]` update journal anchors, `[S]` skip drifted sections, `[A]` abort.
 
@@ -403,10 +401,8 @@ print(os.path.expanduser(dest['path'] + dest.get('subdir', '')).rstrip('/'))
 
 # Find unpublished entries (filename comparison — count comparison is wrong because
 # destination accumulates entries from all projects)
-comm -23 \
-  <(ls "$WORKSPACE/blog/" | grep "\.md$" | grep -v INDEX | sort) \
-  <(ls "$BLOG_DEST/" | sort) \
-  | while read entry; do
+comm -23 <(ls "$WORKSPACE/blog/" | grep "\.md$" | grep -v INDEX | sort) \
+  <(ls "$BLOG_DEST/" | sort) | while read entry; do
       cp "$WORKSPACE/blog/$entry" "$BLOG_DEST/$entry"
       git -C "$(dirname "$BLOG_DEST")" add "${BLOG_DEST##*/}/$entry"
     done
@@ -447,8 +443,7 @@ Always run — not an offer. Checks:
 **1. Blog published** — verify every workspace blog entry exists at the destination:
 
 ```bash
-UNPUBLISHED=$(comm -23 \
-  <(ls "$WORKSPACE/blog/" | grep "\.md$" | grep -v INDEX | sort) \
+UNPUBLISHED=$(comm -23 <(ls "$WORKSPACE/blog/" | grep "\.md$" | grep -v INDEX | sort) \
   <(ls "$BLOG_DEST/" | sort))
 
 if [ -n "$UNPUBLISHED" ]; then
@@ -502,6 +497,25 @@ git -C "$PROJECT" rebase "$BRANCH_NAME"
 git -C "$PROJECT" push "$FORK_REMOTE" "$PROJECT_BASE_BRANCH"
 ```
 
+**Squash before blessed repo delivery (fork model only — mandatory):**
+
+Before prompting for delivery, run git-squash on the range `upstream/$PROJECT_BASE_BRANCH..HEAD`
+(or `$BLESSED_REMOTE/$PROJECT_BASE_BRANCH..HEAD`). This is not optional and must not be
+bypassed with `--no-verify`. The pre-push hook firing is the signal to run git-squash, not
+to skip it. Noise commits (chore, docs follow-ons, journal applies, CI fixups) must be
+compacted before the range is shared upstream.
+
+```bash
+# Show the commit range that will reach the blessed repo
+git -C "$PROJECT" log --oneline "$BLESSED_REMOTE/$PROJECT_BASE_BRANCH"..HEAD
+```
+
+Invoke `/git-squash` with the range `$BLESSED_REMOTE/$PROJECT_BASE_BRANCH..HEAD`.
+Wait for the squash plan, user approval, and execution before proceeding.
+
+If the user explicitly says "skip squash" or "no squash needed": accept and note it,
+then proceed. Never silently skip.
+
 **Blessed repo delivery (fork model only):**
 
 If `$BLESSED_REMOTE` is non-empty, always prompt — three choices:
@@ -515,10 +529,8 @@ If `$BLESSED_REMOTE` is non-empty, always prompt — three choices:
   ```
 - **R — Open PR:**
   ```bash
-  gh pr create --base "$PROJECT_BASE_BRANCH" \
-    --head "$(git -C "$PROJECT" remote get-url "$FORK_REMOTE" \
-      | sed 's|.*github.com[:/]\(.*\)\.git|\1|'):$PROJECT_BASE_BRANCH" \
-    --title "<issue title>" --body "Closes #$ISSUE_N"
+  gh pr create --base "$PROJECT_BASE_BRANCH" --head "$(git -C "$PROJECT" remote get-url "$FORK_REMOTE" \
+      | sed 's|.*github.com[:/]\(.*\)\.git|\1|'):$PROJECT_BASE_BRANCH" --title "<issue title>" --body "Closes #$ISSUE_N"
   ```
 - **N — Skip:** leave upstream for later; note it in the 8h report.
 

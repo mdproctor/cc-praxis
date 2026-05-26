@@ -61,6 +61,59 @@ and inform the user rather than silently falling back to text tools.
 
 ---
 
+## Lifecycle-managed projects
+
+IntelliJ projects may be in sleep states managed by the MCP lifecycle plugin. The plugin
+automatically frees memory when projects are idle. **Never ask the user to open a project —
+the plugin handles this transparently.**
+
+### Project states
+
+| State | Memory | What to do |
+|-------|--------|------------|
+| `active` | full | Use normally |
+| `background` | reduced | Use normally — index is live |
+| `dormant` | low | Use normally — any tool call wakes it |
+| `closed` | none | Provide `project_path` — auto-reopens (5–30s first time) |
+
+### Rules
+
+1. **Always include `project_path`** when you know which project you need. This is what
+   triggers auto-open for closed projects. Never omit it and never tell the user to open
+   the project themselves.
+
+2. **Check status before a batch of operations** if you are unsure what is open:
+   ```
+   ide_project_status
+   ```
+   Response shows which projects are open and their current mode.
+
+3. **If you get `no_project_open`** with a `managed_closed_projects` field in the error,
+   retry any tool call with `project_path` set to one of those paths. The plugin will
+   reopen it automatically. If all else fails, any tool call without `project_path`
+   will auto-open the first managed-closed project to restore MCP access.
+
+4. **`ide_open_project` does not enroll a project in lifecycle management.** Enrollment
+   happens on the first real semantic call (find references, diagnostics, refactoring)
+   after the project is open. Use `ide_open_project` only when a project has never been
+   opened and is not in the lifecycle manager's registry.
+
+5. **If a project is closed and you have its path, just use the path.** Do not call
+   `ide_open_project` first — the auto-open via `project_path` is more efficient and
+   works for all managed projects including ones closed by the lifecycle timer.
+
+### Example: working on a closed managed project
+
+```
+# Wrong — tells user to open it manually
+⚠️ eidos not open — please open /Users/dev/casehub/eidos
+
+# Right — just provide project_path, plugin reopens it
+ide_find_references { "project_path": "/Users/dev/casehub/eidos", "file": "...", ... }
+```
+
+---
+
 ## Decision rule
 
 **`intellij-index`** for anything semantic: navigation, references, refactoring, diagnostics.
