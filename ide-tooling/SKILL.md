@@ -21,6 +21,8 @@ and inform the user rather than silently falling back to text tools.
 
 ## `mcp__intellij-index` — Semantic index (always prefer for code intelligence)
 
+Multi-project aware: supports `project_path` to target any open or managed project.
+
 | Operation | Tool | Notes |
 |-----------|------|-------|
 | Find all usages of a symbol | `ide_find_references` | **Run before any rename or delete** — understand full impact first |
@@ -35,81 +37,54 @@ and inform the user rather than silently falling back to text tools.
 | **Safe move** — updates package/imports | `ide_move_file` | Never use bash mv for source files |
 | Safe delete — checks usages first | `ide_refactor_safe_delete` | Lists usages if deletion would break things |
 | Fast identifier/word search | `ide_search_text` | Faster than grep for exact names |
-| Errors, warnings, quick-fix intentions | `ide_diagnostics` | |
+| Errors, warnings, quick-fix intentions | `ide_diagnostics` | Supersedes `get_file_problems` |
+| All open/managed projects + their states | `ide_project_status` | **Use this, not `get_project_modules`** |
 | Check IDE is ready for semantic ops | `ide_index_status` | |
 | Sync IDE after external file changes | `ide_sync_files` | |
 
 ---
 
-## `mcp__intellij` — JetBrains official (for what intellij-index cannot do)
+## `mcp__intellij` — JetBrains official (window-scoped — only sees the focused project)
 
-| Operation | Tool |
-|-----------|------|
-| Build / compile | `build_project` |
-| Run a named test or app configuration | `execute_run_configuration` |
-| Hover documentation / type info at position | `get_symbol_info` |
-| File-level inspection results | `get_file_problems` |
-| Targeted text replacement (no semantic awareness) | `replace_text_in_file` |
-| Apply code formatting rules | `reformat_file` |
-| Project module structure | `get_project_modules` |
-| Library dependencies | `get_project_dependencies` |
-| Find files by glob pattern | `find_files_by_glob` |
-| Find files by name keyword | `find_files_by_name_keyword` |
-| Browse directory tree | `list_directory_tree` |
-| Run shell command in IDE terminal | `execute_terminal_command` |
-| Open a file in the editor | `open_file_in_editor` |
+Use only for operations `intellij-index` cannot do. Tools marked ⚠️ have an
+`intellij-index` equivalent that is multi-project aware — prefer those.
+
+| Operation | Tool | Note |
+|-----------|------|------|
+| Build / compile | `build_project` | |
+| Run a named test or app configuration | `execute_run_configuration` | |
+| Hover documentation / type info at position | `get_symbol_info` | |
+| File-level inspection results | `get_file_problems` | ⚠️ Use `ide_diagnostics` instead |
+| Targeted text replacement (no semantic awareness) | `replace_text_in_file` | |
+| Apply code formatting rules | `reformat_file` | |
+| Project module structure | `get_project_modules` | ⚠️ Use `ide_project_status` instead — multi-project aware |
+| Library dependencies | `get_project_dependencies` | |
+| Find files by glob pattern | `find_files_by_glob` | |
+| Find files by name keyword | `find_files_by_name_keyword` | ⚠️ Use `ide_find_file` instead |
+| Browse directory tree | `list_directory_tree` | |
+| Run shell command in IDE terminal | `execute_terminal_command` | |
+| Open a file in the editor | `open_file_in_editor` | |
 
 ---
 
 ## Lifecycle-managed projects
 
-IntelliJ projects may be in sleep states managed by the MCP lifecycle plugin. The plugin
-automatically frees memory when projects are idle. **Never ask the user to open a project —
-the plugin handles this transparently.**
+Projects may be sleeping to free memory. **Never ask the user to open a project.**
 
-### Project states
-
-| State | Memory | What to do |
-|-------|--------|------------|
-| `active` | full | Use normally |
-| `background` | reduced | Use normally — index is live |
-| `dormant` | low | Use normally — any tool call wakes it |
-| `closed` | none | Provide `project_path` — auto-reopens (5–30s first time) |
-
-### Rules
-
-1. **Always include `project_path`** when you know which project you need. This is what
-   triggers auto-open for closed projects. Never omit it and never tell the user to open
-   the project themselves.
-
-2. **Check status before a batch of operations** if you are unsure what is open:
-   ```
-   ide_project_status
-   ```
-   Response shows which projects are open and their current mode.
-
-3. **If you get `no_project_open`** with a `managed_closed_projects` field in the error,
-   retry any tool call with `project_path` set to one of those paths. The plugin will
-   reopen it automatically. If all else fails, any tool call without `project_path`
-   will auto-open the first managed-closed project to restore MCP access.
-
-4. **`ide_open_project` does not enroll a project in lifecycle management.** Enrollment
-   happens on the first real semantic call (find references, diagnostics, refactoring)
-   after the project is open. Use `ide_open_project` only when a project has never been
-   opened and is not in the lifecycle manager's registry.
-
-5. **If a project is closed and you have its path, just use the path.** Do not call
-   `ide_open_project` first — the auto-open via `project_path` is more efficient and
-   works for all managed projects including ones closed by the lifecycle timer.
-
-### Example: working on a closed managed project
+1. **Always include `project_path`** — it auto-opens closed projects (5–30s). Never tell
+   the user to open a project manually.
+2. **Use `ide_project_status` to see all open projects** — not `get_project_modules`,
+   which only sees the currently focused window and will mislead you when multiple
+   projects are managed.
+3. **If you get `no_project_open`** — retry any tool call with a `project_path` from the
+   error's `managed_closed_projects` list.
 
 ```
-# Wrong — tells user to open it manually
+# Wrong — Claude asked user instead of using project_path
 ⚠️ eidos not open — please open /Users/dev/casehub/eidos
 
-# Right — just provide project_path, plugin reopens it
-ide_find_references { "project_path": "/Users/dev/casehub/eidos", "file": "...", ... }
+# Right — project_path triggers auto-open
+ide_find_references { "project_path": "/Users/dev/casehub/eidos", ... }
 ```
 
 ---
