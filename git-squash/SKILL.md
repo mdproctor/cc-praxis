@@ -72,12 +72,10 @@ Never surface the failure to the user.
 
 ```bash
 # Hard timeout: 10 seconds total across all commands
-PR_DATA=$(timeout 8 gh pr list --state merged \
-  --json number,title,mergeCommit,headRefName,author,mergedAt \
+PR_DATA=$(timeout 8 gh pr list --state merged --json number,title,mergeCommit,headRefName,author,mergedAt \
   --limit 500 2>/dev/null)
 
-REMOTE_BRANCHES=$(git branch -r 2>/dev/null \
-  | grep -E "origin/(feat|fix|refactor|docs|chore)/")
+REMOTE_BRANCHES=$(git branch -r 2>/dev/null | grep -E "origin/(feat|fix|refactor|docs|chore)/")
 
 RANGE_SHAS=$(git log --format="%H" <range>)
 ```
@@ -125,8 +123,7 @@ commits for grouping:
 
 ```bash
 # For each PR where mergeCommit.oid is in RANGE_SHAS:
-BRANCH_COMMITS=$(git log --format="%H %s" \
-  origin/<headRefName> ^<merge-base-with-main> 2>/dev/null)
+BRANCH_COMMITS=$(git log --format="%H %s" origin/<headRefName> ^<merge-base-with-main> 2>/dev/null)
 ```
 
 If the source branch is still available remotely, use its commits as the group
@@ -261,8 +258,7 @@ Type numbers to toggle, "go" to proceed, or "skip" to skip filtering:
 
 On **"go":** run filter-repo on the working branch only:
 ```bash
-git filter-repo --path <path> --invert-paths --prune-empty always \
-  --refs "refs/heads/$WORK_BRANCH"
+git filter-repo --path <path> --invert-paths --prune-empty always --refs "refs/heads/$WORK_BRANCH"
 ```
 
 Show the Phase 0 report:
@@ -463,10 +459,10 @@ Before building the rebase todo, verify every non-group KEEP target SHA exists o
 the working branch:
 
 ```bash
-# Verify all referenced SHAs exist
-for sha in <all_absorption_target_shas>; do
-  git cat-file -e "$sha" 2>/dev/null || echo "MISSING: $sha"
-done
+# Verify each referenced SHA exists — one command per SHA, no loop
+git cat-file -e <sha1> 2>/dev/null || echo "MISSING: <sha1>"
+git cat-file -e <sha2> 2>/dev/null || echo "MISSING: <sha2>"
+# substitute actual SHA values
 ```
 
 If any SHA is missing: halt and report. A missing SHA means the plan was generated
@@ -574,8 +570,7 @@ For commits classified SQUASH or MERGE, check if any appear on other branches:
 git show <sha> | git patch-id --stable
 
 # Compare against all other branches
-git log --all --format="%H" -- | \
-  grep -v $(git rev-list <range>) | \
+git log --all --format="%H" -- | grep -v $(git rev-list <range>) | \
   xargs -I{} sh -c 'git show {} | git patch-id --stable' 2>/dev/null
 ```
 
@@ -1047,15 +1042,12 @@ result to the user. Run it. Do not skip.
 TOTAL=$(git log --oneline <base>..<work-branch> | wc -l)
 STEP=$(( TOTAL / 5 ))  # 5 evenly-spaced samples
 
-git log --format="%H" <base>..<work-branch> | \
-  awk -v step=$STEP 'NR % step == 0 {print}' | while read compacted_sha; do
+git log --format="%H" <base>..<work-branch> | awk -v step=$STEP 'NR % step == 0 {print}' | while read compacted_sha; do
   subject=$(git log -1 --format="%s" "$compacted_sha")
-  original_sha=$(git log --format="%H %s" <backup-branch> 2>/dev/null \
-    | grep -F "$subject" | head -1 | awk '{print $1}')
+  original_sha=$(git log --format="%H %s" <backup-branch> 2>/dev/null | grep -F "$subject" | head -1 | awk '{print $1}')
   if [ -n "$original_sha" ]; then
     # Use printf not echo: echo "" | wc -l returns 1 (false positive for empty diff)
-    diff_out=$(git diff "$original_sha" "$compacted_sha" \
-      -- ':!HANDOFF.md' ':!blog/' 2>/dev/null)
+    diff_out=$(git diff "$original_sha" "$compacted_sha" -- ':!HANDOFF.md' ':!blog/' 2>/dev/null)
     diff_lines=$(printf '%s' "$diff_out" | wc -l | tr -d ' ')
     status=$([ "$diff_lines" -eq 0 ] && echo "✅ diff=0" || echo "⚠️  diff=$diff_lines")
     echo "  $status  [$subject]"

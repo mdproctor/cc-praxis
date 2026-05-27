@@ -127,8 +127,7 @@ Also check:
 
 For quarkiverse extension updates (including `quarkus-flow`):
 ```bash
-./mvnw versions:display-dependency-updates \
-  -Dincludes=io.quarkiverse.*
+./mvnw versions:display-dependency-updates -Dincludes=io.quarkiverse.*
 ```
 
 ### Step 5 — Propose changes

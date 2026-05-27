@@ -66,10 +66,8 @@ Set `$RESUME_BRANCH`, `$RESUME_WIP_PROJECT`, `$RESUME_WIP_WORKSPACE` from select
 ## Step 3 — Verify branch exists
 
 ```bash
-git -C "$PROJECT" rev-parse --verify "$RESUME_BRANCH" &>/dev/null \
-  || { echo "⚠️ $RESUME_BRANCH not found in project repo."; exit 1; }
-git -C "$WORKSPACE" rev-parse --verify "$RESUME_BRANCH" &>/dev/null \
-  || { echo "⚠️ $RESUME_BRANCH not found in workspace repo."; exit 1; }
+git -C "$PROJECT" rev-parse --verify "$RESUME_BRANCH" &>/dev/null || { echo "⚠️ $RESUME_BRANCH not found in project repo."; exit 1; }
+git -C "$WORKSPACE" rev-parse --verify "$RESUME_BRANCH" &>/dev/null || { echo "⚠️ $RESUME_BRANCH not found in workspace repo."; exit 1; }
 ```
 
 If missing from either:

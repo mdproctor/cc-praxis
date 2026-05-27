@@ -97,7 +97,7 @@ The user provides the directive; CAPTURE scaffolds and writes the entry.
 **Step 1 — Generate ID**
 
 ```bash
-PP_ID="PP-$(date +%Y%m%d)-$(python3 -c "import secrets; print(secrets.token_hex(3))")"
+PP_ID="PP-$(date +%Y%m%d)-$(python3 -c 'import secrets; print(secrets.token_hex(3))')"
 ```
 
 **Step 2 — Derive fields**

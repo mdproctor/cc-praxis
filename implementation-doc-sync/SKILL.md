@@ -142,8 +142,7 @@ For any gap found in a peer-repo doc (e.g. `docs/PLATFORM.md` in the parent repo
 1. **Do not edit or commit to the peer repo**
 2. File a GitHub issue on the peer repo describing exactly what needs updating:
    ```bash
-   gh issue create --repo <owner/peer-repo> \
-     --title "docs: sync <doc-name> for <feature>" \
+   gh issue create --repo <owner/peer-repo> --title "docs: sync <doc-name> for <feature>" \
      --body "## What to update\n\n<exact change needed>\n\n## Context\n<why this change is needed>"
    ```
 3. Report the issue number in the summary

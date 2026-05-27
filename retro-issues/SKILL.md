@@ -75,8 +75,7 @@ gets linked to it instead of spawning a new one.
 
 **Git history:**
 ```bash
-git log --no-merges \
-  --format="%H|%ad|%s" \
+git log --no-merges --format="%H|%ad|%s" \
   --date=short
 ```
 
@@ -272,10 +271,8 @@ Never create in parallel — order matters for issue numbers.
 
 **8a. Create epics:**
 ```bash
-gh issue create \
-  --title "{epic title}" \
-  --label "epic,{type-label}" \
-  --repo {owner/repo} \
+gh issue create --title "{epic title}" \
+  --label "epic,{type-label}" --repo {owner/repo} \
   --body "$(cat <<'EOF'
 ## Overview
 {Inferred from doc references and commit summary. 2–4 sentences.}
@@ -299,10 +296,8 @@ Record each epic number. Update `#TBD` placeholders in `docs/retro-issues.md`.
 
 **8b. Create child issues:**
 ```bash
-gh issue create \
-  --title "{child title}" \
-  --label "{type-label}" \
-  --repo {owner/repo} \
+gh issue create --title "{child title}" \
+  --label "{type-label}" --repo {owner/repo} \
   --body "$(cat <<'EOF'
 ## Context
 Part of epic #{epic-number} — {epic title}.
@@ -333,10 +328,8 @@ gh issue edit {epic-number} --body "..." --repo {owner/repo}
 
 **8d. Create standalone issues:**
 ```bash
-gh issue create \
-  --title "{title}" \
-  --label "{type-label}" \
-  --repo {owner/repo} \
+gh issue create --title "{title}" \
+  --label "{type-label}" --repo {owner/repo} \
   --body "$(cat <<'EOF'
 ## Context
 Retrospectively created. Standalone — not part of any epic.

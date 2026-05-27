@@ -107,15 +107,13 @@ If a focus path was given, start there. Otherwise:
 **Tier 1 (no file reading):**
 ```bash
 # Files by size
-find . -name "*.py" -o -name "*.java" -o -name "*.ts" -o -name "*.go" \
-  | grep -v ".git" | xargs wc -l 2>/dev/null | sort -rn | head -20
+find . -name "*.py" -o -name "*.java" -o -name "*.ts" -o -name "*.go" | grep -v ".git" | xargs wc -l 2>/dev/null | sort -rn | head -20
 
 # Files by churn (most frequently changed)
 git log --format=format: --name-only | grep -v '^$' | sort | uniq -c | sort -rn | head -20
 
 # Repeated literals
-grep -r --include="*.py" --include="*.java" --include="*.ts" \
-  -h "\"[^\"]\{8,\}\"" . 2>/dev/null | sort | uniq -c | sort -rn | head -10
+grep -r --include="*.py" --include="*.java" --include="*.ts" -h "\"[^\"]\{8,\}\"" . 2>/dev/null | sort | uniq -c | sort -rn | head -10
 ```
 
 **Tier 2:** Read top 10 files by churn+size combined ranking.
