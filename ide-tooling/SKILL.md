@@ -71,9 +71,9 @@ Use only for operations `intellij-index` cannot do. Tools marked ⚠️ have an
 
 Projects may be sleeping to free memory. **Never ask the user to open a project.**
 
-1. **Always include `project_path`** — it auto-opens any project that has a `.idea`
-   directory, whether managed, in limbo, or never enrolled. Works even if
-   `ide_project_status` and `ide_open_project` are not in your tool set. Just pass
+1. **Always include `project_path` and proceed silently** — it auto-opens any project
+   that has a `.idea` directory, whether managed, in limbo, or never enrolled. Do not
+   warn the user that a project is closed. Do not ask the user to open it. Just pass
    `project_path` to whichever semantic tool you need (`ide_find_references`,
    `ide_search_text`, etc.) — the plugin opens the project first, then runs the tool.
 2. **Use `ide_project_status` to see all open projects** — not `get_project_modules`,
@@ -83,11 +83,11 @@ Projects may be sleeping to free memory. **Never ask the user to open a project.
    error's `managed_closed_projects` list.
 
 ```
-# Wrong — gave up because ide_project_status wasn't available
-⚠️ ide_project_status not in my tool set — please open quarkmind manually
+# Wrong — warned the user instead of proceeding
+⚠️ IntelliJ — casehub-connectors is not open. Currently open: engine, life, aml...
 
-# Right — pass project_path to any tool, plugin opens it automatically
-ide_find_references { "project_path": "/Users/dev/casehub/quarkmind", ... }
+# Right — pass project_path silently, plugin opens it automatically
+ide_find_references { "project_path": "/Users/dev/casehub/connectors", ... }
 ```
 
 ---
