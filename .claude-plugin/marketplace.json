@@ -70,8 +70,7 @@
         "java-security-audit",
         "java-git-commit",
         "java-update-design",
-        "maven-dependency-update",
-        "java-project-health"
+        "maven-dependency-update"
       ]
     },
     {
@@ -82,8 +81,7 @@
         "ts-dev",
         "ts-code-review",
         "ts-security-audit",
-        "npm-dependency-update",
-        "ts-project-health"
+        "npm-dependency-update"
       ]
     },
     {
@@ -94,8 +92,7 @@
         "python-dev",
         "python-code-review",
         "python-security-audit",
-        "pip-dependency-update",
-        "python-project-health"
+        "pip-dependency-update"
       ]
     }
   ],
@@ -287,12 +284,6 @@
       "version": "1.0.0"
     },
     {
-      "name": "ts-project-health",
-      "source": "./ts-project-health",
-      "description": "Health checks for TypeScript/Node.js projects \u2014 extends project-health with TS-specific checks",
-      "version": "1.0.0"
-    },
-    {
       "name": "python-dev",
       "source": "./python-dev",
       "description": "Python development workflow \u2014 type hints, async patterns, safety, testing with pytest",
@@ -317,12 +308,6 @@
       "version": "1.0.0"
     },
     {
-      "name": "python-project-health",
-      "source": "./python-project-health",
-      "description": "Health checks for Python projects \u2014 extends project-health with Python-specific checks",
-      "version": "1.0.0"
-    },
-    {
       "name": "project-health",
       "source": "./project-health",
       "description": "Universal project health checks \u2014 correctness, consistency, and compliance across all project types",
@@ -332,30 +317,6 @@
       "name": "project-refine",
       "source": "./project-refine",
       "description": "Improvement opportunities across docs and code \u2014 structure, deduplication, and bloat reduction",
-      "version": "1.0.0"
-    },
-    {
-      "name": "skills-project-health",
-      "source": "./skills-project-health",
-      "description": "Health checks for Claude Code skill collection repositories \u2014 extends project-health with skills-specific checks",
-      "version": "1.0.0"
-    },
-    {
-      "name": "java-project-health",
-      "source": "./java-project-health",
-      "description": "Health checks for Java/Maven/Gradle projects \u2014 extends project-health with Java-specific checks",
-      "version": "1.0.0"
-    },
-    {
-      "name": "blog-project-health",
-      "source": "./blog-project-health",
-      "description": "Health checks for GitHub Pages/Jekyll blogs \u2014 extends project-health with blog-specific checks",
-      "version": "1.0.0"
-    },
-    {
-      "name": "custom-project-health",
-      "source": "./custom-project-health",
-      "description": "Health checks for custom projects \u2014 extends project-health with sync-rules and project-currency checks",
       "version": "1.0.0"
     },
     {

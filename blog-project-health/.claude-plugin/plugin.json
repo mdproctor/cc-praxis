@@ -1,5 +1,0 @@
-{
-  "name": "blog-project-health",
-  "description": "Run health checks for a GitHub Pages / Jekyll blog project (universal + blog-specific)",
-  "version": "1.0.0-SNAPSHOT"
-}

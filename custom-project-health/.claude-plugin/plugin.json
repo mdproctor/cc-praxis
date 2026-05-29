@@ -1,5 +1,0 @@
-{
-  "name": "custom-project-health",
-  "description": "Run health checks for a type: custom project (universal + sync rules, project currency)",
-  "version": "1.0.0-SNAPSHOT"
-}

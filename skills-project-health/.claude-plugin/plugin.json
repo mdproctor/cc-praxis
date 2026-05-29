@@ -1,5 +1,0 @@
-{
-  "name": "skills-project-health",
-  "description": "Run health checks for a Claude Code skill collection project (universal + skills-specific)",
-  "version": "1.0.0-SNAPSHOT"
-}

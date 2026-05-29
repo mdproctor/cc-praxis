@@ -1,5 +1,0 @@
-{
-  "name": "java-project-health",
-  "description": "Run health checks for a Java/Maven/Gradle project (universal + Java-specific)",
-  "version": "1.0.0-SNAPSHOT"
-}
