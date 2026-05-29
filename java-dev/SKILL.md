@@ -435,6 +435,5 @@ If you catch yourself thinking any of these, **STOP** and apply the correct appr
 - **After implementing or refactoring:** if the user wants to commit, invoke
   `java-git-commit`, which will also sync DESIGN.md via `java-update-design`
 - **For architectural decisions:** suggest running `adr` to document significant decisions
-- **For logging/observability setup:** invoke `quarkus-observability` when implementing structured logging, tracing, or metrics
 - **For security-critical code:** invoke `java-security-audit` when handling authentication, authorization, payment, or PII
 - **If architectural impact without commit:** suggest running `java-update-design` independently

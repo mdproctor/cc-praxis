@@ -232,11 +232,8 @@ The following skills will be installed (in dependency order):
   6. java-security-audit
   7. java-git-commit
   8. maven-dependency-update
-  9. quarkus-flow-dev
- 10. quarkus-flow-testing
- 11. quarkus-observability
 
-Total: 11 skills
+Total: 8 skills
 
 Dependencies will be installed automatically.
 
@@ -271,9 +268,6 @@ Installing skills...
   ✅ java-security-audit
   ✅ java-git-commit
   ✅ maven-dependency-update
-  ✅ quarkus-flow-dev
-  ✅ quarkus-flow-testing
-  ✅ quarkus-observability
 ```
 
 ### Step 5a: Add write-blog permissions (if write-blog installed)
@@ -432,7 +426,7 @@ After all skills installed successfully:
    Location: ~/.claude/hooks/check_project_setup.sh
    Effect: Prompts for CLAUDE.md setup when opening new repositories
 
-✅ Skills installed: 11
+✅ Skills installed: 8
    Location: ~/.claude/skills/
    Status: Available in ALL conversations (current and future)
 

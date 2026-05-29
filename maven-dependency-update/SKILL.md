@@ -231,7 +231,7 @@ Dependency update is complete when:
 
 ## Skill Chaining
 
-**Invoked by:** [`quarkus-observability`] when adding OTel/Micrometer dependencies to pom.xml; otherwise user-initiated
+**Invoked by:** user-initiated
 
 **Invokes:**
 - [`adr`] when major version upgrades or new extensions detected (offers to user)

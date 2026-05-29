@@ -63,7 +63,7 @@
     {
       "name": "java-quarkus",
       "displayName": "Java / Quarkus",
-      "description": "Java/Quarkus backend development: java-dev, quarkus-flow, code review, security audit, dependency management",
+      "description": "Java/Quarkus backend development: java-dev, code review, security audit, dependency management",
       "skills": [
         "java-dev",
         "java-code-review",
@@ -71,9 +71,6 @@
         "java-git-commit",
         "java-update-design",
         "maven-dependency-update",
-        "quarkus-flow-dev",
-        "quarkus-flow-testing",
-        "quarkus-observability",
         "java-project-health"
       ]
     },
@@ -215,24 +212,6 @@
       "name": "maven-dependency-update",
       "source": "./maven-dependency-update",
       "description": "Maven BOM dependency management",
-      "version": "1.0.0"
-    },
-    {
-      "name": "quarkus-flow-dev",
-      "source": "./quarkus-flow-dev",
-      "description": "Quarkus Flow workflow development",
-      "version": "1.0.0"
-    },
-    {
-      "name": "quarkus-flow-testing",
-      "source": "./quarkus-flow-testing",
-      "description": "Quarkus Flow testing patterns",
-      "version": "1.0.0"
-    },
-    {
-      "name": "quarkus-observability",
-      "source": "./quarkus-observability",
-      "description": "Quarkus observability configuration",
       "version": "1.0.0"
     },
     {

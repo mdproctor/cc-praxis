@@ -269,6 +269,6 @@ any UI work is complete.
 
 ## Skill Chaining
 
-**Prerequisites for:** `java-dev`, `ts-dev`, `python-dev`, `quarkus-flow-testing`
+**Prerequisites for:** `java-dev`, `ts-dev`, `python-dev`
 
 **Does not invoke anything directly** — foundation skill only.

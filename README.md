@@ -58,7 +58,6 @@ cd ~/cc-praxis
 ```bash
 # Install individual skills (auto-resolves dependencies)
 scripts/claude-skill install java-dev
-scripts/claude-skill install quarkus-flow-testing   # installs java-dev + quarkus-flow-dev automatically
 
 # Install all skills
 scripts/claude-skill install-all -y
@@ -220,16 +219,8 @@ For the layered architecture showing how skills relate to each other: [**Skills 
 | `java-code-review` | `java-security-audit` | conditional | Security-critical code detected |
 | `java-code-review` | `java-git-commit` | manual | User wants to commit after review |
 | `java-dev` | `java-code-review` | manual | User triggers review |
-| `quarkus-flow-dev` | `quarkus-flow-testing` | manual | User is writing tests for workflows |
-| `quarkus-flow-dev` | `quarkus-observability` | manual | Workflow tracing/MDC setup needed |
-| `quarkus-flow-dev` | `java-code-review` | manual | User triggers review |
-| `quarkus-flow-dev` | `java-git-commit` | manual | User is ready to commit |
-| `quarkus-flow-testing` | `java-code-review` | manual | User triggers review |
-| `quarkus-flow-testing` | `java-git-commit` | manual | User is ready to commit |
 | `maven-dependency-update` | `adr` | manual | Major version jump or new extension |
 | `maven-dependency-update` | `java-git-commit` | manual | After successful dependency updates |
-| `quarkus-observability` | `maven-dependency-update` | manual | Adding OTEL/Micrometer deps |
-| `quarkus-observability` | `java-git-commit` | manual | Observability config changes |
 | `adr` | `java-git-commit` | manual | Stage ADR with related changes |
 | `java-update-design` | `update-claude-md` | manual | Architecture changes often need workflow doc updates too |
 | `readme-sync.md` | `update-claude-md` | manual | Skill changes often need workflow doc updates too |
@@ -269,10 +260,6 @@ For the layered architecture showing how skills relate to each other: [**Skills 
 | `maven-dependency-update` | `dependency-management-principles` | prereq | Universal BOM patterns loaded as foundation |
 | `npm-dependency-update` | `dependency-management-principles` | prereq | Universal BOM patterns loaded as foundation |
 | `pip-dependency-update` | `dependency-management-principles` | prereq | Universal BOM patterns loaded as foundation |
-| `quarkus-observability` | `observability-principles` | prereq | Universal logging/tracing/metrics loaded as foundation |
-| `quarkus-flow-dev` | `java-dev` | prereq | Java safety and concurrency rules loaded as foundation |
-| `quarkus-flow-testing` | `java-dev` | prereq | Java testing patterns loaded as foundation |
-| `quarkus-flow-testing` | `quarkus-flow-dev` | prereq | Quarkus Flow workflow patterns loaded as foundation |
 
 ---
 ## License
@@ -405,8 +392,7 @@ These skills encode conventions from specific projects. When customising:
 1. Review safety and concurrency rules in `java-dev` — inspired by Sanne Grinovero's Java guidelines
 2. Adjust conventional commit types in `java-git-commit`
 3. Customise BOM versions in `maven-dependency-update`
-4. Update observability endpoints in `quarkus-observability`
-5. Extend the generic principles skills for other languages/frameworks (e.g., `go-code-review`, `gradle-dependency-update`) — see [CLAUDE.md § Extending to New Languages](CLAUDE.md#extending-to-new-languages-pattern-examples)
+4. Extend the generic principles skills for other languages/frameworks (e.g., `go-code-review`, `gradle-dependency-update`) — see [CLAUDE.md § Extending to New Languages](CLAUDE.md#extending-to-new-languages-pattern-examples)
 
 ## Quality & Validation Framework
 
@@ -531,13 +517,6 @@ For contributors and skill authors: [QUALITY.md](QUALITY.md) covers the full val
 ├── java-security-audit/                 # Java/Quarkus OWASP security audit
 │   └── SKILL.md
 ├── maven-dependency-update/             # Maven BOM dependency management
-│   └── SKILL.md
-├── quarkus-flow-dev/                    # Quarkus Serverless Workflow patterns
-│   ├── SKILL.md
-│   └── funcDSL-reference.md            # Complete FuncDSL API reference
-├── quarkus-flow-testing/                # Quarkus workflow testing patterns
-│   └── SKILL.md
-├── quarkus-observability/               # Quarkus observability configuration
 │   └── SKILL.md
 ├── write-blog/                          # Living project diary skill
 │   └── SKILL.md

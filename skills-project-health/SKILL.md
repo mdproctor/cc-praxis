@@ -245,9 +245,6 @@ Universal findings appear without a prefix. Skills-specific findings use `[skill
 ### HIGH (should fix)
 - [skills][cross-refs] git-commit says it routes to blog-git-commit but blog-git-commit doesn't mention being invoked by git-commit
 
-### MEDIUM (worth fixing)
-- [skills][quality] quarkus-flow-dev/SKILL.md description summarises the workflow instead of trigger conditions
-
 ### LOW (nice to fix)
 - [skills][performance] update-primary-doc/SKILL.md is 312 lines — approaching budget
 

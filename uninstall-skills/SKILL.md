@@ -113,8 +113,6 @@ java-dev is required by:
   • java-security-audit
   • java-git-commit
   • maven-dependency-update
-  • quarkus-flow-dev
-  • quarkus-flow-testing
 
 code-review-principles is required by:
   • java-code-review
@@ -126,13 +124,10 @@ Skills to remove:
   4. java-git-commit
   5. java-update-design
   6. maven-dependency-update
-  7. quarkus-flow-dev
-  8. quarkus-flow-testing
-  9. quarkus-observability
- 10. update-claude-md
- 11. adr
+  7. update-claude-md
+  8. adr
 
-Total: 11 skills
+Total: 8 skills
 
 ⚠️  Some skills depend on others being removed. This may cause issues.
 
@@ -143,6 +138,8 @@ Options:
 
 Choose (1-3):
 ```
+
+
 
 **If user chooses 2 (Add dependents):**
 Recursively add all reverse dependencies to removal list:
@@ -182,7 +179,7 @@ Final confirmation before removal:
 ```
 ⚠️  FINAL CONFIRMATION
 
-You are about to uninstall 11 skills:
+You are about to uninstall 8 skills:
 
 This action will:
 - Remove skills from ~/.claude/skills/
@@ -221,9 +218,6 @@ Uninstalling skills...
   ✅ java-git-commit
   ✅ java-update-design
   ✅ maven-dependency-update
-  ✅ quarkus-flow-dev
-  ✅ quarkus-flow-testing
-  ✅ quarkus-observability
   ✅ update-claude-md
   ✅ adr
 ```
@@ -290,7 +284,7 @@ After all skills uninstalled:
 🗑️  Claude Code Skills - Uninstall Complete
 ═══════════════════════════════════════════════════════════
 
-✅ Skills removed: 11
+✅ Skills removed: 8
    Location: ~/.claude/skills/
    Status: No longer available in Claude Code
 

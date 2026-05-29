@@ -1,7 +1,7 @@
 ---
 name: observability-principles
 description: >
-  Use when a framework-specific observability skill (e.g. quarkus-observability)
+  Use when a framework-specific observability skill
   references this as a Prerequisites foundation. NOT invoked directly by users —
   only loaded via Prerequisites by framework-specific skills.
 ---
@@ -242,6 +242,5 @@ within a scope:
 
 ## Skill Chaining
 
-Framework-specific observability skills (`quarkus-observability` for Quarkus,
-`python-observability`, `go-observability`, etc.) implement these principles
+Framework-specific observability skills implement these principles
 with framework-specific configuration, APIs, and instrumentation.
