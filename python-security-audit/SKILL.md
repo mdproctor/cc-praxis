@@ -15,13 +15,10 @@ particular focus on OWASP Top 10 risks adapted for the Python ecosystem.
 
 ## Prerequisites
 
-**This skill builds on [`security-audit-principles`] and [`python-dev`]**.
+**Load `~/.hortora/garden/approaches/security-audit.md`** before proceeding.
+Apply all principles from that file, then the Python-specific additions below.
 
-Apply all rules from:
-- **`security-audit-principles`**: OWASP Top 10 vulnerability categories and severity assessment, security audit workflow and reporting format, why security audits matter and cost of production discovery
-- **`python-dev`**: Python safety patterns, type hints, input validation, testing practices
-
-Then apply the Python-specific security audit patterns below.
+Also apply all rules from **`python-dev`**: Python safety patterns, type hints, input validation, testing practices.
 
 ## Workflow
 

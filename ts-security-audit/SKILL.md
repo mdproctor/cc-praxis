@@ -15,13 +15,10 @@ particular focus on OWASP Top 10 risks adapted for the Node.js ecosystem.
 
 ## Prerequisites
 
-**This skill builds on [`security-audit-principles`] and [`ts-dev`]**.
+**Load `~/.hortora/garden/approaches/security-audit.md`** before proceeding.
+Apply all principles from that file, then the TypeScript/Node.js-specific additions below.
 
-Apply all rules from:
-- **`security-audit-principles`**: OWASP Top 10 vulnerability categories and severity assessment, security audit workflow and reporting format, why security audits matter and cost of production discovery
-- **`ts-dev`**: TypeScript safety patterns, strict mode, type-driven input validation, testing practices
-
-Then apply the TypeScript/Node.js-specific security audit patterns below.
+Also apply all rules from **`ts-dev`**: TypeScript safety patterns, strict mode, type-driven input validation, testing practices.
 
 ## Workflow
 

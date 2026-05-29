@@ -51,13 +51,9 @@
     {
       "name": "principles",
       "displayName": "Principles",
-      "description": "Universal foundations extended by language-specific skills: code review, security, dependencies, observability, testing",
+      "description": "Universal foundations extended by language-specific skills: observability",
       "skills": [
-        "code-review-principles",
-        "security-audit-principles",
-        "dependency-management-principles",
-        "observability-principles",
-        "testing-principles"
+        "observability-principles"
       ]
     },
     {
@@ -122,33 +118,9 @@
       "version": "1.0.0"
     },
     {
-      "name": "code-review-principles",
-      "source": "./code-review-principles",
-      "description": "Universal code review principles covering safety, concurrency, performance, testing philosophy",
-      "version": "1.0.0"
-    },
-    {
-      "name": "security-audit-principles",
-      "source": "./security-audit-principles",
-      "description": "Universal OWASP Top 10 security audit principles",
-      "version": "1.0.0"
-    },
-    {
-      "name": "dependency-management-principles",
-      "source": "./dependency-management-principles",
-      "description": "Universal dependency management principles for BOM patterns",
-      "version": "1.0.0"
-    },
-    {
       "name": "observability-principles",
       "source": "./observability-principles",
       "description": "Universal observability principles covering logging, tracing, and metrics",
-      "version": "1.0.0"
-    },
-    {
-      "name": "testing-principles",
-      "source": "./testing-principles",
-      "description": "Universal test strategy: test taxonomy, happy path/correctness/robustness coverage, coverage analysis, high-value prioritization, browser automation mandate",
       "version": "1.0.0"
     },
     {

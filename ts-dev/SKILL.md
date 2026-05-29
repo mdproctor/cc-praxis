@@ -365,7 +365,7 @@ beforeEach(() => {
 
 ### ⛔ Bug Fix Workflow — Mandatory
 
-**Prerequisites: `testing-principles`** — see the Bug Fix Workflow section for the mandatory 5-step process.
+**See `~/.hortora/garden/approaches/testing.md`** — Bug Fix Workflow section for the mandatory 5-step process.
 
 ## Code Quality
 
@@ -448,9 +448,10 @@ If you catch yourself thinking any of these, **STOP** and apply the correct appr
 
 ## Prerequisites
 
-**This skill builds on `testing-principles` and `ide-tooling`.** Apply all rules from:
-- **ide-tooling**: IntelliJ MCP tool guide — which tool to use for rename, move, find-references, navigation, diagnostics
-- **testing-principles**: test taxonomy (unit/integration/E2E/browser), happy path / correctness / robustness coverage, coverage analysis checklist, high-value prioritization, Playwright mandate for web UI
+**Load `~/.hortora/garden/approaches/testing.md`** before proceeding.
+Apply all principles from that file (including the Playwright mandate for web UI).
+
+Also apply all rules from **`ide-tooling`**: IntelliJ MCP tool guide — which tool to use for rename, move, find-references, navigation, diagnostics.
 
 ## Skill Chaining
 

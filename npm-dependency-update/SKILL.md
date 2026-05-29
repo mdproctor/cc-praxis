@@ -15,12 +15,8 @@ confirmation, and always checking for breaking changes before major bumps.
 
 ## Prerequisites
 
-**This skill builds on [`dependency-management-principles`]**.
-
-Apply all rules from:
-- **`dependency-management-principles`**: BOM-first philosophy and alignment verification, compatibility checking and upgrade safety, never downgrade without confirmation, version drift prevention
-
-Then apply the npm-specific dependency patterns below.
+**Load `~/.hortora/garden/approaches/dependency-management.md`** before proceeding.
+Apply all principles from that file, then the npm-specific patterns below.
 
 ## Core Rules
 

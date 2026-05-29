@@ -15,13 +15,10 @@ production failures in Python codebases.
 
 ## Prerequisites
 
-**This skill builds on [`code-review-principles`] and [`python-dev`]**.
+**Load `~/.hortora/garden/approaches/code-review.md`** before proceeding.
+Apply all principles from that file, then the Python-specific additions below.
 
-Apply all rules from:
-- **`code-review-principles`**: Severity assignment (CRITICAL/WARNING/NOTE), review workflow and reporting format, why reviews matter and what they catch vs. production discovery
-- **`python-dev`**: Safety patterns (mutable defaults, context managers, bare except), type safety (`Any`, missing hints, `TypedDict`), async correctness, testing practices, code quality conventions
-
-Then apply the Python-specific review patterns below.
+Also apply all rules from **`python-dev`**: Safety patterns (mutable defaults, context managers, bare except), type safety (`Any`, missing hints, `TypedDict`), async correctness, testing practices, code quality conventions.
 
 ## Workflow
 

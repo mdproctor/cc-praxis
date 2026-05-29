@@ -15,13 +15,10 @@ focus on OWASP Top 10 risks adapted for Quarkus server-side applications.
 
 ## Prerequisites
 
-**This skill builds on [`security-audit-principles`] and [`java-dev`]**.
+**Load `~/.hortora/garden/approaches/security-audit.md`** before proceeding.
+Apply all principles from that file, then the Java/Quarkus-specific additions below.
 
-Apply all rules from:
-- **`security-audit-principles`**: OWASP Top 10 vulnerability categories and severity assessment, security audit workflow and reporting format, why security audits matter and cost of production discovery
-- **`java-dev`**: Safety patterns (resource leaks, exception handling), code quality rules, testing practices
-
-Then apply the Java/Quarkus-specific security audit patterns below.
+Also apply all rules from **`java-dev`**: Safety patterns (resource leaks, exception handling), code quality rules, testing practices.
 
 ## Workflow
 

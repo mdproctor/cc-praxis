@@ -15,13 +15,10 @@ production failures.
 
 ## Prerequisites
 
-**This skill builds on [`code-review-principles`] and [`ts-dev`]**.
+**Load `~/.hortora/garden/approaches/code-review.md`** before proceeding.
+Apply all principles from that file, then the TypeScript-specific additions below.
 
-Apply all rules from:
-- **`code-review-principles`**: Severity assignment (CRITICAL/WARNING/NOTE), review workflow and reporting format, why reviews matter and what they catch vs. production discovery
-- **`ts-dev`**: Type safety patterns (`any`, type assertions, non-null assertions), async correctness, error handling, testing practices, code quality conventions
-
-Then apply the TypeScript-specific review patterns below.
+Also apply all rules from **`ts-dev`**: Type safety patterns (`any`, type assertions, non-null assertions), async correctness, error handling, testing practices, code quality conventions.
 
 ## Workflow
 

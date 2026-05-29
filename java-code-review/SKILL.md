@@ -16,13 +16,10 @@ and silent data corruption.
 
 ## Prerequisites
 
-**This skill builds on [`code-review-principles`] and [`java-dev`]**.
+**Load `~/.hortora/garden/approaches/code-review.md`** before proceeding.
+Apply all principles from that file, then the Java/Quarkus additions below.
 
-Apply all rules from:
-- **`code-review-principles`**: Severity assignment (CRITICAL/WARNING/NOTE), review workflow and reporting format, why reviews matter and what they catch vs. production discovery
-- **`java-dev`**: Safety patterns (resource leaks, deadlocks, ThreadLocal cleanup), concurrency rules (@Blocking, thread safety), performance guidelines, testing practices
-
-Then apply the Java/Quarkus-specific review patterns below.
+Also apply all rules from **`java-dev`**: Safety patterns (resource leaks, deadlocks, ThreadLocal cleanup), concurrency rules (@Blocking, thread safety), performance guidelines, testing practices.
 
 ## Workflow
 
