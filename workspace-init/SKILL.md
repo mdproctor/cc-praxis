@@ -373,7 +373,7 @@ Per-repo artifacts live in each child workspace.
 |-------|-----------|
 | adr | `adr/` |
 | design-snapshot | `snapshots/` |
-| write-blog | `blog/` |
+| write-content | `blog/` |
 | handover | `HANDOFF.md` |
 | idea-log | `IDEAS.md` |
 ```
@@ -495,7 +495,7 @@ Run `add-dir <absolute-path-to-project>` and `add-dir <absolute-path-to-workspac
 | design-snapshot | `snapshots/` |
 | java-update-design / update-primary-doc | `design/JOURNAL.md` (created by `work-start`) |
 | adr | `adr/` |
-| write-blog | `blog/` |
+| write-content | `blog/` |
 
 ## Structure
 

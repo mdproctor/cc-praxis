@@ -37,7 +37,7 @@ python3 scripts/claude-skill sync-local --all -y
 python3 scripts/claude-skill sync-local <skill-name> -y
 ```
 
-Example: `python3 scripts/claude-skill sync-local write-blog -y`
+Example: `python3 scripts/claude-skill sync-local write-content -y`
 
 ### After syncing
 

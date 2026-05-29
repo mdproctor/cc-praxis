@@ -164,7 +164,7 @@ this checklist:
 ```
 Pre-close sweep — create before presenting the close plan?
 
-[x] 1  write-blog     capture any work on this branch worth a diary entry
+[x] 1  write-content     capture any work on this branch worth a diary entry
 [x] 2  adr            record any significant architectural decisions without a formal ADR
 [x] 3  protocol sweep formalise any project rules established or re-enforced this branch
 [x] 4  forage sweep   check for gotchas, techniques, or undocumented behaviours
@@ -180,7 +180,7 @@ Run checked items in this order:
 1. **Forage sweep** — while context is full; findings may feed the blog entry
 2. **Protocol sweep** — while context is full (invoke `protocol` skill with `SWEEP` operation)
 3. **adr** — invoke `adr` skill for each candidate identified
-4. **write-blog** — last, so it can synthesise the full branch narrative including any forage/protocol submissions
+4. **write-content** — last, so it can synthesise the full branch narrative including any forage/protocol submissions
 
 **Why this step exists:** Step 4 inventories artifacts that *were written*. Without this
 sweep, the close plan accurately reports "blog: no new entries" when it should say "blog:

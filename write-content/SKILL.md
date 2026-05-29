@@ -1,12 +1,14 @@
 ---
 name: write-content
 description: >
-  Use when writing any piece of content — blog post, article, note, brief,
-  news item, or essay. User says "write", "draft", "create a post", "write up",
-  or provides a topic/subject to write about. Routes to the correct content
-  type and applies structure principles, form-specific guidance, and anti-slop
-  rules. Documentation types (tutorial, how-to, explanation, reference) are
-  in scope. NOT for generating code (use java-dev, ts-dev etc.).
+  Use when writing any piece of content — project diary entry, blog post,
+  article, note, brief, news item, or essay. User says "write", "draft",
+  "write a diary entry", "log what we built", "document this pivot",
+  "blog all the work to date", "create a post", "write up", or provides
+  a topic/subject to write about. Routes to the correct content type and
+  applies structure principles, form-specific guidance, and anti-slop rules.
+  Documentation types (tutorial, how-to, explanation, reference) are in scope.
+  NOT for generating code (use java-dev, ts-dev etc.).
 ---
 
 # Write Content
@@ -37,6 +39,7 @@ Use the intent test to classify what is being written:
 
 | Intent | Type |
 |--------|------|
+| "I want to capture what I built / what happened in this project" | **Diary** |
 | "I want to record what I did / what happened" | **Note/log** |
 | "I want to share a quick thought or reaction" | **Note/musing** |
 | "I want to propose something specific" | **Note/idea** |
@@ -47,6 +50,8 @@ Use the intent test to classify what is being written:
 | "I want to argue a position to a conclusion" | **Article/essay** |
 | "I want maximum information density, minimum prose" | **InfoBrief** |
 | "I want to announce a release / event / industry news" | **News** |
+
+**Diary signals:** "write a diary entry", "log what we built today", "document this pivot", "blog all the work to date", "catch the blog up", "write a retrospective series", or invoked with no argument when context is a project diary.
 
 **If unclear:** ask one question — "Is this primarily informing, explaining, or arguing?"
 
@@ -65,6 +70,7 @@ Load the appropriate form file from `write-content/forms/`:
 
 | Type | Form file |
 |------|-----------|
+| **Diary** | `forms/diary.md` — project diary entries; includes file location, frontmatter, voice rules, retrospective sweep |
 | Note (any subtype) | `forms/note.md` |
 | Article (any subtype) | `forms/article.md` |
 | Article/essay specifically | also load `forms/essay.md` |
@@ -116,16 +122,14 @@ Before presenting:
 
 ## Skill Chaining
 
-**Consumed by:**
-- `write-blog` — invokes write-content for content type and writing, adds blog-specific publishing rules
-- Future: write-paper, write-post — same pattern (not yet implemented)
+**Invoked by:** User directly — "write a diary entry", "write an article about X", "draft a brief", "log what we built today"; also after `adr` captures a major decision, after `design-snapshot` marks a milestone, or automatically as part of the `handover` wrap checklist (diary type).
 
 **Loads:**
 - `write-content/defaults/structure-principles.md` — always
 - `write-content/defaults/anti-slop.md` — always
 - `write-content/forms/<type>.md` — per content type
+- `write-content/defaults/common-voice.md` — fallback voice (diary type)
+- `write-content/defaults/mandatory-rules.md` — mandatory diary rules (diary type)
 - Personal style file from `~/claude-workspace/writing-styles/` — if configured
 
-**See also:**
-- `publish-blog` — for publishing after writing
-- `write-blog` — for blog-specific workflow
+**Feeds into:** `publish-blog` — handles publishing mechanics when diary entries are ready to go out.

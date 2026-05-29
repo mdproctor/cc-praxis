@@ -245,12 +245,6 @@
       "version": "1.0.0"
     },
     {
-      "name": "write-blog",
-      "source": "./write-blog",
-      "description": "Living project diary \u2014 captures decisions, pivots, and discoveries in the moment with honest diary voice, not polished retrospectives",
-      "version": "1.0.0"
-    },
-    {
       "name": "publish-blog",
       "source": "./publish-blog",
       "description": "Publish blog entries to external platforms \u2014 reads blog-routing.yaml to route entries per entry_type, tags, and projects to configured git destinations",

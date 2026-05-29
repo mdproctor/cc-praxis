@@ -270,9 +270,9 @@ Installing skills...
   ✅ maven-dependency-update
 ```
 
-### Step 5a: Add write-blog permissions (if write-blog installed)
+### Step 5a: Add write-content permissions (if write-content installed)
 
-If `write-blog` was in the install list, add its required permissions to
+If `write-content` was in the install list, add its required permissions to
 `~/.claude/settings.json` to prevent repeated permission prompts during
 blogging workflows.
 

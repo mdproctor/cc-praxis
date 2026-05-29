@@ -190,7 +190,7 @@ If **n** → skip silently.
 ls blog/ 2>/dev/null | head -1
 ```
 
-If `blog/` exists (meaning write-blog has been used in this workspace), check whether CLAUDE.md already contains the Writing Style Guide requirement:
+If `blog/` exists (meaning write-content has been used in this workspace), check whether CLAUDE.md already contains the Writing Style Guide requirement:
 
 ```bash
 grep -l "writing style guide\|blog-technical" CLAUDE.md 2>/dev/null
@@ -232,8 +232,8 @@ Propose adding immediately after the H1 heading:
 **Name:** <derived-name>
 ```
 
-This field is required by `write-blog` to auto-populate the `projects:` frontmatter
-field in blog entries. Without it, write-blog will stop and prompt the user.
+This field is required by `write-content` to auto-populate the `projects:` frontmatter
+field in blog entries. Without it, write-content will stop and prompt the user.
 
 This is a one-time addition per workspace — once present, this check passes silently.
 
@@ -332,7 +332,7 @@ CLAUDE.md update is complete when:
 
 ## Skill Chaining
 
-**Invoked by:** [`git-commit`] when committing in any repository, [`java-git-commit`] alongside update-design, [`blog-git-commit`] when committing blog changes, [`custom-git-commit`] when committing custom project changes, [`handover`] as part of the session wrap checklist (syncs new conventions before the handover is written), [`write-blog`] on the first blog entry ever in a project (adds the mandatory Writing Style Guide section)
+**Invoked by:** [`git-commit`] when committing in any repository, [`java-git-commit`] alongside update-design, [`blog-git-commit`] when committing blog changes, [`custom-git-commit`] when committing custom project changes, [`handover`] as part of the session wrap checklist (syncs new conventions before the handover is written), [`write-content`] on the first blog entry ever in a project (adds the mandatory Writing Style Guide section)
 
 **Invokes:** None (terminal skill in the chain)
 

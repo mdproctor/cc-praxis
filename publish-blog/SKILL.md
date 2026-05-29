@@ -3,7 +3,7 @@ name: publish-blog
 description: >
   Use when publishing blog entries to external platforms via blog-routing.yaml
   — user says "publish blog", "publish entries", "cross-post this entry", or
-  invokes /publish-blog. NOT for writing new entries (use write-blog for that).
+  invokes /publish-blog. NOT for writing new entries (use write-content with diary type for that).
 ---
 
 # Publish Blog
@@ -30,7 +30,7 @@ This skill controls where individual entries are cross-posted to blog platforms.
 
 ### Step 0 — Resolve blog directory
 
-Use the same three-layer resolution as write-blog:
+Use the same three-layer resolution as write-content (diary form):
 
 1. `Blog directory:` field in CLAUDE.md — explicit path, highest priority
 2. `## Routing` table in CLAUDE.md — `blog → workspace` means `<Workspace>/blog/`; `blog → project` means `<Project repo>/blog/`
@@ -276,7 +276,7 @@ rules:
 
 **Invoked by:** User directly — "publish blog", "cross-post entries", `/publish-blog`
 
-**Reads output of:** [`write-blog`] — the blog entries in the resolved `$BLOG_DIR`
+**Reads output of:** [`write-content`] — the blog entries in the resolved `$BLOG_DIR`
 
 **No external scripts required** — routing logic is applied inline from the config YAML.
 

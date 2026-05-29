@@ -254,7 +254,7 @@ ADR creation is complete when:
 
 **Invokes:** [`git-commit`] to stage and commit the ADR (routes to `java-git-commit`, `custom-git-commit`, etc. per CLAUDE.md project type)
 
-**Can be followed by:** [`write-blog`] — after a major architectural decision is recorded, the user may want to narrate the story of how that decision was reached (offered, not automatic)
+**Can be followed by:** [`write-content`] — after a major architectural decision is recorded, the user may want to narrate the story of how that decision was reached (offered, not automatic)
 
 **Not decided yet?** Use `idea-log` to park the question first; promote to `adr` when the decision is made.
 
