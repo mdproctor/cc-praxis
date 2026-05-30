@@ -369,38 +369,25 @@ Wait for a decision on each. Apply all decisions before continuing.
 
 ### Step 5b — Suggest and offer to rename the session
 
-Claude Code has a built-in `/rename` command that renames the current session.
-Call it without arguments to auto-generate a name from context, or with an
-argument to set a specific name.
+**Only prompt if the session has an auto-generated name.** Auto-generated names
+follow a random three-word pattern (e.g. `gleaming-stargazing-newell`,
+`mellow-hopping-simon`). If the session already has a meaningful custom name
+(set by the user earlier in the session) → skip this step silently.
 
-**Before writing the handover**, generate a concise descriptive session name
-from the session's content — 2–4 words, suitable as a display title, e.g.
-"Hortora Design and Naming" or "Garden v2 Retrieval Redesign."
-
-Then check whether the session already has a meaningful name. The auto-generated
-names follow a random three-word pattern (e.g. `gleaming-stargazing-newell`,
-`mellow-hopping-simon`). If the session appears to still be using one of these:
-
-Present to the user:
+If the session name appears auto-generated, generate a concise descriptive name
+from the session's content — 2–4 words, e.g. "Hortora Design and Naming" or
+"Garden v2 Retrieval Redesign." — and suggest it **after the handover is written
+and committed**:
 
 > **Rename this session?**
 >
 > Suggested name: **`<Suggested Name>`**
 >
 > Type `/rename <Suggested Name>` to apply it.
->
-> *(Tip: `/rename` with no arguments requires earlier conversation context to
-> auto-generate — at session end it says "no conversation context yet".
-> Always provide the name explicitly as shown above.)*
 
-Wait for the user to type `/rename` (or decline). Do not proceed with the
-handover commit until the naming step is resolved.
-
-**If the session already has a meaningful custom name** → skip this step silently.
-
-**Note:** `/rename` is a Claude Code built-in slash command, not a skill command.
-Claude cannot invoke it directly — the user must type it. The skill's job is to
-suggest the name and prompt at the right moment.
+**Note:** Do not block writing or committing the handover on the rename.
+The rename is cosmetic — the handover must be committed regardless.
+`/rename` is a Claude Code built-in; the user must type it.
 
 ### Step 6 — Commit (required)
 
