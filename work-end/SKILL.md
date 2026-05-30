@@ -538,6 +538,43 @@ If no `$BLESSED_REMOTE`: no prompt — fork push is the final delivery.
 
 **Why rebase and not merge --no-ff?** Rebase keeps the project base branch history linear and avoids a merge commit that references a branch consumers never saw. Fast-forward is a safe subset — `git rebase` fast-forwards when possible, replays commits otherwise.
 
+### 8k — Final build verification (Java / Maven projects only)
+
+**Run after 8j. Skip for non-Java projects.**
+
+Check project type:
+```bash
+grep -i "^type:\|^\*\*Type:\*\*" "$PROJECT/CLAUDE.md" 2>/dev/null | head -1
+```
+
+If type is `java`, prompt:
+
+> **Run final build verification?**
+>
+> Default: `mvn install -DskipTests -DskipITs` (no tests — fast)
+>
+> Include unit tests? **(y/n, default n)**
+> Include integration tests? **(y/n, default n)**
+
+Build the command from the answers:
+- Both skipped (default): `mvn install -DskipTests -DskipITs`
+- Unit tests only: `mvn install -DskipITs`
+- Integration tests only: `mvn install -DskipTests`
+- Both included: `mvn install`
+
+Run from project root:
+```bash
+mvn install [flags] -C "$PROJECT"
+# or: mvn -f "$PROJECT/pom.xml" install [flags]
+```
+
+If the build **fails** → stop. Do not proceed to Step 9 (mark closed).
+Report the failure and ask the user to fix it before closing.
+
+If the build **passes** → add `✅ Build verified (mvn install)` to the 8h report and continue.
+
+---
+
 ### Step path (alternative to all-at-once)
 
 If user chose "step" in Step 7:
@@ -545,7 +582,7 @@ If user chose "step" in Step 7:
 - Phase 1: Artifact routing (8a including publish-blog if blog/ has entries), 8b, 8c — confirm, execute, report → "Continue to journal merge? (y/n)"
 - Phase 2: Journal merge (8d) — show each `§Section` before/after, confirm → "Continue to GitHub posting? (y/n)"
 - Phase 3: Spec posting (8e), issue close (8f) → "Continue to branch merge? (y/n)"
-- Phase 4: Merge project branch to `$PROJECT_BASE_BRANCH` (8j), EPIC-CLOSED.md, return workspace to main.
+- Phase 4: Merge project branch to `$PROJECT_BASE_BRANCH` (8j), build verification (8k if Java), EPIC-CLOSED.md, return workspace to main.
 
 Note: publish-blog (8g) runs after issue close (8f), before 8i hygiene scan. It is not
 an "offer" — it always runs. 8i then verifies the result; any unpublished entries block 8j.
