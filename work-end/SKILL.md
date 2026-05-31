@@ -621,17 +621,15 @@ must traverse epic branches to find it — which it already does to check for `.
 
 ```bash
 CLOSE_DATE=$(date +%Y-%m-%d)
-DELETE_DATE=$(date -v +14d +%Y-%m-%d 2>/dev/null || date -d "+14 days" +%Y-%m-%d)
 
 cat > "$WORKSPACE/design/EPIC-CLOSED.md" << EOF
 # Branch Closed — $BRANCH_NAME
 **Date:** $CLOSE_DATE
 **Issue:** #$ISSUE_N
-**Scheduled for deletion:** $DELETE_DATE
 EOF
 
 git -C "$WORKSPACE" add design/EPIC-CLOSED.md
-git -C "$WORKSPACE" commit -m "docs($BRANCH_NAME): mark closed, deletion due $DELETE_DATE"
+git -C "$WORKSPACE" commit -m "docs($BRANCH_NAME): mark closed"
 git -C "$WORKSPACE" push
 ```
 
