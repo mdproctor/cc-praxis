@@ -5,6 +5,7 @@ description: >
   when invoked automatically by git-commit/java-git-commit when commits
   affect build commands, testing patterns, naming conventions, or repository
   structure.
+slash-command: false
 ---
 
 # Update CLAUDE.md

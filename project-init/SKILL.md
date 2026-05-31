@@ -4,6 +4,7 @@ description: >
   Use when project setup needs to be verified or completed — invoked
   automatically at session start (via hook) and by work-start before
   any branch work begins. NOT invoked directly by users.
+slash-command: false
 ---
 
 # project-init

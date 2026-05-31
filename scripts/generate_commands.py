@@ -45,11 +45,23 @@ def extract_description(skill_path: Path) -> str:
     return description
 
 
+def is_slash_command_suppressed(skill_path: Path) -> bool:
+    """Return True if the skill's frontmatter contains 'slash-command: false'."""
+    content = skill_path.read_text()
+    match = re.match(r'^---\s*\n(.*?)\n---', content, re.DOTALL)
+    if not match:
+        return False
+    return re.search(r'^slash-command:\s*false\s*$', match.group(1), re.MULTILINE) is not None
+
+
 def generate_command(skill_path: Path, overwrite: bool = False) -> str:
     """
     Create commands/<skill-name>.md if missing (or if overwrite=True).
     Returns 'created', 'skipped', or 'updated'.
     """
+    if is_slash_command_suppressed(skill_path):
+        return 'skipped'
+
     skill_name = get_skill_name_from_path(skill_path)
     cmd_dir = skill_path.parent / 'commands'
     cmd_file = cmd_dir / f'{skill_name}.md'

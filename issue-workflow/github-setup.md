@@ -30,6 +30,23 @@ gh label create "refactor" --color "#6e6e6e" --description "Code change without 
 
 ---
 
+## Scale and Complexity Labels
+
+Every issue must carry one scale label and one complexity label. Create these in every repo:
+
+```bash
+gh label create "scale: XS"        --color "d4edda" --description "Lines of change"                        --repo {owner/repo}
+gh label create "scale: S"         --color "a8d5b5" --description "Single class / small file"              --repo {owner/repo}
+gh label create "scale: M"         --color "f0c27f" --description "Multi-class / multi-file"               --repo {owner/repo}
+gh label create "scale: L"         --color "e8956d" --description "Substantial feature"                    --repo {owner/repo}
+gh label create "scale: XL"        --color "c0392b" --description "Major rework"                           --repo {owner/repo}
+gh label create "complexity: Low"  --color "dbeafe" --description "Clear path, no unknowns"                --repo {owner/repo}
+gh label create "complexity: Med"  --color "93c5fd" --description "Some design or unknowns"                --repo {owner/repo}
+gh label create "complexity: High" --color "1d4ed8" --description "Significant unknowns, design required"  --repo {owner/repo}
+```
+
+---
+
 ## Work Tracking CLAUDE.md Template
 
 Add or update the `## Work Tracking` section:

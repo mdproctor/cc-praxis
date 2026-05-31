@@ -5,6 +5,7 @@ description: >
   user invokes /workspace-init or says "init workspace for [project]" or
   "create workspace for [project]". NOT for questions about workspaces, NOT
   for ongoing use, NOT for modifying existing workspaces. One-time setup only.
+slash-command: false
 ---
 
 # Workspace Init

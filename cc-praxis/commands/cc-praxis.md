@@ -1,5 +1,5 @@
 ---
-description: "Check cc-praxis setup or open the skill manager UI"
+description: "Use for cc-praxis management: diagnosing setup problems ("why isn't cc-praxis working", "check th..."
 ---
 
 Invoke the `cc-praxis` skill.

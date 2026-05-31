@@ -5,6 +5,7 @@ description: >
   vulnerabilities" in a Python project, or when python-code-review
   identifies auth, payment, or PII handling code needing a security pass.
   NOT automatic — must be explicitly requested or offered by python-code-review.
+slash-command: false
 ---
 
 # Security Audit for Python Applications

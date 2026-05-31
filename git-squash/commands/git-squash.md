@@ -1,5 +1,5 @@
 ---
-description: "Classify and squash commits per policy before pushing — shows summary, optional per-commit table, and applies approved squashes via rebase."
+description: "Use when the commit history contains noise — fixup commits, revert chains, docs wording chores, t..."
 ---
 
 Invoke the `git-squash` skill.

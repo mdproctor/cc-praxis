@@ -57,9 +57,9 @@ def validate_yaml_structure(frontmatter: Dict) -> Tuple[bool, Optional[str]]:
             return False, f"Missing required field: {field}"
 
     # Check for unexpected fields
-    allowed_fields = ['name', 'description', 'compatibility']
+    allowed_fields = ['name', 'description', 'compatibility', 'slash-command']
     for field in frontmatter.keys():
         if field not in allowed_fields:
-            return False, f"Unexpected field: {field} (only name, description, compatibility allowed)"
+            return False, f"Unexpected field: {field} (only name, description, compatibility, slash-command allowed)"
 
     return True, None

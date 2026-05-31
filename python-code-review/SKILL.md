@@ -4,6 +4,7 @@ description: >
   Use when reviewing Python code — user says "review the code", "check
   these changes", "review this", or invokes /python-code-review. Only
   applies to Python projects. Builds on code-review-principles.
+slash-command: false
 ---
 
 # Python Code Review

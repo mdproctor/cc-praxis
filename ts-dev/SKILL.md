@@ -5,6 +5,7 @@ description: >
   tests — user says "implement", "fix", "refactor", "add tests", or is editing
   .ts, .tsx, tsconfig.json, or package.json files. Does NOT apply to reading
   or discussing existing code without changes.
+slash-command: false
 ---
 
 # TypeScript Development

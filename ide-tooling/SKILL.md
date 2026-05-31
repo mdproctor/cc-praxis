@@ -61,9 +61,14 @@ Multi-project aware: supports `project_path` to target any open or managed proje
 
 ---
 
-## `mcp__intellij` — JetBrains official (window-scoped — only sees the focused project)
+## `mcp__intellij` — JetBrains built-in (window-scoped — only sees already-open projects)
 
-Use only for operations `intellij-index` cannot do. Tools marked ⚠️ have an
+**Cannot auto-open projects.** If a project isn't open in the IDE, `mcp__intellij__*` tools
+will fail or return wrong results. Never use these tools to check whether a project is open
+or to trigger opening one — use `mcp__intellij-index__ide_project_status` instead, which
+auto-opens via `project_path`.
+
+Use `mcp__intellij__*` only for operations `intellij-index` cannot do. Tools marked ⚠️ have an
 `intellij-index` equivalent that is multi-project aware — prefer those.
 
 | Operation | Tool | Note |

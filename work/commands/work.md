@@ -1,7 +1,5 @@
 ---
-description: "Unified work lifecycle entry point. Detects state and routes to work-start, work-end, work-pause, or work-resume automatically. Use 'work end' or 'work pause' for explicit actions."
+description: "Use when the user says "work", "work end", "work pause", or "work resume" — detects current branc..."
 ---
 
 Invoke the `work` skill.
-
-$ARGUMENTS

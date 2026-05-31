@@ -5,6 +5,7 @@ description: >
   vulnerabilities" in a TypeScript or Node.js project, or when ts-code-review
   identifies auth, payment, or PII handling code needing a security pass.
   NOT automatic — must be explicitly requested or offered by ts-code-review.
+slash-command: false
 ---
 
 # Security Audit for TypeScript / Node.js Applications

@@ -4,6 +4,7 @@ description: >
   Use when seeking improvement opportunities in a project — "find duplication",
   "bloat check", "look for ways to improve docs", "do a refine session".
   NOT for correctness or compliance — use project-health for that.
+slash-command: false
 ---
 
 # Project Refine

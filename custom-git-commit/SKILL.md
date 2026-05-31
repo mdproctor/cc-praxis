@@ -4,6 +4,7 @@ description: >
   Use when the user says "commit" in a type: custom project (working groups,
   research, documentation, etc.). Only applies to type: custom — all other
   project types route elsewhere.
+slash-command: false
 ---
 
 # Custom Project Commit

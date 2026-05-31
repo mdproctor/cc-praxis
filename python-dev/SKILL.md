@@ -5,6 +5,7 @@ description: >
   tests — user says "implement", "fix", "refactor", "add tests", or is
   editing .py files, pyproject.toml, requirements.txt, or setup.py.
   Does NOT apply to reading or discussing existing code without changes.
+slash-command: false
 ---
 
 # Python Development
