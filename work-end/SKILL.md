@@ -16,12 +16,19 @@ branch closed, returns to the workspace base (main).
 
 ## Path Resolution (run first, always)
 
+Use the same convention as `work-start` — derive paths from git, not CLAUDE.md:
+
 ```bash
-PROJECT=$(grep "add-dir" CLAUDE.md | head -1 | sed 's/.*add-dir //')
-WORKSPACE=$(grep "^\*\*Workspace:\*\*" CLAUDE.md | head -1 | sed 's/.*`\(.*\)`.*/\1/')
-PROJECT_BASE_BRANCH=$(grep "^\*\*Project base branch:\*\*" CLAUDE.md 2>/dev/null | head -1 | sed 's/.*`\(.*\)`.*/\1/')
+WORKSPACE=$(git rev-parse --show-toplevel 2>/dev/null)
+PROJECT=$(readlink -f "$WORKSPACE/proj" 2>/dev/null || echo "$WORKSPACE")
+SINGLE_REPO_MODE=$( [ "$WORKSPACE" = "$PROJECT" ] && echo "yes" || echo "no" )
+PROJECT_BASE_BRANCH=$(grep "^\*\*Project base branch:\*\*" "$PROJECT/CLAUDE.md" 2>/dev/null | head -1 | sed 's/.*`\(.*\)`.*/\1/')
 [ -z "$PROJECT_BASE_BRANCH" ] && PROJECT_BASE_BRANCH="main"
 ```
+
+`WORKSPACE` is the git root of the current session directory. `PROJECT` follows the
+`proj/` symlink to the source repo. If no `proj/` symlink exists, `PROJECT = WORKSPACE`
+(single-repo mode — `SINGLE_REPO_MODE=yes`).
 
 `PROJECT_BASE_BRANCH` is the project's base branch — read from `**Project base branch:** \`<name>\``
 in CLAUDE.md; defaults to `main`. The workspace always uses `main` as its base branch.
@@ -30,11 +37,9 @@ in CLAUDE.md; defaults to `main`. The workspace always uses `main` as its base b
 
 ## Pre-conditions
 
-Resolve paths and read current branch, then check in order:
+Resolve paths (see Path Resolution above) and read current branch, then check in order:
 
 ```bash
-PROJECT=$(grep "add-dir" CLAUDE.md | head -1 | sed 's/.*add-dir //')
-WORKSPACE=$(grep "^\*\*Workspace:\*\*" CLAUDE.md | head -1 | sed 's/.*`\(.*\)`.*/\1/')
 CURRENT_WORKSPACE=$(git -C "$WORKSPACE" branch --show-current)
 ```
 
@@ -65,12 +70,10 @@ CURRENT_WORKSPACE=$(git -C "$WORKSPACE" branch --show-current)
 
 ## Step 0 — Resolve paths
 
+Paths already resolved in Path Resolution above. Extract remaining config:
+
 ```bash
-PROJECT=$(grep "add-dir" CLAUDE.md | head -1 | sed 's/.*add-dir //')
-WORKSPACE=$(grep "^\*\*Workspace:\*\*" CLAUDE.md | head -1 | sed 's/.*`\(.*\)`.*/\1/')
-OWNER_REPO=$(grep "GitHub repo:" CLAUDE.md | head -1 | sed 's/.*GitHub repo: *//')
-PROJECT_BASE_BRANCH=$(grep "^\*\*Project base branch:\*\*" CLAUDE.md 2>/dev/null | head -1 | sed 's/.*`\(.*\)`.*/\1/')
-[ -z "$PROJECT_BASE_BRANCH" ] && PROJECT_BASE_BRANCH="main"
+OWNER_REPO=$(grep "GitHub repo:" "$PROJECT/CLAUDE.md" | head -1 | sed 's/.*GitHub repo: *//')
 ```
 
 ---
@@ -538,6 +541,40 @@ If no `$BLESSED_REMOTE`: no prompt — fork push is the final delivery.
 
 **Why rebase and not merge --no-ff?** Rebase keeps the project base branch history linear and avoids a merge commit that references a branch consumers never saw. Fast-forward is a safe subset — `git rebase` fast-forwards when possible, replays commits otherwise.
 
+### 8j-cleanup — Remove scaffold from main (single-repo mode only)
+
+**Skip entirely in two-repo mode (`SINGLE_REPO_MODE=no`).**
+
+In single-repo mode, Step 8j's rebase brings the scaffold commit (`.meta`, `JOURNAL.md`)
+from the epic branch onto main. These files are ephemeral branch artifacts — they must not
+persist on main. HANDOFF.md and blog entries that also land via rebase are intentional and
+must not be removed.
+
+After 8j completes (workspace/project is now on main):
+
+```bash
+if [ "$SINGLE_REPO_MODE" = "yes" ]; then
+  FILES_TO_REMOVE=""
+  [ -f "$WORKSPACE/design/.meta" ] && FILES_TO_REMOVE="$FILES_TO_REMOVE design/.meta"
+  [ -f "$WORKSPACE/design/JOURNAL.md" ] && FILES_TO_REMOVE="$FILES_TO_REMOVE design/JOURNAL.md"
+  if [ -n "$FILES_TO_REMOVE" ]; then
+    git -C "$WORKSPACE" rm -f $FILES_TO_REMOVE
+    # Remove design/ dir only if it is now completely empty
+    if [ -d "$WORKSPACE/design" ] && [ -z "$(ls -A "$WORKSPACE/design")" ]; then
+      rmdir "$WORKSPACE/design"
+    fi
+    git -C "$WORKSPACE" commit -m "chore($BRANCH_NAME): remove branch scaffold from main"
+    git -C "$WORKSPACE" push
+  fi
+fi
+```
+
+**Why this step exists:** In two-repo mode, `.meta` and `JOURNAL.md` live on the workspace
+epic branch only — they never reach workspace main. In single-repo mode, the workspace IS
+the project repo, so the rebase in 8j brings them to main. This cleanup restores the
+invariant. HANDOFF.md and blog entries reaching main via the same rebase are correct
+behaviour — do not remove them.
+
 ### 8k — Final build verification (Java / Maven projects only)
 
 **Run after 8j. Skip for non-Java projects.**
@@ -591,13 +628,22 @@ an "offer" — it always runs. 8i then verifies the result; any unpublished entr
 
 ## Step 9 — Mark closed
 
-`EPIC-CLOSED.md` lives in `$WORKSPACE/design/` alongside `.meta` and `JOURNAL.md`.
-This is committed to the workspace **epic branch** (not main), so the hygiene scan
-must traverse epic branches to find it — which it already does to check for `.meta`.
+`EPIC-CLOSED.md` lives in `$WORKSPACE/design/` and is committed to the workspace
+**epic branch** (not main), so the hygiene scan can traverse epic branches to detect it.
+
+**Two-repo mode:** workspace is still on the epic branch at this point — commit directly.
+
+**Single-repo mode:** after 8j the repo is on main. Switch to the epic branch to commit,
+then return to main.
 
 ```bash
 CLOSE_DATE=$(date +%Y-%m-%d)
 
+if [ "$SINGLE_REPO_MODE" = "yes" ]; then
+  git -C "$WORKSPACE" checkout "$BRANCH_NAME"
+fi
+
+mkdir -p "$WORKSPACE/design"
 cat > "$WORKSPACE/design/EPIC-CLOSED.md" << EOF
 # Branch Closed — $BRANCH_NAME
 **Date:** $CLOSE_DATE
@@ -607,6 +653,10 @@ EOF
 git -C "$WORKSPACE" add design/EPIC-CLOSED.md
 git -C "$WORKSPACE" commit -m "docs($BRANCH_NAME): mark closed"
 git -C "$WORKSPACE" push
+
+if [ "$SINGLE_REPO_MODE" = "yes" ]; then
+  git -C "$WORKSPACE" checkout main
+fi
 ```
 
 Branches are **not deleted**. `EPIC-CLOSED.md` is the signal for hygiene scan cleanup.
