@@ -1,5 +1,5 @@
 ---
-description: "Save context and switch both repos to main so you can work on something else."
+description: "Use when interrupting current branch work to switch to something else — user says "work-pause", "..."
 ---
 
 Invoke the `work-pause` skill.

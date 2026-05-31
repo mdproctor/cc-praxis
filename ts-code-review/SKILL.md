@@ -4,6 +4,7 @@ description: >
   Use when reviewing TypeScript code — user says "review the code", "check
   these changes", "review this", or invokes /ts-code-review. Only applies to
   TypeScript/JavaScript projects. Builds on code-review-principles.
+slash-command: false
 ---
 
 # TypeScript Code Review

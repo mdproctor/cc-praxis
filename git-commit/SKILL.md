@@ -4,6 +4,7 @@ description: >
   Use when user wants to create a commit NOW - says "commit this", "commit
   these changes", "create a commit", or invokes /git-commit. Does NOT
   apply to discussions about past commits or questions about whether to commit.
+slash-command: false
 ---
 
 # Git Commit Helper

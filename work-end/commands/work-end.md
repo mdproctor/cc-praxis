@@ -1,5 +1,5 @@
 ---
-description: "Close the current branch: promote artifacts, merge journal, close issue, return to main."
+description: "Use when the current branch is complete and ready to close — user says "work-end", "close this br..."
 ---
 
 Invoke the `work-end` skill.

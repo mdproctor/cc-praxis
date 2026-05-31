@@ -5,6 +5,7 @@ description: >
   (function/agent/emit/listen/switchWhen/forEach/http/openapi), HITL patterns,
   YAML workflow definitions, @QuarkusTest for workflows, AI agent mocking, or
   configuring workflow tracing/MDC/OpenTelemetry/Micrometer.
+slash-command: false
 ---
 
 # Quarkus Flow

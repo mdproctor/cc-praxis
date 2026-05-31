@@ -1,7 +1,5 @@
 ---
-description: Write any piece of content — article, note, brief, essay, or news. Routes to the correct content type automatically.
+description: "Use when writing any piece of content — project diary entry, blog post, article, note, brief, new..."
 ---
 
-Write the following content using write-content skill:
-
-$ARGUMENTS
+Invoke the `write-content` skill.

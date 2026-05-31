@@ -5,6 +5,7 @@ description: >
   "doc sweep", or invoked from a prompt snippet at session end. Scoped to what
   changed this session only, not a full project sweep. NOT a design journal
   update (java-git-commit handles that).
+slash-command: false
 ---
 
 # Implementation Doc Sync

@@ -1,7 +1,7 @@
 ---
 name: cc-praxis
 description: >
-  Use for cc-praxis management: diagnosing setup problems ("why isn't
+  Use when cc-praxis management is needed: diagnosing setup problems ("why isn't
   cc-praxis working", "check the setup", "nothing is triggering"), or
   launching the skill manager UI ("open cc-praxis", "manage skills",
   "show installed skills", "what skills are installed").

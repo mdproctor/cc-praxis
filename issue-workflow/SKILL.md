@@ -6,6 +6,7 @@ description: >
   multiple concerns that should be separate issues, or when staged changes span
   multiple issues and should be split. Also invoked automatically throughout
   the development lifecycle when Work Tracking is enabled in CLAUDE.md.
+slash-command: false
 ---
 
 # Issue Workflow
@@ -43,6 +44,32 @@ flowchart TD
     Context_ -->|significant request made| Phase2
     Context_ -->|git-commit Step 2| Phase3
 ```
+
+---
+
+## Scale and Complexity Triage
+
+Every issue gets both labels at creation. Infer from context — do not ask the user.
+
+**Scale** — how much code changes:
+
+| Label | Meaning | Examples |
+|-------|---------|---------|
+| `scale: XS` | Lines of change | Fix a path, add a config entry, update one line |
+| `scale: S` | Single class / small file | New method, small class, one-file refactor |
+| `scale: M` | Multi-class / multi-file | New service + tests, interface + implementations |
+| `scale: L` | Substantial feature | New module, major refactor across many files |
+| `scale: XL` | Major rework | Cross-repo change, architectural overhaul |
+
+**Complexity** — how much design or unknown work is involved:
+
+| Label | Meaning | When |
+|-------|---------|------|
+| `complexity: Low` | Clear path, no unknowns | Approach is obvious; just write the code |
+| `complexity: Med` | Some design or unknowns | Need to figure out an approach; some exploration required |
+| `complexity: High` | Significant unknowns, design required | Requires brainstorming before implementation |
+
+Scale and complexity are independent. An `XL` migration can be `Low` (tedious but clear); an `XS` fix can be `High` (one line but root cause unknown). Err on the side of honest — do not inflate complexity to seem thorough.
 
 ---
 
@@ -276,9 +303,11 @@ merged, and reverted on its own.
 - ✅ "Data Store layer — PropagatingDataStore and subscription pattern"
 - ❌ "JavaScript stuff" / "Task 3" / "Phase 2 work"
 
+Before creating each issue, infer scale and complexity using the **Scale and Complexity Triage** table. Do not ask the user — assess from the description and add both labels.
+
 ```bash
 gh issue create --title "{child title}" \
-  --label "{type-label}" --repo {owner/repo} \
+  --label "{type-label},scale: {XS|S|M|L|XL},complexity: {Low|Med|High}" --repo {owner/repo} \
   --body "$(cat <<'EOF'
 ## Context
 Part of epic #{epic-number} — {epic title}. {Note any dependency on sibling issues.}
@@ -345,7 +374,8 @@ gh issue list --state open --limit 15 --repo {owner/repo}
 
 **If no issue exists:** don't ask — act. Infer what's being built, draft an issue
 using the child body format (Context / What / Acceptance Criteria / Notes), and
-apply **Ad-hoc Issue Placement** below to determine where it belongs. Then propose:
+apply **Ad-hoc Issue Placement** below to determine where it belongs. Also infer
+scale and complexity using the **Scale and Complexity Triage** table. Then propose:
 
 > I'm about to implement "{inferred title}". I've drafted an issue for this:
 >
@@ -354,6 +384,7 @@ apply **Ad-hoc Issue Placement** below to determine where it belongs. Then propo
 > What: {inferred outcome}
 > Acceptance Criteria: {inferred criteria}
 > Notes: {any known pitfalls or files}
+> Scale: {XS|S|M|L|XL} · Complexity: {Low|Med|High}
 >
 > Placement: {active epic #N / epic #M / standalone} — {reason}
 >
@@ -554,6 +585,7 @@ If YES: proceed without a footer. If anything else: return to issue selection.
 - ✅ User confirmed epic + child issues (or confirmed existing epic number)
 - ✅ Epic created with all four sections filled (Overview / Motivation / Scope / Definition of Done)
 - ✅ All child issues created with all four sections filled (Context / What / AC / Notes)
+- ✅ All child issues carry `scale: *` and `complexity: *` labels
 - ✅ Epic Scope checklist updated with real issue numbers
 - ✅ Active issue stated — Claude knows which issue current work targets
 

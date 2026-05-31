@@ -6,6 +6,7 @@ description: >
   tests", or is editing .java files, pom.xml, or build.gradle. Does NOT apply
   to reading/discussing code without changes. For code review use
   java-code-review; for commits use java-git-commit.
+slash-command: false
 ---
 
 # Java Development

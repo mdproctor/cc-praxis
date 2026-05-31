@@ -4,6 +4,7 @@ description: >
   Use when a task or session is beginning — the opening directive in any
   work-item prompt, or when the user says they are beginning work. Handles
   both new and existing branches. NOT optional, must NOT be skipped.
+slash-command: false
 ---
 
 # work-start
@@ -328,18 +329,23 @@ git -C "$WORKSPACE" push  # non-fatal if fails; warn and continue
 
 ### Step 11 — IntelliJ MCPs
 
-Call `ide_index_status` to confirm the MCP server is reachable.
+Two IntelliJ MCP servers may be present:
+- **`mcp__intellij-index__*`** — the Index MCP plugin. Supports auto-opening projects via `project_path`. Use this for all semantic operations.
+- **`mcp__intellij__*`** — the JetBrains built-in MCP. Can only see projects already open in the IDE. Does NOT support auto-opening. Never use this to check if a project is open or to trigger an open.
 
-**If the MCP server itself is unavailable** (connection error, tool not found):
+Call `mcp__intellij-index__ide_index_status` to confirm the Index MCP server is reachable.
+
+**If the Index MCP server itself is unavailable** (connection error, tool not found):
 - Stop immediately — tell the user the MCP is missing
 - Do not proceed with any semantic operation
 - Wait for the user to reconnect via `/mcp`
 
 **If the MCP is reachable but the project isn't open:**
 - Do NOT stop and do NOT ask the user to open the project manually
-- Call `ide_project_status` to see all managed projects and their paths
-- Pass `project_path: <path>` to the first semantic tool you need — the plugin
-  opens the project automatically (5–30s), then runs the tool
+- Do NOT fall back to `mcp__intellij__*` tools — they cannot open projects
+- Call `mcp__intellij-index__ide_project_status` to see all managed projects and their paths
+- Pass `project_path: <path>` to the first `mcp__intellij-index__*` tool you need — the
+  plugin opens the project automatically (5–30s), then runs the tool
 - Never use `get_project_modules` to check what's open — it only sees the currently
   focused window and will mislead you when multiple projects are managed
 

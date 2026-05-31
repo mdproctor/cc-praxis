@@ -4,6 +4,7 @@ description: >
   Use when updating npm packages, bumping versions, adding dependencies, or
   running npm audit in a TypeScript or JavaScript project. Applies to npm,
   yarn, and pnpm projects.
+slash-command: false
 ---
 
 # npm Dependency Update Helper
