@@ -90,7 +90,15 @@ ls CLAUDE.md 2>/dev/null || echo "No CLAUDE.md found"
 
 ### Step 1a: Check for modular structure
 
-Run `python scripts/document_discovery.py CLAUDE.md` (or use the API) to detect linked module files. **If modules exist**, switch to the [modular-handling.md](modular-handling.md) workflow for Steps 2, 5, and 6. Otherwise continue below.
+Check whether sibling docs exist that CLAUDE.md routes content to:
+
+```bash
+[ -f "docs/GOTCHAS.md" ] && echo "gotchas: yes" || echo "gotchas: no"
+[ -f "docs/FLYWAY.md" ] && echo "flyway: yes" || echo "flyway: no"
+[ -f "scripts/README.md" ] && echo "scripts-readme: yes" || echo "scripts-readme: no"
+```
+
+If any module files are present, the document is modular. Continue with the standard single-file workflow for CLAUDE.md itself, but apply **Step 4e** routing before adding any new content — new gotchas, Flyway notes, and script docs must go to their module file, not accumulate in CLAUDE.md.
 
 ### Step 2: Read current content
 
@@ -238,6 +246,25 @@ field in blog entries. Without it, write-content will stop and prompt the user.
 
 This is a one-time addition per workspace — once present, this check passes silently.
 
+### Step 4e: Route new content to the correct module file
+
+Before adding any new content, check the routing table:
+
+| Content category | Target file |
+|---|---|
+| Pitfall, gotcha, workaround, non-obvious behaviour, common mistake | `docs/GOTCHAS.md` |
+| Flyway migration, V-number, migration prerequisite, datasource config | `docs/FLYWAY.md` |
+| Build script, expected test times, script invocation | `scripts/README.md` |
+| Build command, test command, git workflow convention | `CLAUDE.md` |
+| Active epic, issue tracking state, work tracking | `CLAUDE.md` |
+| Architecture, SPI contracts, domain model | `docs/ARCHITECTURE.md` (never `CLAUDE.md`) |
+
+**The rule:** If content matches a module file category, route it there. Never add gotchas, Flyway notes, or script docs to CLAUDE.md. Only rules that need to be in active working memory belong in CLAUDE.md.
+
+When proposing an update that routes to a module file, include it as a separate change block (or as the sole change if CLAUDE.md itself needs no update).
+
+---
+
 ### Step 5: Propose updates
 
 **For single-file CLAUDE.md:**
@@ -270,14 +297,13 @@ End every proposal with exactly:
 When user confirms YES:
 
 1. Apply **only** the proposed changes
-2. **Validate the document:**
+2. **Validate links (if module files present):** Check that any markdown links from CLAUDE.md to module files resolve:
    ```bash
-   python scripts/validate_document.py CLAUDE.md
+   grep -oE '\[([^\]]+)\]\(docs/[^)]+\)' CLAUDE.md | grep -oE 'docs/[^)]+' | while read -r p; do [ -f "$p" ] || echo "BROKEN LINK: $p"; done
    ```
-3. **If validation fails (exit code 1):**
-   - Revert changes: `git restore CLAUDE.md`
-   - Report CRITICAL issues to user; ask user to fix manually; stop (do not stage)
-4. **If validation succeeds or has only warnings:**
+   If broken links are found, fix them before staging.
+3. **Skip `validate_document.py`** — this script is not present in all projects and is optional.
+4. **If no broken links:**
    - Print brief summary: "✅ Updated sections: Build Commands, Testing"
    - Document is ready for staging
 

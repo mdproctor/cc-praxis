@@ -5,31 +5,16 @@ Used by `update-claude-md` when Step 1a reveals a modular CLAUDE.md structure
 
 ---
 
-## Step 1a — Discover document group
+## Step 1a — Identify module files
 
-```python
-from scripts.document_discovery import discover_document_group
-from pathlib import Path
+The modular structure is detected in SKILL.md Step 1a via bash file-presence checks. By the time this file is loaded, you already know which module files exist.
 
-group = discover_document_group(Path("CLAUDE.md"))
-```
+**Treat the detected files as writable targets.** Understand what content each one owns:
+- `docs/GOTCHAS.md` — pitfalls, workarounds, non-obvious behaviours
+- `docs/FLYWAY.md` — migration versions, V-number rules, prerequisites
+- `scripts/README.md` — build script reference, expected test times
 
-**This discovers:**
-- Primary file: `CLAUDE.md`
-- Optional modules via:
-  - Markdown links: `[Workflows](docs/workflows/ci.md)`
-  - Include directives: `<!-- include: patterns.md -->`
-  - Section references: `§ Testing in docs/workflows/testing.md`
-  - Directory pattern: `docs/workflows/*.md` files
-
-**Cache behavior:**
-- First sync: Discovers modules, caches in `.doc-cache.json`
-- Subsequent syncs: Uses cache (fast path, <10ms)
-- Cache invalidation: Automatic on structure changes (new links, new files)
-
-**Result:**
-- Single-file CLAUDE.md → `group.modules` is empty → use standard workflow
-- Modular CLAUDE.md → `group.modules` contains linked files → continue below
+Read CLAUDE.md and each present module file before proposing any changes.
 
 ---
 
@@ -99,24 +84,14 @@ Group proposals by file:
 When user confirms YES:
 
 1. Apply proposed changes to ALL affected files (primary + modules)
-2. **Validate entire document group:**
-   ```python
-   from scripts.validate_document import validate_document_group
-   from scripts.document_discovery import discover_document_group
-   from pathlib import Path
-
-   group = discover_document_group(Path("CLAUDE.md"))
-   issues = validate_document_group(group)
+2. **Validate links:** Check that any markdown links to module files resolve:
+   ```bash
+   grep -oE '\[([^\]]+)\]\(docs/[^)]+\)' CLAUDE.md | grep -oE 'docs/[^)]+' | while read -r p; do [ -f "$p" ] || echo "BROKEN LINK: $p"; done
    ```
-3. **If validation fails (CRITICAL issues):**
-   - Revert ALL modified files:
-     ```bash
-     git restore CLAUDE.md docs/workflows/ci.md docs/workflows/testing.md
-     ```
-   - Report CRITICAL issues to user
-   - Ask user to fix manually
-   - Stop (do not stage)
-4. **If validation succeeds or has only warnings:**
+3. **If broken links found:**
+   - Revert affected files: `git restore CLAUDE.md` (and module files if changed)
+   - Report to user; stop (do not stage)
+4. **If no broken links:**
    - Print summary: "✅ Updated files: CLAUDE.md, docs/workflows/ci.md, docs/workflows/testing.md"
    - All modified files ready for staging
 
