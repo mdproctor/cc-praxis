@@ -5,8 +5,8 @@ description: >
   Use when ending a session and wanting to preserve context for resumption,
   OR when a session is beginning and needing to resume from where things left
   off — says "create a handover", "end of session", "update the handover",
-  "write a handover", or "resume handover". NOT for design records (use
-  design-snapshot) or project narrative (use write-content, diary type).
+  "write a handover", or "resume handover". NOT for project narrative
+  (use write-content, diary type).
 ---
 
 # Session Handover
@@ -102,9 +102,6 @@ longer, trim — it has become a document, not a handover.
 
 ## What This Is Not
 
-- **Not a design snapshot** — design-snapshot freezes design state as an
-  immutable archival record. The handover is operational, mutable, overwritten
-  each session.
 - **Not a project blog entry** — the blog captures narrative for posterity.
   The handover captures operational context for the next 24–48 hours.
 - **Not a knowledge-garden entry** — cross-project technical gotchas go in
@@ -193,18 +190,16 @@ Present this exactly:
 Session wrap — create before writing the handover?
 
 [x] 1  write-content    capture this session's work as a diary entry
-[ ] 2  design-snapshot   freeze the current design state
-[x] 3  update-claude-md  sync any new workflow conventions
-[x] 4  forage sweep      check for gotchas, techniques, undocumented
-[x] 5  protocol sweep    check for project rules worth formalising
-[?] 6  journal-entry     document any design changes this session not yet in design/JOURNAL.md  ← ON if mid-epic (design/.meta exists), OFF otherwise
-[?] 7  epic hygiene      check epic branch state, alignment, and staleness  ← ON if workspace configured, OFF otherwise
+[x] 2  update-claude-md  sync any new workflow conventions
+[x] 3  forage sweep      check for gotchas, techniques, undocumented
+[x] 4  protocol sweep    check for project rules worth formalising
+[?] 5  journal-entry     document any design changes this session not yet in design/JOURNAL.md  ← ON if mid-epic (design/.meta exists), OFF otherwise
+[?] 6  epic hygiene      check epic branch state, alignment, and staleness  ← ON if workspace configured, OFF otherwise
 
 Type numbers to toggle (e.g. "2 6"), "all" to toggle all on/off, or "go" to proceed:
 ```
 
-- **Default:** write-content (diary), update-claude-md, forage sweep, protocol sweep ticked; design-snapshot OFF; journal-entry depends on epic state (see below).
-- **design-snapshot is off by default** — the project model is a single authoritative design document updated in place, not a growing snapshot chain. Only tick it for an explicit, intentional design freeze (e.g. a major milestone or architectural pivot worth preserving immutably). Without a workspace configured, the skill will fail or create the wrong directory.
+- **Default:** write-content (diary), update-claude-md, forage sweep, protocol sweep ticked; journal-entry depends on epic state (see below).
 - **protocol sweep is on by default** — scans the session for project-specific rules worth formalising. Skip it for sessions that worked purely in universal tools with no project-specific rules established or re-enforced. The protocol skill creates `docs/protocols/` if it does not exist — never skip the sweep because the directory is absent.
 - **journal-entry is ON by default when on an epic branch** — check `ls design/.meta 2>/dev/null` before showing the checklist. If `.meta` exists the session is mid-epic and design reasoning is about to be lost; default journal-entry to ON. If not on an epic branch, default to OFF.
 - **epic hygiene is ON by default when a workspace is configured** — check `**Workspace:**` in CLAUDE.md. Runs these checks and surfaces any issues before the session ends:
@@ -222,9 +217,8 @@ Run checked items **in this order** before continuing:
 2. Forage sweep — done while context is full (findings may feed the blog)
 3. Protocol sweep — done while context is full; catches project-specific rules before context is lost
 4. update-claude-md — sync new conventions first
-5. design-snapshot — only if explicitly ticked; requires workspace configured
-6. journal-entry — write any missing JOURNAL.md entries before the handover
-7. write-content (diary) — written last so it can mention forage and protocol submissions and synthesise the complete session narrative including any new conventions
+5. journal-entry — write any missing JOURNAL.md entries before the handover
+6. write-content (diary) — written last so it can mention forage and protocol submissions and synthesise the complete session narrative including any new conventions
 
 After all checked items complete, continue to Step 1.
 
@@ -432,7 +426,6 @@ Session wrap complete.
 ✅ Forage sweep          N entries submitted  (or: nothing garden-worthy found)
 ✅ Protocol sweep        N protocols captured (or: nothing new)
 ✅ update-claude-md      (or ⏭ skipped)
-✅ design-snapshot       (or ⏭ skipped — off by default)
 ✅ journal-entry         (or ⏭ skipped — not mid-epic)
 ✅ write-content (diary)  <entry filename>
 ✅ HANDOFF.md committed  <workspace>/HANDOFF.md → main
@@ -455,13 +448,12 @@ Rules:
 ```mermaid
 flowchart TD
     Trigger((Session ending))
-    WrapChecklist[Show wrap checklist:\nwrite-content / design-snapshot /\nupdate-claude-md / forage sweep /\nprotocol sweep / journal-entry\nmost on by default]
+    WrapChecklist[Show wrap checklist:\nwrite-content / update-claude-md /\nforage sweep / protocol sweep /\njournal-entry\nmost on by default]
     UserToggles[User toggles items\nor types 'all' / Enter]
     GardenSweep[Forage sweep if checked:\ncheck gotchas / techniques /\nundocumented — all 3 categories]
     GardenFound{Anything\nworth submitting?}
     SubmitGarden[Invoke forage CAPTURE\nto write submission]
     WriteBlog[Invoke write-content\nsingle-entry for this session]
-    DesignSnap[Invoke design-snapshot\nfreeze current state]
     UpdateClaude[Invoke update-claude-md\nsync new conventions]
     CheckHistory[git log --oneline -3\n-- HANDOFF.md]
     HasPrevious{Previous\nhandover exists?}
@@ -486,8 +478,7 @@ flowchart TD
     GardenFound -->|yes| SubmitGarden
     GardenFound -->|no| UpdateClaude
     SubmitGarden --> UpdateClaude
-    UpdateClaude --> DesignSnap
-    DesignSnap --> WriteBlog
+    UpdateClaude --> WriteBlog
     WriteBlog --> CheckHistory
     CheckHistory --> HasPrevious
     HasPrevious -->|yes| GetDiff
@@ -534,7 +525,6 @@ Handover is complete when:
 - ✅ Any garden-worthy entries submitted via forage CAPTURE before writing the handover
 - ✅ Protocol sweep performed (if checked) — session scanned for project-specific rules worth formalising; confirmed entries captured and committed
 - ✅ write-content (diary) invoked (if checked) — session diary entry written
-- ✅ design-snapshot invoked (if checked) — design state frozen; off by default
 - ✅ update-claude-md invoked (if checked) — CLAUDE.md synced
 - ✅ journal-entry written (if checked) — design/JOURNAL.md updated; off by default; only applicable on epic branches
 - ✅ Session name offered — user was prompted to `/rename` or acknowledged the session already has a meaningful name
@@ -561,7 +551,7 @@ context marked as "unchanged"? If yes — done.
 **Invoked by:** User directly at end of a session ("create a handover",
 "end of session", "write a handover")
 
-**Invokes:** [`forage`] — forage sweep (Step 2b) to submit any gotchas, techniques, or undocumented items before context is lost; [`protocol`] — protocol sweep to formalise any project-specific rules established this session (if checked); [`write-content`] — diary type for this session's narrative (if checked); [`design-snapshot`] — to freeze current design state (if checked); [`update-claude-md`] — to sync any new conventions (if checked); journal entry (inline action, not a separate skill) — writes missing `design/JOURNAL.md` entries on epic branches (if checked); `git commit` directly for the handover itself
+**Invokes:** [`forage`] — forage sweep (Step 2b) to submit any gotchas, techniques, or undocumented items before context is lost; [`protocol`] — protocol sweep to formalise any project-specific rules established this session (if checked); [`write-content`] — diary type for this session's narrative (if checked); [`update-claude-md`] — to sync any new conventions (if checked); journal entry (inline action, not a separate skill) — writes missing `design/JOURNAL.md` entries on epic branches (if checked); `git commit` directly for the handover itself
 
 **Reads from (surgical, not upfront):**
 - `git diff HEAD -- HANDOFF.md` — what changed from last handover
@@ -570,7 +560,6 @@ context marked as "unchanged"? If yes — done.
 - `~/.hortora/garden/GARDEN.md` — only when including garden reference
 
 **Complements:**
-- `design-snapshot` — archival design state the handover points to
 - `write-content` — narrative context the handover points to
 - `forage` — technical gotcha index the handover references
 - `idea-log` — undecided possibilities the handover references

@@ -122,7 +122,7 @@ Before presenting:
 
 ## Skill Chaining
 
-**Invoked by:** User directly — "write a diary entry", "write an article about X", "draft a brief", "log what we built today"; also after `adr` captures a major decision, after `design-snapshot` marks a milestone, or automatically as part of the `handover` wrap checklist (diary type).
+**Invoked by:** User directly — "write a diary entry", "write an article about X", "draft a brief", "log what we built today"; also after `adr` captures a major decision, or automatically as part of the `handover` wrap checklist (diary type).
 
 **Loads:**
 - `write-content/defaults/structure-principles.md` — always

@@ -342,7 +342,7 @@ All pitfalls from `git-commit` apply, plus:
 
 ## Skill Chaining
 
-**Invoked by:** [`java-code-review`] after all critical issues resolved; [`maven-dependency-update`] after successful dependency updates; [`adr`] when committing an ADR alongside related changes; [`design-snapshot`] to commit a snapshot file; [`idea-log`] to commit IDEAS.md additions; [`write-content`] to commit a blog entry
+**Invoked by:** [`java-code-review`] after all critical issues resolved; [`maven-dependency-update`] after successful dependency updates; [`adr`] when committing an ADR alongside related changes; [`idea-log`] to commit IDEAS.md additions; [`write-content`] to commit a blog entry
 
 **Invokes:** [`java-update-design`] and [`update-claude-md`] before proposing commit (automatic)
 

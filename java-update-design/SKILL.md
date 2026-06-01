@@ -376,7 +376,7 @@ Then update CLAUDE.md:
 
 **Invokes:** None (terminal skill in the chain)
 
-**Complements:** `design-snapshot` — this skill keeps DESIGN.md *current* (mutable, always up to date); `design-snapshot` *freezes* a moment in time (immutable). After a significant architectural update, consider offering a snapshot to record where the design stands.
+**Complements:** `adr` — captures point-in-time decisions alongside this skill's living-doc updates
 
 **Can be invoked independently:** User can run `/update-design` directly to sync DESIGN.md without committing
 

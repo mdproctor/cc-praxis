@@ -373,7 +373,6 @@ Per-repo artifacts live in each child workspace.
 | Skill | Writes to |
 |-------|-----------|
 | adr | `adr/` |
-| design-snapshot | `snapshots/` |
 | write-content | `blog/` |
 | handover | `HANDOFF.md` |
 | idea-log | `IDEAS.md` |
@@ -493,7 +492,6 @@ Run `add-dir <absolute-path-to-project>` and `add-dir <absolute-path-to-workspac
 | writing-plans (plans) | `plans/` |
 | handover | `HANDOFF.md` |
 | idea-log | `IDEAS.md` |
-| design-snapshot | `snapshots/` |
 | java-update-design / update-primary-doc | `design/JOURNAL.md` (created by `work-start`) |
 | adr | `adr/` |
 | write-content | `blog/` |
@@ -999,7 +997,7 @@ FOUND=()
 
 # docs/ artifacts
 # Note: docs/adr/ and docs/specs/ excluded — both are project knowledge, not workspace artifacts.
-[ -d "<project-path>/docs/design-snapshots" ]  && FOUND+=("docs/design-snapshots/ → snapshots/")
+
 [ -d "<project-path>/docs/blog" ]              && FOUND+=("docs/blog/ → blog/")
 [ -d "<project-path>/docs/_posts" ]            && FOUND+=("docs/_posts/ → blog/")
 [ -d "<project-path>/docs/handoffs" ]          && FOUND+=("docs/handoffs/ → handoffs/")

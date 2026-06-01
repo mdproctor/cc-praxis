@@ -250,7 +250,7 @@ ADR creation is complete when:
 
 ## Skill Chaining
 
-**Invoked by:** [`maven-dependency-update`] when major version upgrades or new extensions are proposed, [`java-update-design`] when significant new components are captured, [`idea-log`] when a parked idea is promoted to a formal decision, [`design-snapshot`] when a snapshot reveals decisions without ADR coverage
+**Invoked by:** [`maven-dependency-update`] when major version upgrades or new extensions are proposed, [`java-update-design`] when significant new components are captured, [`idea-log`] when a parked idea is promoted to a formal decision
 
 **Invokes:** [`git-commit`] to stage and commit the ADR (routes to `java-git-commit`, `custom-git-commit`, etc. per CLAUDE.md project type)
 
