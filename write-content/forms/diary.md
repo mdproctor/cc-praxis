@@ -29,7 +29,7 @@ are ready — front matter, platform formatting, final polish.
 ## Voice and Perspective Rules
 
 The **complete and authoritative register rules** are in
-`write-content/defaults/mandatory-rules.md` — loaded as part of Step 4 (draft).
+`write-content/voice/mandatory-rules.md` — loaded as part of Step 4 (draft).
 
 **The rule in brief:** "I" for what I thought, believed, wanted, or decided.
 "we" for what we actually built, tried, found, or fixed together with Claude.
@@ -129,7 +129,7 @@ echo "$PERSONAL_WRITING_STYLES_PATH"
 ```
 
 If set → list `.md` files there, select the blog/diary style guide, read in full.  
-If not set → load `write-content/defaults/common-voice.md`.
+If not set → load `write-content/voice/common-voice.md`.
 
 **Resolve author initials:**
 
@@ -200,7 +200,8 @@ Extract from conversation context. Only ask for what's genuinely unclear:
 
 **Gate — do not draft until both parts complete:**
 
-**Part A:** Read `write-content/defaults/mandatory-rules.md` in full. Cannot be overridden.
+**Part A:** Read `write-content/voice/mandatory-rules.md` in full. Cannot be overridden.
+Load `write-content/mandatory-gates.md` — the pre-draft gate (voice classification, factual accuracy, style guide check) applies here.
 
 **Part B — Pre-draft classification:**
 1. Is Claude a participant? Identify "I" vs "we" vs "Claude [verb]" for each section.

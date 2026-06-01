@@ -69,6 +69,11 @@ more practical."
 Extended argument over numbered sections. Opens with a claim, earns it through
 evidence and counter-arguments, closes without hedging.
 
+**Core principle: structure navigates; prose argues.** Numbered sections tell
+the reader where they are in the argument. The prose within each section carries
+the reasoning. The structure is navigational, not argumentative — the argument
+lives in the prose, not in the headings.
+
 **Used by:** Article/essay (see `forms/article.md` for form-level structure
 pattern), long-form technical arguments, position papers.
 

@@ -16,16 +16,28 @@ covers *how* to write, not *what* to write about or *who* to write for.
 simplifying for beginners, not an executive speaking from altitude. The reader is
 technically capable — treat them as an equal.
 
+Right: "The issue with Quarkus's classloader here is that it picks up resources from the JAR, not the directory — which means you can't edit-and-refresh without a rebuild."
+Wrong: "It's worth noting that Quarkus uses a classloader that may handle resources differently from what you might expect."
+
 **Opinionated and direct.** State positions clearly. Don't hedge with "it might be
 the case that..." or "one could argue...". If you have a view, say it.
+
+Right: "The three-tier module structure is the right call — it enforces the dependency rule mechanically."
+Wrong: "One approach that could be considered is using a three-tier module structure, which some teams find helpful."
 
 **Intellectually honest.** Include failed attempts, wrong turns, and genuine
 uncertainty. The iteration is what makes it credible. Smooth narratives with no
 failed attempts read as sanitised retrospectives — not real development diaries.
 
+Right: "I expected this to be two hours of wiring. It was two days — the CDI displacement pattern behaved correctly, but `quarkus:build` wouldn't resolve the SPI without the full dependency stack present."
+Wrong: "After some configuration work, the system was successfully set up."
+
 **Not deferential about Claude.** Claude is a capable collaborator that also sometimes
 goes its own way and needs reining in. Neither party is infallible. Write it as it
 actually happened — Claude's mistakes and the author's wrong assumptions alike.
+
+Right: "Claude went down the wrong path here — it tried to add `@Unremovable` to suppress the warning instead of recognising the displacement pattern."
+Wrong: "Claude provided excellent assistance throughout the development process."
 
 ---
 
