@@ -1,5 +1,6 @@
 ---
 name: handover
+slash-command: false
 description: >
   Use when ending a session and wanting to preserve context for resumption,
   OR when a session is beginning and needing to resume from where things left

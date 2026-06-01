@@ -1,5 +1,6 @@
 ---
 name: protocol
+slash-command: false
 description: >
   Use when working with protocol files — standing rules, architectural constraints, and
   conventions that keep a project or platform coherent. Protocols may live in the current
