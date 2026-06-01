@@ -16,6 +16,8 @@ and silent data corruption.
 
 ## Prerequisites
 
+**Invoke `ide-tooling` first** — it establishes which IntelliJ MCP to use for reading files and navigating code. With two IntelliJ MCPs available (`mcp__intellij-index__*` and `mcp__intellij__*`), using the wrong one silently fails. `ide-tooling` resolves this before you read a single file.
+
 **Load `~/.hortora/garden/approaches/code-review.md`** before proceeding.
 Apply all principles from that file, then the Java/Quarkus additions below.
 

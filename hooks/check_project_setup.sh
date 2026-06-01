@@ -9,6 +9,7 @@ fi
 # Project setup — delegate all checks to project-init
 echo "🔧 Invoke the project-init skill to verify this project is set up before proceeding."
 
+
 # Handover — session context, handled here not in project-init
 if [ -f "CLAUDE.md" ] && [ -f "HANDOVER.md" ]; then
   LAST_UPDATED=$(git log -1 --format="%ar" -- HANDOVER.md 2>/dev/null || echo "unknown age")

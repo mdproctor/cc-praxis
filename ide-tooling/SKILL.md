@@ -1,14 +1,31 @@
 ---
 name: ide-tooling
 description: >
-  Use when any IDE operation is needed — renaming a symbol, moving a file,
-  finding all references, navigating to a definition, exploring a type hierarchy,
-  diagnosing dependency chains, or any other operation where IntelliJ provides
-  semantic correctness that bash/grep cannot. Also use when the user asks
-  which tool to use for a code navigation or refactoring task.
+  INVOKE IMMEDIATELY when two IntelliJ MCPs are visible: mcp__intellij-index__*
+  and mcp__intellij__*. These are NOT interchangeable — mcp__intellij-index__
+  supports auto-opening projects via project_path; mcp__intellij__ cannot.
+  Always use mcp__intellij-index__ for code navigation. Never try mcp__intellij__
+  first and fall back. Also invoke for any IDE operation: rename, move file,
+  find references, navigate to definition, type hierarchy, diagnostics.
+slash-command: false
 ---
 
 # IDE Tooling — IntelliJ MCP Guide
+
+## ⚠️ Critical: Two MCPs, one right choice
+
+**Use `mcp__intellij-index__*` for everything code-related. Never use `mcp__intellij__*` to navigate or open projects.**
+
+| Need | Use |
+|------|-----|
+| Find references, navigate, search, diagnostics, rename, move | `mcp__intellij-index__*` |
+| Check if project is open | `mcp__intellij-index__ide_project_status` |
+| Project not open → open it | Pass `project_path` to any `mcp__intellij-index__` tool — auto-opens |
+| Build, run tests, terminal, formatting | `mcp__intellij__*` only |
+
+**Never ask the user to open a project. Never fall back to bash because a project isn't open. Never launch IntelliJ from the command line.** Pass `project_path` and let the plugin handle it.
+
+---
 
 Always prefer IntelliJ MCPs over bash, grep, or text tools for semantic code
 operations. IntelliJ understands the code structure; text tools do not.

@@ -328,12 +328,22 @@ git -C "$WORKSPACE" push  # non-fatal if fails; warn and continue
 
 ### Step 11 — IntelliJ MCPs
 
-Call `ide_index_status` to confirm the MCP server is reachable.
+Call `mcp__intellij-index__ide_index_status` to confirm the Index MCP server is reachable.
 
-**If the MCP server itself is unavailable** (connection error, tool not found):
-- Stop immediately — tell the user the MCP is missing
-- Do not proceed with any semantic operation
-- Wait for the user to reconnect via `/mcp`
+**If the Index MCP server itself is unavailable** (connection error, tool not found):
+- **Retry once** — wait 5 seconds, then call `ide_index_status` again. IntelliJ can be
+  briefly unresponsive during GC pauses, indexing spikes, or project opens. A single
+  transient failure is not a reliable signal.
+- **If still unavailable after retry**: output this message and stop — nothing else:
+
+  > ⚠️ IntelliJ MCP unavailable after retry. work-start cannot continue.
+  > Please check IntelliJ is running, then type `/mcp` to reconnect and retry.
+
+  Do not investigate further. Do not check MCP configuration. Do not run other steps
+  in parallel. Do not proceed silently. Stop and wait for the user to act.
+- The only exception: if the user has explicitly said the task is docs-only and they
+  confirm IntelliJ is not needed, you may proceed — but say so explicitly in the
+  work-start summary so the context is on record.
 
 **If the MCP is reachable but the project isn't open:**
 - Do NOT stop and do NOT ask the user to open the project manually
@@ -343,9 +353,15 @@ Call `ide_index_status` to confirm the MCP server is reachable.
 - Never use `get_project_modules` to check what's open — it only sees the currently
   focused window and will mislead you when multiple projects are managed
 
-IntelliJ can also drop mid-task. If a semantic operation fails because the MCP
-server is unavailable at any point, stop and tell the user rather than silently
-falling back.
+**Mid-task connection failure** — if a semantic operation fails mid-task with a connection
+error (not a project-not-found error):
+1. Wait 10 seconds and retry once — the server watchdog may be restarting after a crash
+   (reactive restart takes ~5s).
+2. If still failing after the retry, stop and tell the user:
+   > ⚠️ IntelliJ MCP became unavailable mid-task. Please check IntelliJ is running and
+   > type `/mcp` to reconnect, then ask me to continue.
+3. Do NOT silently fall back to bash/grep for semantic operations. Do NOT continue
+   as if the failure didn't happen.
 
 ### Step 12 — Offer brainstorming
 
@@ -379,7 +395,7 @@ Platform doc: [read / not found]
 Coherence Protocol: [any concerns raised, or "clear"]
 Protocols checked: [list any relevant ones read]
 Garden search: [N GEs surfaced for <domain> / no matches / skipped]
-IntelliJ: ✅ connected / ✅ connected, project auto-opened / ⚠️ MCP unavailable — stopped
+IntelliJ: ✅ connected / ✅ connected, project auto-opened / ⚠️ MCP unavailable after retry — stopped / ⚠️ MCP unavailable (user confirmed docs-only, proceeding explicitly)
 
 Proceeding to brainstorming.  (or: Ready for work.)
 ```

@@ -20,6 +20,21 @@ flags to CLAUDE.md when user says no so they are never asked again.
 
 ---
 
+## IntelliJ MCP routing — always apply
+
+Before any other check: if both `mcp__intellij-index__*` and `mcp__intellij__*` tools are
+visible in this session, note this rule and apply it throughout the session:
+
+- **`mcp__intellij-index__*`** — use for ALL code navigation, file search, diagnostics, and
+  opening projects. Pass `project_path` to auto-open any closed project. Never ask the user
+  to open a project manually.
+- **`mcp__intellij__*`** — use only for build/run, terminal, and formatting. Cannot open projects.
+
+This applies regardless of what work follows — spec writing, code review, implementation, or
+exploration. The rule is in effect for the whole session once noted here.
+
+---
+
 ## Fast-path exit
 
 Run this first. If all conditions are met, return immediately — do nothing else.
