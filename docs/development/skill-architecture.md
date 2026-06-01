@@ -104,14 +104,23 @@ grep -l "readlink -f proj" ~/claude/cc-praxis/*/SKILL.md
 
 ## Supporting Files
 
-When skill content exceeds ~200 words or includes heavy reference material:
+When skill content exceeds ~200 words or includes heavy reference material,
+use named subdirectories that describe their purpose:
 
 ```
 skill-name/
   SKILL.md              # Main workflow (required)
   reference-name.md     # Heavy API/reference docs
-  defaults/             # Bundled defaults (optional)
+  forms/                # Form-specific guidance (if skill has content types)
+  modes/                # Mode-specific constraint sets (if skill has writing modes)
+  voice/                # Voice and style defaults
+  commands/             # Slash command files
 ```
+
+Prefer named directories over a generic `defaults/` — the directory name
+should signal what the files inside govern. `write-content` uses `forms/`,
+`modes/`, and `voice/` rather than `defaults/` so the taxonomy is visible
+from the directory structure alone.
 
 ---
 

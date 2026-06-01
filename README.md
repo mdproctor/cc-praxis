@@ -237,10 +237,10 @@ For the layered architecture showing how skills relate to each other: [**Skills 
 | `pip-dependency-update` | `adr` | manual | Major version jump or significant new package |
 | `pip-dependency-update` | `git-commit` | manual | After successful dependency updates |
 | `handover` | `forage` | conditional | Forage sweep checked in wrap checklist (Step 2b) |
-| `handover` | `write-blog` | conditional | Blog entry checked in wrap checklist |
+| `handover` | `write-content` | conditional | Blog entry checked in wrap checklist |
 | `handover` | `design-snapshot` | conditional | Design snapshot checked in wrap checklist |
 | `handover` | `update-claude-md` | conditional | Convention sync checked in wrap checklist |
-| `write-blog` | `publish-blog` | manual | User wants to push entries to external platforms |
+| `write-content` | `publish-blog` | manual | User wants to push entries to external platforms |
 | `idea-log` | `adr` | manual | Promoting an idea to a formal architectural decision |
 | `idea-log` | `issue-workflow` | manual | Promoting an idea to tracked implementation work |
 | `idea-log` | `git-commit` | manual | Committing IDEAS.md additions and status updates |
@@ -518,7 +518,7 @@ For contributors and skill authors: [QUALITY.md](QUALITY.md) covers the full val
 │   └── SKILL.md
 ├── maven-dependency-update/             # Maven BOM dependency management
 │   └── SKILL.md
-├── write-blog/                          # Living project diary skill
+├── write-content/                       # Universal content creation skill (diary, article, brief, technical docs)
 │   └── SKILL.md
 ├── publish-blog/                        # Blog entry publishing to external git destinations
 │   └── SKILL.md
