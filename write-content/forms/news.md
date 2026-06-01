@@ -91,3 +91,15 @@ Personal amusing tone → Note/musing secondary.
 ## Length
 
 As short as needed. No minimum. A micro post (20 words + link) is valid.
+
+---
+
+## Voice
+
+Fast, direct, with clear sourcing. Opinion clearly separated from fact.
+No padding. No "this is an exciting development" — just what happened
+and why it matters.
+
+Right: the fact stated first, source linked, one sentence of context if non-obvious.
+Wrong: elaborate build-up before the announcement, opinion and fact mixed,
+extended analysis (→ Article/commentary instead).

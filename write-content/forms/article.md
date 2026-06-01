@@ -13,48 +13,35 @@ Newman's exposition. Britton's transactional function.
 
 ### tutorial — learn by doing
 The reader acquires a capability through guided practice.
-Sequential, hands-on — the reader does something.
+Sequential, hands-on — the reader does something. Reader is studying, not working.
 
-**Structure:**
-- Clear learning outcome stated upfront
-- Steps in logical sequence
-- Include real friction points — "I got stuck here because..."
-- "What I wish I knew earlier" moments are valuable
-- Code examples where the code IS the learning
-- Ends when the reader can do the thing
+**Diátaxis:** Tutorial — acquisition mode
 
-**Diátaxis:** Tutorial — acquisition mode, reader is studying not working
+**Mode:** `modes/tutorial.md` — numbered steps, imperative sentences, friction points,
+zero assumed domain knowledge.
 
 ---
 
 ### how-to — task completion
 The reader applies existing capability to accomplish a specific goal.
-Practical, step-oriented — assumes some prior knowledge.
+Practical, step-oriented — assumes some prior knowledge. Reader is working, not studying.
 
-**Structure:**
-- Goal stated clearly upfront
-- Steps toward the goal
-- Include warnings and edge cases
-- "Why this step, not that" where non-obvious
-- Ends when the task is complete
+**Diátaxis:** How-to — application mode
 
-**Diátaxis:** How-to — application mode, reader is working not studying
+**Mode:** `modes/how-to.md` (procedural sub-type) — goal upfront, steps, warnings,
+"why this step, not that" where non-obvious.
 
 ---
 
 ### explanation — understand why
 Builds the reader's mental model of a concept, system, or decision.
-Not about doing — about understanding.
-
-**Structure:**
-- Problem or concept stated
-- Why it works the way it does
-- Analogies from unexpected domains where helpful
-- Show evolution of understanding ("I used to think X...")
-- Compare to related concepts
-- Ends when the mental model is complete
+Not about doing — about understanding. The author's journey through understanding
+is part of the content.
 
 **Diátaxis:** Explanation — understanding, not action
+
+**Mode:** `modes/explanations.md` (discursive sub-type) — personal voice allowed,
+analogies from unexpected domains, "I used to think X", no length cap.
 
 **Showcase variant:** Feature demonstrations, New and Noteworthy posts,
 capability showcases are Article/explanation. If tied to a release,
@@ -79,11 +66,24 @@ tutorial/how-to/explanation/essay → use commentary.
 ---
 
 ### essay — argued to a conclusion
+Extended argument organised into numbered sections with hybrid headings.
 Has a clear position. Earns its hypothesis, counter-arguments, and conclusion
-because it's trying to move the reader. See `forms/essay.md` for full guidance.
+because it's trying to move the reader.
 
-**In brief:** Opens with a claim. Builds evidence. Addresses counter-arguments
-inline. Argues to a conclusion. Does not hedge the conclusion.
+**Mode:** `modes/argumentation.md` (essay/sustained sub-type) — three appeals
+(logos → ethos → pathos), hybrid headings, counter-arguments inline, hubris test.
+
+**Structure (form-level):**
+1. Opening claim — the argument stated in full, directly. 1–3 sentences.
+2. Numbered sections — each section one facet of the argument, in sequence.
+3. Counter-arguments inline — introduced with bold lead-in, engaged immediately.
+4. Acknowledged limits — what the argument establishes vs. what it infers.
+5. Closing — forward-looking only. Never a restatement.
+
+**Multi-part:** each part readable standalone. Italic preamble at the start of
+each part. Cross-references are orienting, not recaps.
+
+**Canonical example:** "When the Machine Codes" — 6-part series at mdproctor.github.io
 
 ---
 
@@ -114,3 +114,27 @@ what will follow ("In this article I will explain...").
 
 **Closing:** End when the point is made. A forward pointer is acceptable.
 No summary. No "thanks for reading."
+
+---
+
+## Voice by sub-type
+
+**tutorial:** Include real friction points. "I got stuck here because..."
+"What I wish I knew earlier." A tutorial with no stumbling blocks reads as
+AI-generated. See `modes/tutorial.md` for full mode guidance.
+
+**how-to:** Step-oriented. Assume some prior knowledge. Include "why this step,
+not that" where non-obvious. Acknowledge what can go wrong. See `modes/how-to.md`.
+
+**explanation:** Use analogies from unexpected domains. Show the evolution of
+your own understanding — "I used to think X, but it turns out Y." Not about
+doing — about understanding. See `modes/explanations.md` (discursive sub-type).
+
+**commentary:** Lean heavily into personal opinion and subjective experience.
+This is where the practitioner voice is most important. State the position
+directly. Often ends with an open question or ironic twist.
+
+**essay:** Strong personal voice + clear stance. Engage counter-arguments
+naturally, not formulaically. Mandate one surprising or contrarian point.
+The argument is logos-first; passion is the human layer that makes evidence
+feel important. See `modes/argumentation.md` (essay/sustained sub-type).

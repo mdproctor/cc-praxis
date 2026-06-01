@@ -80,3 +80,17 @@ pure logistics with no perspective
 
 No minimum. No maximum. Ends when done.
 Logs tend to be 50–300 words. Musings 50–200. Ideas 100–400.
+
+---
+
+## Voice by sub-type
+
+**log:** Should feel raw. High first-person. "I've just got this working", "Still
+not sure whether". Allow fragments. Allow rough edges. Do not polish.
+Typos and uncertainty are authentic signals of genuine work-in-progress.
+
+**musing:** Quick, informal, encoder-dominant. Point at the external thing and
+react. One or two sentences of actual opinion, then stop. No elaboration.
+
+**idea:** Propose something specific. "We should do X because Y." Not a full
+essay — just enough to capture the proposal before it evaporates.

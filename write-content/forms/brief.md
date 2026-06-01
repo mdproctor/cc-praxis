@@ -105,3 +105,17 @@ to go further — never required reading.
 Brief is nearly absent from the historical corpus (3 instances in 577 posts).
 It is a new form — not in the historical writing style. Do not force posts
 into Brief. Only use when maximum density is the actual goal.
+
+---
+
+## Voice
+
+Ruthless editing — make it denser and more telegraphic than a human would naturally
+write. This ironically makes it feel more human. Experts write densely. The Brief
+should feel like it was written by someone who knows exactly what matters and
+respects the reader's time.
+
+Right: every entry states a fact or decision. Nothing restates what is already
+clear from a table header or label.
+Wrong: narrative framing, contextualising the list, elaborate setup before the
+point, rhetorical flourishes, hedging.
