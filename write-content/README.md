@@ -64,6 +64,40 @@ These are orthogonal. A diary entry (form) uses explanation/discursive mode with
 
 ---
 
+## Complete Form × Mode Mapping
+
+Every valid combination. The Q&A routes to exactly one row.
+
+| Form | Sub-type | Mode | Mode file |
+|---|---|---|---|
+| Diary | — | Explanation/discursive | `modes/explanations.md` |
+| Note | musing | (form-defined) | — |
+| Note | idea | (form-defined) | — |
+| Article | tutorial | Tutorial | `modes/tutorial.md` |
+| Article | how-to / procedural | How-to/procedural | `modes/how-to.md` |
+| Article | how-to / diagnostic | How-to/diagnostic | `modes/how-to.md` |
+| Article | explanation / discursive | Explanation/discursive | `modes/explanations.md` |
+| Article | explanation / comparative | Explanation/comparative | `modes/explanations.md` |
+| Article | commentary | (form-defined) | — |
+| Article | essay | Argumentation/essay | `modes/argumentation.md` |
+| Brief | — | Reference/lookup | `modes/reference.md` |
+| News | — | (form-defined) | — |
+| Tech doc | "What it adds" | Explanation/comparative | `modes/explanations.md` |
+| Tech doc | Gotchas | How-to/diagnostic | `modes/how-to.md` |
+| Tech doc | Key files | Reference/inventory | `modes/reference.md` |
+| Tech doc | Key wiring | Reference/lookup | `modes/reference.md` |
+| Tech doc | Pattern to replicate | Tutorial | `modes/tutorial.md` |
+| Tech doc | Architectural decisions | Argumentation/rationale | `modes/argumentation.md` |
+| Tech doc | ADRs | Argumentation/decision | `modes/argumentation.md` |
+| Tech doc | Anti-patterns | How-to/diagnostic | `modes/how-to.md` |
+| Tech doc | §8 crosscutting table | Reference/pointer | `modes/reference.md` |
+
+**(form-defined)** means the mode is implicit in the form file — no separate mode file is loaded. These forms are simple enough that the form file already encodes the structural character.
+
+`modes/_universal.md` is always loaded first, for every row.
+
+---
+
 ## Modes
 
 Mode is the structural constraint set — how information is organised and presented. The Q&A selects the mode; the mode file tells the skill what structure to apply.
@@ -230,7 +264,45 @@ Runs after the draft is written, before anything is shown or saved.
 | `voice/mandatory-rules.md` | I/we/Claude register; code block rules; image rules; content focus |
 | `mandatory-gates.md` | Pre-draft gate and third-party review (process control, not voice) |
 
-Personal style files live in `~/claude-workspace/writing-styles/` — loaded when configured.
+---
+
+### Common voice
+
+`voice/common-voice.md` is the fallback when no personal style file is configured. It gives functional prose that is clear and credible without prescribing a specific personality:
+
+- **Peer to peer** — practitioner talking to other practitioners; not a teacher simplifying for beginners
+- **Opinionated and direct** — states positions clearly; no hedging with "it might be the case that"
+- **Intellectually honest** — includes failed attempts, wrong turns, genuine uncertainty
+- **Not deferential about Claude** — neither party is infallible; write it as it actually happened
+
+Common voice produces good prose. It won't sound like a specific person — that's intentional. It's the baseline everyone starts from.
+
+---
+
+### Personal voice
+
+If you write regularly, create a personal style file. The Q&A will detect and offer it automatically. It composes with any form and mode — personal voice loads on top of common voice, overriding where they conflict.
+
+**Where it lives:** `~/claude-workspace/writing-styles/`
+
+**What to put in it:**
+
+A personal style file captures the things that make your writing recognisably yours — not rules, but fingerprints:
+
+- **What you always say** — phrases, constructions, rhythms that recur. "The thing is..." / "Which means..." / short punchy declaratives before longer technical ones.
+- **What you never say** — words or constructions you actively avoid. "Robust", "leverage", "paradigm" may already be in anti-slop, but yours might be subtler.
+- **Sentence length pattern** — do you default long and technical? Short and declarative? Mixed? At what rhythm?
+- **Audience assumptions** — how much prior knowledge do you assume? Do you name tools without explanation?
+- **Characteristic stance** — opinionated and direct? Measured and careful? Self-deprecating when warranted? How do you handle uncertainty?
+- **What to avoid in your specific voice** — not universal anti-slop, but the things *you* drift toward when unguarded (over-hedging, excessive caveats, over-explaining, starting too many sentences with "I")
+
+The more specific, the better. "Peer to peer, opinionated" is common voice. "Opens with the observation before the claim, tends to short paragraph breaks, uses 'which means' to chain technical consequences, allows typos and rough edges in notes" is personal voice.
+
+**Loading it:**
+
+The skill checks `~/claude-workspace/writing-styles/` at Step 0. If files are found, it offers `[P] Personal` as the Q3 default. You can have multiple files for different content types (e.g. `blog-technical.md` for blog posts, `mark-proctor-voice.md` for the linguistic fingerprint layer) — the skill lists them and loads the most relevant one.
+
+If no file exists, `voice/common-voice.md` loads instead. No configuration needed — presence or absence of the file is the switch.
 
 ---
 
