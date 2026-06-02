@@ -522,7 +522,7 @@ git -C "$PROJECT" push "$FORK_REMOTE" "$PROJECT_BASE_BRANCH"
 ```
 
 If the fork push fails: stop. Do not proceed to blessed repo delivery. The fork must be
-updated first — casehubio never gets ahead of mdproctor.
+updated first — the blessed repo can never be ahead of the fork.
 
 **Blessed repo delivery (fork model only):**
 
@@ -540,7 +540,7 @@ If `$BLESSED_REMOTE` is non-empty, always prompt — three choices:
   gh pr create --base "$PROJECT_BASE_BRANCH" --head "$(git -C "$PROJECT" remote get-url "$FORK_REMOTE" \
       | sed 's|.*github.com[:/]\(.*\)\.git|\1|'):$PROJECT_BASE_BRANCH" --title "<issue title>" --body "Closes #$ISSUE_N"
   ```
-- **N — Skip:** leave casehubio delivery for later; note it in the 8h report. Fork already has the commits.
+- **N — Skip:** leave blessed repo delivery for later; note it in the 8h report. Fork already has the commits.
 
 If no `$BLESSED_REMOTE`: no prompt — fork push is the final delivery.
 
