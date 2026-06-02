@@ -10,25 +10,6 @@ Britton's expressive function — close to the self, not yet shaped for audience
 
 ## Subtypes
 
-### log — coding/development diary
-Records technical work: what you built, what you fixed, what you found.
-NOT a general diary — specifically about technical and technical progress.
-
-**Characteristics:**
-- First-person throughout
-- High mental process clauses ("I've just got X working", "I found that")
-- Typos and rough edges are authentic
-- Can include code snippets, benchmark numbers, test results
-- Ends mid-thought if that's where the work stopped
-
-**Examples:** "Drools now has 1725 unit tests", "Reactive Incremental Graph
-Reasoning with Drools", "The Birth of Drools Pojo Rules"
-
-**Does NOT include:** conference attendance, travel, job postings,
-download statistics, link shares without technical content.
-
----
-
 ### musing — quick observation or reaction
 A short informal note: pointing at something external and reacting briefly,
 or thinking out loud without yet having a formed position.
@@ -84,10 +65,6 @@ Logs tend to be 50–300 words. Musings 50–200. Ideas 100–400.
 ---
 
 ## Voice by sub-type
-
-**log:** Should feel raw. High first-person. "I've just got this working", "Still
-not sure whether". Allow fragments. Allow rough edges. Do not polish.
-Typos and uncertainty are authentic signals of genuine work-in-progress.
 
 **musing:** Quick, informal, encoder-dominant. Point at the external thing and
 react. One or two sentences of actual opinion, then stop. No elaboration.

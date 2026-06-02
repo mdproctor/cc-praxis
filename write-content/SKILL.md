@@ -44,7 +44,6 @@ Always load `voice/anti-slop.md`, `voice/mandatory-rules.md`, and `mandatory-gat
 | Intent | Form |
 |---|---|
 | "I want to capture what I built / what happened in this project" | **Diary** |
-| "I want to record what I did / what happened" | **Note/log** |
 | "I want to share a quick thought or reaction" | **Note/musing** |
 | "I want to propose something specific" | **Note/idea** |
 | "I want you to learn by doing" | **Article/tutorial** |
@@ -113,7 +112,6 @@ For single-mode forms, mode follows from form + sub-type:
 | Brief | Reference/lookup | `modes/reference.md` |
 | News | (voice-dominant — no mode file; use voice files) | — |
 | Diary | Explanation/discursive | `modes/explanations.md` |
-| Note/log | (voice-dominant — no mode file; use voice files) | — |
 | Note/musing | (voice-dominant — no mode file; use voice files) | — |
 | Note/idea | (voice-dominant — no mode file; use voice files) | — |
 | Technical documentation | See mode map in `forms/technical-documentation.md` | varies |
