@@ -146,4 +146,4 @@ Verify coverage: every atomic fact from the pre-rewrite list must appear in the
 output — in the body or a header field.
 
 Check the strip test: remove all labels and bold lead-ins and read only those
-in sequence. Is the factual skeleton complete? Every gap is a content loss.
+in sequence. Is the factual skeleton complete? Every gap is a content loss.yes
