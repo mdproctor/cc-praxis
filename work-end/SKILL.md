@@ -267,7 +267,9 @@ work-end close plan — <branch-name>
   Spec posting       → #<N>  (<filenames>)
   Issue              → close #<N>
   Publish blog       → 8g (N unpublished entries → destination)
-  Project rebase     <branch> → <base-branch>, push origin (automatic)
+  Project rebase     <branch> → <base-branch>
+  Squash             <blessed-remote>/main..HEAD (mandatory before any push)
+  Fork push          → origin/main (mandatory, no skip — fork is always updated first)
   Blessed repo       → prompt: push / PR / skip  (upstream remote, if present)
 
 Approve all, or step by step? (all / step)
@@ -491,22 +493,16 @@ git -C "$PROJECT" rebase "$BRANCH_NAME"
 - **Stop. Do not proceed to Step 9.**
 - Instruct the user: resolve conflicts on `$PROJECT_BASE_BRANCH`, then re-run `work end` to complete the close.
 
-**Push to fork remote (automatic — no prompt):**
+**Squash before fork push (fork model only — mandatory):**
+
+Squash runs BEFORE the fork push so both fork and blessed repo receive identical history.
+Run git-squash on the range `$BLESSED_REMOTE/$PROJECT_BASE_BRANCH..HEAD`. This is not optional
+and must not be bypassed with `--no-verify`. The pre-push hook firing is the signal to run
+git-squash, not to skip it. Noise commits (chore, docs follow-ons, journal applies, CI fixups)
+must be compacted before the range is shared anywhere.
 
 ```bash
-git -C "$PROJECT" push "$FORK_REMOTE" "$PROJECT_BASE_BRANCH"
-```
-
-**Squash before blessed repo delivery (fork model only — mandatory):**
-
-Before prompting for delivery, run git-squash on the range `upstream/$PROJECT_BASE_BRANCH..HEAD`
-(or `$BLESSED_REMOTE/$PROJECT_BASE_BRANCH..HEAD`). This is not optional and must not be
-bypassed with `--no-verify`. The pre-push hook firing is the signal to run git-squash, not
-to skip it. Noise commits (chore, docs follow-ons, journal applies, CI fixups) must be
-compacted before the range is shared upstream.
-
-```bash
-# Show the commit range that will reach the blessed repo
+# Show the commit range that will reach the blessed repo (and therefore the fork too)
 git -C "$PROJECT" log --oneline "$BLESSED_REMOTE/$PROJECT_BASE_BRANCH"..HEAD
 ```
 
@@ -515,6 +511,18 @@ Wait for the squash plan, user approval, and execution before proceeding.
 
 If the user explicitly says "skip squash" or "no squash needed": accept and note it,
 then proceed. Never silently skip.
+
+**Push to fork remote (mandatory — no skip option):**
+
+The fork push is always required. There is no [N]skip. The blessed repo can never receive
+commits that the fork has not already received.
+
+```bash
+git -C "$PROJECT" push "$FORK_REMOTE" "$PROJECT_BASE_BRANCH"
+```
+
+If the fork push fails: stop. Do not proceed to blessed repo delivery. The fork must be
+updated first — casehubio never gets ahead of mdproctor.
 
 **Blessed repo delivery (fork model only):**
 
@@ -532,7 +540,7 @@ If `$BLESSED_REMOTE` is non-empty, always prompt — three choices:
   gh pr create --base "$PROJECT_BASE_BRANCH" --head "$(git -C "$PROJECT" remote get-url "$FORK_REMOTE" \
       | sed 's|.*github.com[:/]\(.*\)\.git|\1|'):$PROJECT_BASE_BRANCH" --title "<issue title>" --body "Closes #$ISSUE_N"
   ```
-- **N — Skip:** leave upstream for later; note it in the 8h report.
+- **N — Skip:** leave casehubio delivery for later; note it in the 8h report. Fork already has the commits.
 
 If no `$BLESSED_REMOTE`: no prompt — fork push is the final delivery.
 
