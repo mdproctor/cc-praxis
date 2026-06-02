@@ -27,7 +27,7 @@ ls ~/claude-workspace/writing-styles/ 2>/dev/null
 
 If no personal style file: load `voice/common-voice.md`.
 
-Always load `voice/anti-slop.md` and `voice/mandatory-rules.md`.
+Always load `voice/anti-slop.md`, `voice/mandatory-rules.md`, and `mandatory-gates.md`.
 
 ---
 
@@ -134,7 +134,20 @@ no specific mode file.
 
 ## Step 5 — Pre-draft gate
 
-Load `mandatory-gates.md`. Run before generating any prose:
+`mandatory-gates.md` was loaded in Step 0. Before generating any prose, produce
+this checklist output explicitly — do not skip, do not produce it silently:
+
+```
+Pre-draft gate:
+☐ Voice classified — I/we/Claude register decided per section
+☐ Content focus checked — process narration removed (build runs, test counts, methodology, agent counts)
+☐ Factual accuracy checked — durations/counts verified against git log or session context
+☐ Banned words scanned — anti-slop.md applied
+```
+
+Replace each `☐` with `✅` once verified. **Do not proceed to Step 6 until all
+four show ✅ and the checklist is shown to the user.** Do not show a draft that
+fails any item — fix first, then show.
 
 **Voice classification:**
 - For forms with author participation (diary, article, note, brief, news): decide
@@ -142,16 +155,14 @@ Load `mandatory-gates.md`. Run before generating any prose:
 - For technical documentation: confirm target section, its mode from the mode map,
   and that the correct mode file is loaded
 
-**Style guide check:**
-- Personal style file loaded?
-- After drafting, verify each "What to Avoid" item before presenting
-- Do not show a draft that fails — fix first
+**Content focus check (from `mandatory-rules.md`):**
+- Strip any sentence about: build passing, test counts, CI runs, methodology followed,
+  number of agents/subagents, iteration counts, which skills or tools were invoked
+- These are process narration — readers don't care how the code was produced
 
 **Factual accuracy check:**
 - Any duration, count, or magnitude claims? Verify against git log or session context
 - If unverifiable: qualify as an estimate or remove
-
-Do not proceed to Step 6 until gate is complete.
 
 ---
 
