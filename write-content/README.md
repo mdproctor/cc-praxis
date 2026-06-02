@@ -1,218 +1,245 @@
 # write-content
 
-Universal content creation skill. Three orthogonal layers — Form, Mode, Voice — applied in sequence. Each layer answers a different question; none determines the others.
+Universal content creation skill. Presents a guided Q&A to determine what you're writing, how to structure it, and how it should sound — then applies the right rules before and after generation.
+
+---
+
+## Using It
+
+Invoke the skill and answer the Q&A. Four questions maximum, single-letter answers, defaults marked.
+
+**Worked example — writing a diary entry:**
+
+```
+What are you writing?
+  [D] Diary  ←
+> D (or Enter)
+
+Voice?
+  [P] Personal — mark-proctor-voice.md  ←
+> P (or Enter)
+
+Writing:  Diary — Explanation/discursive
+Voice:    Personal (mark-proctor-voice.md)
+```
+
+**Worked example — writing a Gotchas section for arc42stories:**
+
+```
+What are you writing?
+  [T] Technical documentation
+> T
+
+Which section?
+  [2] Gotchas  →  How-to/diagnostic
+> 2
+
+Voice?
+  [P] Personal — mark-proctor-voice.md  ←
+> P (or Enter)
+
+Writing:  Tech doc / Gotchas — How-to/diagnostic
+Voice:    Personal (mark-proctor-voice.md)
+```
+
+**Auto-routing** skips Q1 when the invocation is unambiguous — "write a diary entry", "write the Gotchas section for layer X", "write the Pattern to replicate" route directly without asking.
+
+After the Q&A, the skill loads the relevant files and runs the pre-draft gate before generating anything.
 
 ---
 
 ## The Three Layers
 
-| Layer | Question answered | Directory | Examples |
+Every piece of content is defined by three independent choices, each answered by the Q&A:
+
+| Layer | Q&A question | What it determines | Where the rules live |
 |---|---|---|---|
-| **Form** | What kind of content is this? | `forms/` | Note, Article, Brief, Diary, Technical documentation |
-| **Mode** | How does it present information? | `modes/` | Tutorial, Explanation, Reference, How-to, Argumentation |
-| **Voice** | How does it sound? | `voice/` | Mark Proctor's voice, common voice, anti-slop constraints |
+| **Form** | Q1 — What are you writing? | Structure, length, audience, when to use | `forms/` |
+| **Mode** | Q2/Q2b — Sub-type or section | How information is presented | `modes/` |
+| **Voice** | Q3 — Voice? | How it sounds | `voice/` + personal style |
 
-**Form** and **mode** are orthogonal. A diary entry (form) uses Explanation/discursive mode. An arc42stories Gotcha section (technical documentation form) uses How-to/diagnostic mode. The form doesn't determine the mode.
+These are orthogonal. A diary entry (form) uses explanation/discursive mode with Mark Proctor's personal voice. An arc42stories Gotcha section (technical documentation form) uses how-to/diagnostic mode with common voice. Choosing a form doesn't determine the mode; choosing a mode doesn't determine the voice.
 
-**Mode** and **voice** are also orthogonal. How-to/diagnostic mode with a personal voice produces a different result than the same mode with common voice. The mode sets the structure; voice sets the register.
-
-**This is the gap** that "writing style" had been filling without a name. Style was doing the work of all three layers simultaneously — which is why per-type anti-slop guidance felt both necessary and never quite right.
+**Why three layers?** "Writing style" was doing the work of all three simultaneously — which is why per-type guidance never felt quite right. Separating them makes the rules precise and composable.
 
 ---
 
-## Theoretical Foundation
+## Modes
 
-The Form/Mode/Voice taxonomy didn't emerge from first principles. It converged independently with four established frameworks developed across 200 years, from completely different starting points, with no awareness of each other.
+Mode is the structural constraint set — how information is organised and presented. The Q&A selects the mode; the mode file tells the skill what structure to apply.
 
-### The five independent arrivals
+### What each mode prescribes
 
-| Framework | Year | Starting point | Their term for mode |
-|---|---|---|---|
-| Newman | 1827 | Classical rhetoric | **modes** — narration, description, exposition, argumentation |
-| Kinneavy | 1969 | Discourse theory; communication triangle | **aims** — expressive, referential, literary, persuasive |
-| Britton | 1970 | Educational psychology; child development | **functions** — transactional, expressive, poetic |
-| Anker | ~1998 | Pedagogical practice | **modes** — nine sub-modes of exposition |
-| Diátaxis (Procida) | 2017 | Practical problem — Django docs disorganised | **types** — tutorial, how-to, reference, explanation |
+**Tutorial** (`modes/tutorial.md`)
+Numbered imperative steps. One action per step. Zero assumed domain knowledge. Ends when the reader can do the thing.
+*Used for: Article/tutorial, tech doc Pattern to replicate*
 
-Kinneavy, reading eight scholars in 1969, called the convergence "almost fearful symmetry." Procida, independently arriving at the same four-way split in 2017, had no knowledge of Newman, Kinneavy, or classical rhetorical theory. He was a philosopher solving a documentation problem.
+**Explanation/discursive** (`modes/explanations.md`)
+Author-centric. Personal voice allowed. Analogies from unexpected domains. "I used to think X, but it turns out Y." No length cap — ends when the mental model is complete.
+*Used for: Diary, Article/explanation (concept)*
 
-The concept of *mode* — how information is structured and presented to the reader — converges across all five. The terminology doesn't converge: Kinneavy says "aim," Britton says "function," Diátaxis says "type," Newman and Anker say "mode." We use **mode** deliberately — it has the deepest lineage (Newman, 1827) and is already in our four-dimension framework under Anker.
+**Explanation/comparative** (`modes/explanations.md`)
+System-centric. Before:/After: contrast as the organising principle. Hard length cap (2–4 sentences + bullets). No personal voice. Explicit "Not closed here" scope boundary.
+*Used for: Tech doc "What it adds", §9.3 "What this delivers"*
 
-### What each framework contributes
+**How-to/procedural** (`modes/how-to.md`)
+Steps from a working state toward a goal. Goal stated upfront. Warnings and edge cases included. "Why this step, not that" where non-obvious.
+*Used for: Article/how-to*
 
-**Form** maps to Newman's intent dimension. What is the writing trying to do? Inform? Argue? Express? This is the top-level routing question.
+**How-to/diagnostic** (`modes/how-to.md`)
+**Symptom:** what the reader actually sees. **Cause:** root mechanism, not the symptom restated. **Fix:** exact action — no hedging, no "might", no "generally".
+*Used for: Tech doc Gotchas and Anti-patterns*
 
-**Mode** is Anker's dimension. Within the intent, how is information organised for the reader? Reference/lookup vs Reference/inventory are both informative (same form) but structurally different (different modes).
+**Reference/lookup** (`modes/reference.md`)
+Find a specific term or fact. Tables and bullets only. No prose paragraphs. No explanation of why.
+*Used for: Brief, tech doc Key wiring, Glossary*
 
-**Voice** maps to Kinneavy's encoder dimension — the writer's presence, register, and relationship with the reader. Personal voice vs common voice vs system-centric (no author) are voice choices, not form or mode choices.
+**Reference/inventory** (`modes/reference.md`)
+Enumerate what exists. `path/to/File.java` — one sentence: what it is and what it does. Not "this file contains X" — that's obvious.
+*Used for: Tech doc Key files*
 
-### The anti-slop reframe
+**Reference/pointer** (`modes/reference.md`)
+Points to authoritative content elsewhere. One line per reference: what it covers and why to go there. Does not duplicate the referenced content.
+*Used for: Tech doc §8 crosscutting table*
 
-LLMs default to the prose end of the structure–prose spectrum:
+**Argumentation/rationale** (`modes/argumentation.md`)
+"Why X rather than Y: reason. Tradeoff: what X costs." One paragraph. No hedging the conclusion.
+*Used for: Tech doc Architectural decisions*
 
-```
-JSON  Brief  Reference  How-to  Tutorial  Explanation  Essay  Narration  Novel
-↑                                                                              ↑
-machine-readable                                                         pure prose
-```
+**Argumentation/decision** (`modes/argumentation.md`)
+ADR format: Context → Decision → Consequences. Names the alternative considered. States tradeoffs including unwanted consequences.
+*Used for: Tech doc ADRs*
 
-The training corpus is prose-dominated. Anti-slop guidance corrects this by banning specific words and patterns — but those are symptoms. The root cause is mode mismatch: a Gotcha section is generated in Explanation mode when it needs How-to/diagnostic mode. Mode-first generation prevents the symptoms from appearing.
+**Argumentation/essay** (`modes/argumentation.md`)
+Extended argument over numbered sections. Opens with a claim. Three appeals in priority order: logos (evidence), ethos (credibility), pathos (passion). Counter-arguments addressed inline. Ends without hedging.
+*Used for: Article/essay*
+
+### Form-defined forms (no mode file)
+
+Note/musing, Note/idea, Article/commentary, and News load only voice files. Their structural character is defined in the form file itself — brief enough that a separate mode file adds nothing.
+
+### Recognising wrong-mode output
+
+If generated prose reads as AI-sounding despite clean banned-word lists: check the mode. The underlying cause of AI-sounding prose is **mode mismatch** — content that requires How-to/diagnostic was generated in Explanation/discursive. Wrong mode generates wrong structure; wrong structure generates the prose patterns we associate with AI output. The mode selects the structure; the structure prevents the banned patterns from appearing in the first place.
 
 ---
 
-## Single-Mode vs Multi-Mode Documents
+## Anti-Slop Rules
 
-Every framework from Newman to Diátaxis treats mode as a property of the whole document. A text is a tutorial, or an explanation, or a reference. None of them address what may be the most common pattern in technical documentation: **documents that contain multiple modes across sections**.
+Anti-slop operates at two levels.
 
-### The gap in all five frameworks
+### Universal rules (`voice/anti-slop.md`)
 
-A multi-mode document doesn't fit in any of the five frameworks. It's not a tutorial. It's not a reference. It's not an essay. It contains all of them in different sections, and which mode applies depends on the section being written.
+Applies to everything regardless of form, mode, or voice:
 
-Examples of multi-mode documents:
-- **arc42stories** — six different modes across twelve section types
-- **CLAUDE.md files** — conventions (Reference/lookup) + commands (How-to) + workflow narrative (Explanation)
-- **Platform guides** — explanation + reference tables + anti-patterns (How-to/diagnostic)
-- **Technical specifications** — requirements (Reference) + examples (Tutorial) + implementation notes (Explanation)
+**Banned words:** delve, tapestry, realm, crucible, nuanced, intricate, game-changer, groundbreaking, transformative, leverage (verb), synergy, seamlessly, holistic, robust, paradigm, cutting-edge, innovative, exciting journey
 
-This may be the dominant pattern in technical documentation. None of the five frameworks have language for it.
+**Banned patterns:**
+- Opening with "In this post/article I will..."
+- Closing with "In conclusion..." or "Thanks for reading"
+- Hedging with "it's worth considering that" or "one might argue"
+- Superlatives without evidence ("the best", "the most powerful")
+- Theatrical dramatisation ("everything hung by a thread")
+- Starting consecutive sentences with "This" or "It"
+- Generic filler: "It's important to note", "It's worth mentioning"
 
-### How write-content handles it
+### Per-mode voice texture
 
-Single-mode forms (Note, Article, Brief, Diary) have one mode per document. The mode follows from the form sub-type.
+Each mode file ends with a "Voice texture" section — Right: / Wrong: examples specific to that mode. These are not in `voice/anti-slop.md` because they differ by mode:
 
-Multi-mode forms (Technical documentation) declare a **mode map** — a table assigning a mode to every section type. Before writing any section, the mode is identified from the map. The correct mode file is loaded. The mode's structural constraints apply for that section only.
+- Explanation/comparative: specific class names and verbs ("displaces", "fires"). Wrong: gerund openings, chained dashes, passive voice
+- How-to/diagnostic: Fix statements cannot use "might", "could", "generally". Wrong: softening the action
+- Reference/inventory: telegraphic, denser than a human would naturally write. Wrong: narrative framing, "this file contains X"
 
-| Form | Mode handling |
+### Per-form voice guidance
+
+Note, Article, Brief, and News form files each have a "Voice by sub-type" section. Article/commentary, News — voice-forward, no mode file, character comes from the form.
+
+---
+
+## Pre-Draft Gate (Step 2)
+
+Runs after the Q&A and before any prose is generated. Shows an explicit checklist — **do not proceed to writing until all four items show ✅**.
+
+```
+Pre-draft gate:
+☐ Voice classified — I/we/Claude register decided per section
+☐ Content focus checked — process narration removed
+☐ Factual accuracy checked — durations/counts verified
+☐ Banned words scanned — anti-slop.md applied
+```
+
+**Voice classification** — for diary, article, note, brief, news: decide "I", "we", or "Claude [verb]" for each section before drafting. The I/we/Claude register system (in `voice/mandatory-rules.md`) is the most violated rule — classifying it at the gate prevents mid-draft confusion.
+
+For technical documentation: confirm target section, its mode, and that the correct mode file is loaded. No I/we/Claude register — tech docs are system-centric, no author-as-participant.
+
+**Content focus** — strips process narration before it gets written. Sentences about build passing, test counts, methodology followed, agent counts, which skills were invoked — these are how the code was produced, not what the reader cares about. The gate removes the instinct before the draft, not as a post-draft edit.
+
+**Factual accuracy** — any claim about duration, count, or magnitude must be verifiable against git log, file diffs, or session context. If unverifiable, qualify as an estimate or remove. Unverified timeframes ("weeks" when it was days) destroy reader trust when they check the git history.
+
+**Why a gate, not a reminder?** Post-draft editing for these issues is harder and less reliable than preventing them. The gate converts implicit rules into an explicit checkpoint that cannot be skipped.
+
+---
+
+## Quality Check (Step 4)
+
+Runs after the draft is written, before anything is shown or saved.
+
+**Scan test:** strip all labels (bold lead-ins, headings, structured prefixes) and read only those in sequence. The result should be a complete factual skeleton with no gaps. A fact that only exists in prose body text is invisible to scanning — and invisible to LLMs loading the document for session context.
+
+**Mode check:** does the output match the declared mode? Gotcha → Symptom/Cause/Fix structure. Key wiring → bold lead-in + 1–3 sentences per point. "What it adds" → Before:/After: then bullets. A mode check catches structural drift that the gate can't prevent.
+
+**Human-sound check:** no banned words, no AI structural patterns from `voice/anti-slop.md`.
+
+**Intent check:** right form, right audience, ends when the point is made. A diary entry shouldn't read like an article. An article shouldn't require the reader to have been there.
+
+**Third-party review** (from `mandatory-gates.md`) — after drafting and before writing to disk: scan the complete draft for any sentence referencing a named person (other than the author or Claude) or an identifiable group. Present each flagged sentence with Keep / Rephrase / Delete. Zero unresolved flags before writing to disk. This cannot be skipped.
+
+---
+
+## File Reference
+
+### Mode files
+
+| File | Modes |
 |---|---|
-| Note, Article, Brief, Diary, News | Single mode — follows from form sub-type |
-| Technical documentation | Multi-mode — declared in `forms/technical-documentation.md` mode map |
+| `modes/_universal.md` | All — scannability, heading test, element selection, sweet spot principle |
+| `modes/explanations.md` | Discursive / Comparative |
+| `modes/how-to.md` | Procedural / Diagnostic |
+| `modes/reference.md` | Lookup / Pointer / Inventory |
+| `modes/argumentation.md` | Decision / Rationale / Essay/sustained |
+| `modes/tutorial.md` | Tutorial |
 
----
+### Form files
 
-## arc42stories as a Case Study
-
-arc42stories is the reference implementation for multi-mode technical documentation. It has twelve distinct section types, six distinct modes.
-
-### The mode map
-
-| Section | Mode | Why |
-|---|---|---|
-| §8 Crosscutting pointer table | Reference/pointer | Points to authority; no inline content |
-| §8 Anti-patterns | How-to/diagnostic | Reader is in a broken state; Symptom → Cause → Fix |
-| §9.3 "What this delivers" | Explanation/comparative | Before/after contrast; user-visible outcome |
-| §9.4 Key files | Reference/inventory | Enumerate what exists; path → one sentence |
-| §9.4 Key wiring | Reference/lookup | Bold lead-in (the fact) + 1–3 sentences (the reasoning) |
-| §9.4 "What it adds" | Explanation/comparative | Before/after contrast; system-centric; length-capped |
-| §9.4 Gotchas | How-to/diagnostic | Symptom: observable. Cause: root mechanism. Fix: exact action. |
-| §9.4 Pattern to replicate | Tutorial | Numbered steps; domain-agnostic; zero assumed context |
-| §9.4 Architectural decisions | Argumentation/rationale | Why X rather than Y; named alternative; tradeoff accepted |
-| §10 ADRs | Argumentation/decision | Context → Decision → Consequences; ADR format |
-| §11–12 tables | Reference/lookup | Tables only; no prose narrative |
-| §13 Glossary | Reference/lookup | Term → one-sentence definition |
-
-### Why mode matters for "What it adds"
-
-This section is the canonical example of prose drift — and why structural prescription prevents it.
-
-The arc42stories spec gave the section a narrative instruction: *"teaching narrative, what this layer introduces, what gap it closes."* No structural prescription. Every implementation drifted to flowing prose.
-
-Explanation/comparative mode prescribes:
-
-```
-**Before:** [previous state] — one clause.
-**After:** [component @Annotation] — one clause.
-
-What this layer adds:
-- **[Named capability]** — [mechanism]; [what it prevents or enables]
-
-Not closed here: [Layer N] ([what it still lacks]).
-```
-
-**Before this prescription:** prose paragraphs explaining the layer's history and design rationale — accurate but not scannable.
-
-**After:** before/after contrast visible immediately; each addition labelled; scope boundary explicit. Scannable for humans; unambiguous for LLMs.
-
-The prescription didn't change what was said. It changed how it was structured — which is mode, not voice, and not form.
-
-### Sections that were already right
-
-The Gotchas and Pattern to replicate sections in devtown's ARC42STORIES.MD were already in the correct mode before the taxonomy existed. The arc42stories spec prescribed their structure explicitly from the first commit: `Format: **Symptom** → Cause → Fix`, `numbered steps`. Following those constraints naturally produces content in the correct mode.
-
-**The lesson:** structural prescription prevents mode drift. If you want a section to stay in How-to/diagnostic mode across every implementation, prescribe the structure. The mode follows.
-
----
-
-## Mode Files
-
-| File | Modes | Key constraint |
-|---|---|---|
-| `modes/_universal.md` | All | Scannability, heading test, element selection, sweet spot principle |
-| `modes/explanations.md` | Discursive / Comparative | Discursive: author-centric, no length cap. Comparative: Before:/After:, length-capped, no personal voice |
-| `modes/how-to.md` | Procedural / Diagnostic | Procedural: steps from working state. Diagnostic: Symptom → Cause → Fix from broken state |
-| `modes/reference.md` | Lookup / Pointer / Inventory | No prose paragraphs. Each sub-type by reading behaviour. |
-| `modes/argumentation.md` | Decision / Rationale / Essay/sustained | Decision: ADR format. Rationale: inline why. Essay: three appeals, hybrid headings. |
-| `modes/tutorial.md` | Tutorial | Numbered steps; imperative sentences; zero assumed domain knowledge |
-
-**Choosing between sub-types:**
-
-*Explanation* — primary question: is the subject a **concept** (mental model → discursive) or a **change** (delta, before/after → comparative)?
-
-*How-to* — primary question: what is the reader's starting state? **Working, trying to accomplish** (→ procedural). **Broken, trying to recover** (→ diagnostic).
-
----
-
-## Form Files
-
-| File | When to use |
+| File | Form |
 |---|---|
-| `forms/diary.md` | Capturing what happened in a project — personal voice, in-the-moment, not retrospective |
-| `forms/note.md` | Quick record, reaction, or proposal — encoder-dominant, assumes shared context |
-| `forms/article.md` | Full treatment for a wider audience — decoder-dominant, cold reader can follow |
-| `forms/brief.md` | Maximum information density — scanning IS the experience |
-| `forms/news.md` | External event worth sharing — reality-dominant, fast and direct |
-| `forms/technical-documentation.md` | Maintained technical docs with dual audience (human + LLM) — multi-mode |
+| `forms/diary.md` | Diary — project narrative, in-the-moment |
+| `forms/note.md` | Note — musing (quick reaction) or idea (specific proposal) |
+| `forms/article.md` | Article — full treatment for wider audience |
+| `forms/brief.md` | Brief — maximum density, scanning is the experience |
+| `forms/news.md` | News — external event or announcement |
+| `forms/technical-documentation.md` | Technical documentation — multi-mode, maintained alongside system |
 
----
-
-## Voice Files
+### Voice files
 
 | File | What it governs |
 |---|---|
-| `voice/anti-slop.md` | Universal banned words and patterns; master anti-slop instruction |
-| `voice/common-voice.md` | Default fallback voice — peer-to-peer, opinionated, intellectually honest |
-| `voice/mandatory-rules.md` | I/we/Claude register system; code block rules; image rules; content focus |
+| `voice/anti-slop.md` | Universal banned words and patterns |
+| `voice/common-voice.md` | Default voice — peer-to-peer, opinionated, intellectually honest |
+| `voice/mandatory-rules.md` | I/we/Claude register; code block rules; image rules; content focus |
+| `mandatory-gates.md` | Pre-draft gate and third-party review (process control, not voice) |
 
-**Personal voice** lives in `~/claude-workspace/writing-styles/` — loaded when configured. Personal voice is a voice-layer file, not a form or mode file. It composes with any form and mode.
-
-**Process gates** (pre-draft voice classification, factual accuracy, third-party reference review) live in `mandatory-gates.md` at the skill root — not in voice. They are control flow, not writing guidance.
-
----
-
-## The Five Steps
-
-```
-Step 0 — Load voice         (anti-slop; mandatory-rules; mandatory-gates)
-Step 1 — Guided routing     (Q&A picks Form + Mode + Voice; loads all files; shows routing confirmation)
-Step 2 — Pre-draft gate     (voice classification; content focus; factual accuracy)
-Step 3 — Write              (generate raw; edit ruthlessly)
-Step 4 — Quality check      (scan test; mode check; human-sound check; third-party review)
-```
-
-Step 1 is a guided Q&A: form picker → sub-type picker → mode disambiguation (explanation/how-to only) → voice picker. The full Form+Mode+Voice combination is confirmed before any file is loaded. For technical documentation, the section picker maps directly to the mode — no separate disambiguation needed.
+Personal style files live in `~/claude-workspace/writing-styles/` — loaded when configured.
 
 ---
 
-## This README is Multi-Mode
+## Theoretical Background
 
-The structure of this document demonstrates the taxonomy it describes:
+The Form/Mode/Voice taxonomy converged independently with four established frameworks developed across 200 years. Newman (1827) called modes "rhetorical modes." Kinneavy (1969) called them "aims." Britton (1970) called them "functions." Diátaxis (2017) called them "types." All four arrived at the same underlying set of distinctions from completely different starting points with no knowledge of each other. Kinneavy, finding the same convergence across eight scholars in 1969, called it "almost fearful symmetry."
 
-| Section | Mode used |
-|---|---|
-| "The Three Layers" table | Reference/lookup |
-| "Theoretical Foundation" narrative | Explanation/discursive |
-| "The five independent arrivals" table | Reference/lookup |
-| "The anti-slop reframe" spectrum | Explanation/comparative |
-| "arc42stories mode map" | Reference/lookup |
-| "Why mode matters for 'What it adds'" | Explanation/comparative |
-| "The Mode Files" table | Reference/inventory |
-| "The Seven Steps" | Reference/lookup |
+The term **mode** comes from Newman and Anker — deepest lineage (1827) and already in the four-dimension framework this skill builds on.
+
+**The multi-mode document** — every framework assumes a document has one mode. Technical documentation (arc42stories, CLAUDE.md, platform guides) has multiple modes across sections. None of the five frameworks address this. write-content addresses it by declaring a mode map per multi-mode form, allowing the correct mode to be selected per section.
+
+Full research notes: `docs/content-taxonomy-article-notes.md` in the cc-praxis project repo.
