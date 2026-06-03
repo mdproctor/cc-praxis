@@ -61,6 +61,21 @@ CURRENT_WORKSPACE=$(git -C "$WORKSPACE" branch --show-current)
    > before running work-end — stash is not used in this workflow."
    Do not proceed until the working tree is clean. Never stash automatically.
 
+5. **Project base branch must be clean and in sync with remote** — run before any other work:
+   ```bash
+   git -C "$PROJECT" status --short
+   git -C "$PROJECT" log origin/"$PROJECT_BASE_BRANCH".."$PROJECT_BASE_BRANCH" --oneline
+   git -C "$PROJECT" log "$PROJECT_BASE_BRANCH"..origin/"$PROJECT_BASE_BRANCH" --oneline
+   ```
+   - If `git status --short` has output → hard stop:
+     > "⚠️  Project `$PROJECT_BASE_BRANCH` has staged or unstaged changes — a previous operation
+     >  was left incomplete. Resolve before closing this branch."
+   - If local is ahead of remote → hard stop:
+     > "⚠️  Project `$PROJECT_BASE_BRANCH` has N unpushed commits — push or reconcile with
+     >  remote before closing this branch. Unpushed commits will be invisible to the next session."
+   - If remote is ahead of local → warn (non-blocking):
+     > "⚠️  Remote `$PROJECT_BASE_BRANCH` is ahead of local — rebase before landing this branch's work."
+
 ---
 
 ## Step 0 — Resolve paths

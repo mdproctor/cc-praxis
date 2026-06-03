@@ -211,6 +211,8 @@ Type numbers to toggle (e.g. "2 6"), "all" to toggle all on/off, or "go" to proc
   2. Workspace/project branch misalignment
   3. Open epic branches with no commits in the last 7 days (stale)
   4. Mid-epic: journal exists but has no `§Section` anchors (entries will not merge at close)
+  5. **Project main working tree dirty** — run `git status --short` on the project base branch; any staged or unstaged changes mean an operation was left incomplete
+  6. **Project main diverged from remote** — run `git log origin/main..main --oneline` and `git log main..origin/main --oneline`; local commits not on remote = work invisible to next session; remote ahead of local = next session will conflict
   Report findings — do not auto-fix, just surface them so they can be addressed or noted in the handover.
 - **"all":** if all are on → turn all off; if any are off → turn all on
 - **Numbers:** toggle individual items

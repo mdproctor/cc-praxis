@@ -1155,6 +1155,25 @@ git branch --set-upstream-to="origin/$ORIG_BRANCH" "$ORIG_BRANCH" 2>/dev/null ||
 git push --force-with-lease origin "$ORIG_BRANCH"
 ```
 
+**Post-swap working tree check (mandatory):**
+
+After the swap and push, verify the working tree is clean:
+
+```bash
+git status --short
+git log origin/"$ORIG_BRANCH".."$ORIG_BRANCH" --oneline
+```
+
+If `git status --short` produces any output (staged or unstaged changes), hard stop:
+> "⚠️  Swap complete but working tree is dirty — staged/unstaged changes remain.
+>  These will be invisible to the next session if not committed.
+>  Commit or discard before ending the session."
+
+If `git log origin/...` shows unpushed commits, warn:
+> "⚠️  Swap complete but $ORIG_BRANCH has N unpushed commits — push or note in handover."
+
+Do not consider the squash complete until the working tree is clean and the branch is pushed.
+
 Confirm:
 ```
 ✅ Swap complete.
