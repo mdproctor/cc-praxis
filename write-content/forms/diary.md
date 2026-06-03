@@ -23,6 +23,7 @@ are ready — front matter, platform formatting, final polish.
 - **Not a retrospective** — Never written after the fact. If a belief was wrong, a new entry corrects it — the old entry is never revised.
 - **Not a technical spec** — Diary voice only.
 - **Not a finished article** — `publish-blog` restructures entries for publication. Voice and style are consistent; formatting differs.
+- **Not a session log** — a pure sequence of actions (ran X, found Y, fixed Z) with no decision, observation, reflection, or insight attached. If nothing surprised you, changed your understanding, or is worth reading independently of what the commits record, don't write the entry.
 
 ---
 
@@ -188,7 +189,19 @@ For Correction: identify which entry is being corrected. Never edit the original
 
 ### Step 3 — Gather the story
 
-Extract from conversation context. Only ask for what's genuinely unclear:
+**Entry worthiness check — before gathering anything:**
+
+Does this session contain at least one of:
+- A decision and its reasoning (software, process, methodology, or other)
+- An observation or discovery about how something works
+- A conceptual or theoretical exploration
+- An industry reflection or opinion
+- A future idea beginning to crystallise
+- Anything that would be worth reading independently of the action sequence
+
+If the session was a pure action sequence — tasks completed, branches closed, commits landed, cleanup done — with none of the above: **do not write this entry.** Ask first: does the insight actually belong in a different project's diary (e.g. methodology work → cc-praxis diary, tooling discovery → garden entry)?
+
+If worthiness is confirmed, extract from conversation context. Only ask for what's genuinely unclear:
 - What was the goal?
 - What was believed going in?
 - What was built/tried/found? What failed before the fix?
