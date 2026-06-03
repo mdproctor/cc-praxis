@@ -108,6 +108,46 @@ ISSUE_REPO_GITHUB=$(grep "^issue-repo:" "$WORKSPACE/design/.meta" | sed 's/issue
 `$BRANCH_NAME`, `$PROJECT_SHA`, and `$ISSUE_N` are used throughout Steps 3–10.
 Extract once here — never re-read from `.meta` in later steps.
 
+### Branch summary — always print before proceeding
+
+Immediately after extracting variables, print a summary of all work done on this branch:
+
+```bash
+# Issue title
+gh issue view "$ISSUE_N" --repo "${ISSUE_REPO_GITHUB:-$OWNER_REPO}" --json title --jq '.title' 2>/dev/null
+
+# Commits on branch vs project base branch
+git -C "$PROJECT" log --oneline "$PROJECT_BASE_BRANCH".."$BRANCH_NAME" 2>/dev/null \
+  || git -C "$PROJECT" log --oneline "$PROJECT_SHA"..HEAD
+
+# Change volume
+git -C "$PROJECT" diff --shortstat "$PROJECT_SHA"..HEAD 2>/dev/null
+
+# Journal entries (if any)
+grep "^### " "$WORKSPACE/design/JOURNAL.md" 2>/dev/null | wc -l
+```
+
+Output format:
+
+```
+╔══ Branch Summary ═══════════════════════════════════╗
+║  Branch: <branch-name>
+║  Issue:  #<N> — <title>
+║  Started: <date from .meta>
+║
+║  Commits (<N>):
+║    <git log --oneline output, one per line>
+║
+║  Changed: <N files, N insertions, N deletions>
+║  Journal: <N entries> (or: no journal)
+╚═════════════════════════════════════════════════════╝
+```
+
+If the issue title cannot be fetched (no network, no tracking), omit that line.
+If no commits are found on the branch (work landed directly on base), note that.
+
+This summary is informational only — it does not block the close and requires no user input.
+
 ---
 
 ## Step 2 — Flyway V re-scan
