@@ -47,6 +47,65 @@ git -C "$WORKSPACE" log -1 --format="%ar" -- HANDOFF.md
 If more than a week old, flag it before using the context:
 > "HANDOFF.md is N days old — some context may be stale. Verify key assumptions before building on it."
 
+Read the file. Then run Step R3 before presenting.
+
+### Step R3 — GitHub issue cross-check
+
+After reading HANDOFF.md, scan it for issue references and verify their current state. This catches issues that were closed since the last session and removes stale entries from the handover.
+
+**Extract issue refs:**
+
+Scan the full HANDOFF.md for `#N` patterns. Also scan for `Closes #N`, `Refs #N`, and bare `#N` in What's Left and What's Next sections. Deduplicate.
+
+**Resolve the GitHub repo:**
+
+```bash
+GITHUB_REPO=$(grep "GitHub repo:" "$PROJECT/CLAUDE.md" 2>/dev/null | head -1 | sed 's/.*GitHub repo: *//')
+# Fallback: read from workspace CLAUDE.md
+[ -z "$GITHUB_REPO" ] && GITHUB_REPO=$(grep "GitHub repo:" "$WORKSPACE/CLAUDE.md" 2>/dev/null | head -1 | sed 's/.*GitHub repo: *//')
+```
+
+If no GitHub repo is resolvable, skip this step silently.
+
+**Check each issue:**
+
+For each `#N` found, run:
+```bash
+gh issue view N --repo "$GITHUB_REPO" --json state,title --jq '"#\(.number) [\(.state)] \(.title)"' 2>/dev/null
+```
+
+**Identify stale entries:**
+
+An entry is stale if the issue is CLOSED but appears in What's Left or What's Next as if it were open work. Collect the full list.
+
+**Report and offer update:**
+
+If any stale closed issues are found, print:
+
+```
+Issues closed since last session:
+  #N — <title> (was in What's Left/What's Next)
+  #M — <title> (was in What's Left/What's Next)
+
+Update handover to remove these? (y/n)
+```
+
+If confirmed (or if running non-interactively, proceed automatically):
+
+1. Remove closed issue entries from What's Left and What's Next
+2. If the issue number appears in the Immediate Next Step and is now closed, replace it with the next open item or a note that it was completed
+3. Add a one-line note at the top of the handover: `*Updated: #N, #M closed since last session — removed from backlog.*`
+4. Overwrite HANDOFF.md with the updated content
+5. Commit to workspace main:
+
+```bash
+git -C "$WORKSPACE" add HANDOFF.md
+git -C "$WORKSPACE" commit -m "docs: handover cross-check — removed N closed issues"
+git -C "$WORKSPACE" push
+```
+
+If no stale issues found, proceed silently to the resume output.
+
 Then read the file and present the resume output using this structure:
 
 ---
