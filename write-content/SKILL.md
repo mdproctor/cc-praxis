@@ -217,9 +217,13 @@ Generate content following:
 *Generate raw, then edit ruthlessly. First pass captures content; editing pass
 removes AI-naturalized filler, hedging, and false balance.*
 
+**Do not show the draft to the user before completing Step 4.**
+
 ---
 
 ## Step 4 — Quality check + third-party review
+
+**Run before presenting the draft. Never show a draft that has not passed this gate.**
 
 **Quality check:**
 - Does it scan? Strip labels, read only those — complete factual skeleton with no gaps?
