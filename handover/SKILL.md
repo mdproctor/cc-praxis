@@ -47,15 +47,15 @@ git -C "$WORKSPACE" log -1 --format="%ar" -- HANDOFF.md
 If more than a week old, flag it before using the context:
 > "HANDOFF.md is N days old — some context may be stale. Verify key assumptions before building on it."
 
-Read the file. Then present the resume output (Step R3 is opt-in — see below).
-
-### Step R3 — GitHub issue cross-check (opt-in)
-
-**Do not run this step automatically.** After presenting the resume output, offer it once:
+Read the file. Then ask before presenting:
 
 > "Check GitHub for issues closed since last session? (y/n)"
 
-Only proceed if the user confirms. This avoids one `gh issue view` call per referenced issue on every resume.
+Run Step R3 if confirmed, then present the resume output once — with stale entries already removed if any were found. Skip R3 and present immediately if declined.
+
+### Step R3 — GitHub issue cross-check (opt-in)
+
+Only run when the user confirms the prompt above. This avoids one `gh issue view` call per referenced issue on every resume.
 
 **If confirmed:**
 
