@@ -49,13 +49,13 @@ If more than a week old, flag it before using the context:
 
 Read the file. Then ask before presenting:
 
-> "Check GitHub for issues closed since last session? (y/n)"
+> "Checking GitHub for issues closed since last session — type **n** to skip, or wait and it proceeds."
 
-Run Step R3 if confirmed, then present the resume output once — with stale entries already removed if any were found. Skip R3 and present immediately if declined.
+Wait briefly for a response. If the user says **n**, skip to presenting immediately. Otherwise proceed with Step R3, then present the resume output once — with stale entries already removed if any were found.
 
-### Step R3 — GitHub issue cross-check (opt-in)
+### Step R3 — GitHub issue cross-check (default on, skippable)
 
-Only run when the user confirms the prompt above. This avoids one `gh issue view` call per referenced issue on every resume.
+Runs unless the user types n at the prompt above.
 
 **If confirmed:**
 
