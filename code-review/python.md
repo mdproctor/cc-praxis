@@ -1,23 +1,9 @@
----
-name: python-code-review
-description: >
-  Use when reviewing Python code — user says "review the code", "check
-  these changes", "review this", or invokes /python-code-review. Only
-  applies to Python projects. Builds on code-review-principles.
-slash-command: false
----
-
 # Python Code Review
 
 You are an expert Python code reviewer. Your job is to catch problems before
 they reach the repository, with particular focus on safety violations, type
 system bypasses, and async correctness — the issues most likely to cause silent
 production failures in Python codebases.
-
-## Prerequisites
-
-**Load `~/.hortora/garden/approaches/code-review.md`** before proceeding.
-Apply all principles from that file, then the Python-specific additions below.
 
 Also apply all rules from **`python-dev`**: Safety patterns (mutable defaults, context managers, bare except), type safety (`Any`, missing hints, `TypedDict`), async correctness, testing practices, code quality conventions.
 
@@ -36,7 +22,7 @@ Suggested fix:
           roles = []
 ```
 
-**Step 4:** re-run `/python-code-review` after fixes; hand off to `/git-commit` when clear. Do NOT hand off until the user confirms fixes are done.
+**Step 4:** re-run `/code-review` after fixes; hand off to `/git-commit` when clear. Do NOT hand off until the user confirms fixes are done.
 
 Step 2 uses the Python Review Checklist below.
 
@@ -227,7 +213,7 @@ Flag any call to `open()`, `requests.get()`, `subprocess.run()`, `time.sleep()`,
 
 **Sequential `await` in a loop when `asyncio.gather()` is applicable:**
 
-Flag any `for` loop containing a top-level `await` where iterations are independent. This is simultaneously a CRITICAL async correctness issue and a performance issue.
+Flag any `for` loop containing a top-level `await` where iterations are independent.
 
 **List where a generator suffices:**
 ```python
@@ -258,17 +244,5 @@ total = sum(record.value for record in records)
 | Missing async correctness review for `async def` functions | Unawaited coroutines produce `RuntimeWarning`, not an error — easy to overlook | Trace every coroutine call to confirm `await` is present |
 | Approving `MagicMock` tests as sufficient coverage | Mocks reflect assumptions, not production behaviour; they drift silently | Require in-memory or real implementations for integration-level tests |
 | Skipping review for "trivial" changes | Mutable defaults, missing awaits, and bare excepts appear in trivial-looking code | Review ALL staged changes regardless of apparent size |
-| Skipping security review for auth/PII code | Security vulnerabilities are easy to miss in a functional review | Invoke `python-security-audit` for auth/payment/PII/user-input changes |
+| Skipping security review for auth/PII code | Security vulnerabilities are easy to miss in a functional review | Invoke `/security-audit` for auth/payment/PII/user-input changes |
 | Accepting `Any` as "temporary" | Temporary `Any` is permanent `Any` — it spreads through callers | Require a concrete type or `Protocol` at review time |
-
----
-
-## Skill Chaining
-
-**Invoked by:** [`python-dev`] before committing (user can skip)
-
-**Invokes:** [`python-security-audit`] for security-critical code (offered when reviewing auth/payment/PII/user-input handling), [`git-commit`] after approval if user wants to commit
-
-**Builds on:** [`code-review-principles`] for severity model and reporting format, [`python-dev`] for Python-specific rules and patterns
-
-**Can be invoked independently:** User says "review my code", "check my changes", or explicitly invokes /python-code-review

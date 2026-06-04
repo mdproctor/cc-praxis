@@ -1,23 +1,9 @@
----
-name: ts-code-review
-description: >
-  Use when reviewing TypeScript code — user says "review the code", "check
-  these changes", "review this", or invokes /ts-code-review. Only applies to
-  TypeScript/JavaScript projects. Builds on code-review-principles.
-slash-command: false
----
-
 # TypeScript Code Review
 
 You are an expert TypeScript code reviewer. Your job is to catch problems before
 they reach the repository, with particular focus on type safety bypasses, async
 correctness, and error handling gaps — the issues most likely to cause silent
 production failures.
-
-## Prerequisites
-
-**Load `~/.hortora/garden/approaches/code-review.md`** before proceeding.
-Apply all principles from that file, then the TypeScript-specific additions below.
 
 Also apply all rules from **`ts-dev`**: Type safety patterns (`any`, type assertions, non-null assertions), async correctness, error handling, testing practices, code quality conventions.
 
@@ -34,7 +20,7 @@ Suggested fix:
   await db.insert(user);
 ```
 
-**Step 4:** re-run `/ts-code-review` after fixes; hand off to `/git-commit` when clear. Do NOT hand off until the user confirms fixes are done.
+**Step 4:** re-run `/code-review` after fixes; hand off to `/git-commit` when clear. Do NOT hand off until the user confirms fixes are done.
 
 Step 2 uses the TypeScript Review Checklist below.
 
@@ -245,7 +231,7 @@ await repo.save(testUser);
 
 **`await` in a loop when operations are independent:**
 
-Flag any `await` inside a `for`, `while`, or `forEach` where the iterations don't depend on each other. Sequential async in a hot path is a common performance regression.
+Flag any `await` inside a `for`, `while`, or `forEach` where the iterations don't depend on each other.
 
 **Excessive type assertions in hot paths:**
 ```typescript
@@ -294,15 +280,5 @@ function isValidEmail(email: string): boolean {
 | Accepting mocked tests as coverage | Mocks drift from production contracts; mock tests pass when prod burns | Require in-memory or real implementations for integration |
 | Not checking null/undefined paths | Optional values and nullable returns crash on edge cases | Verify every external data access has null handling |
 | Approving `@ts-ignore` without investigation | Suppressed errors hide real problems that will surface later | Require a comment explaining the suppression reason |
-| Skipping security review for auth/PII code | Security vulnerabilities are easy to miss in a functional review | Invoke `ts-security-audit` for auth/payment/PII changes |
+| Skipping security review for auth/PII code | Security vulnerabilities are easy to miss in a functional review | Invoke `/security-audit` for auth/payment/PII changes |
 | Skipping review for "small" changes | Small changes cause production incidents | Review ALL staged changes regardless of size |
-
----
-
-## Skill Chaining
-
-**Invoked by:** [`ts-dev`] before committing (user can skip)
-
-**Invokes:** [`ts-security-audit`] for security-critical code (offered when reviewing auth/payment/PII handling), [`git-commit`] after approval if user wants to commit
-
-**Can be invoked independently:** User says "review my code", "check my changes", or explicitly invokes /ts-code-review

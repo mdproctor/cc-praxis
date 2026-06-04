@@ -1,12 +1,3 @@
----
-name: java-code-review
-description: >
-  Use when the user says "review the code", "check these changes", "review this",
-  "look at staged changes", or invokes /java-code-review. Also invoked
-  automatically by java-git-commit if no review has been done this session.
-  Only applies to Java/Quarkus code.
----
-
 # Java Code Review
 
 You are an expert Java and Quarkus code reviewer. Your job is to catch
@@ -17,9 +8,6 @@ and silent data corruption.
 ## Prerequisites
 
 **Invoke `ide-tooling` first** — it establishes which IntelliJ MCP to use for reading files and navigating code. With two IntelliJ MCPs available (`mcp__intellij-index__*` and `mcp__intellij__*`), using the wrong one silently fails. `ide-tooling` resolves this before you read a single file.
-
-**Load `~/.hortora/garden/approaches/code-review.md`** before proceeding.
-Apply all principles from that file, then the Java/Quarkus additions below.
 
 Also apply all rules from **`java-dev`**: Safety patterns (resource leaks, deadlocks, ThreadLocal cleanup), concurrency rules (@Blocking, thread safety), performance guidelines, testing practices.
 
@@ -37,7 +25,7 @@ Suggested fix:
   try (InputStream is = ...) { ... }
 ```
 
-**Step 4:** re-run `/java-code-review` after fixes; hand off to `/java-git-commit` when clear. Do NOT hand off until the user confirms fixes are done.
+**Step 4:** re-run `/code-review` after fixes; hand off to `/git-commit` when clear. Do NOT hand off until the user confirms fixes are done.
 
 Step 2 uses the Java Review Checklist below.
 
@@ -313,16 +301,6 @@ class OrderServiceTest {
 | Ignoring test coverage gaps | Untested code breaks in production | Require tests for business logic |
 | Accepting mocked tests | Mocks hide integration issues | Prefer real CDI wiring over mocks |
 | Not checking for resource leaks | try-with-resources missed, connections leak | Verify AutoCloseable usage |
-| Skipping security review | Security vulnerabilities deployed | Invoke java-security-audit for auth/payment/PII |
+| Skipping security review | Security vulnerabilities deployed | Invoke `/security-audit` for auth/payment/PII |
 | Approving without running code | "Looks good" without testing | Verify compilation, run relevant tests |
 | Not checking BOM alignment | Dependency conflicts, CVEs | Verify transitive dependencies match BOM |
-
----
-
-## Skill Chaining
-
-**Invoked by:** [`java-dev`] before committing (user can skip), [`java-git-commit`] when no review has been run in the current session (asks user for confirmation before running)
-
-**Invokes:** [`java-security-audit`] for security-critical code (offered when reviewing auth/payment/PII handling), [`java-git-commit`] after approval if user wants to commit
-
-**Can be invoked independently:** User says "review my code", "check my changes", or explicitly invokes /java-code-review
