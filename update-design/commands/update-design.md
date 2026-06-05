@@ -1,5 +1,5 @@
 ---
-description: "Use when syncing the design doc to reflect code changes. Routes to Java, TypeScript, or Python workflow based on project type."
+description: "Use when the user says "update the design doc", "sync DESIGN.md", "sync ARC42STORIES.MD", "reflec..."
 ---
 
 Invoke the `update-design` skill.

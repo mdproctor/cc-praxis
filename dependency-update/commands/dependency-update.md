@@ -1,5 +1,5 @@
 ---
-description: "Use when updating dependencies, bumping versions, or running security audits. Routes to Maven, npm, or pip based on project type."
+description: "Use when the user says "bump a version", "upgrade dependencies", "check for newer versions", "add..."
 ---
 
 Invoke the `dependency-update` skill.

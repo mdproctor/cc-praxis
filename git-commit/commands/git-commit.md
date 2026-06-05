@@ -1,5 +1,5 @@
 ---
-description: "Use when user wants to commit — routes to Java, custom, or generic workflow based on project type declared in CLAUDE.md."
+description: "Use when user wants to create a commit NOW — says "commit this", "commit these changes", "create ..."
 ---
 
 Invoke the `git-commit` skill.

@@ -1,5 +1,5 @@
 ---
-description: "Use when the user says 'review the code', 'check these changes', 'review this'. Routes to Java, TypeScript, or Python review based on project type."
+description: "Use when the user says "review the code", "check these changes", "review this", "look at staged c..."
 ---
 
 Invoke the `code-review` skill.

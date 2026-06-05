@@ -103,12 +103,6 @@
       "version": "1.0.0"
     },
     {
-      "name": "quarkus-flow",
-      "source": "./quarkus-flow",
-      "description": "Use when working with quarkus-flow: writing Flow subclasses, FuncDSL tasks (function/agent/emit/listen/switchWhen/for...",
-      "version": "1.0.0"
-    },
-    {
       "name": "retro-issues",
       "source": "./retro-issues",
       "description": "Use when mapping an existing git repository's history to GitHub epics and issues — user says \"map our history to issu...",
@@ -118,12 +112,6 @@
       "name": "security-audit",
       "source": "./security-audit",
       "description": "Use when user explicitly requests \"security review\", \"audit security\", \"check for vulnerabilities\", or \"OWASP check\",...",
-      "version": "1.0.0"
-    },
-    {
-      "name": "sync-local",
-      "source": "./sync-local",
-      "description": "Use when the user wants to sync installed skills to the latest version from the cloned repository — says \"sync skills...",
       "version": "1.0.0"
     },
     {
