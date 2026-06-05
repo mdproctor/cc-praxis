@@ -56,7 +56,7 @@ KNOWN_NON_SKILLS = {
     # but not yet implemented. Add here when referenced, remove when created.
     'python-observability',
     'go-dependency-update', 'go-observability',
-    'npm-dependency-update',
+    'dependency-update',
 }
 
 

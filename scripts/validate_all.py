@@ -35,7 +35,6 @@ VALIDATORS = {
         {'script': 'validate_readme_sync.py', 'name': 'README Sync', 'target': None},
         {'script': 'validate_links.py', 'name': 'External Links', 'target': None},
         {'script': 'validate_examples.py', 'name': 'Code Examples', 'target': None},
-        {'script': 'validate_web_app.py', 'name': 'Web App Sync', 'target': None},
     ],
     'ci': [
         # CI tier: <5min budget, expensive tests

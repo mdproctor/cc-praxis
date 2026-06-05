@@ -34,12 +34,12 @@ NAMING_PATTERNS = {
     'language': {
         'pattern': r'^(java|python|go|rust|javascript|typescript)-[a-z-]+$',
         'description': 'Language-specific (e.g., java-dev, python-test)',
-        'examples': ['java-dev', 'python-code-review']
+        'examples': ['java-dev', 'python-dev']
     },
     'tool': {
         'pattern': r'^(maven|gradle|npm|pip|cargo)-[a-z-]+$',
-        'description': 'Tool-specific (e.g., maven-dependency-update)',
-        'examples': ['maven-dependency-update', 'gradle-build']
+        'description': 'Tool-specific (e.g., dependency-update)',
+        'examples': ['dependency-update', 'gradle-build']
     },
     'framework': {
         'pattern': r'^(quarkus|spring|react|vue|django)-[a-z-]+$',

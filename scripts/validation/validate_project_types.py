@@ -14,7 +14,7 @@ no significant prose between them. This distinguishes actual lists like:
 
 ...from prose sentences that happen to mention several types:
 
-  "routes to java-git-commit for type: java, custom-git-commit for type: custom"
+  "routes to git-commit/java.md for type: java, git-commit/custom.md for type: custom"
 
 Checks:
 - Canonical list can be extracted from CLAUDE.md
@@ -144,8 +144,7 @@ def files_to_scan(root: Path) -> list[Path]:
 
     # Directories with historically frozen content — type lists reflect the era
     # they were written and must not be updated (blog = immutable by policy;
-    # design-snapshots = immutable archival records).
-    frozen_dirs = {'docs/blog', 'docs/design-snapshots'}
+    frozen_dirs = {'docs/blog'}
 
     for ext in SCAN_EXTENSIONS:
         for f in root.rglob(f'*{ext}'):

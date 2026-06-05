@@ -1,294 +1,189 @@
 {
   "name": "cc-praxis",
-  "description": "Professional development skills for Claude Code \u2014 deep Java/Quarkus support plus universal principles for any project",
+  "description": "Professional development workflow skills for Claude Code — router-based, language-aware, lazy-loaded. Install everything; only relevant content loads.",
   "owner": {
     "name": "Mark Proctor",
     "url": "https://github.com/mdproctor"
   },
-  "bundles": [
-    {
-      "name": "quick-start-java",
-      "displayName": "Quick Start: Java / Quarkus",
-      "description": "Get immediate value with 3 skills: safety-first development, code review that catches bugs before they ship, and smart commits that sync DESIGN.md automatically",
-      "skills": [
-        "java-dev",
-        "java-code-review",
-        "java-git-commit"
-      ]
-    },
-    {
-      "name": "quick-start-typescript",
-      "displayName": "Quick Start: TypeScript",
-      "description": "Get immediate value with 3 skills: strict-mode TypeScript development, code review catching type safety and async bugs, and conventional commits with issue linking",
-      "skills": [
-        "ts-dev",
-        "ts-code-review",
-        "git-commit"
-      ]
-    },
-    {
-      "name": "quick-start-python",
-      "displayName": "Quick Start: Python",
-      "description": "Get immediate value with 3 skills: type-annotated Python development, code review catching bare excepts and injection risks, and conventional commits with issue linking",
-      "skills": [
-        "python-dev",
-        "python-code-review",
-        "git-commit"
-      ]
-    },
-    {
-      "name": "core",
-      "displayName": "Core",
-      "description": "Universal workflow tools every project needs: commits, CLAUDE.md sync, architecture decisions, project health",
-      "skills": [
-        "git-commit",
-        "update-claude-md",
-        "adr",
-        "project-health",
-        "project-refine"
-      ]
-    },
-    {
-      "name": "principles",
-      "displayName": "Principles",
-      "description": "Universal foundations extended by language-specific skills: observability",
-      "skills": [
-        "observability-principles"
-      ]
-    },
-    {
-      "name": "java-quarkus",
-      "displayName": "Java / Quarkus",
-      "description": "Java/Quarkus backend development: java-dev, code review, security audit, dependency management",
-      "skills": [
-        "java-dev",
-        "java-code-review",
-        "java-security-audit",
-        "java-git-commit",
-        "java-update-design",
-        "maven-dependency-update"
-      ]
-    },
-    {
-      "name": "typescript",
-      "displayName": "TypeScript",
-      "description": "TypeScript/Node.js development: ts-dev, code review, security audit, npm dependency management",
-      "skills": [
-        "ts-dev",
-        "ts-code-review",
-        "ts-security-audit",
-        "npm-dependency-update"
-      ]
-    },
-    {
-      "name": "python",
-      "displayName": "Python",
-      "description": "Python development: python-dev, code review, security audit, pip dependency management",
-      "skills": [
-        "python-dev",
-        "python-code-review",
-        "python-security-audit",
-        "pip-dependency-update"
-      ]
-    }
-  ],
   "plugins": [
     {
-      "name": "cc-praxis",
-      "source": "./cc-praxis",
-      "description": "cc-praxis management: diagnose setup problems or launch the skill manager UI",
+      "name": "adr",
+      "source": "./adr",
+      "description": "Use when recording architectural decisions: user says \"create an ADR\", \"document why we chose X\", significant technic...",
       "version": "1.0.0"
     },
     {
-      "name": "install-skills",
-      "source": "./install-skills",
-      "description": "One-time marketplace bootstrap: configure hooks and install skills",
+      "name": "code-review",
+      "source": "./code-review",
+      "description": "Use when the user says \"review the code\", \"check these changes\", \"review this\", \"look at staged changes\", or invokes ...",
       "version": "1.0.0"
     },
     {
-      "name": "uninstall-skills",
-      "source": "./uninstall-skills",
-      "description": "Remove marketplace skills and hooks with reverse dependency checking",
-      "version": "1.0.0"
-    },
-    {
-      "name": "observability-principles",
-      "source": "./observability-principles",
-      "description": "Universal observability principles covering logging, tracing, and metrics",
-      "version": "1.0.0"
-    },
-    {
-      "name": "issue-workflow",
-      "source": "./issue-workflow",
-      "description": "GitHub issue tracking with cross-cutting detection, commit split suggestions, and release-based changelog",
+      "name": "dependency-update",
+      "source": "./dependency-update",
+      "description": "Use when the user says \"bump a version\", \"upgrade dependencies\", \"check for newer versions\", \"add a dependency\", or \"...",
       "version": "1.0.0"
     },
     {
       "name": "git-commit",
       "source": "./git-commit",
-      "description": "Generic conventional commits with project type routing",
+      "description": "Use when user wants to create a commit NOW — says \"commit this\", \"commit these changes\", \"create a commit\". Routes to...",
       "version": "1.0.0"
     },
     {
       "name": "git-squash",
       "source": "./git-squash",
-      "description": "Classify and squash commits per policy before pushing — summary, optional per-commit table, rebase execution",
-      "version": "1.0.0"
-    },
-    {
-      "name": "java-dev",
-      "source": "./java-dev",
-      "description": "Java/Quarkus development workflow",
-      "version": "1.0.0"
-    },
-    {
-      "name": "java-code-review",
-      "source": "./java-code-review",
-      "description": "Java-specific code review extending code-review-principles",
-      "version": "1.0.0"
-    },
-    {
-      "name": "java-security-audit",
-      "source": "./java-security-audit",
-      "description": "Java/Quarkus OWASP Top 10 security audit",
-      "version": "1.0.0"
-    },
-    {
-      "name": "java-git-commit",
-      "source": "./java-git-commit",
-      "description": "Java project commits with DESIGN.md sync",
-      "version": "1.0.0"
-    },
-    {
-      "name": "java-update-design",
-      "source": "./java-update-design",
-      "description": "DESIGN.md synchronization for Java projects",
-      "version": "1.0.0"
-    },
-    {
-      "name": "maven-dependency-update",
-      "source": "./maven-dependency-update",
-      "description": "Maven BOM dependency management",
-      "version": "1.0.0"
-    },
-    {
-      "name": "custom-git-commit",
-      "source": "./custom-git-commit",
-      "description": "Custom project type commits with configurable sync",
-      "version": "1.0.0"
-    },
-    {
-      "name": "update-claude-md",
-      "source": "./update-claude-md",
-      "description": "CLAUDE.md workflow documentation sync",
-      "version": "1.0.0"
-    },
-    {
-      "name": "adr",
-      "source": "./adr",
-      "description": "Architecture Decision Record creation",
-      "version": "1.0.0"
-    },
-    {
-      "name": "design-snapshot",
-      "source": "./design-snapshot",
-      "description": "Immutable dated record of design state \u2014 where we are, how we got here, where we're going",
-      "version": "1.0.0"
-    },
-    {
-      "name": "publish-blog",
-      "source": "./publish-blog",
-      "description": "Publish blog entries to external platforms \u2014 reads blog-routing.yaml to route entries per entry_type, tags, and projects to configured git destinations",
+      "description": "Use when the commit history contains noise — fixup commits, revert chains, docs wording chores, tiny cleanups — that ...",
       "version": "1.0.0"
     },
     {
       "name": "handover",
       "source": "./handover",
-      "description": "Generates a concise HANDOFF.md at session end \u2014 lazy references to design snapshots, project blog, and knowledge garden rather than loading them",
+      "description": "Use when ending a session and wanting to preserve context for resumption, OR when a session is beginning and needing ...",
+      "version": "1.0.0"
+    },
+    {
+      "name": "ide-tooling",
+      "source": "./ide-tooling",
+      "description": "INVOKE IMMEDIATELY when two IntelliJ MCPs are visible: mcp__intellij-index__* and mcp__intellij__*. These are NOT int...",
       "version": "1.0.0"
     },
     {
       "name": "idea-log",
       "source": "./idea-log",
-      "description": "Lightweight living log for undecided possibilities \u2014 capture, review, promote, and discard ideas",
+      "description": "Use when user wants to park an idea for later — says \"log this idea\", \"add to idea log\", \"park that thought\", \"we sho...",
       "version": "1.0.0"
     },
     {
-      "name": "ts-dev",
-      "source": "./ts-dev",
-      "description": "TypeScript development workflow \u2014 strict mode, async patterns, error handling, testing",
+      "name": "implementation-doc-sync",
+      "source": "./implementation-doc-sync",
+      "description": "Use when documentation needs syncing — user says \"sync docs\", \"update docs\", \"doc sweep\", or invoked from a prompt sn...",
       "version": "1.0.0"
     },
     {
-      "name": "ts-code-review",
-      "source": "./ts-code-review",
-      "description": "TypeScript code review extending code-review-principles \u2014 type safety, async correctness",
+      "name": "issue-workflow",
+      "source": "./issue-workflow",
+      "description": "Use when setting up GitHub issue tracking, planning implementation work (creating epics and child issues from a plan)...",
       "version": "1.0.0"
     },
     {
-      "name": "ts-security-audit",
-      "source": "./ts-security-audit",
-      "description": "TypeScript/Node.js OWASP Top 10 security audit \u2014 injection, auth, SSRF, prototype pollution",
-      "version": "1.0.0"
-    },
-    {
-      "name": "npm-dependency-update",
-      "source": "./npm-dependency-update",
-      "description": "npm/yarn/pnpm dependency management extending dependency-management-principles",
-      "version": "1.0.0"
-    },
-    {
-      "name": "python-dev",
-      "source": "./python-dev",
-      "description": "Python development workflow \u2014 type hints, async patterns, safety, testing with pytest",
-      "version": "1.0.0"
-    },
-    {
-      "name": "python-code-review",
-      "source": "./python-code-review",
-      "description": "Python code review extending code-review-principles \u2014 type safety, async correctness, safety",
-      "version": "1.0.0"
-    },
-    {
-      "name": "python-security-audit",
-      "source": "./python-security-audit",
-      "description": "Python OWASP Top 10 security audit \u2014 injection, pickle deserialization, secrets, SSRF",
-      "version": "1.0.0"
-    },
-    {
-      "name": "pip-dependency-update",
-      "source": "./pip-dependency-update",
-      "description": "pip/poetry/pipenv dependency management extending dependency-management-principles",
+      "name": "java-dev",
+      "source": "./java-dev",
+      "description": "Use when writing new Java code, fixing bugs, refactoring, or adding tests in Quarkus applications — user says \"implem...",
       "version": "1.0.0"
     },
     {
       "name": "project-health",
       "source": "./project-health",
-      "description": "Universal project health checks \u2014 correctness, consistency, and compliance across all project types",
-      "version": "1.0.0"
-    },
-    {
-      "name": "project-refine",
-      "source": "./project-refine",
-      "description": "Improvement opportunities across docs and code \u2014 structure, deduplication, and bloat reduction",
-      "version": "1.0.0"
-    },
-    {
-      "name": "retro-issues",
-      "source": "./retro-issues",
-      "description": "One-off retrospective mapping of git history to GitHub epics and issues \u2014 analyses git log, ADRs, blog entries, and design docs; proposes structure for review before creating anything",
-      "version": "1.0.0"
-    },
-    {
-      "name": "workspace-init",
-      "source": "./workspace-init",
-      "description": "One-time workspace setup \u2014 creates ~/claude/private/<project>/ with routing CLAUDE.md, gitignored project symlink, and full directory structure",
+      "description": "Use when correctness, completeness, or consistency of a project needs verification — \"is the project healthy?\", \"pre-...",
       "version": "1.0.0"
     },
     {
       "name": "project-init",
       "source": "./project-init",
-      "description": "Normalised project setup gateway \u2014 invoked by session hook and work-start; verifies CLAUDE.md, workspace, work tracking, and superpowers; not user-invoked directly",
+      "description": "Use when project setup needs to be verified or completed — invoked automatically at session start (via hook) and by w...",
+      "version": "1.0.0"
+    },
+    {
+      "name": "project-refine",
+      "source": "./project-refine",
+      "description": "Use when seeking improvement opportunities in a project — \"find duplication\", \"bloat check\", \"look for ways to improv...",
+      "version": "1.0.0"
+    },
+    {
+      "name": "publish-blog",
+      "source": "./publish-blog",
+      "description": "Use when publishing blog entries to external platforms via blog-routing.yaml — user says \"publish blog\", \"publish ent...",
+      "version": "1.0.0"
+    },
+    {
+      "name": "python-dev",
+      "source": "./python-dev",
+      "description": "Use when writing new Python code, fixing bugs, refactoring, or adding tests — user says \"implement\", \"fix\", \"refactor...",
+      "version": "1.0.0"
+    },
+    {
+      "name": "quarkus-flow",
+      "source": "./quarkus-flow",
+      "description": "Use when working with quarkus-flow: writing Flow subclasses, FuncDSL tasks (function/agent/emit/listen/switchWhen/for...",
+      "version": "1.0.0"
+    },
+    {
+      "name": "retro-issues",
+      "source": "./retro-issues",
+      "description": "Use when mapping an existing git repository's history to GitHub epics and issues — user says \"map our history to issu...",
+      "version": "1.0.0"
+    },
+    {
+      "name": "security-audit",
+      "source": "./security-audit",
+      "description": "Use when user explicitly requests \"security review\", \"audit security\", \"check for vulnerabilities\", or \"OWASP check\",...",
+      "version": "1.0.0"
+    },
+    {
+      "name": "sync-local",
+      "source": "./sync-local",
+      "description": "Use when the user wants to sync installed skills to the latest version from the cloned repository — says \"sync skills...",
+      "version": "1.0.0"
+    },
+    {
+      "name": "ts-dev",
+      "source": "./ts-dev",
+      "description": "Use when writing new TypeScript code, fixing bugs, refactoring, or adding tests — user says \"implement\", \"fix\", \"refa...",
+      "version": "1.0.0"
+    },
+    {
+      "name": "update-claude-md",
+      "source": "./update-claude-md",
+      "description": "Use when CLAUDE.md needs updating due to workflow or convention changes, or when invoked automatically by git-commit/...",
+      "version": "1.0.0"
+    },
+    {
+      "name": "update-design",
+      "source": "./update-design",
+      "description": "Use when the user says \"update the design doc\", \"sync DESIGN.md\", \"sync ARC42STORIES.MD\", \"reflect code changes in th...",
+      "version": "1.0.0"
+    },
+    {
+      "name": "work",
+      "source": "./work",
+      "description": "Use when the user says \"work\", \"work end\", \"work pause\", or \"work resume\" — detects current branch state and routes t...",
+      "version": "1.0.0"
+    },
+    {
+      "name": "work-end",
+      "source": "./work-end",
+      "description": "Use when the current branch is complete and ready to close — user says \"work-end\", \"close this branch\", or \"wrap up t...",
+      "version": "1.0.0"
+    },
+    {
+      "name": "work-pause",
+      "source": "./work-pause",
+      "description": "Use when interrupting current branch work to switch to something else — user says \"work-pause\", \"pause this work\", or...",
+      "version": "1.0.0"
+    },
+    {
+      "name": "work-resume",
+      "source": "./work-resume",
+      "description": "Use when returning to a paused branch — user says \"work-resume\", \"resume\", or \"go back to that branch\". Reads the pau...",
+      "version": "1.0.0"
+    },
+    {
+      "name": "work-start",
+      "source": "./work-start",
+      "description": "Use when a task or session is beginning — the opening directive in any work-item prompt, or when the user says they a...",
+      "version": "1.0.0"
+    },
+    {
+      "name": "workspace-init",
+      "source": "./workspace-init",
+      "description": "Use when explicitly creating a new companion workspace from scratch — user invokes /workspace-init or says \"init work...",
+      "version": "1.0.0"
+    },
+    {
+      "name": "write-content",
+      "source": "./write-content",
+      "description": "Use when writing any piece of content — project diary entry, blog post, article, note, brief, README, news item, tech...",
       "version": "1.0.0"
     }
   ]
