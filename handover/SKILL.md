@@ -25,18 +25,14 @@ When the user says "resume handover" (or similar), the job is to **locate and re
 
 Use the same convention as `work-start` — derive workspace from CWD via git, not from CLAUDE.md:
 
+Run the bundled context script — no shell variable assignments:
 ```bash
-WORKSPACE=$(git rev-parse --show-toplevel 2>/dev/null)
-PROJECT=$(realpath "$WORKSPACE/proj" 2>/dev/null)
+python3 ~/.claude/skills/project-init/ctx.py
 ```
 
-- `WORKSPACE` is the git root of the session's starting directory — this IS the workspace.
-- `PROJECT` follows the `proj/` symlink to the source repo (confirms we are in the workspace, not the project repo).
-- HANDOFF.md is at `$WORKSPACE/HANDOFF.md`.
+Use `WORKSPACE` and `PROJECT` from the output as concrete strings. HANDOFF.md is at `<WORKSPACE>/HANDOFF.md`.
 
-**If `proj/` does not exist** (no workspace configured), HANDOFF.md is at `$WORKSPACE/HANDOFF.md` anyway — CWD is both workspace and project in that case.
-
-**Do not scan CLAUDE.md for a workspace path.** Multiple CLAUDE.mds are loaded per session (global, parent, project). The parent's `**Workspace:**` declaration will be found first and will point to the wrong repo. `git rev-parse --show-toplevel` from the session's CWD is always correct.
+**Do not scan CLAUDE.md for a workspace path.** Multiple CLAUDE.mds are loaded per session (global, parent, project). The parent's `**Workspace:**` declaration will be found first and will point to the wrong repo. `python3 ~/.claude/skills/project-init/ctx.py` resolves from CWD via git — always correct.
 
 ### Step R2 — Check freshness, then read
 
@@ -467,11 +463,9 @@ The rename is cosmetic — the handover must be committed regardless.
 
 ### Step 6 — Commit (required)
 
-Resolve the workspace path via symlinks, then commit. HANDOFF.md must **always** be committed to workspace **main**, even when the session is on a branch. It is a session artifact, not a branch artifact — committing it to a branch makes it invisible to the next session starting on main.
+Resolve the workspace path via the context script (already run in Path Resolution above), then commit. HANDOFF.md must **always** be committed to workspace **main**, even when the session is on a branch. It is a session artifact, not a branch artifact — committing it to a branch makes it invisible to the next session starting on main.
 
-```bash
-WORKSPACE=$(git rev-parse --show-toplevel 2>/dev/null)
-```
+Use `WORKSPACE` from the ctx.py output as a concrete string.
 
 ```bash
 CURRENT_BRANCH=$(git -C <Workspace> branch --show-current)

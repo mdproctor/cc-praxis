@@ -39,11 +39,12 @@ grep -A 5 "^## Routing$" "$HOME/.claude/CLAUDE.md" 2>/dev/null | grep "Default d
 # Layer 1: built-in default → project (docs/adr/)
 ```
 
-Resolve paths via symlinks:
+Resolve paths — run the bundled context script:
 ```bash
-WORKSPACE=$(git rev-parse --show-toplevel 2>/dev/null)
-PROJECT=$(readlink -f proj 2>/dev/null)
+python3 ~/.claude/skills/project-init/ctx.py
 ```
+
+Use `WORKSPACE` and `PROJECT` from the output as concrete strings in all subsequent commands.
 
 | Resolved destination | Write to | git -C path |
 |----------------------|----------|-------------|

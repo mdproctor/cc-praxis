@@ -28,16 +28,14 @@ Only continue to path resolution once project-init returns clean.
 
 ## Path Resolution (run after project-init)
 
+Run the bundled context script — no shell variable assignments:
 ```bash
-WORKSPACE=$(git rev-parse --show-toplevel 2>/dev/null)
-PROJECT=$(readlink -f proj 2>/dev/null)
-[ -z "$PROJECT" ] && { echo "⚠️ No proj/ symlink found — workspace-init may have been declined. Proceeding in single-repo mode."; }
-PROJECT_BASE_BRANCH=$(grep "^\*\*Project base branch:\*\*" CLAUDE.md 2>/dev/null | head -1 | sed 's/.*`\(.*\)`.*/\1/')
-[ -z "$PROJECT_BASE_BRANCH" ] && PROJECT_BASE_BRANCH="main"
+python3 ~/.claude/skills/project-init/ctx.py
 ```
 
-`WORKSPACE` is the git root of the current workspace. `PROJECT` follows the `proj/` symlink
-to the project repo. All git commands use `-C "$WORKSPACE"` or `-C "$PROJECT"` explicitly.
+Use the printed values as **concrete strings** in all subsequent commands.
+`WORKSPACE` is the git root of the workspace. `PROJECT` follows the `proj/` symlink
+to the project repo. All git commands use `-C <WORKSPACE>` or `-C <PROJECT>` explicitly.
 Never use bare `git` without `-C <path>`. Never rely on CWD.
 
 `PROJECT_BASE_BRANCH` is the project's base branch — read from `**Project base branch:** \`<name>\``

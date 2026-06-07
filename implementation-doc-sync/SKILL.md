@@ -43,12 +43,12 @@ Store this as the **session scope**. Everything below is filtered through it.
 **Run before checking any docs.** Every doc identified in Step 2 must be
 checked against this boundary — peer-repo docs are never edited directly.
 
+Run the bundled context script to resolve the home repo path:
 ```bash
-HOME_REPO=$(git rev-parse --show-toplevel)
-echo "Home repo: $HOME_REPO"
+python3 ~/.claude/skills/project-init/ctx.py
 ```
 
-A doc is **in the home repo** if its absolute path starts with `$HOME_REPO/`.
+A doc is **in the home repo** if its absolute path starts with `<WORKSPACE>/`.
 
 A doc is **in a peer repo** if its path starts with a sibling directory
 (e.g. `../parent/`, `../engine/`, `../ledger/`) or any other git root

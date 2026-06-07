@@ -161,11 +161,15 @@ Install the hook that hard-blocks commits without an issue reference.
 The hook is committed to `.githooks/` so it survives clones and is visible
 to all contributors. `core.hooksPath` activates it on the current machine.
 
+Run the bundled context script first:
 ```bash
-PROJECT_PATH=$(readlink -f proj 2>/dev/null || echo ".")
+python3 ~/.claude/skills/project-init/ctx.py
+```
 
+Use `PROJECT` from the output as the concrete project path. Then:
+```bash
 HOOK_SRC="$HOME/.claude/skills/issue-workflow/hooks/commit-msg"
-GITHOOKS_DIR="$PROJECT_PATH/.githooks"
+GITHOOKS_DIR="<PROJECT>/.githooks"
 HOOK_DEST="$GITHOOKS_DIR/commit-msg"
 
 if [ -f "$HOOK_DEST" ]; then

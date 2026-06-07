@@ -17,14 +17,13 @@ the WIP commit to restore working state, removes the entry from the stack.
 
 ## Path Resolution (run first, always)
 
+Run the bundled context script — no shell variable assignments, no CLAUDE.md scanning:
 ```bash
-PROJECT=$(grep "add-dir" CLAUDE.md | head -1 | sed 's/.*add-dir //')
-WORKSPACE=$(grep "^\*\*Workspace:\*\*" CLAUDE.md | head -1 | sed 's/.*`\(.*\)`.*/\1/')
-PROJECT_BASE_BRANCH=$(grep "^\*\*Project base branch:\*\*" CLAUDE.md 2>/dev/null | head -1 | sed 's/.*`\(.*\)`.*/\1/')
-[ -z "$PROJECT_BASE_BRANCH" ] && PROJECT_BASE_BRANCH="main"
+python3 ~/.claude/skills/project-init/ctx.py
 ```
 
-`PROJECT_BASE_BRANCH` is the project's base branch — defaults to `main` if not set in CLAUDE.md.
+Use `WORKSPACE`, `PROJECT`, `BASE_BRANCH`, `CURRENT_BRANCH` from the output as concrete strings.
+`BASE_BRANCH` defaults to `main` if not declared in the project CLAUDE.md.
 
 ---
 
