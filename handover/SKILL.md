@@ -43,15 +43,20 @@ git -C "$WORKSPACE" log -1 --format="%ar" -- HANDOFF.md
 If more than a week old, flag it before using the context:
 > "HANDOFF.md is N days old — some context may be stale. Verify key assumptions before building on it."
 
-Read the file. Then ask before presenting:
+Read the file. Then use `AskUserQuestion` to offer the cross-check:
 
-> "Checking GitHub for issues closed since last session — type **n** to skip, or wait and it proceeds."
+```
+Check GitHub for issues closed since last session?
+  [Y] Yes — cross-check now  (default)
+  [N] Skip — show handover immediately
+```
 
-Wait briefly for a response. If the user says **n**, skip to presenting immediately. Otherwise proceed with Step R3, then present the resume output once — with stale entries already removed if any were found.
+If **N**: skip directly to presenting the resume output.
+If **Y** (or default): proceed with Step R3, then present the resume output once — with stale entries already removed if any were found.
 
 ### Step R3 — GitHub issue cross-check (default on, skippable)
 
-Runs unless the user types n at the prompt above.
+Runs only if user chose Y above.
 
 **If confirmed:**
 
