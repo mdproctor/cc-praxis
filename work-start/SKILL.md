@@ -246,18 +246,20 @@ Show to user, allow override. Guards:
 
 ### Step 6 — Flyway V scan
 
-```bash
-git -C "$PROJECT" fetch --all 2>/dev/null || echo "⚠️ No network — scan incomplete"
-```
-
-If network available: scan `$PROJECT_BASE_BRANCH` + all remote branches for claimed V numbers. Compute
-`next-safe-v = max + 1`. If conflict found: warn, show offending branches, block until acknowledged.
-
 Only ask about Flyway if the user described migration work:
 > "Will this branch include database migrations? (y/n)"
-> - y → `FLYWAY_NEXT_V=<next-safe-v>`
-> - explicit n → `FLYWAY_NEXT_V=none`
-> - no answer (default) → `FLYWAY_NEXT_V=unknown`
+> - explicit n → `FLYWAY_NEXT_V=none`; skip scan
+> - no answer (default) → `FLYWAY_NEXT_V=unknown`; skip scan
+> - y → run scan:
+
+```bash
+python3 ~/.claude/skills/work-start/flyway_scan.py <PROJECT> <BASE_BRANCH>
+```
+
+Read `NEXT_SAFE_V`, `CONFLICT`, `SCAN_COMPLETE` from output.
+- `CONFLICT=yes` → warn, show `CONFLICT_V` and `CONFLICT_BRANCHES`, block until acknowledged
+- `SCAN_COMPLETE=no` → warn "offline — scan incomplete, V-number may conflict"
+- Set `FLYWAY_NEXT_V=<NEXT_SAFE_V>`
 ### Step 7 — Create branches (atomic)
 
 ```bash
@@ -285,21 +287,13 @@ CANDIDATE="$(dirname "$PROJECT")/$ISSUE_REPO_NAME"
   $CANDIDATE. Falling through to routing config. Journal will target routing-config destination."*
   Continue to Layers 1–2.
 
-Read routing config (3-layer cascade) for `design` artifact (only if Layer 0 did not match):
+Resolve routing config for `design` artifact (only if Layer 0 did not match):
 
-**Layer 1 (global default — `~/.claude/CLAUDE.md`):**
 ```bash
-grep -A 5 "^## Routing$" "$HOME/.claude/CLAUDE.md" 2>/dev/null | grep "^\*\*Default destination:\*\*" | sed 's/\*\*Default destination:\*\* *//'
+python3 ~/.claude/skills/project-init/routing.py ~/.claude/CLAUDE.md <WORKSPACE>/CLAUDE.md design
 ```
-Valid values: `workspace` or `project`. Anything else: warn, treat as absent.
 
-**Layer 2 (workspace per-artifact — `$WORKSPACE/CLAUDE.md`):**
-```bash
-grep -A 30 "^## Routing$" "$WORKSPACE/CLAUDE.md" 2>/dev/null
-```
-Parse the markdown table for a `design` row. Valid values: `workspace`, `project`.
-
-Layer 2 overrides Layer 1. If neither present: default is `project`.
+Read `DESTINATION` and `LAYER` from output. If command fails, default to `project`.
 
 Apply resolved routing:
 - If `design → workspace`: `DESIGN_REPO="$WORKSPACE"`, baseline = `git -C "$WORKSPACE" rev-parse main`, `DESIGN_REPO_KEY=workspace`
@@ -317,30 +311,23 @@ Leave blank (empty output) if `<DESIGN_REPO>/DESIGN.md` does not exist yet.
 ### Step 9 — Scaffold
 
 ```bash
-mkdir -p "$WORKSPACE/design"
+python3 ~/.claude/skills/work-start/scaffold.py <WORKSPACE> \
+  branch=<branch-name> \
+  project-sha=<baseline SHA from Step 8> \
+  date=<YYYY-MM-DD> \
+  issue=<N> \
+  issue-repo=<ISSUE_REPO_GITHUB> \
+  covers=<comma-separated issues> \
+  flyway-next-v=<N|none|unknown> \
+  design-repo=<DESIGN_REPO_KEY> \
+  design-section-hashes=<pipe-sep-hashes>
 ```
 
-Write `$WORKSPACE/design/JOURNAL.md`:
-```markdown
-# Design Journal — <branch-name>
-```
-
-Write `$WORKSPACE/design/.meta`:
-```
-branch: <branch-name>
-project-sha: <baseline SHA from Step 8>
-date: <YYYY-MM-DD>
-issue: <N or blank>
-issue-repo: <ISSUE_REPO_GITHUB | blank>
-covers: <comma-separated issue numbers, e.g. "5,19,32" — always includes primary; equals issue: when single>
-flyway-next-v: <N | none | unknown>
-design-repo: <workspace | project | cross-repo:<repo-name>>
-design-section-hashes: <pipe-separated hash:heading pairs, or blank>
-```
+Read `META_PATH` and `JOURNAL_PATH` from output. If `ERROR=` appears: hard stop.
 
 `covers:` is the authoritative list of all issues this branch will close. `work-end`
 reads it to close every issue at branch close time. When tracking is disabled or no
-issue was resolved, leave `covers:` blank (same as `issue:`).
+issue was resolved, omit the `covers=` arg (defaults to `issue=` value).
 
 ### Step 10 — Commit and push scaffold
 
