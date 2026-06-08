@@ -878,29 +878,24 @@ EOF
 
 ### Step 7b — Create bidirectional navigation symlinks
 
-Create a `proj` symlink in the workspace pointing to the project, and a `wksp`
-symlink in the project pointing to the workspace. These let you `cd proj` or
-`cd wksp` to jump between the two without remembering the full path.
+Create `proj/` in the workspace pointing to the project, and `wksp/` in the
+project pointing to the workspace. Also ensures `wksp` is in `.gitignore`.
+
+**Hard stop if this fails** — without the symlinks, ctx.py falls into single-repo
+mode and all workspace artifacts land in the project repo.
 
 ```bash
-# workspace/proj → project directory
-ln -sf "<project-path>" "$BASE/proj"
-
-# project/wksp → workspace directory
-ln -sf "$BASE" "<project-path>/wksp"
+python3 ~/.claude/skills/workspace-init/create_symlinks.py "<project-path>" "<BASE>"
 ```
 
-Add `wksp` to the project `.gitignore` so the symlink is never accidentally
-staged. Use the committed `.gitignore`, not `.git/info/exclude`, so the
-convention is visible to anyone working on the repo:
+Read `PROJ_SYMLINK`, `WKSP_SYMLINK`, `GITIGNORE_UPDATED` from output.
 
+If output contains `ERROR=`: hard stop — report the error message and do not continue.
+
+If `GITIGNORE_UPDATED=yes`: stage and commit the `.gitignore` change:
 ```bash
-# Add wksp to project .gitignore (append if not already present)
-grep -q "^wksp$" "<project-path>/.gitignore" 2>/dev/null || echo "wksp" >> "<project-path>/.gitignore"
-
-# Stage and commit .gitignore update
 git -C "<project-path>" add .gitignore
-git -C "<project-path>" diff --cached --quiet || git -C "<project-path>" commit -m "chore: ignore wksp symlink"
+git -C "<project-path>" commit -m "chore: ignore wksp symlink"
 ```
 
 `proj` is already covered by the workspace `.gitignore` written in Step 7.

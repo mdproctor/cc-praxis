@@ -95,31 +95,27 @@ Push failures are non-fatal — the WIP commit is safely on the local branch.
 ## Step 5 — Push pause entry onto stack (on workspace main)
 
 ```bash
-PAUSE_TS=$(date -u +%Y-%m-%dT%H:%M:%SZ)  # already set in Step 2 if dirty; set here if clean
-
-git -C "$WORKSPACE" checkout main
-git -C "$WORKSPACE" pull --rebase origin main
-
-STACK_FILE="$WORKSPACE/design/.pause-stack"
-touch "$STACK_FILE"
-
-# Append new entry (YAML block, newest at end of file)
-cat >> "$STACK_FILE" << EOF
-- branch: $BRANCH_NAME
-  issue: ${ISSUE_N:-none}
-  paused: $PAUSE_TS
-  wip_project: $WIP_COMMITTED
-  wip_workspace: $WORKSPACE_WIP_COMMITTED
-EOF
-
-git -C "$WORKSPACE" add design/.pause-stack
-git -C "$WORKSPACE" commit -m "chore: pause $BRANCH_NAME — stack depth $(grep -c '^- branch:' "$STACK_FILE")"
-git -C "$WORKSPACE" push
+git -C <WORKSPACE> checkout main
+git -C <WORKSPACE> pull --rebase origin main
 ```
 
-**If push fails: abort.** Pop the local stack entry and switch back to the branch.
-The pause stack on main must always be committed and pushed — it is the source
-of truth across sessions.
+Push the entry using the stack script — no shell variable assignments or heredocs:
+```bash
+python3 ~/.claude/skills/project-init/stack.py push <WORKSPACE>/design/.pause-stack branch=<BRANCH_NAME> issue=<ISSUE_N> wip_project=<WIP_COMMITTED> wip_workspace=<WORKSPACE_WIP_COMMITTED>
+```
+
+Read `STACK_DEPTH` from output. Then commit and push:
+```bash
+git -C <WORKSPACE> add design/.pause-stack
+git -C <WORKSPACE> commit -m "chore: pause <BRANCH_NAME> — stack depth <STACK_DEPTH>"
+git -C <WORKSPACE> push
+```
+
+**If push fails: abort.** Remove the stack entry with:
+```bash
+python3 ~/.claude/skills/project-init/stack.py pop <WORKSPACE>/design/.pause-stack <BRANCH_NAME>
+```
+Then switch back to the branch. The pause stack on main must always be committed and pushed — it is the source of truth across sessions.
 
 ---
 

@@ -78,7 +78,7 @@ If missing from either:
 ## Step 4 — Remove entry from stack (on workspace main)
 
 ```bash
-python3 ~/.claude/skills/project-init/remove_from_stack.py <WORKSPACE>/design/.pause-stack <RESUME_BRANCH>
+python3 ~/.claude/skills/project-init/stack.py pop <WORKSPACE>/design/.pause-stack <RESUME_BRANCH>
 git -C <WORKSPACE> add design/.pause-stack
 git -C <WORKSPACE> commit -m "chore: resume <RESUME_BRANCH> — pop from pause stack"
 git -C <WORKSPACE> push
