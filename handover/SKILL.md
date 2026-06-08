@@ -69,16 +69,9 @@ For each `#N` found, run a separate command per issue with the concrete repo val
 gh issue view <N> --repo <OWNER_REPO> --json state,title --jq '"#\(.number) [\(.state)] \(.title)"' 2>/dev/null
 ```
 
-If any are CLOSED but still appear as open work, print:
+If any are CLOSED but still appear as open work: remove them from HANDOFF.md immediately — no prompt. Add `*Updated: #N, #M closed — removed from backlog.*` at the top, commit to workspace main.
 
-```
-Issues closed since last session:
-  #N — <title> (was in What's Left/What's Next)
-
-Update handover to remove these? (y/n)
-```
-
-If confirmed: remove stale entries, add `*Updated: #N closed — removed from backlog.*` at top, commit to workspace main.
+Report what was removed at the end of the resume output (see structure below).
 
 Then read the file and present the resume output using this structure:
 
@@ -109,6 +102,10 @@ Discretionary new work. Items blocked by other modules are flagged in Notes.
 | # | Description | Scale | Complexity | Notes |
 |---|-------------|-------|------------|-------|
 | #N | ... | S | Low | ... |
+
+**## Cleaned up**
+Only include if issues were removed during cross-check. Omit entirely if nothing was removed.
+- `#N — <title>` — closed, removed from backlog
 
 ---
 
