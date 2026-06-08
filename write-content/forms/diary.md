@@ -88,12 +88,43 @@ Full template and heading guidance: **[diary-template.md](diary-template.md)**
 - Code blocks for the interesting parts
 - The moment something surprised you
 - Screenshots for any UI work — **mandatory**; clip to the relevant area
+- A closing insight, if the work genuinely surfaces one (see below)
 
 **Avoid:**
 - Smooth narratives with no failed attempts
 - "We decided to use X" without saying what else was considered
 - Vague future commitment: "we'll address this later"
 - Describing a UI without showing it
+- Forcing a closing insight when there's nothing genuine to say
+
+---
+
+## Closing insight — optional, not a section
+
+After the main narrative, if the work surfaces something worth thinking about,
+include 1–3 sentences woven into the closing prose. **Not a headed section.
+Not a task list. Only when there's something genuine.**
+
+Use these forms as the filter — if what you'd write doesn't fit one, leave it out:
+
+1. **What it might lead to** — a direction the work opens that isn't obvious from the commits
+2. **An insight the reader might not be aware of** — a non-obvious implication or cross-project connection
+3. **Related things worth looking into** — a pointer to something adjacent the work illuminates
+4. **This looks similar to what we did elsewhere** — pattern recognition across sessions or projects
+5. **We made a decision here without realising it** — an implicit architectural choice worth naming so it can be consciously owned
+6. **The reason this works is non-obvious** — explains WHY something works when it doesn't look like it should; useful for anyone tempted to simplify it later
+7. **We're drifting toward X without having decided to** — names an emergent direction that hasn't been articulated as a goal yet
+8. **The risk here is...** — a non-obvious failure mode not visible from the code
+
+**Examples of the right texture:**
+
+> *"The ctx.py pattern probably has further to run — there's a whole class of shell operations in the remaining skills that are one permission check away from the same problem."*
+
+> *"Between ctx.py, stack.py, and discover-repos.py, project-init is quietly becoming a Python runtime for the whole skill ecosystem. That's a meaningfully different thing than it started as."*
+
+> *"Fixing work-pause surfaces a broader question: how many of the lifecycle commands have implicit ordering assumptions that aren't enforced anywhere?"*
+
+The test: would a developer reading this entry think "I hadn't considered that" or "that's worth knowing"? If yes, include it. If it reads like scaffolding or obligation, cut it.
 
 ---
 
@@ -298,6 +329,7 @@ See [diary-retrospective.md](diary-retrospective.md) — loaded when invoked wit
 | Vague errors: "X didn't work" | Useless to future readers | Include exact error messages, commands, file paths |
 | Editing an earlier entry when beliefs change | Destroys the historical record | Write a Correction entry instead |
 | Using a "Next:" footer | Sounds like scaffolding | Integrate forward-looking note naturally, or end on the last real point |
+| Forcing a closing insight | Reads as obligation, not thought | Only include if it passes one of the eight forms — otherwise end on the last real point |
 
 ---
 
