@@ -310,9 +310,9 @@ from routing config — which may have changed between sessions.
 
 Compute section hashes (single pipe-separated line):
 ```bash
-HASHES=$(grep "^## " "$DESIGN_REPO/DESIGN.md" 2>/dev/null | while read h; do printf "%s:%s|" "$(printf '%s' "$h" | shasum -a 256 | cut -c1-8)" "$h"; done)
+python3 ~/.claude/skills/project-init/section_hashes.py <DESIGN_REPO>/DESIGN.md
 ```
-Leave blank if `$DESIGN_REPO/DESIGN.md` does not exist yet.
+Leave blank (empty output) if `<DESIGN_REPO>/DESIGN.md` does not exist yet.
 
 ### Step 9 — Scaffold
 

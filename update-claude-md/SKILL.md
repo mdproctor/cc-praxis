@@ -299,7 +299,7 @@ When user confirms YES:
 1. Apply **only** the proposed changes
 2. **Validate links (if module files present):** Check that any markdown links from CLAUDE.md to module files resolve:
    ```bash
-   grep -oE '\[([^\]]+)\]\(docs/[^)]+\)' CLAUDE.md | grep -oE 'docs/[^)]+' | while read -r p; do [ -f "$p" ] || echo "BROKEN LINK: $p"; done
+   python3 ~/.claude/skills/update-claude-md/check_links.py CLAUDE.md
    ```
    If broken links are found, fix them before staging.
 3. **Skip `validate_document.py`** — this script is not present in all projects and is optional.

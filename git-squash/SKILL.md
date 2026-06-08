@@ -52,9 +52,11 @@ single-commit cleanup to a full reconstruction, goes through `/git-squash`.
 Before any destructive operation, create an isolated working branch:
 
 ```bash
-ORIG_BRANCH=$(git branch --show-current)
-WORK_BRANCH="squash/wip-${ORIG_BRANCH}-$(date +%Y%m%d-%H%M%S)"
-git checkout -b "$WORK_BRANCH"
+python3 ~/.claude/skills/git-squash/ctx.py
+```
+Use `ORIG_BRANCH` and `WORK_BRANCH` from the output, then:
+```bash
+git checkout -b <WORK_BRANCH>
 ```
 
 Record both names — needed for the swap in Step 8. All filter-repo and rebase
@@ -293,29 +295,11 @@ UPSTREAM_REMOTE=$(git remote | grep -E "^upstream$|^casehubio$" | head -1)
 UNPUSHED_COUNT=$(git log --oneline "@{u}..HEAD" 2>/dev/null | wc -l | tr -d ' ')
 UNPUSHED_RANGE="@{u}..HEAD"
 
-# Range 2: Largest safe — commits not yet on the blessed upstream repo
-if [ -n "$UPSTREAM_REMOTE" ]; then
-  SAFE_COUNT=$(git log --oneline "$UPSTREAM_REMOTE/$PROJECT_BASE_BRANCH..HEAD" 2>/dev/null | wc -l | tr -d ' ')
-  SAFE_RANGE="$UPSTREAM_REMOTE/$PROJECT_BASE_BRANCH..HEAD"
-  SAFE_LABEL="not on $UPSTREAM_REMOTE/$PROJECT_BASE_BRANCH"
-else
-  # No upstream: safe = not on origin base branch
-  SAFE_COUNT=$(git log --oneline "origin/$PROJECT_BASE_BRANCH..HEAD" 2>/dev/null | wc -l | tr -d ' ')
-  SAFE_RANGE="origin/$PROJECT_BASE_BRANCH..HEAD"
-  SAFE_LABEL="not on origin/$PROJECT_BASE_BRANCH"
-fi
-
-# Range 3: All — full branch from .meta PROJECT_SHA
-META_SHA=$(grep "^project-sha:" "$WORKSPACE/design/.meta" 2>/dev/null | sed 's/project-sha: //')
-if [ -n "$META_SHA" ]; then
-  ALL_COUNT=$(git log --oneline "$META_SHA..HEAD" 2>/dev/null | wc -l | tr -d ' ')
-  ALL_RANGE="$META_SHA..HEAD"
-  ALL_LABEL="full branch from start"
-else
-  ALL_COUNT=$(git log --oneline "origin/$PROJECT_BASE_BRANCH..HEAD" 2>/dev/null | wc -l | tr -d ' ')
-  ALL_RANGE="origin/$PROJECT_BASE_BRANCH..HEAD"
-  ALL_LABEL="full branch"
-fi
+Run the context script to get all range data:
+```bash
+python3 ~/.claude/skills/git-squash/ctx.py
+```
+Use `UNPUSHED_COUNT`/`UNPUSHED_RANGE`, `SAFE_COUNT`/`SAFE_RANGE`, `ALL_COUNT`/`ALL_RANGE`/`ALL_LABEL` from the output.
 ```
 
 Present the choice:
@@ -1096,7 +1080,7 @@ result to the user. Run it. Do not skip.
 TOTAL=$(git log --oneline <base>..<work-branch> | wc -l)
 STEP=$(( TOTAL / 5 ))  # 5 evenly-spaced samples
 
-git log --format="%H" <base>..<work-branch> | awk -v step=$STEP 'NR % step == 0 {print}' | while read compacted_sha; do
+python3 ~/.claude/skills/git-squash/ctx.py --compaction-targets <base> <work-branch> <STEP>
   subject=$(git log -1 --format="%s" "$compacted_sha")
   original_sha=$(git log --format="%H %s" <backup-branch> 2>/dev/null | grep -F "$subject" | head -1 | awk '{print $1}')
   if [ -n "$original_sha" ]; then
@@ -1158,7 +1142,7 @@ When run, assess surviving commit quality:
 
 ```bash
 # For each KEEP commit in the compacted range
-git log --format="%H %s" <base>..<work-branch> | while read sha subject; do
+python3 ~/.claude/skills/git-squash/ctx.py --rebase-todo <base> <work-branch>
   diff_lines=$(git show --stat --format="" $sha | awk '/changed/{sum+=$1} END{print sum}')
   body=$(git log -1 --format="%b" $sha | grep -v '^$' | wc -l)
   echo "$sha $diff_lines $body $subject"

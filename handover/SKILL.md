@@ -62,17 +62,11 @@ Runs only if user chose Y above.
 
 Scan HANDOFF.md for `#N` patterns in What's Left and What's Next sections. Deduplicate.
 
-Resolve the GitHub repo:
-```bash
-GITHUB_REPO=$(grep "GitHub repo:" "$PROJECT/CLAUDE.md" 2>/dev/null | head -1 | sed 's/.*GitHub repo: *//')
-[ -z "$GITHUB_REPO" ] && GITHUB_REPO=$(grep "GitHub repo:" "$WORKSPACE/CLAUDE.md" 2>/dev/null | head -1 | sed 's/.*GitHub repo: *//')
-```
+Use `OWNER_REPO` from the ctx.py output. If empty, skip silently.
 
-If no GitHub repo is resolvable, skip silently.
-
-For each `#N` found:
+For each `#N` found, run a separate command per issue with the concrete repo value:
 ```bash
-gh issue view N --repo "$GITHUB_REPO" --json state,title --jq '"#\(.number) [\(.state)] \(.title)"' 2>/dev/null
+gh issue view <N> --repo <OWNER_REPO> --json state,title --jq '"#\(.number) [\(.state)] \(.title)"' 2>/dev/null
 ```
 
 If any are CLOSED but still appear as open work, print:
@@ -348,7 +342,7 @@ Only run if `ARC42STORIES.MD` exists in the project repo and was ticked in the c
 
 Read the layer taxonomy table (§4) and chapter index (§9.2). For each row that shows `🔲 pending (#NNN)`, check the referenced issue:
 ```bash
-gh issue view NNN --repo "$GITHUB_REPO" --json state --jq '.state'
+gh issue view <NNN> --repo <OWNER_REPO> --json state --jq '.state'
 ```
 If the issue is CLOSED but the row still says pending, the status is stale.
 

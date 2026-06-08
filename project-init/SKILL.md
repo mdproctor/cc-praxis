@@ -41,14 +41,7 @@ exploration. The rule is in effect for the whole session once noted here.
 Run this first. If all conditions are met, return immediately — do nothing else.
 
 ```bash
-CLAUDE_OK=$(grep -q "## Project Type" CLAUDE.md 2>/dev/null && echo "yes" || echo "no")
-WORKSPACE_OK=$(  { [ -L "wksp" ] && [ -d "wksp" ]; } \
-              || { [ -L "proj" ] && [ -d "proj" ]; } \
-              || grep -q "^workspace: declined" CLAUDE.md 2>/dev/null \
-              && echo "yes" || echo "no")
-ISSUES_OK=$(  grep -q "Issue tracking: enabled"  CLAUDE.md 2>/dev/null \
-           || grep -q "Issue tracking: declined" CLAUDE.md 2>/dev/null \
-           && echo "yes" || echo "no")
+python3 ~/.claude/skills/project-init/ctx.py
 ```
 
 If `CLAUDE_OK=yes` AND `WORKSPACE_OK=yes` AND `ISSUES_OK=yes` → return silently.
@@ -83,9 +76,9 @@ check can run without a project type.
 
 ### Check 2 — Workspace
 
+Use `WORKSPACE_OK` from the ctx.py output (already run in fast-path). Check separately if it was declined:
 ```bash
-WKSP_CONFIGURED=$( { [ -L "wksp" ] && [ -d "wksp" ]; } || { [ -L "proj" ] && [ -d "proj" ]; } && echo "yes" || echo "no")
-WKSP_DECLINED=$(grep -q "^workspace: declined" CLAUDE.md 2>/dev/null && echo "yes" || echo "no")
+grep "workspace: declined" CLAUDE.md 2>/dev/null
 ```
 
 | State | Action |
@@ -168,11 +161,7 @@ Issue tracking: declined
 Skip if: workspace was just set up this session (workspace-init offered it).
 
 ```bash
-python3 -c "
-import json, os
-s = json.load(open(os.path.expanduser('~/.claude/settings.json')))
-print('installed' if 'superpowers@claude-plugins-official' in s.get('enabledPlugins', {}) else 'missing')
-" 2>/dev/null || echo "missing"
+python3 -c 'import json,os; s=json.load(open(os.path.expanduser("~/.claude/settings.json"))); print("installed" if "superpowers@claude-plugins-official" in s.get("enabledPlugins",{}) else "missing")' 2>/dev/null || echo "missing"
 ```
 
 | State | Action |

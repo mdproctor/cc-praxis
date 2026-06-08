@@ -1133,12 +1133,7 @@ If n → skip. Do not ask again this session.
 Check if superpowers is already installed:
 
 ```bash
-python3 -c "
-import json, os
-s = json.load(open(os.path.expanduser('~/.claude/settings.json')))
-enabled = s.get('enabledPlugins', {})
-print('installed' if 'superpowers@claude-plugins-official' in enabled else 'not installed')
-"
+python3 -c 'import json,os; s=json.load(open(os.path.expanduser("~/.claude/settings.json"))); print("installed" if "superpowers@claude-plugins-official" in s.get("enabledPlugins",{}) else "not installed")'
 ```
 
 If already installed → skip silently.

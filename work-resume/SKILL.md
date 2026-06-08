@@ -78,19 +78,10 @@ If missing from either:
 ## Step 4 — Remove entry from stack (on workspace main)
 
 ```bash
-# Still on main — update the stack before switching branches
-python3 -c "
-import sys, re
-stack = open('$STACK_FILE').read()
-# Remove the selected branch block (- branch: NAME through next - branch: or EOF)
-pattern = r'- branch: $RESUME_BRANCH\n(?:  .*\n)*'
-stack = re.sub(pattern, '', stack)
-open('$STACK_FILE', 'w').write(stack)
-"
-
-git -C "$WORKSPACE" add design/.pause-stack
-git -C "$WORKSPACE" commit -m "chore: resume $RESUME_BRANCH — pop from pause stack"
-git -C "$WORKSPACE" push
+python3 ~/.claude/skills/project-init/remove_from_stack.py <WORKSPACE>/design/.pause-stack <RESUME_BRANCH>
+git -C <WORKSPACE> add design/.pause-stack
+git -C <WORKSPACE> commit -m "chore: resume <RESUME_BRANCH> — pop from pause stack"
+git -C <WORKSPACE> push
 ```
 
 **If push fails: abort** — do not switch branches. The stack on main must be
