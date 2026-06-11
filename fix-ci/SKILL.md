@@ -157,11 +157,12 @@ git push
 
 ## Step 7 — Verify CI
 
-Schedule a wakeup to poll CI status. Typical CI runs take 3-8 minutes.
+Schedule a wakeup to poll CI status. Default wait: 5 minutes (300s).
+Override by setting `ci-build-time-minutes` in CLAUDE.md `## Build and Test`.
 
 ```
 ScheduleWakeup:
-  delaySeconds: 270
+  delaySeconds: 300   # or ci-build-time-minutes × 60 from CLAUDE.md
   reason: "waiting for CI run to complete after push"
   prompt: "/fix-ci"
 ```
