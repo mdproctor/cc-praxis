@@ -465,6 +465,25 @@ every workspace blog entry exists at the destination. Verify with the same `comm
 not a skip. If the line is absent entirely, 8g was not run — stop and run it before
 proceeding to 8i/8j.
 
+**Closing summary — always append after the artifact lines:**
+
+```
+What this delivered:
+  · <capability or fix — concrete outcome, not a task description>
+  · <capability or fix>
+  (2–4 bullets; omit if obvious from the issue title alone)
+
+What this enables:
+  → <follow-on work now unblocked, or new capability now possible>
+  → <second item if applicable>
+```
+
+Generate from branch context — commits, issue title, COVERS list, and any issue
+cross-references. Check COVERS issues on GitHub for 'blocked by' or 'depends on'
+language to find what this unblocks. Omit **What this enables** entirely if nothing
+follows directly — do not pad. Omit **What this delivered** if the issue title already
+says it clearly and there is nothing to add.
+
 ### 8i — Hygiene scan
 
 Always run — not an offer. Checks:
