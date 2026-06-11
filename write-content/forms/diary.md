@@ -154,6 +154,33 @@ Resolve to an **absolute path**.
 cat CLAUDE.md 2>/dev/null | head -80
 ```
 
+**Resolve canonical project name:**
+
+Read the `**Name:**` field from the loaded CLAUDE.md. Then look it up in `~/.claude/project-names.yaml`:
+
+```python
+import yaml, re
+from pathlib import Path
+
+registry_path = Path.home() / ".claude" / "project-names.yaml"
+raw_name = "<value from **Name:** field>"
+
+if registry_path.exists():
+    registry = yaml.safe_load(registry_path.read_text())
+    canonical = (registry.get("aliases", {}).get(raw_name)
+                 or registry.get("canonical", {}).get(raw_name))
+    if canonical:
+        project_label = canonical
+    else:
+        # Not in registry — use raw name but warn
+        project_label = raw_name
+        print(f"⚠️  Project name '{raw_name}' not in ~/.claude/project-names.yaml — using as-is. Add it to prevent label drift.")
+else:
+    project_label = raw_name
+```
+
+Use `project_label` (not `raw_name`) as the value in `projects: [<project_label>]` frontmatter.
+
 **Load voice (one of two, never both):**
 
 ```bash
