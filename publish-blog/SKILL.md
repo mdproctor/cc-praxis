@@ -178,7 +178,28 @@ If push fails, report with resolution command:
    git -C ~/blog push
 ```
 
-### Step 8 — Summary
+### Step 8 — Clean up source entries
+
+Published entries are now versioned in the destination repo — the workspace copy
+is redundant. Delete it:
+
+```bash
+git -C "$BLOG_DIR/.." rm "$BLOG_DIR/<filename>"
+```
+
+If all entries in `$BLOG_DIR` have been published and removed, also remove
+`INDEX.md` if present.
+
+Commit the removals in the source workspace repo:
+
+```bash
+git -C "$BLOG_DIR/.." commit -m "chore: remove published blog entries"
+```
+
+Only remove entries whose destinations all succeeded (✅). If any destination
+failed for an entry, keep the source copy until the failure is resolved.
+
+### Step 9 — Summary
 
 ```
 Publishing complete
@@ -186,6 +207,8 @@ Publishing complete
 ✅ personal-blog   — 2 entries published, committed, pushed
 ✅ quarkus-blog    — 1 entry published, committed (no remote)
 ❌ project-blog    — push failed (run: git -C ~/project push)
+
+Source cleanup: 2 entries removed from workspace (1 retained — destination failed)
 ```
 
 ---
@@ -268,6 +291,7 @@ rules:
 - [ ] All destination directories validated before copying
 - [ ] Entries copied to each resolved destination
 - [ ] Git destinations committed; remote destinations pushed (or failure reported)
+- [ ] Successfully published entries removed from source workspace
 - [ ] Summary shows per-destination outcome (✅ / ❌)
 
 ---
