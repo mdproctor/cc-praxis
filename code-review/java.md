@@ -296,7 +296,7 @@ class OrderServiceTest {
 |---------|----------------|-----|
 | Skipping review for "small changes" | Small changes cause production incidents | Review ALL changes, size doesn't matter |
 | Only checking syntax/compilation | Misses resource leaks, race conditions, security | Follow full checklist from code-review-principles |
-| Approving with WARNING findings | Warnings become tech debt | Fix or document why acceptable |
+| Leaving any finding unfixed | Unfixed findings accumulate and rot | Fix every finding — CRITICAL, WARNING, and NOTE — before completing the review. If the fix itself is troublesome (risky, out of scope, or needs investigation), defer as a GitHub issue rather than applying a hasty fix |
 | Not checking thread safety | Quarkus event loop violations cause crashes | Verify @Blocking, avoid shared mutable state |
 | Ignoring test coverage gaps | Untested code breaks in production | Require tests for business logic |
 | Accepting mocked tests | Mocks hide integration issues | Prefer real CDI wiring over mocks |
