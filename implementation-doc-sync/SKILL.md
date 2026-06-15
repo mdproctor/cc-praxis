@@ -220,4 +220,5 @@ issues in Step 4 and are the responsibility of the peer repo's session.
 **Complements:**
 - `project-health` — full project correctness check (not session-scoped)
 - `java-git-commit` — chains to `java-update-design` for design journal
-- `handover` — runs after this skill; the handover references updated docs
+- `work-end` — runs this as part of Step 3b pre-close sweep; writes HANDOFF.md after
+- `handover` — runs this as part of the wrap checklist (mid-work sessions only)

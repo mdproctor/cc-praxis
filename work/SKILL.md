@@ -65,10 +65,11 @@ If stack depth > 3, prefix with: `⚠️  Stack has <N> paused branches — cons
 **Step 4 — On feature branch: ask once**
 
 > "You're on `<branch-name>`. What do you want to do?
-> 1. **end** — close this branch, merge journal, close issue, return to main
-> 2. **pause** — commit WIP, push to stack, switch to main (resume later)"
+> 1. **end** — close this branch, merge, push, write handover, return to main
+> 2. **pause** — commit WIP, push to stack, switch to main (resume later)
+> 3. **wrap** — end session but keep branch open (write handover for next session)"
 
-Route to work-end or work-pause based on answer.
+Route to work-end, work-pause, or handover based on answer.
 
 ---
 
@@ -77,8 +78,9 @@ Route to work-end or work-pause based on answer.
 **Routes to:**
 - `work-start` — when beginning new work from main
 - `work-resume` — when returning to a paused branch from main
-- `work-end` — when closing a completed branch
+- `work-end` — when closing a completed branch (includes full wrap + HANDOFF.md)
 - `work-pause` — when saving state to switch to something else
+- `handover` — when ending the session but keeping the branch open (mid-work wrap)
 
 **This skill does not implement the lifecycle itself** — it detects state and
 delegates. All logic lives in the individual lifecycle skills.

@@ -247,8 +247,8 @@ decision before writing to disk. See `mandatory-gates.md` for full procedure.
 
 **Invoked by:** User directly — "write a diary entry", "write an article about X",
 "draft a brief", "log what we built today", "write the Gotchas section for layer X",
-"update the What it adds section"; also automatically as part of the `handover`
-wrap checklist (diary type).
+"update the What it adds section"; also automatically as part of `work-end` Step 3b
+pre-close sweep and `handover` wrap checklist (diary type).
 
 **Loads:**
 - `write-content/modes/_universal.md` — always

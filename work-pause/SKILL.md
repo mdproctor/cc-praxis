@@ -140,3 +140,19 @@ You're on main — type work to resume this branch or start new work.
 ```
 
 If stack depth > 3, add: `⚠️  Stack has <N> paused branches — consider closing some.`
+
+---
+
+## Pause vs Wrap
+
+**work-pause** is for switching branches mid-session — you're continuing to work,
+just on something else. It does not write HANDOFF.md or run the session wrap.
+
+If the session is ending (not switching to other work), use **handover** (`wrap`)
+instead — it writes HANDOFF.md so the next session can resume on the same branch.
+
+| Intent | Skill |
+|--------|-------|
+| Switch to a different branch now, come back later | work-pause |
+| End the session, continue this branch next time | handover (wrap) |
+| Branch is done, close everything | work-end |
