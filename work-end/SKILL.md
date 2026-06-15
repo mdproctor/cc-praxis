@@ -842,15 +842,16 @@ Output the final tick-list:
 ```
 Session wrap complete.
 
-✅ Epic hygiene          (or ⏭ skipped)
-✅ Forage sweep          N entries submitted  (or: nothing garden-worthy found)
-✅ Protocol sweep        N protocols captured (or: nothing new)
-✅ update-claude-md      (or ⏭ skipped)
-✅ journal-entry         (or ⏭ skipped — not mid-epic)
-✅ arc42 stale scan      N items fixed  (or: nothing stale found / ⏭ skipped — no ARC42STORIES.MD)
-✅ write-content (diary)  <entry filename>  (or ⏭ skipped)
-✅ Code review           0 findings  (or: N findings fixed)
-✅ HANDOFF.md committed  <workspace>/HANDOFF.md → main
+✅ Epic hygiene              (or ⏭ skipped)
+✅ Forage sweep              N entries submitted  (or: nothing garden-worthy found)
+✅ Protocol sweep            N protocols captured (or: nothing new)
+✅ update-claude-md          (or ⏭ skipped)
+✅ implementation-doc-sync   N docs updated, N issues filed  (or: nothing stale found / ⏭ skipped)
+✅ journal-entry             (or ⏭ skipped — not mid-epic)
+✅ arc42 stale scan          N items fixed  (or: nothing stale found / ⏭ skipped — no ARC42STORIES.MD)
+✅ write-content (diary)     <entry filename>  (or ⏭ skipped)
+✅ Code review               0 findings  (or: N findings fixed)
+✅ HANDOFF.md committed      <workspace>/HANDOFF.md → main
 ```
 
 Show every item — both ticked and skipped with reason.
