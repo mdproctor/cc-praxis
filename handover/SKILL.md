@@ -2,16 +2,28 @@
 name: handover
 slash-command: false
 description: >
-  Use when ending a session and wanting to preserve context for resumption,
-  OR when a session is beginning and needing to resume from where things left
-  off — says "create a handover", "end of session", "update the handover",
-  "write a handover", or "resume handover". NOT for project narrative
-  (use write-content, diary type).
+  Use when ending a mid-work session (branch stays open) and wanting to preserve
+  context for resumption, OR when a session is beginning and needing to resume
+  from where things left off — says "create a handover", "end of session",
+  "update the handover", "write a handover", "wrap", or "resume handover".
+  NOT for branch closure (use work-end — it includes the full wrap).
+  NOT for project narrative (use write-content, diary type).
 ---
 
 # Session Handover
 
 > **Terminology:** *handover* is the act (what you do at session end); *handoff* is the artifact (the `HANDOFF.md` file passed to the next session).
+
+## When to Use This vs work-end
+
+| Situation | Skill |
+|-----------|-------|
+| Branch is **done** — closing, merging, pushing | `work-end` (includes full wrap + HANDOFF.md) |
+| Branch is **not done** — pausing mid-work, ending session | `handover` (this skill) |
+| **Resuming** from a previous session | `resume handover` (this skill, resume path) |
+
+**work-end already writes HANDOFF.md** as its final step (Step 12). If you just ran
+work-end, do NOT invoke this skill — everything is already done.
 
 ---
 
@@ -43,7 +55,29 @@ git -C "$WORKSPACE" log -1 --format="%ar" -- HANDOFF.md
 If more than a week old, flag it before using the context:
 > "HANDOFF.md is N days old — some context may be stale. Verify key assumptions before building on it."
 
-Read the file, then immediately proceed to Step R3. No prompt — the cross-check always runs. Results appear in the "Cleaned up" section of the resume output.
+Read the file, then immediately proceed to Step R2b.
+
+### Step R2b — Detect open branch (continue-in-place)
+
+Check whether the previous session left an open branch (mid-work handover, not work-end):
+
+```bash
+cat "$WORKSPACE/design/.meta" 2>/dev/null
+```
+
+If `.meta` exists on the current branch AND `$WORKSPACE/design/EPIC-CLOSED.md` does NOT exist
+on that branch → the previous session paused mid-work. The branch is still open.
+
+**If open branch detected:** present the resume output (Steps R3+) with this Immediate
+Next Step:
+
+> "Branch `<branch-name>` is still open for #`<issue>`. Run `/work` to continue."
+
+`work-start` will detect the existing `.meta` and resume the branch (Detection state 2).
+Do not start a new branch or suggest picking different work.
+
+**If no `.meta` or EPIC-CLOSED.md exists:** the previous session closed cleanly via work-end.
+Proceed normally — the Immediate Next Step comes from HANDOFF.md content.
 
 ### Step R3 — GitHub issue cross-check (always runs)
 
@@ -615,21 +649,27 @@ context marked as "unchanged"? If yes — done.
 
 ## Skill Chaining
 
-**Invoked by:** User directly at end of a session ("create a handover",
-"end of session", "write a handover")
+**Invoked by:** User directly for mid-work session wrap ("create a handover",
+"end of session", "write a handover", "wrap"). NOT invoked after work-end —
+work-end Step 12 handles the full wrap including HANDOFF.md.
 
-**Invokes:** [`forage`] — forage sweep (Step 2b) to submit any gotchas, techniques, or undocumented items before context is lost; [`protocol`] — protocol sweep to formalise any project-specific rules established this session (if checked); [`write-content`] — diary type for this session's narrative (if checked); [`update-claude-md`] — to sync any new conventions (if checked); journal entry (inline action, not a separate skill) — writes missing `design/JOURNAL.md` entries on epic branches (if checked); arc42 stale scan (Step 2c, inline) — checks ARC42STORIES.MD for stale statuses, resolved cross-repo blockers, and closed-issue forward refs (if checked and ARC42STORIES.MD exists); `git commit` directly for the handover itself
+**Invokes:** [`forage`] — forage sweep (Step 2b); [`protocol`] — protocol sweep
+(if checked); [`write-content`] — diary (if checked); [`update-claude-md`] —
+convention sync (if checked); `git commit` directly for HANDOFF.md
+
+**Resume path invokes:** [`work-start`] — when an open branch is detected,
+the resume output directs the user to `/work` which handles branch resumption
 
 **Reads from (surgical, not upfront):**
 - `git diff HEAD -- HANDOFF.md` — what changed from last handover
 - `git log --oneline -6` — recent commits for orientation
 - `ls` on workspace directories — locate paths without reading files
-- `~/.hortora/garden/GARDEN.md` — only when including garden reference
+- `design/.meta` + `design/EPIC-CLOSED.md` — open branch detection on resume
 
 **Complements:**
+- `work-end` — branch closure includes full wrap; this skill is for mid-work only
 - `write-content` — narrative context the handover points to
 - `forage` — technical gotcha index the handover references
-- `idea-log` — undecided possibilities the handover references
 
 **Does NOT replace:** CLAUDE.md (auto-loaded), `--resume`/`--continue` flags
 (restore conversation history for same-machine continuation)

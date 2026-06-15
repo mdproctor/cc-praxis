@@ -796,3 +796,61 @@ git -C "$WORKSPACE" checkout main
 ```
 
 Check remote ahead; prompt before `pull --rebase`. Not automatic.
+
+---
+
+## Step 11 — ARC42 stale scan
+
+Only if `ARC42STORIES.MD` exists in the project repo. Catches cross-session drift
+not covered by work-end's per-commit scope — layer statuses, resolved blockers,
+closed-issue forward refs.
+
+See the handover skill's Step 2c for the three checks (layer statuses, external
+blockers, forward-tense refs). Run the same procedure here. Commit fixes to
+the project repo.
+
+Skip silently if `ARC42STORIES.MD` does not exist.
+
+---
+
+## Step 12 — Write HANDOFF.md and close the session
+
+work-end includes the full session wrap. There is no need to invoke the handover
+skill separately after work-end — everything is handled here.
+
+### 12a — HANDOFF.md
+
+Follow the handover skill's Steps 1–6 (check previous handover, recall from
+context, gather orientation, build references, write HANDOFF.md, commit to
+workspace main). The pre-close sweep (Step 3b) already ran forage, protocol,
+update-claude-md, doc-sync, and write-content — do not re-run them or show the
+wrap checklist. Only write the HANDOFF.md file.
+
+**Important:** HANDOFF.md must be committed to workspace **main**, not the epic
+branch (which is now closed). The workspace should already be on main from Step 10.
+
+### 12b — Session rename
+
+Suggest a session rename if the session name appears auto-generated (random
+three-word pattern). Generate a concise 2–4 word name from the session's
+content. The user types `/rename <name>` — it is a Claude Code built-in.
+
+### 12c — Session close summary
+
+Output the final tick-list:
+
+```
+Session wrap complete.
+
+✅ Epic hygiene          (or ⏭ skipped)
+✅ Forage sweep          N entries submitted  (or: nothing garden-worthy found)
+✅ Protocol sweep        N protocols captured (or: nothing new)
+✅ update-claude-md      (or ⏭ skipped)
+✅ journal-entry         (or ⏭ skipped — not mid-epic)
+✅ arc42 stale scan      N items fixed  (or: nothing stale found / ⏭ skipped — no ARC42STORIES.MD)
+✅ write-content (diary)  <entry filename>  (or ⏭ skipped)
+✅ Code review           0 findings  (or: N findings fixed)
+✅ HANDOFF.md committed  <workspace>/HANDOFF.md → main
+```
+
+Show every item — both ticked and skipped with reason.
