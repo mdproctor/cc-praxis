@@ -203,6 +203,20 @@ If not set → prompt once and save to `~/.claude/settings.json`.
 - **No argument** → load [diary-retrospective.md](diary-retrospective.md) and follow that workflow. Skip Steps 1–7 below.
 - **With context** → propose entry type before asking anything, then continue with Step 1.
 
+**Check for prior entries in this series:**
+
+If a workspace `.meta` file exists (mid-branch session), read the branch name:
+```bash
+grep "^branch:" <WORKSPACE>/design/.meta 2>/dev/null
+```
+
+Use the branch name as the series key. Scan `<BLOG_DIR>/` for entries with matching `series:` frontmatter:
+```bash
+grep -rl "^series:.*<branch-name>" <BLOG_DIR>/ 2>/dev/null | sort
+```
+
+If prior entries exist: note their filenames and titles. They will be referenced in the new entry's opening (Step 4) and included in the frontmatter `series:` field (Step 6). If no prior entries and no `.meta`: this is a standalone entry — omit `series:` from frontmatter.
+
 **Ensure CLAUDE.md has style guide pointer** (gate, not offer):
 
 ```bash
@@ -318,8 +332,17 @@ entry_type: <article|note>
 subtype: diary                                     # omit for articles
 projects: [<project>, ...]
 tags: [<tag>, ...]                               # omit if empty
+series: <branch-name>                            # omit if no prior entries in this series
 ---
 ```
+
+**If `series:` is set and prior entries exist**, open the entry body with a brief continuity note before any other content:
+
+```markdown
+*Part of a series on [#<issue> — <issue title>](<link-to-issue>). Previous: [<prior-entry-title>](<filename>).*
+```
+
+Keep it to one line — it's a navigation aid, not an introduction. Omit if this is the first entry in the series (no prior entries found in Step 0).
 
 After writing, update `<BLOG_DIR>/INDEX.md` (create if absent):
 ```markdown
