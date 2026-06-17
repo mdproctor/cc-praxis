@@ -265,6 +265,33 @@ When proposing an update that routes to a module file, include it as a separate 
 
 ---
 
+### Step 4f: Check for missing ARC42STORIES.MD reference
+
+```bash
+[ -f "ARC42STORIES.MD" ] && echo "arc42: exists" || echo "arc42: absent"
+```
+
+If `ARC42STORIES.MD` exists, check whether CLAUDE.md already references it:
+
+```bash
+grep -c "ARC42STORIES" CLAUDE.md 2>/dev/null
+```
+
+If ARC42STORIES.MD exists **and** CLAUDE.md has zero mentions, propose adding two things:
+
+1. A `design` row in the Routing table (if a Routing table exists):
+   ```markdown
+   | design     | project     | journal in workspace `design/`; merge target is project `ARC42STORIES.MD` |
+   ```
+
+2. A living-docs block after the Routing table:
+   ```markdown
+   Living docs — check for drift after significant changes:
+   - `ARC42STORIES.MD` — primary architecture record; check §9–10 after module, SPI, or structural changes
+   ```
+
+This is a one-time addition — once present, this check passes silently.
+
 ### Step 5: Propose updates
 
 **For single-file CLAUDE.md:**
