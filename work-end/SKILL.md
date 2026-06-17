@@ -22,6 +22,12 @@ failure mode of this skill.
 **Doc sync is mandatory.** `update-claude-md` and `implementation-doc-sync`
 are part of the pre-close sweep and default to ON. They catch convention drift
 and stale documentation that compounds across sessions.
+
+**Main-branch mutations go through work-end only.** Never run
+`git checkout main && git merge <branch>` manually — this bypasses
+pull-before-merge, squash-before-push, and fork-first delivery. If work
+needs to land on main, use work-end on the branch. There is no safe shortcut.
+The pre-push hook blocks diverged pushes, but prevention is better than detection.
 </HARD-GATE>
 
 ### Red Flags — thoughts that mean STOP

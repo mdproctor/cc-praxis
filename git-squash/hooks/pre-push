@@ -19,6 +19,21 @@ while read local_ref local_sha remote_ref remote_sha; do
   # Skip branch deletions
   [ "$local_sha" = "0000000000000000000000000000000000000000" ] && continue
 
+  # Block pushes to main/master when local has diverged from origin.
+  # Catches stale-main merges that create local/remote divergence.
+  branch_name=$(echo "$remote_ref" | sed 's|refs/heads/||')
+  if echo "$remote_ref" | grep -qE "refs/heads/(main|master)$"; then
+    git fetch "$remote" "$branch_name" --quiet 2>/dev/null
+    behind=$(git rev-list HEAD.."$remote/$branch_name" --count 2>/dev/null || echo 0)
+    if [ "$behind" -gt 0 ]; then
+      echo ""
+      echo "❌ Local $branch_name is $behind commits behind $remote/$branch_name."
+      echo "   Run: git pull --rebase origin $branch_name"
+      echo "   Then push again."
+      exit 1
+    fi
+  fi
+
   if [ "$remote_sha" = "0000000000000000000000000000000000000000" ]; then
     # New branch — compare to default branch
     base=$(git rev-parse --verify origin/main 2>/dev/null || git rev-parse --verify origin/master 2>/dev/null || echo "")
