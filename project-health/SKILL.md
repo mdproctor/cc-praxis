@@ -18,16 +18,17 @@ type-specific health checks inline based on the project type declared in CLAUDE.
 
 ## Step 0 — Read Project Type
 
-Before any checks run, read the project type from CLAUDE.md:
+Before any checks run, read the project type:
 
 ```bash
-grep -A 2 "## Project Type" CLAUDE.md 2>/dev/null
+python3 ~/.claude/skills/project-init/ctx.py
 ```
+
+Read `PROJECT_TYPE` from the output.
 
 Extract the type: `skills` | `java` | `blog` | `custom` | `generic`
 
-If CLAUDE.md is missing or has no Project Type, treat as `generic` and note it
-as a `config` finding.
+If `PROJECT_TYPE` is empty, treat as `generic` and note it as a `config` finding.
 
 Store the type — type-aware checks (`primary-doc`, `artifacts`, `conventions`,
 `framework`) use it throughout this skill.

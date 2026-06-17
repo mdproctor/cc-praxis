@@ -31,10 +31,14 @@ correct skill — developer says `work` to begin, `work end` to close,
 **Step 2 — Detect state (for `work` alone)**
 
 ```bash
-WORKSPACE=$(grep "^\*\*Workspace:\*\*" CLAUDE.md 2>/dev/null | head -1 | sed "s/.*\`\(.*\)\`.*/\1/")
+python3 ~/.claude/skills/project-init/ctx.py
+```
+
+Read `WORKSPACE` and `CURRENT_BRANCH` from the output, then check pause stack state:
+
+```bash
 STACK_FILE="$WORKSPACE/design/.pause-stack"
 STACK_DEPTH=$(grep -c "^- branch:" "$STACK_FILE" 2>/dev/null || echo 0)
-CURRENT_BRANCH=$(git -C "$WORKSPACE" branch --show-current 2>/dev/null)
 IS_MAIN=$([ "$CURRENT_BRANCH" = "main" ] && echo "yes" || echo "no")
 ```
 

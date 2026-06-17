@@ -746,10 +746,7 @@ Start with standard project-knowledge paths:
 
 **Create DESIGN.md stub if missing (java / typescript / python projects only):**
 
-Read the project type from CLAUDE.md:
-```bash
-grep -E "^\*\*Type:\*\*|^type:" "<project-path>/CLAUDE.md" 2>/dev/null | head -1
-```
+Read `PROJECT_TYPE` from ctx.py output (run `python3 ~/.claude/skills/project-init/ctx.py` if not already run for this repo).
 
 If type is `java`, `typescript`, or `python` AND `docs/DESIGN.md` does not exist:
 
@@ -916,9 +913,9 @@ HAS_COMMITMSG=false
 [ -f "$PREPUSH_SRC" ] && [ ! -f "$GITHOOKS_DIR/pre-push" ]   && HAS_PREPUSH=true
 [ -f "$COMMITMSG_SRC" ] && [ ! -f "$GITHOOKS_DIR/commit-msg" ] && HAS_COMMITMSG=true
 
-# Also check if Work Tracking is enabled for commit-msg
-WORK_TRACKING=$(grep -q "Issue tracking.*enabled" "<project-path>/CLAUDE.md" 2>/dev/null && echo yes || echo no)
-[ "$WORK_TRACKING" = "no" ] && HAS_COMMITMSG=false
+# Also check if Work Tracking is enabled for commit-msg (read ISSUES_STATUS from ctx.py output in Step 10b)
+# If ISSUES_STATUS != "enabled", skip commit-msg hook
+[ "$ISSUES_STATUS" != "enabled" ] && HAS_COMMITMSG=false
 ```
 
 **If both `$HAS_PREPUSH` and `$HAS_COMMITMSG` are false** → skip silently (nothing to install or already present).
@@ -1103,15 +1100,11 @@ more recent file as `workspace/HANDOFF.md` and discard the older one.
 
 ### Step 10b — Offer issue tracking setup
 
-Check if Work Tracking is already configured:
+Read `ISSUES_STATUS` from ctx.py output (run `python3 ~/.claude/skills/project-init/ctx.py` if not already run).
 
-```bash
-grep -q "Issue tracking.*enabled" CLAUDE.md 2>/dev/null && echo "configured" || echo "not configured"
-```
+If `ISSUES_STATUS` is `enabled` → skip silently.
 
-If already configured → skip silently.
-
-If not configured, ask:
+If `ISSUES_STATUS` is `absent`, ask:
 
 > **Set up GitHub issue tracking? (YES / n)**
 >

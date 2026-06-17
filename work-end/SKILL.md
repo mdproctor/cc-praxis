@@ -686,12 +686,9 @@ behaviour — do not remove them.
 
 **Run after 8j. Skip for non-Java projects.**
 
-Check project type:
-```bash
-grep -i "^type:\|^\*\*Type:\*\*" "$PROJECT/CLAUDE.md" 2>/dev/null | head -1
-```
+Read `PROJECT_TYPE` from the ctx.py output (already run in Path Resolution).
 
-If type is `java`, use `AskUserQuestion` with exactly these four options:
+If `PROJECT_TYPE` is `java`, use `AskUserQuestion` with exactly these four options:
 
 ```
 Build verification level?
@@ -807,15 +804,15 @@ Check remote ahead; prompt before `pull --rebase`. Not automatic.
 
 ## Step 11 — ARC42 stale scan
 
-Only if `ARC42STORIES.MD` exists in the project repo. Catches cross-session drift
-not covered by work-end's per-commit scope — layer statuses, resolved blockers,
-closed-issue forward refs.
+Only if `HAS_ARC42STORIES=yes` (from ctx.py output, already run in Path Resolution).
+Catches cross-session drift not covered by work-end's per-commit scope — layer
+statuses, resolved blockers, closed-issue forward refs.
 
 See the handover skill's Step 2c for the three checks (layer statuses, external
 blockers, forward-tense refs). Run the same procedure here. Commit fixes to
 the project repo.
 
-Skip silently if `ARC42STORIES.MD` does not exist.
+Skip silently if `HAS_ARC42STORIES=no`.
 
 ---
 

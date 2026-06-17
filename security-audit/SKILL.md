@@ -10,7 +10,7 @@ description: >
 
 # Security Audit
 
-Reads project type from CLAUDE.md, then loads the language-specific audit checklist.
+Reads project type, then loads the language-specific audit checklist.
 
 ## Step 0 — Load universal principles
 
@@ -19,8 +19,10 @@ Reads project type from CLAUDE.md, then loads the language-specific audit checkl
 ## Step 1 — Detect project type
 
 ```bash
-grep -A 2 "## Project Type" CLAUDE.md 2>/dev/null | grep "^type:"
+python3 ~/.claude/skills/project-init/ctx.py
 ```
+
+Read `PROJECT_TYPE` from the output.
 
 Extract: `java` | `ts` | `python`
 

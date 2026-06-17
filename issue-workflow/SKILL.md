@@ -81,10 +81,12 @@ Run when the user calls `/issue-workflow` directly, or when `git-commit` or
 ### Step 0 — Idempotency check
 
 ```bash
-grep -q "Issue tracking.*enabled" CLAUDE.md 2>/dev/null && echo "configured" || echo "not configured"
+python3 ~/.claude/skills/project-init/ctx.py
 ```
 
-**If already configured** → skip the setup flow and show:
+Read `ISSUES_STATUS` from the output.
+
+**If `ISSUES_STATUS` is `enabled`** → skip the setup flow and show:
 
 > Issue tracking is already configured (`Issue tracking: enabled` found in CLAUDE.md).
 >

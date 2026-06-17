@@ -44,7 +44,7 @@ Run this first. If all conditions are met, return immediately — do nothing els
 python3 ~/.claude/skills/project-init/ctx.py
 ```
 
-If `CLAUDE_OK=yes` AND `WORKSPACE_OK=yes` AND `ISSUES_OK=yes` → return silently.
+If `CLAUDE_OK=yes` AND `WORKSPACE_OK=yes` AND `ISSUES_STATUS` is not `absent` → return silently.
 
 ---
 
@@ -52,16 +52,18 @@ If `CLAUDE_OK=yes` AND `WORKSPACE_OK=yes` AND `ISSUES_OK=yes` → return silentl
 
 ### Check 1 — CLAUDE.md with project type
 
+Read `CLAUDE_OK` and `PROJECT_TYPE` from the ctx.py output (already run in fast-path).
+
+Also check whether the file exists at all:
 ```bash
 [ -f "CLAUDE.md" ] && echo "exists" || echo "missing"
-grep -q "## Project Type" CLAUDE.md 2>/dev/null && echo "typed" || echo "untyped"
 ```
 
 | State | Action |
 |-------|--------|
-| Missing | Ask user for project type, create CLAUDE.md inline |
-| Exists, no type | Ask user to choose type, insert `## Project Type` section |
-| Exists with type | ✅ Continue |
+| CLAUDE.md missing | Ask user for project type, create CLAUDE.md inline |
+| CLAUDE.md exists, `CLAUDE_OK=no` | Ask user to choose type, insert `## Project Type` section |
+| `CLAUDE_OK=yes` | ✅ Continue |
 
 **Project type choices:** `skills` · `java` · `blog` · `custom` · `generic`
 
@@ -76,17 +78,13 @@ check can run without a project type.
 
 ### Check 2 — Workspace
 
-Use `WORKSPACE_OK` from the ctx.py output (already run in fast-path). Check separately if it was declined:
-```bash
-grep "workspace: declined" CLAUDE.md 2>/dev/null
-```
+Read `WORKSPACE_OK` and `WORKSPACE_DECLINED` from the ctx.py output (already run in fast-path).
 
 | State | Action |
 |-------|--------|
-| `wksp/` symlink present (CWD is project) | ✅ Continue |
-| `proj/` symlink present (CWD is workspace) | ✅ Continue |
-| `workspace: declined` in CLAUDE.md | ✅ Skip silently |
-| Neither | Offer (see below) |
+| `WORKSPACE_OK=yes` (symlinks present or declined) | ✅ Continue |
+| `WORKSPACE_DECLINED=yes` | ✅ Skip silently |
+| `WORKSPACE_OK=no` and `WORKSPACE_DECLINED=no` | Offer (see below) |
 
 **Offer:**
 
@@ -125,17 +123,13 @@ workspace: declined
 Skip if: workspace was just set up this session (workspace-init offered it),
 or `Issue tracking: declined` is already in CLAUDE.md.
 
-```bash
-grep -q "Issue tracking: enabled"  CLAUDE.md 2>/dev/null && echo "enabled"  || \
-grep -q "Issue tracking: declined" CLAUDE.md 2>/dev/null && echo "declined" || \
-echo "missing"
-```
+Read `ISSUES_STATUS` from the ctx.py output (already run in fast-path). Values: `enabled` | `declined` | `absent`.
 
 | State | Action |
 |-------|--------|
 | `enabled` | ✅ Continue |
 | `declined` | ✅ Skip silently |
-| `missing` | Offer (see below) |
+| `absent` | Offer (see below) |
 
 **Offer:**
 

@@ -19,11 +19,18 @@ blocks work — findings are always opportunities, never failures.
 
 ## Step 0 — Read Project Type and Configuration
 
-Read project type from CLAUDE.md (for context, not routing — project-refine is
-always the right skill regardless of type):
+Read project type (for context, not routing — project-refine is always the
+right skill regardless of type):
 
 ```bash
-grep -A 2 "## Project Type" CLAUDE.md 2>/dev/null
+python3 ~/.claude/skills/project-init/ctx.py
+```
+
+Read `PROJECT_TYPE` from the output.
+
+Also read Health Check Configuration from CLAUDE.md:
+
+```bash
 grep -A 10 "## Health Check Configuration" CLAUDE.md 2>/dev/null
 ```
 

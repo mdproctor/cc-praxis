@@ -9,15 +9,17 @@ description: >
 
 # Update Design Document
 
-Reads project type from CLAUDE.md, then loads the language-specific design
-sync workflow. All types update a living design document to reflect current
-architecture — only the document format and detection logic differ.
+Reads project type, then loads the language-specific design sync workflow.
+All types update a living design document to reflect current architecture —
+only the document format and detection logic differ.
 
 ## Step 1 — Detect project type
 
 ```bash
-grep -A 2 "## Project Type" CLAUDE.md 2>/dev/null | grep "^type:"
+python3 ~/.claude/skills/project-init/ctx.py
 ```
+
+Read `PROJECT_TYPE` from the output. Also read `HAS_ARC42STORIES` for design doc routing.
 
 Extract: `java` | `ts` | `python` | `generic`
 

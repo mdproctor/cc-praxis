@@ -162,11 +162,10 @@ Map changes to CLAUDE.md sections:
 
 ### Step 4b: Check for missing Work Tracking section
 
-```bash
-grep -q "Issue tracking.*enabled" CLAUDE.md 2>/dev/null && echo "present" || echo "absent"
-```
+Run `python3 ~/.claude/skills/project-init/ctx.py` if not already run this session.
+Read `ISSUES_STATUS` from the output.
 
-If absent, prompt:
+If `ISSUES_STATUS` is `absent`, prompt:
 
 > **Enable GitHub issue tracking for this repo? (YES / n)**
 >
@@ -199,11 +198,9 @@ If **n** → skip silently.
 ls blog/ 2>/dev/null | head -1
 ```
 
-If `blog/` exists (meaning write-content has been used in this workspace), check whether CLAUDE.md already contains the Writing Style Guide requirement:
+If `blog/` exists (meaning write-content has been used in this workspace), check whether CLAUDE.md already contains the Writing Style Guide requirement.
 
-```bash
-grep -l "writing style guide\|blog-technical" CLAUDE.md 2>/dev/null
-```
+Read `HAS_WRITING_STYLE_REF` from the ctx.py output (already run in Step 4b).
 
 If `blog/` exists **and** the requirement is absent from CLAUDE.md, propose adding:
 
@@ -223,13 +220,9 @@ Check whether this is a workspace CLAUDE.md (has `## Session Start` with `add-di
 grep -l "add-dir" CLAUDE.md 2>/dev/null
 ```
 
-If it is a workspace CLAUDE.md, check whether a `**Name:**` field exists:
+If it is a workspace CLAUDE.md, read `PROJECT_NAME` from the ctx.py output (already run in Step 4b).
 
-```bash
-grep -l "\*\*Name:\*\*" CLAUDE.md 2>/dev/null
-```
-
-If the `**Name:**` field is **absent**, derive it from the H1 heading:
+If `PROJECT_NAME` is **empty**, derive it from the H1 heading:
 
 ```bash
 head -3 CLAUDE.md | grep "^# " | sed 's/^# //' | sed 's/ Workspace$//'
@@ -267,11 +260,9 @@ When proposing an update that routes to a module file, include it as a separate 
 
 ### Step 4f: Check for missing ARC42STORIES.MD reference
 
-```bash
-[ -f "ARC42STORIES.MD" ] && echo "arc42: exists" || echo "arc42: absent"
-```
+Read `HAS_ARC42STORIES` from the ctx.py output (already run in Step 4b).
 
-If `ARC42STORIES.MD` exists, check whether CLAUDE.md already references it:
+If `HAS_ARC42STORIES=yes`, check whether CLAUDE.md already references it:
 
 ```bash
 grep -c "ARC42STORIES" CLAUDE.md 2>/dev/null

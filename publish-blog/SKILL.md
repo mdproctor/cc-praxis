@@ -30,30 +30,21 @@ This skill controls where individual entries are cross-posted to blog platforms.
 
 ### Step 0 — Resolve blog directory
 
-Use the same three-layer resolution as write-content (diary form):
-
-1. `Blog directory:` field in CLAUDE.md — explicit path, highest priority
-2. `## Routing` table in CLAUDE.md — `blog → workspace` means `<Workspace>/blog/`; `blog → project` means `<Project repo>/blog/`
-3. Default: `blog/` relative to CWD
-
 ```bash
-# Check for explicit Blog directory field
-grep -i "blog directory:" CLAUDE.md 2>/dev/null
-
-# Otherwise check routing table
-grep -A 20 "^## Routing$" CLAUDE.md 2>/dev/null | grep "^| blog"
+python3 ~/.claude/skills/project-init/ctx.py
 ```
+
+Read `BLOG_DIR` and `HAS_BLOG_ROUTING` from the output.
+
+If `BLOG_DIR` is non-empty, use it directly. Otherwise fall back to `blog/` relative to CWD.
 
 Resolve `BLOG_DIR` to an **absolute path** before proceeding.
 
 ### Step 1 — Load routing config
 
-```bash
-ls ~/.claude/blog-routing.yaml 2>/dev/null && echo "global found"
-ls <WORKSPACE>/blog-routing.yaml 2>/dev/null && echo "project found"
-```
+Read `HAS_BLOG_ROUTING` from the ctx.py output (already run in Step 0).
 
-If global config is missing, stop:
+If `HAS_BLOG_ROUTING=no`, stop:
 > "No global routing config found at `~/.claude/blog-routing.yaml`."
 
 Read the global config with PyYAML. If a project-level `blog-routing.yaml`

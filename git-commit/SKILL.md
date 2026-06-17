@@ -36,10 +36,11 @@ Commit messages describe **WHAT changed and WHY**. Not who or what wrote them. T
 
 ### Step 0 — Route by project type
 
-**Read CLAUDE.md for project type:**
 ```bash
-grep -A 2 "## Project Type" CLAUDE.md 2>/dev/null | grep "^type:\|^\*\*Type:\*\*"
+python3 ~/.claude/skills/project-init/ctx.py
 ```
+
+Read `PROJECT_TYPE` and `ISSUES_STATUS` from the output.
 
 | Type | Action |
 |------|--------|
@@ -73,12 +74,9 @@ Wait for user response.
 
 ### Step 0b — Offer issue tracking (when absent)
 
-Check if CLAUDE.md already has Work Tracking configured:
-```bash
-grep -q "Issue tracking.*enabled" CLAUDE.md 2>/dev/null && echo "exists" || echo "absent"
-```
+Read `ISSUES_STATUS` from the ctx.py output (already run in Step 0).
 
-**If absent** (whether CLAUDE.md is freshly created or already exists), ask:
+**If `ISSUES_STATUS` is `absent`** (whether CLAUDE.md is freshly created or already exists), ask:
 
 > **Enable GitHub issue tracking for this repo? (YES / n)**
 >
@@ -153,12 +151,9 @@ python scripts/validate_document.py <file>
 
 ### Step 2 — Issue linking and commit split check (if Work Tracking enabled)
 
-Check if Work Tracking is configured:
-```bash
-grep -q "Issue tracking.*enabled" CLAUDE.md 2>/dev/null && echo "enabled" || echo "disabled"
-```
+Read `ISSUES_STATUS` from the ctx.py output (already run in Step 0).
 
-**If enabled:**
+**If `ISSUES_STATUS` is `enabled`:**
 
 **2a — Check for commit split candidates**
 

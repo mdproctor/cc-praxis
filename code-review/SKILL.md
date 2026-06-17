@@ -9,7 +9,7 @@ description: >
 
 # Code Review
 
-Reads the project type from CLAUDE.md, then loads the appropriate language-specific
+Reads the project type, then loads the appropriate language-specific
 review checklist. Universal review principles apply to all types.
 
 ## Step 0 — Load universal principles
@@ -20,8 +20,10 @@ All review severity models, reporting formats, and workflow steps are defined th
 ## Step 1 — Detect project type
 
 ```bash
-grep -A 2 "## Project Type" CLAUDE.md 2>/dev/null | grep "^type:"
+python3 ~/.claude/skills/project-init/ctx.py
 ```
+
+Read `PROJECT_TYPE` from the output.
 
 Extract: `java` | `ts` | `python` | `generic`
 

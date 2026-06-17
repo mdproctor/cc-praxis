@@ -131,16 +131,13 @@ Use the invocation argument if provided. Otherwise prompt:
 
 ### Step 2 — Platform coherence
 
-Locate the platform doc — check in order, use first found:
+Read `HAS_PLATFORM_DOC` from the ctx.py output (already run in Path Resolution).
 
-```bash
-ls "$PROJECT/docs/PLATFORM.md" 2>/dev/null \
-  || ls "$WORKSPACE/PLATFORM.md" 2>/dev/null \
-  || ls "$WORKSPACE/docs/PLATFORM.md" 2>/dev/null \
-  || ls ~/claude/casehub/parent/docs/PLATFORM.md 2>/dev/null
-```
+If `HAS_PLATFORM_DOC=yes`, locate and read it (check `$PROJECT/docs/PLATFORM.md`,
+`$WORKSPACE/docs/PLATFORM.md`, `$WORKSPACE/workspace/docs/PLATFORM.md`).
+If `HAS_PLATFORM_DOC=no`, skip this step silently.
 
-Read it. Run the five coherence questions against the work description:
+Run the five coherence questions against the work description:
 
 1. **Does this already exist?** Is this capability already implemented somewhere?
 2. **Is this the right repo?** Would this work more naturally live elsewhere?
@@ -152,12 +149,11 @@ Surface any concerns to the user before proceeding.
 
 ### Step 3 — Relevant protocols
 
-```bash
-ls "$PROJECT/docs/protocols/" 2>/dev/null \
-  || ls "$WORKSPACE/protocols/" 2>/dev/null \
-  || ls "$WORKSPACE/docs/protocols/" 2>/dev/null \
-  || ls ~/claude/casehub/parent/docs/protocols/ 2>/dev/null
-```
+Read `HAS_PROTOCOLS_DIR` from the ctx.py output (already run in Path Resolution).
+
+If `HAS_PROTOCOLS_DIR=yes`, locate the protocols directory (check `$PROJECT/docs/protocols/`,
+`$WORKSPACE/docs/protocols/`, `$WORKSPACE/workspace/docs/protocols/`).
+If `HAS_PROTOCOLS_DIR=no`, skip this step silently.
 
 Read any protocols applicable to the described work. Surface violations before proceeding.
 
