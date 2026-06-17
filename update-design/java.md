@@ -54,12 +54,18 @@ This skill is invoked by `git-commit` when:
 
 ### Step 0: Detect target document
 
-Before anything else, check whether `ARC42STORIES.MD` exists in the workspace root:
+Before anything else, check whether `ARC42STORIES.MD` exists in the **project repo**.
+Resolve the project path via the `proj/` symlink — this works correctly regardless of
+whether the skill is invoked from the workspace CWD or the project CWD:
 
 ```bash
 WORKSPACE=$(git rev-parse --show-toplevel 2>/dev/null)
-ls "$WORKSPACE/ARC42STORIES.MD" 2>/dev/null && echo "arc42=yes" || echo "arc42=no"
+PROJECT=$(readlink -f "$WORKSPACE/proj" 2>/dev/null || echo "$WORKSPACE")
+ls "$PROJECT/ARC42STORIES.MD" 2>/dev/null && echo "arc42=yes" || echo "arc42=no"
 ```
+
+If `proj/` is absent (CWD is already the project repo), `PROJECT` falls back to `WORKSPACE`,
+which is the project root — the check remains correct in both cases.
 
 | State | Target document | Behaviour |
 |---|---|---|
